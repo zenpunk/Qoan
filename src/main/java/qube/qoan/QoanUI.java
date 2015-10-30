@@ -26,28 +26,28 @@ import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
 import qube.qoan.views.ComponentsView;
 import qube.qoan.views.StartView;
+import qube.qoan.views.WorkspaceView;
 
 /**
  *
  */
 @Theme("mytheme")
-//@Theme("codeGraph")
 @Widgetset("qube.qoan.MyAppWidgetset")
 public class QoanUI extends UI {
 
     Navigator navigator;
-    protected static final String MAINVIEW = "main";
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        getPage().setTitle("Navigation Example");
+        getPage().setTitle("Qoan");
 
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
 
-        // Create and register the views
-        navigator.addView("", new StartView());
-        navigator.addView(ComponentsView.NAME, new ComponentsView());
+        // Create and register the views- not that this way, the pages will always be new instances!
+        navigator.addView("", StartView.class);
+        navigator.addView(ComponentsView.NAME, ComponentsView.class);
+        navigator.addView(WorkspaceView.NAME, WorkspaceView.class);
     }
 
 

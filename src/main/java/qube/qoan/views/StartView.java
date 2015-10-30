@@ -4,6 +4,7 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ClassResource;
 import com.vaadin.server.ExternalResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 
 /**
@@ -14,6 +15,7 @@ public class StartView extends VerticalLayout implements View {
     public static String NAME = "start";
 
     private static String loremIpsum =
+            "<p>"+
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut sapien vel lacus varius feugiat. " +
                     "Duis sit amet quam et ligula lacinia pulvinar non vitae massa. " +
                     "Vestibulum finibus sapien vel elit suscipit, " +
@@ -22,6 +24,8 @@ public class StartView extends VerticalLayout implements View {
                     "Sed consequat consequat tortor ullamcorper tempor. Maecenas tincidunt sodales tellus quis pharetra. " +
                     "Donec imperdiet varius enim, a tempor nulla tristique quis. " +
                     "Aenean ac leo sed elit maximus maximus."+
+            "</p>" +
+            "<p text-align: center;>"+
             "Mauris metus nisi, pulvinar vel odio eget, tempus tristique velit. " +
                     "Sed venenatis libero velit, sit amet facilisis urna aliquam in. " +
                     "Nunc id nibh eget nisl interdum faucibus non nec odio. " +
@@ -33,7 +37,9 @@ public class StartView extends VerticalLayout implements View {
                     "Curabitur eget dolor risus. Curabitur ornare sagittis purus, eu mollis leo vulputate in. " +
                     "Morbi fermentum augue eu nisi suscipit, sit amet fermentum dolor tristique. " +
                     "Proin lacus mauris, cursus in gravida sit amet, vestibulum non eros."+
-            "Etiam vulputate ante ut sapien aliquet feugiat. Vivamus sed lectus vitae felis egestas posuere imperdiet in nulla. " +
+            "</p>" +
+            "<p text-align: center;>"+
+                    "Etiam vulputate ante ut sapien aliquet feugiat. Vivamus sed lectus vitae felis egestas posuere imperdiet in nulla. " +
                     "Donec tincidunt posuere sem quis rhoncus. Duis congue diam et lectus pellentesque, quis ornare erat malesuada. " +
                     "Praesent malesuada eget neque nec maximus. Quisque quis imperdiet mauris, vel fringilla erat. " +
                     "In condimentum leo lorem, cursus porttitor felis ultricies laoreet. " +
@@ -42,7 +48,9 @@ public class StartView extends VerticalLayout implements View {
                     "Donec rutrum mauris augue, et aliquam lorem semper ac. " +
                     "Phasellus a felis turpis. Sed sed risus bibendum, vulputate dui ut, accumsan dolor. " +
                     "Vivamus faucibus turpis a ipsum viverra, at hendrerit nisi tincidunt." +
-            "Nunc fringilla, odio ac dignissim commodo, purus odio laoreet lectus, lobortis mollis ex turpis non leo. " +
+            "</p>" +
+            "<p text-align: center;>"+
+                    "Nunc fringilla, odio ac dignissim commodo, purus odio laoreet lectus, lobortis mollis ex turpis non leo. " +
                     "Fusce ac consequat risus. Quisque ut velit velit. " +
                     "Suspendisse vestibulum, eros sit amet dignissim pharetra, tellus nisl rutrum libero, " +
                     "et egestas risus augue non velit. Aenean nec nulla non sapien iaculis ullamcorper at in sem. " +
@@ -53,25 +61,43 @@ public class StartView extends VerticalLayout implements View {
                     "Morbi facilisis diam lacinia aliquet molestie. Aenean eu magna faucibus diam ullamcorper eleifend. " +
                     "Nullam sodales dolor velit, id pharetra leo tempus vel. Aenean molestie nibh vitae quam convallis tempor. " +
                     "Donec varius mi sed libero sollicitudin dignissim a vitae mi."+
-            "Duis in turpis eu odio pharetra placerat. Curabitur sed nibh felis. " +
+            "</p>" +
+            "<p text-align: center;>"+
+                    "Duis in turpis eu odio pharetra placerat. Curabitur sed nibh felis. " +
                     "Fusce lacinia auctor dui sit amet ultricies. Ut accumsan felis sit amet leo varius, at tristique magna iaculis. " +
                     "Maecenas rhoncus ipsum lectus, eget mollis turpis maximus quis. Etiam consequat varius neque, ac finibus turpis. " +
                     "Morbi hendrerit tincidunt scelerisque. Praesent faucibus dictum nisi. " +
                     "Aliquam pulvinar dapibus enim, rhoncus rutrum tortor placerat nec. " +
                     "Quisque lobortis ligula in augue finibus, suscipit sagittis elit lacinia. " +
-                    "Sed accumsan imperdiet maximus. ";
+                    "Sed accumsan imperdiet maximus. " +
+            "</p>" ;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        Label label = new Label(loremIpsum);
+
+        UI.getCurrent().getPage().setTitle("Welcome to Qoan");
+
+        setWidth("600px");
+
+        Label label = new Label(loremIpsum, ContentMode.HTML);
+
         addComponent(label);
 
-        Button link = new Button("Components Display", new Button.ClickListener() {
+        Button componentsButton = new Button("Components Display", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
             }
         });
-        addComponent(link);
+        addComponent(componentsButton);
+
+        Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+            }
+        });
+        addComponent(workspaceButton);
+
     }
 }

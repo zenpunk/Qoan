@@ -2,10 +2,7 @@ package qube.qoan.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -27,10 +24,8 @@ public class ComponentsView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-//        final VerticalLayout layout = new VerticalLayout();
-//        layout.setMargin(true);
-//        layout.setSpacing(true);
-//        setContent(layout);
+
+        UI.getCurrent().getPage().setTitle("Qoan Components Display");
 
         Button button = new Button("Click Me");
         button.addClickListener(new Button.ClickListener() {
