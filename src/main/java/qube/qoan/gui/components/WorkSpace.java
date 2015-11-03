@@ -1,16 +1,15 @@
 package qube.qoan.gui.components;
 
-import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- * Created by rainbird on 10/31/15.
+ * Created by rainbird on 11/2/15.
  */
-public class SearchMenu extends Panel {
+public class WorkSpace extends Panel {
 
-    public SearchMenu() {
+    public WorkSpace() {
         super();
 
         // do the initialization
@@ -19,13 +18,13 @@ public class SearchMenu extends Panel {
 
     private void initialize() {
         // begin with setting the size
-        setWidth("300");
+        setWidth("1200");
         setHeight("550");
 
         VerticalLayout layout = new VerticalLayout();
 
         // some dummy label do fill in the display
-        Label label = new Label("Display something as SearchMenu");
+        Label label = new Label("Display something as WorkSpace");
         layout.addComponent(label);
 
         setContent(layout);
