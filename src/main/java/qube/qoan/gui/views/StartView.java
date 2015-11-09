@@ -4,13 +4,14 @@ import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
+import qube.qoan.gui.components.QoanHeader;
 
 /**
  * Created by rainbird on 10/29/15.
  */
 public class StartView extends VerticalLayout implements View {
 
-    public static String NAME = "start";
+    public static String NAME = "";
 
     private static String loremIpsum =
             "<p>"+
@@ -72,6 +73,9 @@ public class StartView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+
+        QoanHeader header = new QoanHeader();
+        addComponent(header);
 
         UI.getCurrent().getPage().setTitle("Welcome to Qoan");
 

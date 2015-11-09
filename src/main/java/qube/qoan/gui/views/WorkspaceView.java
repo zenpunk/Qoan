@@ -3,6 +3,7 @@ package qube.qoan.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import qube.qoan.gui.components.QoanHeader;
 import qube.qoan.gui.components.SearchMenu;
 import qube.qoan.gui.components.WorkSpace;
 
@@ -27,6 +28,9 @@ public class WorkspaceView extends VerticalLayout implements View {
 
         searchVisible = true;
         workspaceVisible = true;
+
+        QoanHeader header = new QoanHeader();
+        addComponent(header);
 
         HorizontalLayout innerLayout = new HorizontalLayout();
 

@@ -1,4 +1,4 @@
-package qube.qoan.views;
+package qube.qoan.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
@@ -14,6 +14,7 @@ import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
+import qube.qoan.gui.components.QoanHeader;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -26,6 +27,9 @@ public class ComponentsView extends VerticalLayout implements View {
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         UI.getCurrent().getPage().setTitle("Qoan Components Display");
+
+        QoanHeader header = new QoanHeader();
+        addComponent(header);
 
         Button button = new Button("Click Me");
         button.addClickListener(new Button.ClickListener() {
