@@ -25,7 +25,7 @@ public class WebServer {
 
     private static String contextPath = "/";
     private static String resourceBase = "target/webapp";
-    private static int httpPort = 8080;
+    private static int httpPort = 8090;
 
     /**
      * main function, starts the jetty server.
@@ -55,5 +55,9 @@ public class WebServer {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        // now the web-server has been started, we invoke an instance of Hazelcast as well
+        //HazelcastInstance hazelcastInstance = Hazelcast.getInstance();
+
     }
 }

@@ -69,6 +69,12 @@
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client</artifactId>
 		</dependency>
+
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiled</artifactId>
+            <version>${vaadin.version}</version>
+        </dependency>
 		<!--
 		  Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
 		  
@@ -76,14 +82,13 @@
 		  compilation classpath by vaadin-maven-plugin so normally there is no need for an
 		  explicit dependency.
 		-->
-		<!--
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiler</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		-->
-		<dependency>
+
+        <dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
