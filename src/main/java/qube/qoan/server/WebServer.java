@@ -25,7 +25,7 @@ public class WebServer {
 
     private static String contextPath = "/";
     private static String resourceBase = "target/webapp";
-    private static int httpPort = 8090;
+    private static int httpPort = 8080;
 
     /**
      * main function, starts the jetty server.
