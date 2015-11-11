@@ -19,6 +19,10 @@
 		<project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.2.6.v20141205</jetty9.version>
         <guice.version>4.0</guice.version>
+
+        <!-- @TODO not so sure about those two -->
+        <lucene.version>5.3.1</lucene.version>
+        <tika.version>1.10</tika.version>
 	</properties>
 
 	<repositories>
@@ -139,7 +143,40 @@
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
-	</dependencies>
+
+        <!-- lucene & tika -->
+        <!-- tika does parsing and lucene does search and indexing -->
+        <dependency>
+            <groupId>org.apache.tika</groupId>
+            <artifactId>tika-parsers</artifactId>
+            <version>${tika.version}</version>
+        </dependency>
+
+        <!-- lucene itself -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-common</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-queryparser</artifactId>
+            <version>${lucene.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>qube.qoan</groupId>
+            <artifactId>qai</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+    </dependencies>
 
 	<build>
 		<plugins>

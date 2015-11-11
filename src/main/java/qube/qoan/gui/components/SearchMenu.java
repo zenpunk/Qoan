@@ -20,15 +20,16 @@ import javax.inject.Inject;
  */
 public class SearchMenu extends Panel {
 
-    @Inject @Named("Wiktionary_en")
-    private SearchServiceInterface searchService;
+//    @Inject @Named("Wiktionary_en")
+//    private SearchServiceInterface searchService;
 
     public SearchMenu() {
         super();
 
+        // @TODO initialization doesn't work due to project dependencies- skip for the time being
         // i think this is more or less what we will need to do in order to make the injector to work
-        Injector injector = Guice.createInjector(new QoanModule(), new QaiModule());
-        injector.injectMembers(this);
+//        Injector injector = Guice.createInjector(new QoanModule(), new QaiModule());
+//        injector.injectMembers(this);
         // do the initialization
         initialize();
     }
