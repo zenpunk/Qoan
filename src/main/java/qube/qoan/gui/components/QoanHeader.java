@@ -27,7 +27,7 @@ public class QoanHeader extends Panel {
         CssLayout firstRow = new CssLayout();
 
         // Image as a file resource
-        ClassResource resource = new ClassResource("images/crows.jpg");
+        ClassResource resource = new ClassResource("/images/crows.jpg");
         Image image = new Image("qube.qoan", resource);
 
         firstRow.addComponent(image);

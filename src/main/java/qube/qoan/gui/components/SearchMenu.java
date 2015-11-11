@@ -3,6 +3,7 @@ package qube.qoan.gui.components;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.Module;
+import com.google.inject.name.Named;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
@@ -19,7 +20,7 @@ import javax.inject.Inject;
  */
 public class SearchMenu extends Panel {
 
-    @Inject
+    @Inject @Named("Wiktionary_en")
     private SearchServiceInterface searchService;
 
     public SearchMenu() {
