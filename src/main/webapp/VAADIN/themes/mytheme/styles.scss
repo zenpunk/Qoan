@@ -8,4 +8,9 @@
   @include addons;
   @include mytheme;
 
+#header {
+    height: 120px;
+    background: #EDF6FB url(./images/crows.jpg) repeat-x;
+}
+
 }

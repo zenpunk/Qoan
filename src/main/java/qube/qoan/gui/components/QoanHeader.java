@@ -25,13 +25,14 @@ public class QoanHeader extends Panel {
         layout.setWidth("100%");
 
         CssLayout firstRow = new CssLayout();
+        firstRow.addStyleName("header");
 
         // Image as a file resource
-        ClassResource resource = new ClassResource("/images/crows.jpg");
-        Image image = new Image("qube.qoan", resource);
-
-        firstRow.addComponent(image);
-        layout.addComponent(firstRow);
+//        ClassResource resource = new ClassResource("/images/crows.jpg");
+//        Image image = new Image("qube.qoan", resource);
+//
+//        firstRow.addComponent(image);
+//        layout.addComponent(firstRow);
 
         HorizontalLayout secondRow = new HorizontalLayout();
 

@@ -28,7 +28,7 @@ public class QoanUI extends UI {
         // Create and register the views- not that this way, the pages will always be new instances!
         navigator.addView("", StartView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
-        navigator.addView(WorkspaceView.NAME, WorkspaceView.class);
+        navigator.addView(WorkspaceView.NAME, new WorkspaceView());
     }
 
 
