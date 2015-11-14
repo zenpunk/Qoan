@@ -115,10 +115,13 @@ public class ComponentsView extends VerticalLayout implements View {
         Edge edge2 = new Edge(node1.getId(),node3.getId());
         Edge edge3 = new Edge(node2.getId(),node5.getId());
         Edge edge4 = new Edge(node2.getId(),node4.getId());
+        Edge edge5 = new Edge(node6.getId(),node4.getId());
+        Edge edge6 = new Edge(node1.getId(),node5.getId());
+        Edge edge7 = new Edge(node1.getId(),node4.getId());
 
         networkDiagram.addNode(node1);
         networkDiagram.addNode(node2,node3,node4,node5,node6);
-        networkDiagram.addEdge(edge1,edge2,edge3,edge4);
+        networkDiagram.addEdge(edge1,edge2,edge3,edge4, edge5, edge6, edge7);
 
         return networkDiagram;
     }

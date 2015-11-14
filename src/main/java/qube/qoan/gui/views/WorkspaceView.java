@@ -35,10 +35,15 @@ public class WorkspaceView extends VerticalLayout implements View {
         HorizontalLayout innerLayout = new HorizontalLayout();
 
         // begin adding the first component
+
+
+
+
+        // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
         innerLayout.addComponent(searchMenu);
 
-        workSpace = new WorkSpace();
+        workSpace = new WorkSpace(searchMenu);
         innerLayout.addComponent(workSpace);
 
         addComponent(innerLayout);
@@ -67,12 +72,13 @@ public class WorkspaceView extends VerticalLayout implements View {
     }
 
     public void onAddTab(Button.ClickEvent event) {
-        if (workspaceVisible) {
-            workspaceVisible = false;
-        } else {
-            workspaceVisible = true;
-        }
-        workSpace.setVisible(workspaceVisible);
+//        if (workspaceVisible) {
+//            workspaceVisible = false;
+//        } else {
+//            workspaceVisible = true;
+//        }
+//        workSpace.setVisible(workspaceVisible);
+        workSpace.addNewTab();
         Notification.show("Tab Add button was clicked");
     }
 }
