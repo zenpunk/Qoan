@@ -8,6 +8,7 @@ import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
+import com.vaadin.event.dd.TargetDetails;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.event.dd.acceptcriteria.And;
@@ -109,8 +110,12 @@ public class SearchMenu extends Panel implements SearchAgent {
         }
 
         public void drop(DragAndDropEvent event) {
+
             Transferable transferable = event.getTransferable();
+
+            // check what source we are receiving events from
             if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
+
                 DragAndDropWrapper.WrapperTransferable t =
                         (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
                 DragAndDropWrapper.WrapperTargetDetails details =
@@ -126,7 +131,9 @@ public class SearchMenu extends Panel implements SearchAgent {
                 AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
                 pos.setLeftValue(pos.getLeftValue() + xChange);
                 pos.setTopValue(pos.getTopValue() + yChange);
+
             } else if (transferable instanceof DataBoundTransferable) {
+
                 DataBoundTransferable t = (DataBoundTransferable) event.getTransferable();
                 Object itemId = t.getItemId();
                 Item item = resultTable.getItem(itemId);
@@ -141,6 +148,8 @@ public class SearchMenu extends Panel implements SearchAgent {
                 DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
                 wikiTagWrapper.setSizeUndefined();
                 wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+
+                // @TODO add logic for placing the component where  it is created
                 parentLayout.addComponent(wikiTagWrapper, "left: 50px; top: 50px;");
 
                 Notification.show("WikiArricle: " + title + " added to Workpsace");

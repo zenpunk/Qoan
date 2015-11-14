@@ -1,8 +1,8 @@
 package qube.qoan.gui.components;
 
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.*;
+import info.bliki.wiki.model.WikiModel;
 import qube.qai.persistence.WikiArticle;
 
 /**
@@ -34,6 +34,11 @@ public class WikiArticleTag extends Panel {
 
 
         // @TODO add an event listener which will expand to display the wiki-content
+        String content = WikiModel.toHtml(wikiArticle.getContent());
+        Label contentText = new Label(content, ContentMode.HTML);
+        PopupView contentPopup = new PopupView("expand", contentText);
+        layout.addComponent(contentPopup);
+
 
         setContent(layout);
     }
