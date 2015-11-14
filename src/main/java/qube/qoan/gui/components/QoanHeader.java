@@ -32,7 +32,7 @@ public class QoanHeader extends Panel {
 //        Image image = new Image("qube.qoan", resource);
 //
 //        firstRow.addComponent(image);
-//        layout.addComponent(firstRow);
+//        parentLayout.addComponent(firstRow);
 
         HorizontalLayout secondRow = new HorizontalLayout();
 

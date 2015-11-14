@@ -5,6 +5,7 @@ import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.vaadin.data.Item;
 import com.vaadin.event.DataBoundTransferable;
+import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -60,7 +61,7 @@ public class SearchMenu extends Panel implements SearchAgent {
 
         // some dummy label do fill in the display
 //        Label label = new Label("Display something as SearchMenu");
-//        layout.addComponent(label);
+//        parentLayout.addComponent(label);
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
 
@@ -87,11 +88,46 @@ public class SearchMenu extends Panel implements SearchAgent {
      * creates a drag-n-drop handler which would handle the added table rows
      * @return
      */
-    public DropHandler createDropHandler() {
-        DropHandler dropHandler = new DropHandler() {
-            @Override
-            public void drop(DragAndDropEvent dropEvent) {
-                DataBoundTransferable t = (DataBoundTransferable) dropEvent.getTransferable();
+    public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
+        DropHandler dropHandler = new MoveHandler(parentLayout);
+
+        return dropHandler;
+    }
+
+    // Handles drops both on an AbsoluteLayout and
+    // on components contained within it
+    class MoveHandler implements DropHandler {
+
+        AbsoluteLayout parentLayout;
+
+        public MoveHandler(AbsoluteLayout layout) {
+            this.parentLayout = layout;
+        }
+
+        public AcceptCriterion getAcceptCriterion() {
+            return AcceptAll.get();
+        }
+
+        public void drop(DragAndDropEvent event) {
+            Transferable transferable = event.getTransferable();
+            if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
+                DragAndDropWrapper.WrapperTransferable t =
+                        (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
+                DragAndDropWrapper.WrapperTargetDetails details =
+                        (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
+
+                // Calculate the drag coordinate difference
+                int xChange = details.getMouseEvent().getClientX()
+                        - t.getMouseDownEvent().getClientX();
+                int yChange = details.getMouseEvent().getClientY()
+                        - t.getMouseDownEvent().getClientY();
+
+                // Move the component in the absolute parentLayout
+                AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
+                pos.setLeftValue(pos.getLeftValue() + xChange);
+                pos.setTopValue(pos.getTopValue() + yChange);
+            } else if (transferable instanceof DataBoundTransferable) {
+                DataBoundTransferable t = (DataBoundTransferable) event.getTransferable();
                 Object itemId = t.getItemId();
                 Item item = resultTable.getItem(itemId);
                 String title = (String) item.getItemProperty("Title").getValue();
@@ -101,19 +137,16 @@ public class SearchMenu extends Panel implements SearchAgent {
                 wikiArticle.setSource(source);
                 wikiArticle.setId(uuidService.createUUIDString());
 
-                WikiArticleTag wikiTag = new WikiArticleTag(wikiArticle);
-                workSpace.addComponentToDisplay(wikiTag);
+                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle);
+                DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
+                wikiTagWrapper.setSizeUndefined();
+                wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+                parentLayout.addComponent(wikiTagWrapper, "left: 50px; top: 50px;");
 
                 Notification.show("WikiArricle: " + title + " added to Workpsace");
             }
 
-            @Override
-            public AcceptCriterion getAcceptCriterion() {
-                return new And(new SourceIs(resultTable), AbstractSelect.AcceptItem.ALL);
-            }
-        };
-
-        return dropHandler;
+        }
     }
 
     @Override

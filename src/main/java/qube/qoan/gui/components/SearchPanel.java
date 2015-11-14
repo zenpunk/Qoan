@@ -41,7 +41,7 @@ public class SearchPanel extends Panel {
         // text field for maximum results
 //        ObjectProperty searchLimit = new ObjectProperty("Max Hits", Integer.class);
 //        TextField searchLimitField = new TextField("Max Hits", searchLimit);
-//        layout.addComponent(searchLimitField);
+//        parentLayout.addComponent(searchLimitField);
 
         // text field for the actual search term to be used
         ObjectProperty searchTerm = new ObjectProperty("", String.class);

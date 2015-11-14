@@ -20,9 +20,7 @@ public class WorkspacePanel extends Panel {
 
     private AbsoluteLayout layout;
 
-//    private DragAndDropWrapper dndWrapper;
-
-    private DropHandler dropHandler;
+    public DragAndDropWrapper layoutWrapper;
 
     public WorkspacePanel(String title) {
         this.title = title;
@@ -36,49 +34,25 @@ public class WorkspacePanel extends Panel {
         layout.setWidth("1000px");
         layout.setHeight("550px");
 
-
-//        dndWrapper = new DragAndDropWrapper(layout);
-//
-//       dndWrapper.setDropHandler(dropHandler);
-
         Label titleLabel = new Label(title);
         DragAndDropWrapper wrapper = new DragAndDropWrapper(titleLabel);
         wrapper.setSizeUndefined();
         wrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
         layout.addComponent(wrapper, "left: 50px; top: 50px;");
 
-        DragAndDropWrapper layoutWrapper = new DragAndDropWrapper(layout);
-        layoutWrapper.setDropHandler(new MoveHandler());
+        layoutWrapper = new DragAndDropWrapper(layout);
+        //layoutWrapper.setDropHandler(new MoveHandler());
         // and finally set the
         setContent(layoutWrapper);
     }
 
-    // Handles drops both on an AbsoluteLayout and
-    // on components contained within it
-    class MoveHandler implements DropHandler {
-        public AcceptCriterion getAcceptCriterion() {
-            return AcceptAll.get();
-        }
-
-        public void drop(DragAndDropEvent event) {
-            DragAndDropWrapper.WrapperTransferable t =
-                    (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
-            DragAndDropWrapper.WrapperTargetDetails details =
-                    (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
-
-            // Calculate the drag coordinate difference
-            int xChange = details.getMouseEvent().getClientX()
-                    - t.getMouseDownEvent().getClientX();
-            int yChange = details.getMouseEvent().getClientY()
-                    - t.getMouseDownEvent().getClientY();
-
-            // Move the component in the absolute layout
-            AbsoluteLayout.ComponentPosition pos = layout.getPosition(t.getSourceComponent());
-            pos.setLeftValue(pos.getLeftValue() + xChange);
-            pos.setTopValue(pos.getTopValue() + yChange);
-        }
+    public void setDropHandler(DropHandler dropHandler) {
+        layoutWrapper.setDropHandler(dropHandler);
     }
 
+    public AbsoluteLayout getBaseLayout() {
+        return layout;
+    }
 
     public String getTitle() {
         return title;
