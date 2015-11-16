@@ -28,7 +28,7 @@ public class WorkSpace extends Panel {
     private void initialize() {
         // begin with setting the size
         setWidth("1000");
-        setHeight("500");
+        setHeight("550");
 
         layout = new HorizontalLayout();
 

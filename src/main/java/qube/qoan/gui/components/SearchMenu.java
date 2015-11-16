@@ -8,11 +8,8 @@ import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.TargetDetails;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.event.dd.acceptcriteria.And;
-import com.vaadin.event.dd.acceptcriteria.SourceIs;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiModule;
 import qube.qai.persistence.WikiArticle;
@@ -22,6 +19,7 @@ import qube.qoan.gui.interfaces.SearchAgent;
 import qube.qoan.services.QoanModule;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
@@ -30,7 +28,10 @@ import java.util.Collection;
 public class SearchMenu extends Panel implements SearchAgent {
 
     @Inject @Named("Wiktionary_en")
-    private SearchServiceInterface searchService;
+    private SearchServiceInterface wiktionarySearchService;
+
+    @Inject @Named("Wikipedia_en")
+    private SearchServiceInterface wikipediaSearchService;
 
     @Inject
     private UUIDServiceInterface uuidService;
@@ -140,7 +141,17 @@ public class SearchMenu extends Panel implements SearchAgent {
                 String title = (String) item.getItemProperty("Title").getValue();
                 String source = (String) item.getItemProperty("Source").getValue();
 
-                WikiArticle wikiArticle = searchService.retrieveDocumentContentFromZipFile(title);
+                WikiArticle wikiArticle = null;
+                if ("Wikipedia".equalsIgnoreCase(source)) {
+                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(title);
+                } else if ("Wiktionary".equalsIgnoreCase(source)) {
+                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(title);
+                }
+
+                if (wikiArticle == null) {
+                    return;
+                }
+
                 wikiArticle.setSource(source);
                 wikiArticle.setId(uuidService.createUUIDString());
 
@@ -165,7 +176,25 @@ public class SearchMenu extends Panel implements SearchAgent {
 
         Notification.show(message);
 
-        Collection<String> results = searchService.searchInputString(searchTerm, searchIn, maxResults);
+        Collection<String> results = new ArrayList<String>();
+        if ("Wikipedia".equalsIgnoreCase(source)) {
+            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable(source, results);
+        } else if ("Wiktionary".equalsIgnoreCase(source)) {
+            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable(source, results);
+        } else if ("Wikipedia & Wiktionary".equalsIgnoreCase(source)) {
+            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable("Wikipedia", results);
+            results.clear();
+            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable("Wiktionary", results);
+        }
+
+
+    }
+
+    private void addRowsToTable(String source, Collection<String> results) {
         if (results != null && !results.isEmpty()) {
             // make the table visible and clear contents before adding new items
             resultTable.setVisible(true);

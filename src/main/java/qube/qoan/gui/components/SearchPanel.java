@@ -25,14 +25,16 @@ public class SearchPanel extends Panel {
         // now we add a select-box for wiki-source
         ObjectProperty wikiSource = new ObjectProperty("", String.class);
         ComboBox wikiSourceBox = new ComboBox("Wiki Source");
+        wikiSourceBox.addItem("Wikipedia");
         wikiSourceBox.addItem("Wiktionary");
+        wikiSourceBox.addItem("Wikipedia & Wiktionary");
         wikiSourceBox.setPropertyDataSource(wikiSource);
         layout.addComponent(wikiSourceBox);
 
         // use a select box for the part where the search should take place
         ObjectProperty searchIn = new ObjectProperty("", String.class);
         ComboBox searchInBox = new ComboBox("Search In");
-        searchInBox.addItem("Title & Content");
+        searchInBox.addItem("title and content");
         searchInBox.addItem("title");
         searchInBox.addItem("content");
         searchInBox.setPropertyDataSource(searchIn);
@@ -61,7 +63,7 @@ public class SearchPanel extends Panel {
 
 
 
-                searchAgent.searchFor(source, search, part, 100);
+                searchAgent.searchFor(source, search, part, 20);
             }
         });
         layout.addComponent(searchButton);
