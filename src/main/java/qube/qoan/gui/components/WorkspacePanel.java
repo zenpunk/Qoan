@@ -38,7 +38,7 @@ public class WorkspacePanel extends Panel {
         DragAndDropWrapper wrapper = new DragAndDropWrapper(titleLabel);
         wrapper.setSizeUndefined();
         wrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-        layout.addComponent(wrapper, "left: 50px; top: 50px;");
+        layout.addComponent(wrapper, "right: 50px; top: 50px;");
 
         layoutWrapper = new DragAndDropWrapper(layout);
         //layoutWrapper.setDropHandler(new MoveHandler());

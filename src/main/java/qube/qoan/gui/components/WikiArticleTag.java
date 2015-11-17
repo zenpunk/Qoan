@@ -14,11 +14,14 @@ public class WikiArticleTag extends Panel {
 
     private WikiArticle wikiArticle;
 
-    public WikiArticleTag(String source, WikiArticle wikiArticle) {
+    private Layout parentLayout;
+
+    public WikiArticleTag(String source, WikiArticle wikiArticle, Layout parentLayout) {
         super();
 
         this.source = source;
         this.wikiArticle = wikiArticle;
+        this.parentLayout = parentLayout;
 
         initialize();
     }
@@ -40,6 +43,8 @@ public class WikiArticleTag extends Panel {
 //        PopupView contentPopup = new PopupView("expand", contentText);
 //        layout.addComponent(contentPopup);
 
+        HorizontalLayout buttonsLayout = new HorizontalLayout();
+
         Button open = new Button("open");
         open.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
@@ -55,17 +60,21 @@ public class WikiArticleTag extends Panel {
             }
         });
         open.setStyleName("link");
-        layout.addComponent(open);
+        buttonsLayout.addComponent(open);
 
         // @TODO get this to work- have a handle on the super-class layout passed in constructor, or something
-//        Button remove = new Button("remove");
-//        remove.addClickListener(new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                Layout parentLayout = (Layout) getParent();
-//                parentLayout.removeComponent(super.);
-//            }
-//        });
+        Button remove = new Button("remove");
+        remove.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Component parent = getParent();
+                parentLayout.removeComponent(parent);
+            }
+        });
+        remove.setStyleName("link");
+        buttonsLayout.addComponent(remove);
+
+        layout.addComponent(buttonsLayout);
 
         setContent(layout);
     }

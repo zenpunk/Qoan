@@ -155,7 +155,7 @@ public class SearchMenu extends Panel implements SearchAgent {
                 wikiArticle.setSource(source);
                 wikiArticle.setId(uuidService.createUUIDString());
 
-                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle);
+                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
                 DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
                 wikiTagWrapper.setSizeUndefined();
                 wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
