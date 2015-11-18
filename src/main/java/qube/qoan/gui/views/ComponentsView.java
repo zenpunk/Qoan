@@ -31,6 +31,14 @@ public class ComponentsView extends VerticalLayout implements View {
         QoanHeader header = new QoanHeader();
         addComponent(header);
 
+        Component graph = createNetworkDiagram();
+        graph.setHeight("400px");
+        graph.setWidth("400px");
+        addComponent(graph);
+
+        Component chart = regressionChart();
+        addComponent(chart);
+
         Button button = new Button("Click Me");
         button.addClickListener(new Button.ClickListener() {
             @Override
@@ -41,14 +49,6 @@ public class ComponentsView extends VerticalLayout implements View {
         });
 
         addComponent(button);
-
-        Component chart = regressionChart();
-        addComponent(chart);
-
-        Component graph = createNetworkDiagram();
-        graph.setHeight("400px");
-        graph.setWidth("400px");
-        addComponent(graph);
     }
 
     // methods are for chart creation coming from the examples

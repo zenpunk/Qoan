@@ -63,7 +63,7 @@ public class SearchPanel extends Panel {
 
 
 
-                searchAgent.searchFor(source, search, part, 20);
+                searchAgent.searchFor(source, search, part, 100);
             }
         });
         layout.addComponent(searchButton);

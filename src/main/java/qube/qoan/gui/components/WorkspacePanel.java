@@ -31,8 +31,8 @@ public class WorkspacePanel extends Panel {
     private void initialize() {
 
         layout = new AbsoluteLayout();
-        layout.setWidth("1000px");
-        layout.setHeight("550px");
+        layout.setWidth("1050px");
+        layout.setHeight("500px");
 
         Label titleLabel = new Label(title);
         DragAndDropWrapper wrapper = new DragAndDropWrapper(titleLabel);

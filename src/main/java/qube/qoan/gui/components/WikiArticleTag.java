@@ -62,11 +62,12 @@ public class WikiArticleTag extends Panel {
         open.setStyleName("link");
         buttonsLayout.addComponent(open);
 
-        // @TODO get this to work- have a handle on the super-class layout passed in constructor, or something
+        // add a button to remove this tag from workspace
         Button remove = new Button("remove");
         remove.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                // we are removing the parent- which is the dnd-wrapper
                 Component parent = getParent();
                 parentLayout.removeComponent(parent);
             }

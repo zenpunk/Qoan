@@ -68,7 +68,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         layout.addComponent(searchPanel);
 
         resultTable = new Table("Results:");
-        resultTable.setDescription("drag results to workspace to visualize their contents");
+        //resultTable.setDescription("drag results to workspace to visualize their contents");
         resultTable.addContainerProperty("Source", String.class, null);
         resultTable.addContainerProperty("Title", String.class, null);
         resultTable.setVisible(false);
@@ -77,6 +77,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         //resultTable.setColumnReorderingAllowed(true);
         resultTable.setPageLength(7);
         resultTable.setDragMode(Table.TableDragMode.ROW);
+        resultTable.setColumnReorderingAllowed(true);
 
         // add drag-n-drop support
         //workSpace.setDropHandler();
@@ -91,18 +92,18 @@ public class SearchMenu extends Panel implements SearchAgent {
      * @return
      */
     public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
-        DropHandler dropHandler = new MoveHandler(parentLayout);
+        DropHandler dropHandler = new MoveAndDropHandler(parentLayout);
 
         return dropHandler;
     }
 
     // Handles drops both on an AbsoluteLayout and
     // on components contained within it
-    class MoveHandler implements DropHandler {
+    class MoveAndDropHandler implements DropHandler {
 
         AbsoluteLayout parentLayout;
 
-        public MoveHandler(AbsoluteLayout layout) {
+        public MoveAndDropHandler(AbsoluteLayout layout) {
             this.parentLayout = layout;
         }
 
@@ -197,6 +198,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     private void addRowsToTable(String source, Collection<String> results) {
         if (results != null && !results.isEmpty()) {
             // make the table visible and clear contents before adding new items
+            resultTable.setCaption("results: (" + results.size() + ")");
             resultTable.setVisible(true);
             resultTable.removeAllItems();
 

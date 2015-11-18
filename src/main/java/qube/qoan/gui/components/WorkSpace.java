@@ -27,16 +27,16 @@ public class WorkSpace extends Panel {
 
     private void initialize() {
         // begin with setting the size
-        setWidth("1000");
+        setWidth("1050");
         setHeight("550");
 
         layout = new HorizontalLayout();
 
         workspaceTabs = new TabSheet();
-        workspaceTabs.setHeight("100%");
-        workspaceTabs.setWidth("100%");
 
         WorkspacePanel panel = new WorkspacePanel("Workspace 1");
+//        panel.setWidth("1050");
+//        panel.setHeight("550");
         workspaceTabs.addTab(panel).setCaption("Workspace 1");
         DropHandler dropHandler = searchMenu.createDropHandler(panel.getBaseLayout());
         panel.setDropHandler(dropHandler);
