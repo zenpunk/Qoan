@@ -79,27 +79,27 @@ public class StartView extends VerticalLayout implements View {
 
         UI.getCurrent().getPage().setTitle("Welcome to Qoan");
 
-        setWidth("600px");
+        setWidth("1200px");
 
         Label label = new Label(loremIpsum, ContentMode.HTML);
 
         addComponent(label);
 
-        Button componentsButton = new Button("Components Display", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
-            }
-        });
-        addComponent(componentsButton);
-
-        Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
-            }
-        });
-        addComponent(workspaceButton);
+//        Button componentsButton = new Button("Components Display", new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent event) {
+//                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
+//            }
+//        });
+//        addComponent(componentsButton);
+//
+//        Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent event) {
+//                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+//            }
+//        });
+//        addComponent(workspaceButton);
 
     }
 }

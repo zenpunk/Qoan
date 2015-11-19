@@ -67,6 +67,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
 
+        // @TODO make search results better readable
         resultTable = new Table("Results:");
         //resultTable.setDescription("drag results to workspace to visualize their contents");
         resultTable.addContainerProperty("Source", String.class, null);
@@ -78,7 +79,10 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setPageLength(7);
         resultTable.setDragMode(Table.TableDragMode.ROW);
         resultTable.setColumnReorderingAllowed(true);
-
+        resultTable.setSizeUndefined();
+        resultTable.setColumnCollapsingAllowed(true);
+        resultTable.setFooterVisible(true);
+        resultTable.setSortAscending(true);
         // add drag-n-drop support
         //workSpace.setDropHandler();
 
