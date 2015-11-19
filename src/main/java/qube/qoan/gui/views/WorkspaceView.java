@@ -3,6 +3,7 @@ package qube.qoan.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import qube.qoan.gui.components.MarketMenu;
 import qube.qoan.gui.components.QoanHeader;
 import qube.qoan.gui.components.SearchMenu;
 import qube.qoan.gui.components.WorkSpace;
@@ -16,18 +17,19 @@ public class WorkspaceView extends VerticalLayout implements View {
 
     public static String NAME = "workspace";
 
-    private boolean searchVisible;
-    private boolean workspaceVisible;
+    private boolean searchMenuVisible;
+    private boolean marketMenuVisible;
 
     private SearchMenu searchMenu;
+    private MarketMenu marketMenu;
     private WorkSpace workSpace;
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         UI.getCurrent().getPage().setTitle("Qoan Workspace");
 
-        searchVisible = true;
-        workspaceVisible = true;
+        searchMenuVisible = true;
+        marketMenuVisible = true;
 
         QoanHeader header = new QoanHeader();
         addComponent(header);
@@ -35,13 +37,12 @@ public class WorkspaceView extends VerticalLayout implements View {
         HorizontalLayout innerLayout = new HorizontalLayout();
 
         // begin adding the first component
-
-
-
-
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
         innerLayout.addComponent(searchMenu);
+
+        marketMenu = new MarketMenu();
+        innerLayout.addComponent(marketMenu);
 
         workSpace = new WorkSpace(searchMenu);
         innerLayout.addComponent(workSpace);
@@ -54,31 +55,51 @@ public class WorkspaceView extends VerticalLayout implements View {
         showSearchMenuButton.addListener(Button.ClickEvent.class, this, "onShowSearch");
         lowerLayout.addComponent(showSearchMenuButton);
 
-        Button showAddTabButton = new Button("Add New Tab");
-        showAddTabButton.addListener(Button.ClickEvent.class, this, "onAddTab");
-        lowerLayout.addComponent(showAddTabButton);
+        Button addTabButton = new Button("Add New Tab");
+        addTabButton.addListener(Button.ClickEvent.class, this, "onAddTab");
+        lowerLayout.addComponent(addTabButton);
+
+        Button showStockMenuButton = new Button("Show Stock-Market Menu");
+        showStockMenuButton.addListener(Button.ClickEvent.class, this, "onShowMarket");
+        lowerLayout.addComponent(showStockMenuButton);
 
         addComponent(lowerLayout);
     }
 
-    public void onShowSearch(Button.ClickEvent event) {
-        if (searchVisible) {
-            searchVisible = false;
+    /**
+     * listener method for showing market-menu
+     * @param event
+     */
+    public void onShowMarket(Button.ClickEvent event) {
+        if (marketMenuVisible) {
+            marketMenuVisible = false;
         } else {
-            searchVisible = true;
+            marketMenuVisible = true;
         }
-        searchMenu.setVisible(searchVisible);
-        Notification.show("Search button was clicked");
+        marketMenu.setVisible(marketMenuVisible);
+        Notification.show("Show market menu button was clicked");
     }
 
+    /**
+     * listener method for showing search-menu
+     * @param event
+     */
+    public void onShowSearch(Button.ClickEvent event) {
+        if (searchMenuVisible) {
+            searchMenuVisible = false;
+        } else {
+            searchMenuVisible = true;
+        }
+        searchMenu.setVisible(searchMenuVisible);
+        Notification.show("Show search menu button was clicked");
+    }
+
+    /**
+     * listener method for adding a new tab to workspace
+     * @param event
+     */
     public void onAddTab(Button.ClickEvent event) {
-//        if (workspaceVisible) {
-//            workspaceVisible = false;
-//        } else {
-//            workspaceVisible = true;
-//        }
-//        workSpace.setVisible(workspaceVisible);
         workSpace.addNewTab();
-        Notification.show("Tab Add button was clicked");
+        Notification.show("Add-tab button was clicked");
     }
 }
