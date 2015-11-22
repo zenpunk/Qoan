@@ -1,15 +1,10 @@
 package qube.qoan.gui.components;
 
-import com.vaadin.data.Item;
-import com.vaadin.event.DataBoundTransferable;
-import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.acceptcriteria.AcceptAll;
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
-import com.vaadin.event.dd.acceptcriteria.And;
-import com.vaadin.event.dd.acceptcriteria.SourceIs;
-import com.vaadin.ui.*;
-import qube.qai.persistence.WikiArticle;
+import com.vaadin.ui.AbsoluteLayout;
+import com.vaadin.ui.DragAndDropWrapper;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 
 /**
  * Created by rainbird on 11/14/15.

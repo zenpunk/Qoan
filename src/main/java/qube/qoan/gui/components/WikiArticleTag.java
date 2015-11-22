@@ -1,8 +1,6 @@
 package qube.qoan.gui.components;
 
-import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import info.bliki.wiki.model.WikiModel;
 import qube.qai.persistence.WikiArticle;
 
 /**

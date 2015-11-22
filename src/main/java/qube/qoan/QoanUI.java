@@ -4,7 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.*;
+import com.vaadin.ui.UI;
 import qube.qoan.gui.views.ComponentsView;
 import qube.qoan.gui.views.StartView;
 import qube.qoan.gui.views.WorkspaceView;

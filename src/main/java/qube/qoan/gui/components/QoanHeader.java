@@ -1,13 +1,9 @@
 package qube.qoan.gui.components;
 
-import com.vaadin.server.ClassResource;
-import com.vaadin.server.FileResource;
 import com.vaadin.ui.*;
 import qube.qoan.gui.views.ComponentsView;
 import qube.qoan.gui.views.StartView;
 import qube.qoan.gui.views.WorkspaceView;
-
-import java.io.File;
 
 /**
  * Created by rainbird on 11/9/15.

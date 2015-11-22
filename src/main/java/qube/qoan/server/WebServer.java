@@ -1,20 +1,7 @@
 package qube.qoan.server;
 
 
-import java.lang.management.ManagementFactory;
-
-import javax.management.MBeanServer;
-
-
-import com.vaadin.server.VaadinService;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Window;
-import org.eclipse.jetty.jmx.MBeanContainer;
-import org.eclipse.jetty.server.*;
-import org.eclipse.jetty.servlet.ServletHandler;
-import org.eclipse.jetty.util.resource.Resource;
-import org.eclipse.jetty.util.ssl.SslContextFactory;
+import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.webapp.WebAppContext;
 
 

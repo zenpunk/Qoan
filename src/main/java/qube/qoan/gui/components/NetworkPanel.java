@@ -1,7 +1,6 @@
 package qube.qoan.gui.components;
 
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
