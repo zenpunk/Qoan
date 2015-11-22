@@ -28,6 +28,7 @@ public class WikiArticleTag extends Panel {
 
     private void initialize() {
         VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(true);
 
         String title = wikiArticle.getTitle();
         Label titleLabel = new Label(title);
@@ -38,8 +39,8 @@ public class WikiArticleTag extends Panel {
 
 
         // popup which will expand to display the wiki-content
-        String content = WikiModel.toHtml(wikiArticle.getContent());
-        Label contentText = new Label(content, ContentMode.HTML);
+//        String content = WikiModel.toHtml(wikiArticle.getContent());
+//        Label contentText = new Label(content, ContentMode.HTML);
 //        PopupView contentPopup = new PopupView("expand", contentText);
 //        layout.addComponent(contentPopup);
 
@@ -48,13 +49,16 @@ public class WikiArticleTag extends Panel {
         Button open = new Button("open");
         open.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
+                WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
+                contentPanel.setSizeFull();
+
                 Window window = new Window(title);
                 window.setWidth("600px");
                 window.setHeight("400px");
                 window.setDraggable(true);
                 window.setResizable(true);
                 window.center();
-                window.setContent(contentText);
+                window.setContent(contentPanel);
                 // Add it to the root component
                 UI.getCurrent().addWindow(window);
             }

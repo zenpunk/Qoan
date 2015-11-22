@@ -29,6 +29,7 @@ public class SearchPanel extends Panel {
         wikiSourceBox.addItem("Wiktionary");
         wikiSourceBox.addItem("Wikipedia & Wiktionary");
         wikiSourceBox.setPropertyDataSource(wikiSource);
+        wikiSourceBox.setValue("Wikipedia");
         layout.addComponent(wikiSourceBox);
 
         // use a select box for the part where the search should take place
@@ -38,6 +39,7 @@ public class SearchPanel extends Panel {
         searchInBox.addItem("title");
         searchInBox.addItem("content");
         searchInBox.setPropertyDataSource(searchIn);
+        searchInBox.setValue("content");
         layout.addComponent(searchInBox);
 
         // text field for maximum results
