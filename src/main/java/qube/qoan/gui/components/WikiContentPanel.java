@@ -3,7 +3,7 @@ package qube.qoan.gui.components;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import info.bliki.wiki.model.WikiModel;
-import qube.qai.network.QaiNetwork;
+import qube.qai.network.Network;
 import qube.qai.persistence.WikiArticle;
 
 /**
@@ -36,7 +36,7 @@ public class WikiContentPanel extends Panel {
         addGraphButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                QaiNetwork network = QaiNetwork.createTestNetwork();
+                Network network = Network.createTestNetwork();
                 NetworkPanel networkPanel = new NetworkPanel(network);
                 networkPanel.setSizeFull();
                 tabbedContent.addTab(networkPanel).setCaption("Wiki-Network");

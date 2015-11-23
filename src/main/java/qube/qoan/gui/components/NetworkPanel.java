@@ -5,7 +5,7 @@ import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
-import qube.qai.network.QaiNetwork;
+import qube.qai.network.Network;
 
 import java.util.Collection;
 
@@ -15,7 +15,7 @@ import java.util.Collection;
  */
 public class NetworkPanel extends Panel {
 
-    private QaiNetwork network;
+    private Network network;
 
     private NetworkDiagram diagram;
 
@@ -23,14 +23,14 @@ public class NetworkPanel extends Panel {
         super();
     }
 
-    public NetworkPanel(QaiNetwork network) {
+    public NetworkPanel(Network network) {
         this();
         this.network = network;
 
         initialize(network);
     }
 
-    private void initialize(QaiNetwork network) {
+    private void initialize(Network network) {
 
         Options options = new Options();
         options.setWidth("600px");
@@ -39,9 +39,9 @@ public class NetworkPanel extends Panel {
         diagram = new NetworkDiagram(options);
         diagram.setSizeFull();
 
-        Collection<QaiNetwork.Vertex> vertices = network.getVertices();
+        Collection<Network.Vertex> vertices = network.getVertices();
         int count = 0;
-        for (QaiNetwork.Vertex vertex : vertices) {
+        for (Network.Vertex vertex : vertices) {
             Node node = new Node(count, vertex.getName());
             vertex.setDiagramId(count);
             diagram.addNode(node);
@@ -49,8 +49,8 @@ public class NetworkPanel extends Panel {
             count++;
         }
 
-        Collection<QaiNetwork.Edge> edges = network.getAllEdges();
-        for (QaiNetwork.Edge edge : edges) {
+        Collection<Network.Edge> edges = network.getAllEdges();
+        for (Network.Edge edge : edges) {
             Edge diagramEdge = new Edge(edge.getFrom().getDiagramId(), edge.getTo().getDiagramId());
             diagram.addEdge(diagramEdge);
         }
