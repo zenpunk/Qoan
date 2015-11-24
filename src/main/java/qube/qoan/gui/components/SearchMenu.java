@@ -56,8 +56,8 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     private void initialize() {
         // begin with setting the size
-        setWidth("300");
-        setHeight("550");
+//        setWidth("300");
+//        setHeight("550");
 
         layout = new VerticalLayout();
 
@@ -135,9 +135,11 @@ public class SearchMenu extends Panel implements SearchAgent {
 
                 // Move the component in the absolute parentLayout
                 AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
-                pos.setLeftValue(pos.getLeftValue() + xChange);
-                pos.setTopValue(pos.getTopValue() + yChange);
-
+                // @TODO how can position be null?!?
+                if (pos != null) {
+                    pos.setLeftValue(pos.getLeftValue() + xChange);
+                    pos.setTopValue(pos.getTopValue() + yChange);
+                }
             } else if (transferable instanceof DataBoundTransferable) {
 
                 DataBoundTransferable t = (DataBoundTransferable) event.getTransferable();

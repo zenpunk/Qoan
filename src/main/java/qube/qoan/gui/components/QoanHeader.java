@@ -18,7 +18,7 @@ public class QoanHeader extends Panel {
 
     private void initialize() {
         VerticalLayout layout = new VerticalLayout();
-        layout.setWidth("100%");
+        //layout.setWidth("100%");
 
         CssLayout firstRow = new CssLayout();
         firstRow.addStyleName("header");
@@ -35,7 +35,9 @@ public class QoanHeader extends Panel {
         Button homeButton = new Button("Home", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
+                if (!UI.getCurrent().getEmbedId().equals(StartView.NAME)) {
+                    UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
+                }
             }
         });
         homeButton.setStyleName("link");
@@ -44,7 +46,9 @@ public class QoanHeader extends Panel {
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+                if (!UI.getCurrent().getEmbedId().equals(WorkspaceView.NAME)) {
+                    UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+                }
             }
         });
         workspaceButton.setStyleName("link");
@@ -53,7 +57,9 @@ public class QoanHeader extends Panel {
         Button componentsButton = new Button("Components", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
+                if (!UI.getCurrent().getEmbedId().equals(ComponentsView.NAME)) {
+                    UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
+                }
             }
         });
         componentsButton.setStyleName("link");

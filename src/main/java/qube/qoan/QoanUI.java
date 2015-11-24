@@ -16,7 +16,9 @@ import qube.qoan.gui.views.WorkspaceView;
 @Widgetset("qube.qoan.MyAppWidgetset")
 public class QoanUI extends UI {
 
-    Navigator navigator;
+    protected Navigator navigator;
+
+    protected WorkspaceView workspaceView;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -25,10 +27,15 @@ public class QoanUI extends UI {
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
 
+        // instantiate the workspace-view
+        if (workspaceView == null) {
+            workspaceView = new WorkspaceView();
+        }
+
         // Create and register the views- not that this way, the pages will always be new instances!
         navigator.addView("", StartView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
-        navigator.addView(WorkspaceView.NAME, new WorkspaceView());
+        navigator.addView(WorkspaceView.NAME, workspaceView);
     }
 
 
