@@ -7,7 +7,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import qube.qoan.gui.components.TestSearchMenu;
-import qube.qoan.services.QoanTestModule;
 
 /**
  * Created by rainbird on 11/19/15.
