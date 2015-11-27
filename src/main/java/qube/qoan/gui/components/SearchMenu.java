@@ -3,6 +3,7 @@ package qube.qoan.gui.components;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
+import com.google.inject.servlet.ServletModule;
 import com.vaadin.data.Item;
 import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
@@ -48,8 +49,8 @@ public class SearchMenu extends Panel implements SearchAgent {
         this.workSpace = workSpace;
 
         // i think this is more or less what we will need to do in order to make the injector to work
-        Injector injector = Guice.createInjector(new QoanModule(), new QaiModule());
-        injector.injectMembers(this);
+        //Injector injector = Guice.createInjector(new ServletModule(), new QoanModule(), new QaiModule());
+        //injector.injectMembers(this);
         // do the initialization
         initialize();
     }

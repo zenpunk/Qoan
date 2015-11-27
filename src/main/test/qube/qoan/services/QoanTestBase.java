@@ -19,7 +19,10 @@ public class QoanTestBase extends TestCase {
 
         Injector injector = Guice.createInjector(new QoanTestModule());
         injector.injectMembers(this);
+
+
     }
+
 
     public static void main(String[] params) {
         String[] tests = {QoanTestBase.class.getName()};

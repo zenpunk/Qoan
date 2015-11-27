@@ -1,8 +1,15 @@
 package qube.qoan.server;
 
 
+import com.google.inject.servlet.GuiceFilter;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.FilterMapping;
 import org.eclipse.jetty.webapp.WebAppContext;
+import qube.qoan.services.QoanServletConfig;
+
+import javax.servlet.DispatcherType;
+import java.util.EnumSet;
+import java.util.Iterator;
 
 
 /**
@@ -25,15 +32,11 @@ public class WebServer {
 
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath(contextPath);
-        //webAppContext.setWar(resourceBase);
         webAppContext.setResourceBase(resourceBase);
         webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
+        //webAppContext.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
+        webAppContext.addEventListener(new QoanServletConfig());
         server.setHandler(webAppContext);
-
-        // another trial- this time we'll try to add the servlet directly
-//        ServletHandler handler = new ServletHandler();
-//        server.setHandler(handler);
-//        handler.addServletWithMapping(VaadinServlet.class, "/*");
 
         System.out.println("Go to http://localhost:" + httpPort + contextPath);
         try {
