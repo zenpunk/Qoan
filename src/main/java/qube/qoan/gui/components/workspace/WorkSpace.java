@@ -1,4 +1,4 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace;
 
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.ui.*;
@@ -10,7 +10,7 @@ public class WorkSpace extends Panel {
 
     private HorizontalLayout layout;
 
-    private DragAndDropWrapper dndWrapper;
+//    private DragAndDropWrapper dndWrapper;
 
     private TabSheet workspaceTabs;
 
@@ -54,7 +54,7 @@ public class WorkSpace extends Panel {
         workspaceTabs.addTab(panel).setCaption(title);
     }
 
-    public void addComponentToDisplay(Component component) {
-        layout.addComponent(component);
-    }
+//    public void addComponentToDisplay(Component component) {
+//        layout.addComponent(component);
+//    }
 }

@@ -1,4 +1,4 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace;
 
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;

@@ -32,7 +32,7 @@ public class QoanServletConfig extends GuiceServletContextListener {
             }
         };
 
-        Injector injector = Guice.createInjector(module, new QoanModule(), new QaiModule());
+        Injector injector = Guice.createInjector(module); // , new QoanModule(), new QaiModule()
 
         return injector;
     }

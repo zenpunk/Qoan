@@ -1,4 +1,4 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;

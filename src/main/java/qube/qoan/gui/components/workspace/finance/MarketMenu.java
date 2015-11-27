@@ -1,4 +1,4 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.ui.Panel;
 

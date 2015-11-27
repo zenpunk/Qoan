@@ -9,6 +9,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import qube.qai.main.QaiModule;
+import qube.qoan.gui.views.AdminView;
 import qube.qoan.gui.views.ComponentsView;
 import qube.qoan.gui.views.StartView;
 import qube.qoan.gui.views.WorkspaceView;
@@ -24,6 +25,8 @@ public class QoanUI extends UI {
     protected Navigator navigator;
 
     protected WorkspaceView workspaceView;
+
+    protected AdminView adminView;
 
     protected static Injector injector;
 
@@ -42,10 +45,17 @@ public class QoanUI extends UI {
             workspaceView = new WorkspaceView();
         }
 
+        // instantiate the admin-view,
+        // so that the thing has time to create its listeners and things
+        if (adminView == null) {
+            adminView = new AdminView();
+        }
+
         // Create and register the views- not that this way, the pages will always be new instances!
         navigator.addView("", StartView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
         navigator.addView(WorkspaceView.NAME, workspaceView);
+        navigator.addView(AdminView.NAME, adminView);
     }
 
     public static Injector getInjector() {

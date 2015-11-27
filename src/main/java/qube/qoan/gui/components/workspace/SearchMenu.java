@@ -1,9 +1,7 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
-import com.google.inject.servlet.ServletModule;
 import com.vaadin.data.Item;
 import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
@@ -12,13 +10,12 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
-import qube.qai.main.QaiModule;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.interfaces.SearchAgent;
-import qube.qoan.services.QoanModule;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -67,11 +64,14 @@ public class SearchMenu extends Panel implements SearchAgent {
         //resultTable.setDescription("drag results to workspace to visualize their contents");
         resultTable.addContainerProperty("Source", String.class, null);
         resultTable.addContainerProperty("Title", String.class, null);
+        resultTable.addContainerProperty("Relevance", Double.class, null);
+        resultTable.addContainerProperty("File", String.class, null);
+
         resultTable.setVisible(false);
         resultTable.setSelectable(true);
         resultTable.setImmediate(true);
         //resultTable.setColumnReorderingAllowed(true);
-        resultTable.setPageLength(7);
+        resultTable.setPageLength(6);
         resultTable.setDragMode(Table.TableDragMode.ROW);
         resultTable.setColumnReorderingAllowed(true);
         resultTable.setSizeUndefined();
@@ -138,14 +138,14 @@ public class SearchMenu extends Panel implements SearchAgent {
                 DataBoundTransferable t = (DataBoundTransferable) event.getTransferable();
                 Object itemId = t.getItemId();
                 Item item = resultTable.getItem(itemId);
-                String title = (String) item.getItemProperty("Title").getValue();
+                String file = (String) item.getItemProperty("File").getValue();
                 String source = (String) item.getItemProperty("Source").getValue();
 
                 WikiArticle wikiArticle = null;
                 if ("Wikipedia".equalsIgnoreCase(source)) {
-                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(title);
+                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
                 } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(title);
+                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
                 }
 
                 if (wikiArticle == null) {
@@ -160,10 +160,20 @@ public class SearchMenu extends Panel implements SearchAgent {
                 wikiTagWrapper.setSizeUndefined();
                 wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
 
+                // try to find out the component position to enter
+                String positionString;
+                AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
+                if (pos != null) {
+                    float left = pos.getLeftValue();
+                    float top = pos.getTopValue();
+                    positionString = "left:" + left + "px; top:" + top + "px;";
+                } else {
+                    positionString = "left: 50px; top: 50px;";
+                }
                 // @TODO add logic for placing the component where  it is created
-                parentLayout.addComponent(wikiTagWrapper, "left: 50px; top: 50px;");
+                parentLayout.addComponent(wikiTagWrapper, positionString);
 
-                Notification.show("WikiArricle: " + title + " added to Workpsace");
+                Notification.show("WikiArricle: " + file + " added to Workpsace");
             }
 
         }
@@ -176,7 +186,7 @@ public class SearchMenu extends Panel implements SearchAgent {
 
         Notification.show(message);
 
-        Collection<String> results = new ArrayList<String>();
+        Collection<SearchResult> results = new ArrayList<SearchResult>();
         if ("Wikipedia".equalsIgnoreCase(source)) {
             results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
             addRowsToTable(source, results);
@@ -194,18 +204,20 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     }
 
-    private void addRowsToTable(String source, Collection<String> results) {
+    private void addRowsToTable(String source, Collection<SearchResult> results) {
         if (results != null && !results.isEmpty()) {
             // make the table visible and clear contents before adding new items
             resultTable.setCaption("results: (" + results.size() + ")");
             resultTable.setVisible(true);
             resultTable.removeAllItems();
 
-            for (String result : results) {
+            for (SearchResult result : results) {
                 Object itemId = resultTable.addItem();
                 Item row = resultTable.getItem(itemId);
                 row.getItemProperty("Source").setValue(source);
-                row.getItemProperty("Title").setValue(result);
+                row.getItemProperty("Title").setValue(result.getTitle());
+                row.getItemProperty("Relevance").setValue(result.getRelevance());
+                row.getItemProperty("File").setValue(result.getFilename());
 
             }
         }

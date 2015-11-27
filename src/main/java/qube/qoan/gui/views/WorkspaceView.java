@@ -3,10 +3,10 @@ package qube.qoan.gui.views;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
-import qube.qoan.gui.components.MarketMenu;
+import qube.qoan.gui.components.workspace.finance.MarketMenu;
 import qube.qoan.gui.components.QoanHeader;
-import qube.qoan.gui.components.SearchMenu;
-import qube.qoan.gui.components.WorkSpace;
+import qube.qoan.gui.components.workspace.SearchMenu;
+import qube.qoan.gui.components.workspace.WorkSpace;
 
 /**
  * Created by rainbird on 10/30/15.
