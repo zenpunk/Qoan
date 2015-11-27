@@ -25,10 +25,12 @@ public class QoanUI extends UI {
 
     protected WorkspaceView workspaceView;
 
+    protected static Injector injector;
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        Injector injector = Guice.createInjector(new ServletModule(), new QoanModule(), new QaiModule());
+        injector = Guice.createInjector(new QoanModule(), new QaiModule());
 
         getPage().setTitle("Qoan");
 
@@ -46,6 +48,8 @@ public class QoanUI extends UI {
         navigator.addView(WorkspaceView.NAME, workspaceView);
     }
 
-
+    public static Injector getInjector() {
+        return injector;
+    }
 
 }

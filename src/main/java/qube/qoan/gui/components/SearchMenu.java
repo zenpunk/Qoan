@@ -16,6 +16,7 @@ import qube.qai.main.QaiModule;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
+import qube.qoan.QoanUI;
 import qube.qoan.gui.interfaces.SearchAgent;
 import qube.qoan.services.QoanModule;
 
@@ -46,25 +47,18 @@ public class SearchMenu extends Panel implements SearchAgent {
     public SearchMenu() {
         super();
 
-        this.workSpace = workSpace;
+        // @TODO i think this is more or less what we will need to do in order to make the injector to work
+        Injector injector = QoanUI.getInjector();
+        injector.injectMembers(this);
 
-        // i think this is more or less what we will need to do in order to make the injector to work
-        //Injector injector = Guice.createInjector(new ServletModule(), new QoanModule(), new QaiModule());
-        //injector.injectMembers(this);
-        // do the initialization
         initialize();
     }
 
     private void initialize() {
-        // begin with setting the size
-//        setWidth("300");
-//        setHeight("550");
 
         layout = new VerticalLayout();
 
         // some dummy label do fill in the display
-//        Label label = new Label("Display something as SearchMenu");
-//        parentLayout.addComponent(label);
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
 
@@ -84,8 +78,6 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setColumnCollapsingAllowed(true);
         resultTable.setFooterVisible(true);
         resultTable.setSortAscending(true);
-        // add drag-n-drop support
-        //workSpace.setDropHandler();
 
         layout.addComponent(resultTable);
 
