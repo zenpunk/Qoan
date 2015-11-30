@@ -68,6 +68,7 @@ public class SearchPanel extends Panel {
                 searchAgent.searchFor(source, search, part, 100);
             }
         });
+        searchButton.setStyleName("link");
         layout.addComponent(searchButton);
 
         setContent(layout);
