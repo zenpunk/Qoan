@@ -9,7 +9,7 @@
     <modules>
         <module>../qai</module>
     </modules>
-    <name>qoan</name>
+    <name>qube.qoan</name>
 
 	<properties>
 		<vaadin.version>7.5.8</vaadin.version>
