@@ -2,13 +2,11 @@ package qube.qoan.services;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.google.inject.name.Names;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.inject.servlet.ServletScopes;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
-import qube.qai.main.QaiModule;
 import qube.qoan.QoanUI;
 
 /**

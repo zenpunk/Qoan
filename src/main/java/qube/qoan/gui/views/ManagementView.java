@@ -7,12 +7,13 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * Created by rainbird on 11/27/15.
  */
-public class AdminView extends VerticalLayout implements View {
+public class ManagementView extends VerticalLayout implements View {
 
-    public static String NAME = "AdminView";
+    public static String NAME = "ManagementView";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
+        // @TODO hazelcast instance and all the rest
     }
 }

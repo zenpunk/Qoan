@@ -1,7 +1,9 @@
 package qube.qoan.gui.components.workspace;
 
 import com.vaadin.event.dd.DropHandler;
-import com.vaadin.ui.*;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.TabSheet;
 
 /**
  * Created by rainbird on 11/2/15.

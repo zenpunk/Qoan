@@ -1,15 +1,9 @@
 package qube.qoan.server;
 
 
-import com.google.inject.servlet.GuiceFilter;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.servlet.FilterMapping;
 import org.eclipse.jetty.webapp.WebAppContext;
 import qube.qoan.services.QoanServletConfig;
-
-import javax.servlet.DispatcherType;
-import java.util.EnumSet;
-import java.util.Iterator;
 
 
 /**
