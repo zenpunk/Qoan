@@ -1,4 +1,4 @@
-package qube.qoan.gui.components.workspace;
+package qube.qoan.gui.components.workspace.network;
 
 import com.vaadin.ui.Panel;
 import org.vaadin.visjs.networkDiagram.Edge;

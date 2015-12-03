@@ -55,19 +55,19 @@
 	</dependencyManagement>
 
 	<dependencies>
-		<!--<dependency>-->
-			<!--<groupId>javax.servlet</groupId>-->
-			<!--<artifactId>javax.servlet-api</artifactId>-->
-			<!--<version>3.1.0</version>-->
-		<!--</dependency>-->
+        <!-- Qai is after all also a dependency -->
+        <dependency>
+            <groupId>qube.qai</groupId>
+            <artifactId>qai</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+		<!-- Vaadin and etc. -->
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
 		</dependency>
-		<!--<dependency>-->
-			<!--<groupId>com.vaadin</groupId>-->
-			<!--<artifactId>vaadin-push</artifactId>-->
-		<!--</dependency>-->
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client</artifactId>
@@ -80,7 +80,6 @@
         </dependency>
 		<!--
 		  Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
-		  
 		  For widgetset compilation, vaadin-client-compiler is automatically added on the
 		  compilation classpath by vaadin-maven-plugin so normally there is no need for an
 		  explicit dependency.
@@ -88,6 +87,7 @@
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiler</artifactId>
+            <version>${vaadin.version}</version>
 			<scope>provided</scope>
 		</dependency>
 
@@ -96,21 +96,34 @@
 			<artifactId>vaadin-themes</artifactId>
 		</dependency>
 
-		<!-- jGraph to vaadin adaptation-->
+		<!-- jFreeChart Vaadin adapter for charts and plots -->
 		<dependency>
 			<groupId>org.vaadin.addon</groupId>
 			<artifactId>jfreechartwrapper</artifactId>
 			<version>3.0.2</version>
 		</dependency>
 
-        <!-- graph rendering component -->
+        <!-- Visjs Vaadin adapter for network rendering -->
         <dependency>
             <groupId>org.vaadin.addon</groupId>
             <artifactId>visjs-addon</artifactId>
             <version>1.0.1.0</version>
         </dependency>
 
-		<!--  JETTY DEPENDENCIES -->
+        <!-- Vaadin plug-in to make components resizable-->
+        <dependency>
+            <groupId>com.vaadin.pekka</groupId>
+            <artifactId>resizablecsslayout</artifactId>
+            <version>1.1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+
+		<!--  Jetty & Dependencies -->
 		<dependency>
 			<groupId>org.eclipse.jetty</groupId>
 			<artifactId>jetty-server</artifactId>
@@ -137,7 +150,7 @@
 			<version>${jetty9.version}</version>
 		</dependency>
 
-        <!-- GUICE is pretty important after all -->
+        <!-- Guice is pretty important after all -->
         <dependency>
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
@@ -150,15 +163,15 @@
             <version>${guice.version}</version>
         </dependency>
 
-        <!-- lucene & tika -->
-        <!-- tika does parsing and lucene does search and indexing -->
+        <!-- Lucene & Tika -->
+        <!-- Tika does parsing and lucene does search and indexing -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers</artifactId>
             <version>${tika.version}</version>
         </dependency>
 
-        <!-- lucene itself -->
+        <!-- Lucene itself -->
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
@@ -176,11 +189,7 @@
             <artifactId>lucene-queryparser</artifactId>
             <version>${lucene.version}</version>
         </dependency>
-        <dependency>
-            <groupId>qube.qai</groupId>
-            <artifactId>qai</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
+
 
         <!-- Hazelcast for distributed computing -->
         <dependency>
@@ -188,16 +197,13 @@
             <artifactId>hazelcast</artifactId>
             <version>${hazelcast.version}</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>qube.qoan</groupId>-->
-            <!--<artifactId>qai</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
-        <!--<dependency>-->
-            <!--<groupId>qube.qai</groupId>-->
-            <!--<artifactId>qai</artifactId>-->
-            <!--<version>1.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
+
+        <!-- slf4j -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.13</version>
+        </dependency>
 
         <!-- jUnit for the tests -->
         <dependency>
@@ -285,54 +291,10 @@
 					</filesets>
 				</configuration>
 			</plugin>
-
-			<!-- The Jetty plugin allows us to easily test the development build by
-				running jetty:run on the command line. -->
-			<!--<plugin>-->
-				<!--<groupId>org.eclipse.jetty</groupId>-->
-				<!--<artifactId>jetty-maven-plugin</artifactId>-->
-				<!--<version>9.3.5.v20151012</version>-->
-				<!--<configuration>-->
-				    <!--<scanIntervalSeconds>2</scanIntervalSeconds>-->
-				<!--</configuration>-->
-			<!--</plugin>-->
 		</plugins>
 
 		<pluginManagement>
-			<plugins>
-				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
-				<!-- TODO Remove when http://dev.vaadin.com/ticket/14924 is resolved -->
-				<!--<plugin>-->
-					<!--<groupId>org.eclipse.m2e</groupId>-->
-					<!--<artifactId>lifecycle-mapping</artifactId>-->
-					<!--<version>1.0.0</version>-->
-					<!--<configuration>-->
-						<!--<lifecycleMappingMetadata>-->
-							<!--<pluginExecutions>-->
-								<!--<pluginExecution>-->
-									<!--<pluginExecutionFilter>-->
-										<!--<groupId>com.vaadin</groupId>-->
-										<!--<artifactId>-->
-											<!--vaadin-maven-plugin-->
-										<!--</artifactId>-->
-										<!--<versionRange>[7.1.11,)</versionRange>-->
-										<!--<goals>-->
-											<!--<goal>resources</goal>-->
-											<!--<goal>update-widgetset</goal>-->
-											<!--<goal>compile</goal>-->
-											<!--<goal>compile-theme</goal>-->
-											<!--<goal>update-theme</goal>-->
-										<!--</goals>-->
-									<!--</pluginExecutionFilter>-->
-									<!--<action>-->
-										<!--<ignore></ignore>-->
-									<!--</action>-->
-								<!--</pluginExecution>-->
-							<!--</pluginExecutions>-->
-						<!--</lifecycleMappingMetadata>-->
-					<!--</configuration>-->
-				<!--</plugin>-->
-			</plugins>
+			<plugins></plugins>
 		</pluginManagement>
 
 	</build>

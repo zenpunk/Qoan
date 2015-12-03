@@ -1,7 +1,8 @@
-package qube.qoan.gui.components.workspace;
+package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
+import qube.qoan.gui.components.common.InnerPanel;
 
 /**
  * Created by rainbird on 11/13/15.
@@ -9,6 +10,10 @@ import qube.qai.persistence.WikiArticle;
 public class WikiArticleTag extends Panel {
 
     private String source;
+
+    private int top = 100;
+
+    private int left = 100;
 
     private WikiArticle wikiArticle;
 
@@ -50,18 +55,32 @@ public class WikiArticleTag extends Panel {
                 WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
                 contentPanel.setSizeFull();
 
-                Window window = new Window(title);
+                //Window window = new Window(title);
+                InnerPanel window = new InnerPanel(contentPanel);
                 window.setWidth("600px");
                 window.setHeight("400px");
-                window.setDraggable(true);
-                window.setResizable(true);
-                window.center();
-                window.setContent(contentPanel);
+                //window.setDraggable(true);
+                //window.setResizable(true);
+                //window.center();
+                //window.setContent(contentPanel);
                 // Add it to the root component
-                UI.getCurrent().addWindow(window);
+                //UI.getCurrent().addWindow(window);
+                // have to find a way to add the component to current display-panel
+                if (parentLayout instanceof AbsoluteLayout) {
+                    left = left + 5;
+                    top = top + 5;
+                    String positionString = "left: " + left + "px; top: " + top + "px;";
+                    DragAndDropWrapper dndWrapper = new DragAndDropWrapper(window);
+                    dndWrapper.setSizeUndefined();
+                    dndWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+                    ((AbsoluteLayout)parentLayout).addComponent(dndWrapper, positionString);
+                } else {
+                    parentLayout.addComponent(window);
+                }
+
             }
         });
-        open.setStyleName("link");
+//        open.setStyleName("link");
         buttonsLayout.addComponent(open);
 
         // add a button to remove this tag from workspace
@@ -74,7 +93,7 @@ public class WikiArticleTag extends Panel {
                 parentLayout.removeComponent(parent);
             }
         });
-        remove.setStyleName("link");
+//        remove.setStyleName("link");
         buttonsLayout.addComponent(remove);
 
         layout.addComponent(buttonsLayout);

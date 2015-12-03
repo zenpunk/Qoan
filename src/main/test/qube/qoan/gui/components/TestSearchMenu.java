@@ -5,7 +5,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
-import qube.qoan.gui.components.workspace.SearchMenu;
+import qube.qoan.gui.components.workspace.search.SearchMenu;
 import qube.qoan.services.QoanTestBase;
 
 import java.util.Collection;

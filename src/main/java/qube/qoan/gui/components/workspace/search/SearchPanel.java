@@ -1,4 +1,4 @@
-package qube.qoan.gui.components.workspace;
+package qube.qoan.gui.components.workspace.search;
 
 import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;
@@ -68,7 +68,7 @@ public class SearchPanel extends Panel {
                 searchAgent.searchFor(source, search, part, 100);
             }
         });
-        searchButton.setStyleName("link");
+//        searchButton.setStyleName("link");
         layout.addComponent(searchButton);
 
         setContent(layout);

@@ -4,6 +4,7 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
+import qube.qoan.gui.components.workspace.search.SearchMenu;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -11,8 +12,6 @@ import com.vaadin.ui.TabSheet;
 public class WorkSpace extends Panel {
 
     private HorizontalLayout layout;
-
-//    private DragAndDropWrapper dndWrapper;
 
     private TabSheet workspaceTabs;
 

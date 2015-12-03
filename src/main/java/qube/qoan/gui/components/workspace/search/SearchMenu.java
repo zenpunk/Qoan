@@ -1,4 +1,4 @@
-package qube.qoan.gui.components.workspace;
+package qube.qoan.gui.components.workspace.search;
 
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
@@ -15,6 +15,8 @@ import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
+import qube.qoan.gui.components.workspace.WorkSpace;
+import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
 import qube.qoan.gui.interfaces.SearchAgent;
 
 import javax.inject.Inject;
@@ -44,7 +46,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     public SearchMenu() {
         super();
 
-        // @TODO i think this is more or less what we will need to do in order to make the injector to work
+        // start with self-inoculation
         Injector injector = QoanUI.getInjector();
         injector.injectMembers(this);
 
@@ -59,7 +61,14 @@ public class SearchMenu extends Panel implements SearchAgent {
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
 
-        // @TODO make search results better readable
+        createResultTable();
+        layout.addComponent(resultTable);
+
+        setContent(layout);
+    }
+
+    private void createResultTable() {
+
         resultTable = new Table("Results:");
         //resultTable.setDescription("drag results to workspace to visualize their contents");
         resultTable.addContainerProperty("Source", String.class, null);
@@ -79,9 +88,9 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setFooterVisible(true);
         resultTable.setSortAscending(true);
 
-        layout.addComponent(resultTable);
-
-        setContent(layout);
+        // disable these columns initially so that they don't take too much space
+        resultTable.setColumnCollapsed("Source", true);
+        resultTable.setColumnCollapsed("File", true);
     }
 
     /**
@@ -94,9 +103,66 @@ public class SearchMenu extends Panel implements SearchAgent {
         return dropHandler;
     }
 
-    // Handles drops both on an AbsoluteLayout and
-    // on components contained within it
+    /**
+     * does the actual searching in the source-index
+     * @param source
+     * @param searchTerm
+     * @param searchIn
+     * @param maxResults
+     */
+    @Override
+    public void searchFor(String source, String searchTerm, String searchIn, int maxResults) {
+        // for the time being simply display search terms
+        String message = "Search from: " + source + " in: " + searchIn + " for: " + searchTerm; // + " with: " + maxHits + " max. results";
+
+        Notification.show(message);
+
+        Collection<SearchResult> results = new ArrayList<SearchResult>();
+        if ("Wikipedia".equalsIgnoreCase(source)) {
+            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable(source, results);
+        } else if ("Wiktionary".equalsIgnoreCase(source)) {
+            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable(source, results);
+        } else if ("Wikipedia & Wiktionary".equalsIgnoreCase(source)) {
+            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable("Wikipedia", results);
+            results.clear();
+            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
+            addRowsToTable("Wiktionary", results);
+        }
+
+
+    }
+
+    private void addRowsToTable(String source, Collection<SearchResult> results) {
+
+        if (results != null && !results.isEmpty()) {
+            // make the table visible and clear contents before adding new items
+            resultTable.setCaption("results: (" + results.size() + ")");
+            resultTable.setVisible(true);
+            resultTable.removeAllItems();
+
+            for (SearchResult result : results) {
+                Object itemId = resultTable.addItem();
+                Item row = resultTable.getItem(itemId);
+                row.getItemProperty("Source").setValue(source);
+                row.getItemProperty("Title").setValue(result.getTitle());
+                row.getItemProperty("Relevance").setValue(result.getRelevance());
+                row.getItemProperty("File").setValue(result.getFilename());
+
+            }
+        }
+    }
+
+    /**
+     * Handles drops both on an AbsoluteLayout and
+     * on components contained within it
+     */
     class MoveAndDropHandler implements DropHandler {
+
+        int left = 40;
+        int top = 40;
 
         AbsoluteLayout parentLayout;
 
@@ -168,7 +234,9 @@ public class SearchMenu extends Panel implements SearchAgent {
                     float top = pos.getTopValue();
                     positionString = "left:" + left + "px; top:" + top + "px;";
                 } else {
-                    positionString = "left: 50px; top: 50px;";
+                    left = left + 5;
+                    top = top + 5;
+                    positionString = "left: " + left + "px; top: " + top + "px;";
                 }
                 // @TODO add logic for placing the component where  it is created
                 parentLayout.addComponent(wikiTagWrapper, positionString);
@@ -176,50 +244,6 @@ public class SearchMenu extends Panel implements SearchAgent {
                 Notification.show("WikiArricle: " + file + " added to Workpsace");
             }
 
-        }
-    }
-
-    @Override
-    public void searchFor(String source, String searchTerm, String searchIn, int maxResults) {
-        // for the time being simply display search terms
-        String message = "Search from: " + source + " in: " + searchIn + " for: " + searchTerm; // + " with: " + maxHits + " max. results";
-
-        Notification.show(message);
-
-        Collection<SearchResult> results = new ArrayList<SearchResult>();
-        if ("Wikipedia".equalsIgnoreCase(source)) {
-            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
-            addRowsToTable(source, results);
-        } else if ("Wiktionary".equalsIgnoreCase(source)) {
-            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
-            addRowsToTable(source, results);
-        } else if ("Wikipedia & Wiktionary".equalsIgnoreCase(source)) {
-            results.addAll(wikipediaSearchService.searchInputString(searchTerm, searchIn, maxResults));
-            addRowsToTable("Wikipedia", results);
-            results.clear();
-            results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
-            addRowsToTable("Wiktionary", results);
-        }
-
-
-    }
-
-    private void addRowsToTable(String source, Collection<SearchResult> results) {
-        if (results != null && !results.isEmpty()) {
-            // make the table visible and clear contents before adding new items
-            resultTable.setCaption("results: (" + results.size() + ")");
-            resultTable.setVisible(true);
-            resultTable.removeAllItems();
-
-            for (SearchResult result : results) {
-                Object itemId = resultTable.addItem();
-                Item row = resultTable.getItem(itemId);
-                row.getItemProperty("Source").setValue(source);
-                row.getItemProperty("Title").setValue(result.getTitle());
-                row.getItemProperty("Relevance").setValue(result.getRelevance());
-                row.getItemProperty("File").setValue(result.getFilename());
-
-            }
         }
     }
 }
