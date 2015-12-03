@@ -40,15 +40,7 @@ public class WikiArticleTag extends Panel {
         Label sourceLabel = new Label("from: " + source);
         layout.addComponent(sourceLabel);
 
-
-        // popup which will expand to display the wiki-content
-//        String content = WikiModel.toHtml(wikiArticle.getContent());
-//        Label contentText = new Label(content, ContentMode.HTML);
-//        PopupView contentPopup = new PopupView("expand", contentText);
-//        layout.addComponent(contentPopup);
-
         HorizontalLayout buttonsLayout = new HorizontalLayout();
-
         Button open = new Button("open");
         open.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
@@ -59,13 +51,7 @@ public class WikiArticleTag extends Panel {
                 InnerPanel window = new InnerPanel(contentPanel);
                 window.setWidth("600px");
                 window.setHeight("400px");
-                //window.setDraggable(true);
-                //window.setResizable(true);
-                //window.center();
-                //window.setContent(contentPanel);
-                // Add it to the root component
-                //UI.getCurrent().addWindow(window);
-                // have to find a way to add the component to current display-panel
+                // if parent is an absolute layout, we need a position to add the thing as well
                 if (parentLayout instanceof AbsoluteLayout) {
                     left = left + 5;
                     top = top + 5;
@@ -80,7 +66,7 @@ public class WikiArticleTag extends Panel {
 
             }
         });
-//        open.setStyleName("link");
+        open.setStyleName("link");
         buttonsLayout.addComponent(open);
 
         // add a button to remove this tag from workspace
@@ -93,7 +79,7 @@ public class WikiArticleTag extends Panel {
                 parentLayout.removeComponent(parent);
             }
         });
-//        remove.setStyleName("link");
+        remove.setStyleName("link");
         buttonsLayout.addComponent(remove);
 
         layout.addComponent(buttonsLayout);
