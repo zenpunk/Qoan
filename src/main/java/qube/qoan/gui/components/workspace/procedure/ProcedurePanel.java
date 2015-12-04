@@ -1,6 +1,7 @@
 package qube.qoan.gui.components.workspace.procedure;
 
 import com.vaadin.data.Item;
+import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureVisitor;
@@ -22,7 +23,6 @@ public class ProcedurePanel extends Panel {
     public ProcedurePanel() {
 
         super();
-
         initialize();
     }
 
@@ -53,6 +53,9 @@ public class ProcedurePanel extends Panel {
         layout.addComponent(descriptionLabel);
 
         procedureTree = new Tree("Procedure: " + name);
+        procedureTree.setImmediate(true);
+        procedureTree.setSelectable(true);
+        procedureTree.setDragMode(Tree.TreeDragMode.NODE);
         //Item parent = procedureTree.addItem(name);
         ProcedureTreeBuilder treeBuilder = new ProcedureTreeBuilder();
         treeBuilder.visit(procedure, name);
@@ -69,7 +72,8 @@ public class ProcedurePanel extends Panel {
 
             String parent = (String) data;
             String name = procedure.getName();
-            procedureTree.addItem(name);
+            Item item = procedureTree.addItem(name);
+            item.addItemProperty("UUID", new ObjectProperty<String>(procedure.getUuid()));
             procedureTree.setParent(name, parent);
 
             procedure.childrenAccept(this, name);

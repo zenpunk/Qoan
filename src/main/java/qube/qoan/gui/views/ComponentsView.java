@@ -7,14 +7,23 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
 import org.jfree.data.xy.DefaultTableXYDataset;
 import org.jfree.data.xy.XYSeries;
+import org.miv.graphstream.algorithm.generator.RandomGenerator;
+import org.ojalgo.random.Normal;
+import org.ojalgo.random.Poisson;
+import org.ojalgo.random.RandomNumber;
+import org.ojalgo.random.Weibull;
 import org.vaadin.addon.JFreeChartWrapper;
 import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
 import qube.qoan.gui.components.QoanHeader;
+
+import java.util.Random;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -54,38 +63,31 @@ public class ComponentsView extends VerticalLayout implements View {
     // methods are for chart creation coming from the examples
     private Component regressionChart() {
 
-        DefaultTableXYDataset ds = new DefaultTableXYDataset();
-
-        XYSeries series;
-
-        series = new XYSeries("BAR", false, false);
-        for (int i = 0; i < 100; i++) {
-            series.add(i+1, Math.random());
+        // try our hand with an histogram
+        int number = 1000;
+        double[] value = new double[number];
+        //Random generator = new Random();
+        RandomNumber generator = new Normal(0.5, 0.1);
+        //RandomNumber generator = new Weibull(1.0, 1.5);
+        //RandomNumber generator = new Poisson(15);
+        for (int i=1; i < number; i++) {
+            value[i] = generator.doubleValue();
         }
 
-        ds.addSeries(series);
+        HistogramDataset dataset = new HistogramDataset();
+        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
+        dataset.addSeries("Histogram", value, 50);
+        String plotTitle = "Histogram";
+        String xaxis = "value";
+        String yaxis = "frequency";
+        PlotOrientation orientation = PlotOrientation.VERTICAL;
+        boolean show = false; // show legends- if there is only one series not necessary
+        boolean toolTips = false;
+        boolean urls = false;
+        JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis,
+                dataset, orientation, show, toolTips, urls);
 
-        JFreeChart scatterPlot = ChartFactory.createScatterPlot("Regression",
-                "X", "Y", ds, PlotOrientation.HORIZONTAL, true, false, false);
-
-        XYPlot plot = (XYPlot) scatterPlot.getPlot();
-
-//        double[] regression = Regression.getOLSRegression(ds, 0);
-//
-//        // regression line points
-//
-//        double v1 = regression[0] + regression[1] * 1;
-//        double v2 = regression[0] + regression[1] * 6;
-
-//        DefaultXYDataset ds2 = new DefaultXYDataset();
-//        ds2.addSeries("regline", new double[][] { new double[] { 1, 6 },
-//                new double[] { v1, v2 } });
-//        plot.setDataset(1, ds2);
-//        plot.setRenderer(1, new XYLineAndShapeRenderer(true, false));
-
-        JFreeChart c = new JFreeChart(plot);
-
-        return new JFreeChartWrapper(c) {
+        return new JFreeChartWrapper(chart) {
 
             @Override
             public void attach() {
