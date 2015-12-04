@@ -7,6 +7,6 @@ import qube.qai.procedure.Procedure;
  */
 public interface ProcedureSource {
 
-    public Procedure getSelectedProcedure();
+    Procedure getSelectedProcedure();
 
 }

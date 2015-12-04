@@ -28,6 +28,8 @@ import java.util.Collection;
  */
 public class SearchMenu extends Panel implements SearchAgent {
 
+    private boolean debug = true;
+
     @Inject @Named("Wiktionary_en")
     private SearchServiceInterface wiktionarySearchService;
 
@@ -180,70 +182,84 @@ public class SearchMenu extends Panel implements SearchAgent {
 
             // check what source we are receiving events from
             if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
-
-                DragAndDropWrapper.WrapperTransferable t =
-                        (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
-                DragAndDropWrapper.WrapperTargetDetails details =
-                        (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
-
-                // Calculate the drag coordinate difference
-                int xChange = details.getMouseEvent().getClientX()
-                        - t.getMouseDownEvent().getClientX();
-                int yChange = details.getMouseEvent().getClientY()
-                        - t.getMouseDownEvent().getClientY();
-
-                // Move the component in the absolute parentLayout
-                AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
-                // @TODO how can position be null?!?
-                if (pos != null) {
-                    pos.setLeftValue(pos.getLeftValue() + xChange);
-                    pos.setTopValue(pos.getTopValue() + yChange);
-                }
+                handleDragEvent(event);
             } else if (transferable instanceof DataBoundTransferable) {
-
-                DataBoundTransferable t = (DataBoundTransferable) event.getTransferable();
-                Object itemId = t.getItemId();
-                Item item = resultTable.getItem(itemId);
-                String file = (String) item.getItemProperty("File").getValue();
-                String source = (String) item.getItemProperty("Source").getValue();
-
-                WikiArticle wikiArticle = null;
-                if ("Wikipedia".equalsIgnoreCase(source)) {
-                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
-                } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
-                }
-
-                if (wikiArticle == null) {
-                    return;
-                }
-
-                wikiArticle.setSource(source);
-                wikiArticle.setId(uuidService.createUUIDString());
-
-                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
-                DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
-                wikiTagWrapper.setSizeUndefined();
-                wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-
-                // try to find out the component position to enter
-                String positionString;
-                AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
-                if (pos != null) {
-                    float left = pos.getLeftValue();
-                    float top = pos.getTopValue();
-                    positionString = "left:" + left + "px; top:" + top + "px;";
-                } else {
-                    left = left + 5;
-                    top = top + 5;
-                    positionString = "left: " + left + "px; top: " + top + "px;";
-                }
-                // @TODO add logic for placing the component where  it is created
-                parentLayout.addComponent(wikiTagWrapper, positionString);
-
-                Notification.show("WikiArricle: " + file + " added to Workpsace");
+                handleDropEvent((DataBoundTransferable) transferable);
             }
 
+        }
+
+        /**
+         * this handles the dragging on the layout itself
+         * and changes the positions of the components
+         * which are being dragged around
+         * @TODO extend this to work with drops from procedure-menu as well
+         * @param transferable
+         */
+        private void handleDropEvent(DataBoundTransferable transferable) {
+
+            Object itemId = transferable.getItemId();
+            Item item = resultTable.getItem(itemId);
+            String file = (String) item.getItemProperty("File").getValue();
+            String source = (String) item.getItemProperty("Source").getValue();
+
+            WikiArticle wikiArticle = null;
+            if ("Wikipedia".equalsIgnoreCase(source)) {
+                wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
+            } else if ("Wiktionary".equalsIgnoreCase(source)) {
+                wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
+            }
+
+            if (wikiArticle == null) {
+                return;
+            }
+
+            wikiArticle.setSource(source);
+            wikiArticle.setId(uuidService.createUUIDString());
+
+            WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
+            DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
+            wikiTagWrapper.setSizeUndefined();
+            wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+
+            // try to find out the component position to enter
+            String positionString;
+            left = left + 5;
+            top = top + 5;
+            positionString = "left: " + left + "px; top: " + top + "px;";
+            parentLayout.addComponent(wikiTagWrapper, positionString);
+
+            if (debug) {
+                Notification.show("WikiArricle: " + file + " added to Workpsace");
+            }
+        }
+
+        /**
+         * this handles the drop events from external sources
+         * in this case, drops from search-menu result-table on workspace
+         * @param event
+         */
+        private void handleDragEvent(DragAndDropEvent event) {
+            DragAndDropWrapper.WrapperTransferable t =
+                    (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
+            DragAndDropWrapper.WrapperTargetDetails details =
+                    (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
+
+            // Calculate the drag coordinate difference
+            int xChange = details.getMouseEvent().getClientX()
+                    - t.getMouseDownEvent().getClientX();
+            int yChange = details.getMouseEvent().getClientY()
+                    - t.getMouseDownEvent().getClientY();
+
+            // Move the component in the absolute parentLayout
+            AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
+            // check to make sure there is indeed a position to be changed
+            // can happen that something dragged on layout, but not part of the
+            // layout is being dropped- we can't change positions of those, after all
+            if (pos != null) {
+                pos.setLeftValue(pos.getLeftValue() + xChange);
+                pos.setTopValue(pos.getTopValue() + yChange);
+            }
         }
     }
 }

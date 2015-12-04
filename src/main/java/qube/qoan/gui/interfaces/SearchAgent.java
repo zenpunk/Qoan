@@ -5,5 +5,5 @@ package qube.qoan.gui.interfaces;
  */
 public interface SearchAgent {
 
-    public void searchFor(String source, String searchTerm, String searchIn, int maxResults);
+    void searchFor(String source, String searchTerm, String searchIn, int maxResults);
 }
