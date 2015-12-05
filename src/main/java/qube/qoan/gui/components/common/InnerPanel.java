@@ -32,6 +32,7 @@ public class InnerPanel extends Panel {
         // add the title only if there is actually something there
         if (StringUtils.isNotBlank(title)) {
             Label titleLabel = new Label(title);
+            titleLabel.setStyleName("bold");
             topLayout.addComponent(titleLabel, "top:10px; left:15px;");
         }
 

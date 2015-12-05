@@ -32,7 +32,7 @@ public class ProcedureMenu extends Panel {
         repositoryPanel.setWidth("100%");
         layout.addComponent(repositoryPanel);
 
-        ProcedurePanel procedurePanel = new ProcedurePanel();
+        ProcedureListPanel procedurePanel = new ProcedureListPanel();
         procedurePanel.setWidth("100%");
 
         Button showSelectedProcedureButton = new Button("Show selected procedure");

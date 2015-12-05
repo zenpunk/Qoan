@@ -11,6 +11,8 @@ import qube.qoan.gui.components.workspace.search.SearchMenu;
 import qube.qoan.gui.components.workspace.WorkSpace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by rainbird on 10/30/15.
  * here we need absolute layout, because we want this part of the application to be
@@ -49,9 +51,9 @@ public class WorkspaceView extends VerticalLayout implements View {
 
         // there is no real setting to this, just depends on what you are doing
         // and if the things are in the way really
-        searchMenuVisible = true;
+        searchMenuVisible = false;
         financeMenuVisible = false;
-        procedureVisible = false;
+        procedureVisible = true;
 
         QoanHeader header = new QoanHeader();
         header.setWidth("100%");
@@ -108,25 +110,34 @@ public class WorkspaceView extends VerticalLayout implements View {
 
         HorizontalLayout lowerLayout = new HorizontalLayout();
 
+        // open the search menu
         Button showSearchMenuButton = new Button("Show SearchMenu");
-//        showSearchMenuButton.setStyleName("link");
+        showSearchMenuButton.setStyleName("link");
         showSearchMenuButton.addListener(Button.ClickEvent.class, this, "onShowSearch");
         lowerLayout.addComponent(showSearchMenuButton);
 
-        Button addTabButton = new Button("Add New Tab");
-//        addTabButton.setStyleName("link");
-        addTabButton.addListener(Button.ClickEvent.class, this, "onAddTab");
-        lowerLayout.addComponent(addTabButton);
+        // open the procedure menu
+        try {
+            Button showProcedureMenuButton = new Button("Show Procedure Menu");
+            showProcedureMenuButton.setStyleName("link");
+            Method onShowProcedure = this.getClass().getMethod("onShowProcedure", Button.ClickEvent.class);
+            showProcedureMenuButton.addListener(Button.ClickEvent.class, this, onShowProcedure);
+            lowerLayout.addComponent(showProcedureMenuButton);
 
-        Button showStockMenuButton = new Button("Show Finance Menu");
-//        showStockMenuButton.setStyleName("link");
-        showStockMenuButton.addListener(Button.ClickEvent.class, this, "onShowFinance");
-        lowerLayout.addComponent(showStockMenuButton);
+            Button addTabButton = new Button("Add New Tab");
+            addTabButton.setStyleName("link");
+            Method onAddTab = this.getClass().getMethod("onAddTab", Button.ClickEvent.class);
+            addTabButton.addListener(Button.ClickEvent.class, this, onAddTab);
+            lowerLayout.addComponent(addTabButton);
 
-        Button showProcedureMenuButton = new Button("Show Procedure Menu");
-//        showProcedureMenuButton.setStyleName("link");
-        showProcedureMenuButton.addListener(Button.ClickEvent.class, this, "onShowProcedure");
-        lowerLayout.addComponent(showProcedureMenuButton);
+            Button showStockMenuButton = new Button("Show Finance Menu");
+            showStockMenuButton.setStyleName("link");
+            Method onShowFinance = this.getClass().getMethod("onShowFinance", Button.ClickEvent.class);
+            showStockMenuButton.addListener(Button.ClickEvent.class, this, onShowFinance);
+            lowerLayout.addComponent(showStockMenuButton);
+        } catch (NoSuchMethodException e) {
+            Notification.show("NoSuchMethodException" + e.getMessage());
+        }
 
         addComponent(lowerLayout);
     }

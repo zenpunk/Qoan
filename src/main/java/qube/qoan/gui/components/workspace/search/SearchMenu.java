@@ -11,12 +11,16 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
+import qube.qai.procedure.Procedure;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.WorkSpace;
+import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
+import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
 import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
+import qube.qoan.gui.interfaces.ProcedureSource;
 import qube.qoan.gui.interfaces.SearchAgent;
 
 import javax.inject.Inject;
@@ -35,6 +39,9 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     @Inject @Named("Wikipedia_en")
     private SearchServiceInterface wikipediaSearchService;
+
+    @Inject
+    private ProcedureSource procedureSource;
 
     @Inject
     private UUIDServiceInterface uuidService;
@@ -157,6 +164,10 @@ public class SearchMenu extends Panel implements SearchAgent {
         }
     }
 
+    class SearchMenuItem {
+
+    }
+
     /**
      * Handles drops both on an AbsoluteLayout and
      * on components contained within it
@@ -199,39 +210,49 @@ public class SearchMenu extends Panel implements SearchAgent {
         private void handleDropEvent(DataBoundTransferable transferable) {
 
             Object itemId = transferable.getItemId();
-            Item item = resultTable.getItem(itemId);
-            String file = (String) item.getItemProperty("File").getValue();
-            String source = (String) item.getItemProperty("Source").getValue();
+            DragAndDropWrapper tagWrapper = null;
 
-            WikiArticle wikiArticle = null;
-            if ("Wikipedia".equalsIgnoreCase(source)) {
-                wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
-            } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
+            if (itemId instanceof ProcedureListPanel.ProcedureItem) {
+
+                ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
+                Procedure procedure = procedureSource.getProcedureWithName(pItem.getName());
+                ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
+                tagWrapper = new DragAndDropWrapper(procedureTag);
+
+            } else {
+
+                Item item = resultTable.getItem(itemId);
+                String file = (String) item.getItemProperty("File").getValue();
+                String source = (String) item.getItemProperty("Source").getValue();
+
+                WikiArticle wikiArticle = null;
+                if ("Wikipedia".equalsIgnoreCase(source)) {
+                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
+                } else if ("Wiktionary".equalsIgnoreCase(source)) {
+                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
+                }
+
+                if (wikiArticle == null) {
+                    return;
+                }
+
+                wikiArticle.setSource(source);
+                wikiArticle.setId(uuidService.createUUIDString());
+
+                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
+                tagWrapper = new DragAndDropWrapper(wikiTag);
             }
 
-            if (wikiArticle == null) {
-                return;
-            }
-
-            wikiArticle.setSource(source);
-            wikiArticle.setId(uuidService.createUUIDString());
-
-            WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
-            DragAndDropWrapper wikiTagWrapper = new DragAndDropWrapper(wikiTag);
-            wikiTagWrapper.setSizeUndefined();
-            wikiTagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+            tagWrapper.setSizeUndefined();
+            tagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
 
             // try to find out the component position to enter
             String positionString;
             left = left + 5;
             top = top + 5;
             positionString = "left: " + left + "px; top: " + top + "px;";
-            parentLayout.addComponent(wikiTagWrapper, positionString);
+            parentLayout.addComponent(tagWrapper, positionString);
 
-            if (debug) {
-                Notification.show("WikiArricle: " + file + " added to Workpsace");
-            }
         }
 
         /**

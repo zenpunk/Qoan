@@ -40,7 +40,7 @@ public class QoanHeader extends Panel {
                 }
             }
         });
-//        homeButton.setStyleName("link");
+        homeButton.setStyleName("link");
         secondRow.addComponent(homeButton);
 
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
@@ -51,7 +51,7 @@ public class QoanHeader extends Panel {
                 }
             }
         });
-//        workspaceButton.setStyleName("link");
+        workspaceButton.setStyleName("link");
         secondRow.addComponent(workspaceButton);
 
         Button componentsButton = new Button("Components", new Button.ClickListener() {
@@ -62,7 +62,7 @@ public class QoanHeader extends Panel {
                 }
             }
         });
-//        componentsButton.setStyleName("link");
+        componentsButton.setStyleName("link");
         secondRow.addComponent(componentsButton);
         layout.addComponent(secondRow);
         setContent(layout);

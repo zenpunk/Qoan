@@ -35,6 +35,7 @@ public class WikiArticleTag extends Panel {
 
         String title = wikiArticle.getTitle();
         Label titleLabel = new Label(title);
+        titleLabel.setStyleName("bold");
         layout.addComponent(titleLabel);
 
         Label sourceLabel = new Label("from: " + source);

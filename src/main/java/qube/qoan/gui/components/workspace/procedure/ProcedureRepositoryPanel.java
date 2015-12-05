@@ -47,4 +47,9 @@ public class ProcedureRepositoryPanel extends Panel implements ProcedureSource {
         NeuralNetworkAnalysis neuralNetworkAnalysis = (NeuralNetworkAnalysis) NeuralNetworkAnalysis.Factory.constructProcedure();
         return neuralNetworkAnalysis;
     }
+
+    @Override
+    public Procedure getProcedureWithName(String name) {
+        return null;
+    }
 }

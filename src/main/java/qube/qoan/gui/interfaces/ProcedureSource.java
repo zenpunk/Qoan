@@ -9,4 +9,6 @@ public interface ProcedureSource {
 
     Procedure getSelectedProcedure();
 
+    Procedure getProcedureWithName(String name);
+
 }

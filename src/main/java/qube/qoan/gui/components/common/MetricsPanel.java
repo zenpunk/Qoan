@@ -27,6 +27,7 @@ public class MetricsPanel extends Panel {
         VerticalLayout layout = new VerticalLayout();
 
         Label nameLabel = new Label(name);
+        nameLabel.setStyleName("bold");
         layout.addComponent(nameLabel);
 
         Metrics metrics = metricTyped.buildMetrics();
