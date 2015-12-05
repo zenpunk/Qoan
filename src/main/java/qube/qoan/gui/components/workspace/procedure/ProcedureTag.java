@@ -47,11 +47,11 @@ public class ProcedureTag extends Panel {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 String title = procedure.getName();
-                MetricsPanel metricsPanel = new MetricsPanel(title, procedure.getArguments());
+                MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
 
                 InnerPanel window = new InnerPanel(title, metricsPanel);
-                window.setWidth("600px");
-                window.setHeight("400px");
+//                window.setWidth("600px");
+//                window.setHeight("400px");
                 // if parent is an absolute layout, we need a position to add the thing as well
                 if (parentLayout instanceof AbsoluteLayout) {
                     left = left + 5;

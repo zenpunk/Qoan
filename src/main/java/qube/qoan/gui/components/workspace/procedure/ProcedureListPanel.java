@@ -34,9 +34,9 @@ public class ProcedureListPanel extends Panel {
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
-        layout.setWidth("400px");
-
-        Label nameLabel = new Label("Procedures:");
+//        layout.setWidth("300px");
+//        layout.setHeight("500px");
+        Label nameLabel = new Label("Selected Procedures:");
         nameLabel.setStyleName("bold");
         layout.addComponent(nameLabel);
 
@@ -52,6 +52,8 @@ public class ProcedureListPanel extends Panel {
         String name = procedure.getName();
 
         VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(true);
+        //layout.setHeight("450px");
 
 //        Label nameLabel = new Label(name);
 //        layout.addComponent(nameLabel);

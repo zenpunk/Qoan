@@ -1,5 +1,6 @@
 package qube.qoan.gui.components.workspace.procedure;
 
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
@@ -27,25 +28,27 @@ public class ProcedureMenu extends Panel {
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
+        layout.setWidth("300px");
+        //layout.setHeight("500px");
 
         ProcedureRepositoryPanel repositoryPanel = new ProcedureRepositoryPanel();
-        repositoryPanel.setWidth("100%");
+        //repositoryPanel.setWidth("300px");
         layout.addComponent(repositoryPanel);
 
-        ProcedureListPanel procedurePanel = new ProcedureListPanel();
-        procedurePanel.setWidth("100%");
-
+        ProcedureListPanel procedureListPanel = new ProcedureListPanel();
+        procedureListPanel.setHeight("400px");
+        // create the button which does the work
         Button showSelectedProcedureButton = new Button("Show selected procedure");
         showSelectedProcedureButton.addClickListener(new Button.ClickListener(){
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Procedure procedure = repositoryPanel.getSelectedProcedure();
-                procedurePanel.displayProcedure(procedure);
+                procedureListPanel.displayProcedure(procedure);
             }
         });
 //        showSelectedProcedureButton.setStyleName("link");
         layout.addComponent(showSelectedProcedureButton);
-        layout.addComponent(procedurePanel);
+        layout.addComponent(procedureListPanel);
         setContent(layout);
 
     }

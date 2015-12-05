@@ -24,19 +24,19 @@ public class InnerPanel extends Panel {
     private void initialize(String title, Component content) {
 
         // Begin with layout
-        VerticalLayout layout = new VerticalLayout();
+        //VerticalLayout layout = new VerticalLayout();
 
         AbsoluteLayout topLayout = new AbsoluteLayout();
         topLayout.setWidth("600px");
-        topLayout.setHeight("30px");
+        topLayout.setHeight("400px");
         // add the title only if there is actually something there
         if (StringUtils.isNotBlank(title)) {
             Label titleLabel = new Label(title);
             titleLabel.setStyleName("bold");
-            topLayout.addComponent(titleLabel, "top:10px; left:15px;");
+            topLayout.addComponent(titleLabel, "top:10px; left:10px;");
         }
 
-        Button closeButton = new Button("close");
+        Button closeButton = new Button("X");
         closeButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -44,14 +44,19 @@ public class InnerPanel extends Panel {
             }
         });
         closeButton.setStyleName("link");
-        topLayout.addComponent(closeButton, "top:10px; right:10px;");
+        topLayout.addComponent(closeButton, "top:0px; right:10px;");
         topLayout.setStyleName("hover");
-        layout.addComponent(topLayout);
+        //layout.addComponent(topLayout);
 
         // now add the given component
-        layout.addComponent(content);
-
-        layout.setMargin(true);
-        setContent(layout);
+        Panel contentPanel = new Panel(content);
+        contentPanel.setWidth("380px");
+        contentPanel.setHeight("370px");
+        //layout.addComponent(content);
+        topLayout.addComponent(content, "top:30; right:0px; bottom:1px; left:0px;");
+        //layout.setMargin(true);
+        //setContent(layout);
+        setContent(topLayout);
     }
+
 }

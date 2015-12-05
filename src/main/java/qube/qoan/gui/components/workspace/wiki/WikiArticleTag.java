@@ -50,8 +50,8 @@ public class WikiArticleTag extends Panel {
 
                 //Window window = new Window(title);
                 InnerPanel window = new InnerPanel(title, contentPanel);
-                window.setWidth("600px");
-                window.setHeight("400px");
+//                window.setWidth("600px");
+//                window.setHeight("400px");
                 // if parent is an absolute layout, we need a position to add the thing as well
                 if (parentLayout instanceof AbsoluteLayout) {
                     left = left + 5;

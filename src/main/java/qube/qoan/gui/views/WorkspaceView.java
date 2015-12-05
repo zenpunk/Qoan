@@ -110,33 +110,37 @@ public class WorkspaceView extends VerticalLayout implements View {
 
         HorizontalLayout lowerLayout = new HorizontalLayout();
 
-        // open the search menu
-        Button showSearchMenuButton = new Button("Show SearchMenu");
-        showSearchMenuButton.setStyleName("link");
-        showSearchMenuButton.addListener(Button.ClickEvent.class, this, "onShowSearch");
-        lowerLayout.addComponent(showSearchMenuButton);
-
-        // open the procedure menu
         try {
-            Button showProcedureMenuButton = new Button("Show Procedure Menu");
-            showProcedureMenuButton.setStyleName("link");
-            Method onShowProcedure = this.getClass().getMethod("onShowProcedure", Button.ClickEvent.class);
-            showProcedureMenuButton.addListener(Button.ClickEvent.class, this, onShowProcedure);
-            lowerLayout.addComponent(showProcedureMenuButton);
-
+            // add a new tab to workspace
             Button addTabButton = new Button("Add New Tab");
             addTabButton.setStyleName("link");
             Method onAddTab = this.getClass().getMethod("onAddTab", Button.ClickEvent.class);
             addTabButton.addListener(Button.ClickEvent.class, this, onAddTab);
             lowerLayout.addComponent(addTabButton);
 
-            Button showStockMenuButton = new Button("Show Finance Menu");
-            showStockMenuButton.setStyleName("link");
+            // open the search menu
+            Button showSearchMenuButton = new Button("Show Search Menu");
+            showSearchMenuButton.setStyleName("link");
+            Method onShowSearch = this.getClass().getMethod("onShowSearch", Button.ClickEvent.class);
+            showSearchMenuButton.addListener(Button.ClickEvent.class, this, onShowSearch);
+            lowerLayout.addComponent(showSearchMenuButton);
+
+            // open the procedure menu
+            Button showProcedureMenuButton = new Button("Show Procedure Menu");
+            showProcedureMenuButton.setStyleName("link");
+            Method onShowProcedure = this.getClass().getMethod("onShowProcedure", Button.ClickEvent.class);
+            showProcedureMenuButton.addListener(Button.ClickEvent.class, this, onShowProcedure);
+            lowerLayout.addComponent(showProcedureMenuButton);
+
+            // open the finance-menu
+            Button showFinanceMenuButton = new Button("Show Finance Menu");
+            showFinanceMenuButton.setStyleName("link");
             Method onShowFinance = this.getClass().getMethod("onShowFinance", Button.ClickEvent.class);
-            showStockMenuButton.addListener(Button.ClickEvent.class, this, onShowFinance);
-            lowerLayout.addComponent(showStockMenuButton);
+            showFinanceMenuButton.addListener(Button.ClickEvent.class, this, onShowFinance);
+            lowerLayout.addComponent(showFinanceMenuButton);
+
         } catch (NoSuchMethodException e) {
-            Notification.show("NoSuchMethodException" + e.getMessage());
+            Notification.show("NoSuchMethodException: " + e.getMessage());
         }
 
         addComponent(lowerLayout);

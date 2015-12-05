@@ -1,8 +1,10 @@
 package qube.qoan.gui.views;
 
+import com.kitfox.svg.pathcmd.Vertical;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
@@ -76,17 +78,21 @@ public class StartView extends VerticalLayout implements View {
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
+        VerticalLayout layout = new VerticalLayout();
+        layout.setWidth("100%");
+
         QoanHeader header = new QoanHeader();
-        addComponent(header);
+        //header.setWidth("100%");
+        layout.addComponent(header);
 
         UI.getCurrent().getPage().setTitle("Welcome to Qoan");
 
-        setWidth("1200px");
-
+        //setWidth("1200px");
+        VerticalLayout contentLayout = new VerticalLayout();
+        contentLayout.setWidth("800px");
         Label label = new Label(loremIpsum, ContentMode.HTML);
-
-        addComponent(label);
-
+        contentLayout.addComponent(label);
+        contentLayout.setComponentAlignment(label, Alignment.TOP_RIGHT);
 //        Button componentsButton = new Button("Components Display", new Button.ClickListener() {
 //            @Override
 //            public void buttonClick(Button.ClickEvent event) {
@@ -102,6 +108,7 @@ public class StartView extends VerticalLayout implements View {
 //            }
 //        });
 //        addComponent(workspaceButton);
-
+        layout.addComponent(contentLayout);
+        addComponent(layout);
     }
 }
