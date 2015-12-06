@@ -164,6 +164,9 @@ public class SearchMenu extends Panel implements SearchAgent {
         }
     }
 
+    /**
+     * @TODO use as item-id class for searches so that the event doesn't need reference to the table
+     */
     class SearchMenuItem {
 
     }
@@ -204,7 +207,7 @@ public class SearchMenu extends Panel implements SearchAgent {
          * this handles the dragging on the layout itself
          * and changes the positions of the components
          * which are being dragged around
-         * @TODO extend this to work with drops from procedure-menu as well
+         * @TODO extend this to work selectors
          * @param transferable
          */
         private void handleDropEvent(DataBoundTransferable transferable) {
