@@ -65,7 +65,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     private void initialize() {
 
         layout = new VerticalLayout();
-
+        layout.setWidth("300px");
         // some dummy label do fill in the display
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
@@ -89,7 +89,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setSelectable(true);
         resultTable.setImmediate(true);
         //resultTable.setColumnReorderingAllowed(true);
-        resultTable.setPageLength(6);
+        resultTable.setPageLength(5);
         resultTable.setDragMode(Table.TableDragMode.ROW);
         resultTable.setColumnReorderingAllowed(true);
         resultTable.setSizeUndefined();

@@ -1,6 +1,7 @@
 package qube.qoan.gui.components;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import qube.qoan.gui.views.ComponentsView;
 import qube.qoan.gui.views.StartView;
@@ -19,14 +20,18 @@ public class QoanHeader extends Panel {
 
     private void initialize() {
 
-        HorizontalLayout secondRow = new HorizontalLayout();
+        HorizontalLayout layout = new HorizontalLayout();
 
+        // add some space before the icon
+        Label space = new Label("&nbsp;");
+        space.setContentMode(ContentMode.HTML);
+        layout.addComponent(space);
         // Image as a file resource
         ClassResource resource = new ClassResource("/images/kokoline.gif");
         Image image = new Image("Qoan", resource);
         image.setWidth("20px");
         image.setHeight("30px");
-        secondRow.addComponent(image);
+        layout.addComponent(image);
 
         // button for navigating to Welcome page
         Button homeButton = new Button("Home", new Button.ClickListener() {
@@ -38,7 +43,7 @@ public class QoanHeader extends Panel {
             }
         });
         homeButton.setStyleName("link");
-        secondRow.addComponent(homeButton);
+        layout.addComponent(homeButton);
 
         // button for navigating to the Workspace
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
@@ -50,7 +55,7 @@ public class QoanHeader extends Panel {
             }
         });
         workspaceButton.setStyleName("link");
-        secondRow.addComponent(workspaceButton);
+        layout.addComponent(workspaceButton);
 
         // button for navigating to the Components view
         Button componentsButton = new Button("Components", new Button.ClickListener() {
@@ -62,8 +67,8 @@ public class QoanHeader extends Panel {
             }
         });
         componentsButton.setStyleName("link");
-        secondRow.addComponent(componentsButton);
+        layout.addComponent(componentsButton);
 
-        setContent(secondRow);
+        setContent(layout);
     }
 }

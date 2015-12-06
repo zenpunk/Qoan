@@ -53,7 +53,7 @@ public class WorkspaceView extends VerticalLayout implements View {
         // and if the things are in the way really
         searchMenuVisible = false;
         financeMenuVisible = false;
-        procedureVisible = true;
+        procedureVisible = false;
 
         QoanHeader header = new QoanHeader();
         header.setWidth("100%");
@@ -61,11 +61,13 @@ public class WorkspaceView extends VerticalLayout implements View {
 
         HorizontalLayout innerLayout = new HorizontalLayout();
         //AbsoluteLayout innerLayout = new AbsoluteLayout();
-        //innerLayout.setSizeFull();
+//        innerLayout.setWidth("1200px");
+        innerLayout.setHeight("500px");
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
+        searchMenu.setSizeUndefined();
         searchMenu.setVisible(searchMenuVisible);
 //        ResizableCssLayout searchMenuWrapper = new ResizableCssLayout();
 //        searchMenuWrapper.addComponent(searchMenu);
@@ -76,6 +78,7 @@ public class WorkspaceView extends VerticalLayout implements View {
         innerLayout.addComponent(searchMenu); // , "top:10px; left:10px;"
 
         financeMenu = new FinanceMenu();
+        financeMenu.setSizeUndefined();
         financeMenu.setVisible(financeMenuVisible);
 //        ResizableCssLayout financeMenuWrapper = new ResizableCssLayout();
 //        financeMenuWrapper.addComponent(financeMenu);
@@ -87,6 +90,7 @@ public class WorkspaceView extends VerticalLayout implements View {
         innerLayout.addComponent(financeMenu); // , "top: 0px; left: 200px;"
 
         procedureMenu = new ProcedureMenu();
+        procedureMenu.setSizeUndefined();
         procedureMenu.setVisible(procedureVisible);
 //        ResizableCssLayout procedureMenuWrapper = new ResizableCssLayout();
 //        procedureMenuWrapper.addComponent(procedureMenu);

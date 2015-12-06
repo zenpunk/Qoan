@@ -26,7 +26,7 @@ public class WorkspacePanel extends Panel {
     private void initialize() {
 
         layout = new AbsoluteLayout();
-        layout.setWidth("1050px");
+        layout.setWidth("1400px");
         layout.setHeight("500px");
 
         Label titleLabel = new Label(title);

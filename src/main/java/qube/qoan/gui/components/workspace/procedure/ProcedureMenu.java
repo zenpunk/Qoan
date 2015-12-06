@@ -36,7 +36,7 @@ public class ProcedureMenu extends Panel {
         layout.addComponent(repositoryPanel);
 
         ProcedureListPanel procedureListPanel = new ProcedureListPanel();
-        procedureListPanel.setHeight("400px");
+        //procedureListPanel.setHeight("400px");
         // create the button which does the work
         Button showSelectedProcedureButton = new Button("Show selected procedure");
         showSelectedProcedureButton.addClickListener(new Button.ClickListener(){
