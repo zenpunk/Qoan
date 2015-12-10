@@ -6,24 +6,16 @@ import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.plot.XYPlot;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
-import org.jfree.data.xy.DefaultTableXYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.miv.graphstream.algorithm.generator.RandomGenerator;
 import org.ojalgo.random.Normal;
-import org.ojalgo.random.Poisson;
 import org.ojalgo.random.RandomNumber;
-import org.ojalgo.random.Weibull;
 import org.vaadin.addon.JFreeChartWrapper;
 import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
 import qube.qoan.gui.components.QoanHeader;
-
-import java.util.Random;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -45,7 +37,7 @@ public class ComponentsView extends VerticalLayout implements View {
         graph.setWidth("400px");
         addComponent(graph);
 
-        Component chart = regressionChart();
+        Component chart = createChart();
         addComponent(chart);
 
         Button button = new Button("Click Me");
@@ -61,7 +53,7 @@ public class ComponentsView extends VerticalLayout implements View {
     }
 
     // methods are for chart creation coming from the examples
-    private Component regressionChart() {
+    private Component createChart() {
 
         // try our hand with an histogram
         int number = 1000;
