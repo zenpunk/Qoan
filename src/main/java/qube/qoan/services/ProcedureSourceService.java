@@ -29,8 +29,8 @@ public class ProcedureSourceService implements ProcedureSource {
             procedure = new NeuralNetworkAnalysis();
         } else if (NeuralNetworkForwardPropagation.NAME.equals(name)) {
             procedure = new NeuralNetworkForwardPropagation();
-        } else if (SelectProcedure.NAME.equals(name)) {
-            procedure = new SelectProcedure();
+        } else if (SortingPercentilesProcedure.NAME.equals(name)) {
+            procedure = new SortingPercentilesProcedure();
         } else if (TimeSeriesAnalysis.NAME.equals(name)) {
             procedure = new TimeSeriesAnalysis();
         }
