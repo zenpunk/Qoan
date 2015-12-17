@@ -12,6 +12,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.procedure.Procedure;
+import qube.qai.services.ProcedureSource;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -20,7 +21,6 @@ import qube.qoan.gui.components.workspace.WorkSpace;
 import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
 import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
 import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
-import qube.qoan.gui.interfaces.ProcedureSource;
 import qube.qoan.gui.interfaces.SearchAgent;
 
 import javax.inject.Inject;
@@ -172,6 +172,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     }
 
     /**
+     * @TODO can this class be made to be independent?
      * Handles drops both on an AbsoluteLayout and
      * on components contained within it
      */

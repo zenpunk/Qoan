@@ -8,6 +8,13 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.Second;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.ojalgo.random.Normal;
 import org.ojalgo.random.RandomNumber;
 import org.vaadin.addon.JFreeChartWrapper;
@@ -32,34 +39,78 @@ public class ComponentsView extends VerticalLayout implements View {
         QoanHeader header = new QoanHeader();
         addComponent(header);
 
+        Label chartLabel = new Label("A small graph");
+        addComponent(chartLabel);
         Component graph = createNetworkDiagram();
-        graph.setHeight("400px");
-        graph.setWidth("400px");
+        graph.setHeight("600px");
+        graph.setWidth("800px");
         addComponent(graph);
 
-        Component chart = createChart();
-        addComponent(chart);
+        Component timeSeries = createTimeSeries();
+        addComponent(timeSeries);
 
-        Button button = new Button("Click Me");
-        button.addClickListener(new Button.ClickListener() {
+        Component histogram = createHistogram();
+        addComponent(histogram);
+
+//        Button button = new Button("Click Me");
+//        button.addClickListener(new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent event) {
+//                Label label = new Label("Thank you for clicking");
+//                addComponent(label);
+//            }
+//        });
+//
+//        addComponent(button);
+    }
+
+    private Component createTimeSeries() {
+        XYDataset dataset = createDataset("microsoft", "apple", "google");
+        JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                "Computing Test",
+                "Days",
+                "Value",
+                dataset,
+                true,
+                false,
+                false);
+        return new JFreeChartWrapper(chart) {
+
             @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Label label = new Label("Thank you for clicking");
-                addComponent(label);
+            public void attach() {
+                super.attach();
+                setResource("src", getSource());
             }
-        });
+        };
+    }
 
-        addComponent(button);
+    private XYDataset createDataset(String... names)
+    {
+        int size = 100;
+        RandomNumber generator = new Normal(0.5, 10.0);
+        TimeSeriesCollection dataset = new TimeSeriesCollection( );
+        int day = 01; int month = 01; int year = 2000;
+        for (String name : names) {
+            TimeSeries firefox = new TimeSeries(name);
+            Day current = new Day(day, month, year);
+            for (int i = 0; i < size; i++) {
+                firefox.add(current, generator.doubleValue());
+                current = (Day) current.next();
+            }
+            dataset.addSeries(firefox);
+        }
+
+        return dataset;
     }
 
     // methods are for chart creation coming from the examples
-    private Component createChart() {
+    private Component createHistogram() {
 
         // try our hand with an histogram
         int number = 1000;
         double[] value = new double[number];
         //Random generator = new Random();
-        RandomNumber generator = new Normal(0.5, 0.1);
+        RandomNumber generator = new Normal(0.5, 10.0);
         //RandomNumber generator = new Weibull(1.0, 1.5);
         //RandomNumber generator = new Poisson(15);
         for (int i=1; i < number; i++) {

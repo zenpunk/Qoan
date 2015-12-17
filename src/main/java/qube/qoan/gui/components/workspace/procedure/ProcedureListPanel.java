@@ -34,8 +34,6 @@ public class ProcedureListPanel extends Panel {
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
-//        layout.setWidth("300px");
-//        layout.setHeight("500px");
         Label nameLabel = new Label("Selected Procedures:");
         nameLabel.setStyleName("bold");
         layout.addComponent(nameLabel);
@@ -53,11 +51,8 @@ public class ProcedureListPanel extends Panel {
 
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
-        //layout.setHeight("450px");
 
-//        Label nameLabel = new Label(name);
-//        layout.addComponent(nameLabel);
-
+        // put a description of the procedure
         Label descriptionLabel = new Label(procedure.getDescription());
         layout.addComponent(descriptionLabel);
 
@@ -68,7 +63,7 @@ public class ProcedureListPanel extends Panel {
         procedureTree.addContainerProperty("Name", String.class, "Name");
         procedureTree.addContainerProperty("UUID", String.class, "UUID");
 
-        //Item parent = procedureTree.addItem(name);
+        // use our smart-visitor for building the tree
         ProcedureTreeBuilder treeBuilder = new ProcedureTreeBuilder();
         treeBuilder.visit(procedure, name);
         layout.addComponent(procedureTree);
@@ -82,16 +77,9 @@ public class ProcedureListPanel extends Panel {
         @Override
         public Object visit(Procedure procedure, Object parent) {
 
-            //String parent = (String) data;
             String name = procedure.getName();
             ProcedureItem current = new ProcedureItem(procedure.getUuid(), procedure.getName());
-//            Item item = procedureTree.addItem(name);
             procedureTree.addItem(current);
-            // @TODO this is in fact pretty important to get to work
-            // without adding these properties, we can never read the id's on the receiving side of the drop
-//            item.addItemProperty("Name", new ObjectProperty<String>(procedure.getUuid()));
-//            item.addItemProperty("UUID", new ObjectProperty<String>(procedure.getUuid()));
-
             procedureTree.setParent(current, parent);
 
             procedure.childrenAccept(this, current);
