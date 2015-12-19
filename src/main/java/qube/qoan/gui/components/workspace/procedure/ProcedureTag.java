@@ -154,7 +154,6 @@ public class ProcedureTag extends Panel {
         if (arguments.getResultNames().contains(ProcedureChain.AVERAGE_TIME_SEQUENCE)
                 && arguments.getResultNames().contains(ProcedureChain.SORTED_ITEMS)) {
 
-            // @TODO
             Map<String, Statistics> sortedTimeSequences = (Map<String, Statistics>) arguments.getResult(ProcedureChain.SORTED_ITEMS);
             TimeSequence<Double> averageTimeSequence = (TimeSequence<Double>) arguments.getResult(ProcedureChain.AVERAGE_TIME_SEQUENCE);
             // say, two best, two worst and average
