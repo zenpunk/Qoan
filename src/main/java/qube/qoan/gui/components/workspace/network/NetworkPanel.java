@@ -49,7 +49,7 @@ public class NetworkPanel extends Panel {
             count++;
         }
 
-        Collection<Network.Edge> edges = network.getAllEdges();
+        Collection<Network.Edge> edges = network.getEdges();
         for (Network.Edge edge : edges) {
             Edge diagramEdge = new Edge(edge.getFrom().getDiagramId(), edge.getTo().getDiagramId());
             diagram.addEdge(diagramEdge);
