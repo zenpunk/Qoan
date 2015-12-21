@@ -1,7 +1,5 @@
-package qube.qoan.gui.workspace.finance.parser;
+package qube.qoan.gui.components.workspace.finance.parser;
 
-import junit.framework.TestCase;
-import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.services.QoanTestBase;
@@ -32,5 +30,8 @@ public class TestWikiTableVisitor extends QoanTestBase {
         for (SearchResult result : results) {
 
         }
+
+        WikiTableVisitor wikiVisitor = new WikiTableVisitor();
+        fail("test not yet implemented");
     }
 }

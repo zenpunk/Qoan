@@ -2,12 +2,8 @@ package qube.qoan.services;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import junit.framework.Test;
 import junit.framework.TestCase;
-import junit.framework.TestSuite;
 import junit.textui.TestRunner;
-import qube.qoan.gui.components.TestSearchMenu;
-import qube.qoan.gui.workspace.finance.parser.TestWikiTableVisitor;
 
 /**
  * Created by rainbird on 11/19/15.
