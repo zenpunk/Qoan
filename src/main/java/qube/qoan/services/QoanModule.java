@@ -22,9 +22,9 @@ public class QoanModule extends AbstractModule {
         //bind(ProcedureSource.class).to(ProcedureSourceService.class);
     }
 
-    @Provides
-    @Singleton
+    @Provides @Singleton
     HazelcastInstance provideHazelcastInstance() {
+
         if (hazelcastInstance != null) {
             return hazelcastInstance;
         }

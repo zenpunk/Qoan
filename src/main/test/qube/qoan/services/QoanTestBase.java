@@ -7,19 +7,21 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import qube.qoan.gui.components.TestSearchMenu;
+import qube.qoan.gui.workspace.finance.parser.TestWikiTableVisitor;
 
 /**
  * Created by rainbird on 11/19/15.
  */
 public class QoanTestBase extends TestCase {
 
+    protected Injector injector;
+
     @Override
     protected void setUp() throws Exception {
         super.setUp();
 
-        Injector injector = Guice.createInjector(new QoanTestModule());
+        injector = Guice.createInjector(new QoanTestModule());
         injector.injectMembers(this);
-
 
     }
 
@@ -29,14 +31,15 @@ public class QoanTestBase extends TestCase {
         TestRunner.main(tests);
     }
 
-    public static Test suite() {
+    /*public static Test suite() {
         TestSuite suite = new TestSuite("All tests");
 
-        // persistence.mapstores
+        // this one tests search menu drag-n-drop things
         suite.addTestSuite(TestSearchMenu.class);
 
-
+        // thisone is for parsing wiki-tables
+        suite.addTestSuite(TestWikiTableVisitor.class);
 
         return suite;
-    }
+    }*/
 }
