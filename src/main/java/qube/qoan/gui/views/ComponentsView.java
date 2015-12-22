@@ -9,12 +9,9 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
 import org.jfree.data.time.Day;
-import org.jfree.data.time.Second;
 import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
-import org.jfree.data.xy.XYSeries;
-import org.jfree.data.xy.XYSeriesCollection;
 import org.ojalgo.random.Normal;
 import org.ojalgo.random.RandomNumber;
 import org.vaadin.addon.JFreeChartWrapper;
@@ -22,7 +19,7 @@ import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
-import qube.qoan.gui.components.QoanHeader;
+import qube.qoan.gui.components.common.QoanHeader;
 
 /**
  * Created by rainbird on 10/29/15.

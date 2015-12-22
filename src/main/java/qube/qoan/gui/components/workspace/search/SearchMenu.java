@@ -14,7 +14,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.procedure.Procedure;
-import qube.qai.services.ProcedureSource;
+import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -50,7 +50,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     private HazelcastInstance hazelcastInstance;
 
     @Inject
-    private ProcedureSource procedureSource;
+    private ProcedureSourceInterface procedureSource;
 
     @Inject
     private UUIDServiceInterface uuidService;

@@ -6,9 +6,7 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import qube.qai.procedure.Procedure;
-import qube.qai.procedure.analysis.NeuralNetworkAnalysis;
-import qube.qai.services.ProcedureSource;
+import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
@@ -19,7 +17,7 @@ import javax.inject.Inject;
 public class ProcedureRepositoryPanel extends Panel {
 
     @Inject
-    private ProcedureSource procedureSource;
+    private ProcedureSourceInterface procedureSource;
     private String dummyName = "Dummy neural-network analysis";
 
     private ObjectProperty<String> name;

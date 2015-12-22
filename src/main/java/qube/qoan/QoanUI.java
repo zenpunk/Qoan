@@ -49,6 +49,7 @@ public class QoanUI extends UI {
         // so that the thing has time to create its listeners and things
         if (managementView == null) {
             managementView = new ManagementView();
+            injector.injectMembers(managementView);
         }
 
         // Create and register the views- not that this way, the pages will always be new instances!

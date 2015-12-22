@@ -1,9 +1,10 @@
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.common;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import qube.qoan.gui.views.ComponentsView;
+import qube.qoan.gui.views.ManagementView;
 import qube.qoan.gui.views.StartView;
 import qube.qoan.gui.views.WorkspaceView;
 
@@ -68,6 +69,18 @@ public class QoanHeader extends Panel {
         });
         componentsButton.setStyleName("link");
         layout.addComponent(componentsButton);
+
+        // button for navigating to the Components view
+        Button managementButton = new Button("Management", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                if (!UI.getCurrent().getEmbedId().equals(ManagementView.NAME)) {
+                    UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
+                }
+            }
+        });
+        managementButton.setStyleName("link");
+        layout.addComponent(managementButton);
 
         setContent(layout);
     }
