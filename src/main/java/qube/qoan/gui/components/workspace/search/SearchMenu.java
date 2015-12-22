@@ -2,6 +2,8 @@ package qube.qoan.gui.components.workspace.search;
 
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.vaadin.data.Item;
 import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
@@ -34,11 +36,18 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     private boolean debug = true;
 
+    private String WIKIPEDIA = "WIKIPEDIA_EN";
+
+    private String WIKTIONARY = "WIKTIONARY_EN";
+
     @Inject @Named("Wiktionary_en")
     private SearchServiceInterface wiktionarySearchService;
 
     @Inject @Named("Wikipedia_en")
     private SearchServiceInterface wikipediaSearchService;
+
+    @Inject
+    private HazelcastInstance hazelcastInstance;
 
     @Inject
     private ProcedureSource procedureSource;
@@ -233,12 +242,14 @@ public class SearchMenu extends Panel implements SearchAgent {
                 String source = (String) item.getItemProperty("Source").getValue();
 
                 WikiArticle wikiArticle = null;
+                IMap<String,WikiArticle> map = null;
                 if ("Wikipedia".equalsIgnoreCase(source)) {
-                    wikiArticle = wikipediaSearchService.retrieveDocumentContentFromZipFile(file);
+                    map = hazelcastInstance.getMap(WIKIPEDIA);
                 } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                    wikiArticle = wiktionarySearchService.retrieveDocumentContentFromZipFile(file);
+                    map = hazelcastInstance.getMap(WIKTIONARY);
                 }
 
+                wikiArticle = map.get(file);
                 if (wikiArticle == null) {
                     return;
                 }

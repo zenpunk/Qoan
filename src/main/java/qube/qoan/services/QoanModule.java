@@ -30,7 +30,7 @@ public class QoanModule extends AbstractModule {
         }
 
         ClientConfig clientConfig = new ClientConfig();
-        clientConfig.setInstanceName(QAI_NODE_NAME);
+        //clientConfig.setInstanceName(QAI_NODE_NAME);
         clientConfig.getNetworkConfig().addAddress("127.0.0.1:5701");
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 

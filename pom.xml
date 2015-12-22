@@ -19,7 +19,7 @@
 		<project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.2.6.v20141205</jetty9.version>
         <guice.version>4.0</guice.version>
-        <hazelcast.version>3.6-EA2</hazelcast.version>
+        <hazelcast.version>3.5.4</hazelcast.version>
         <!-- @TODO not so sure about those two -->
         <lucene.version>5.3.1</lucene.version>
         <tika.version>1.10</tika.version>
