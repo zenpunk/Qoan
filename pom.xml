@@ -124,6 +124,12 @@
         </dependency>
 
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>loginform</artifactId>
+            <version>0.6.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>xml-apis</groupId>
             <artifactId>xml-apis</artifactId>
             <version>1.4.01</version>
