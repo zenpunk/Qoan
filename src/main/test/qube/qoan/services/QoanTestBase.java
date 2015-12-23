@@ -4,6 +4,7 @@ import com.google.inject.Guice;
 import com.google.inject.Injector;
 import junit.framework.TestCase;
 import junit.textui.TestRunner;
+import qube.qai.main.QaiModule;
 
 /**
  * Created by rainbird on 11/19/15.
@@ -16,6 +17,7 @@ public class QoanTestBase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
+        // @TODO QaiModule is not right here... find a way to make the QaiTestModule to be accessible
         injector = Guice.createInjector(new QoanTestModule());
         injector.injectMembers(this);
 

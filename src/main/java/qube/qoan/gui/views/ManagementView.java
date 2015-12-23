@@ -48,6 +48,10 @@ public class ManagementView extends VerticalLayout implements View {
         }
     }
 
+    /**
+     * traditional way for getting the gui done,
+     * nothing original really
+     */
     private void initialize() {
 
         remotelyCreatedUuids = new TreeSet<String>();
@@ -58,44 +62,47 @@ public class ManagementView extends VerticalLayout implements View {
         QoanHeader header = new QoanHeader();
         layout.addComponent(header);
 
-        final SimpleLoginForm loginForm = new SimpleLoginForm();
-        loginForm.clear(); // should work even if not displayed
-        layout.addComponent(loginForm);
+//        final SimpleLoginForm loginForm = new SimpleLoginForm();
+//        loginForm.clear(); // should work even if not displayed
+//        layout.addComponent(loginForm);
 
-//        Label something = new Label("Welcome to the management page");
-//        something.setStyleName("bold");
-//        layout.addComponent(something);
-//
-//        // well, i guess this is now time
-//        procedureUuids = procedureRunner.getStartedProcedures();
-//        Table procedureTable = new Table("All procedures:");
-//        procedureTable.addContainerProperty("Procedure", String.class, null);
-//        procedureTable.addContainerProperty("State", String.class, null);
-//        procedureTable.addContainerProperty("Remote object created", Boolean.class, Boolean.FALSE);
-//        procedureTable.setColumnReorderingAllowed(true);
-//        procedureTable.setColumnCollapsingAllowed(true);
-//
-//        for (String uuid : procedureUuids) {
-//            ProcedureRunnerInterface.STATE state = procedureRunner.queryState(uuid);
-//
-//            Object itemId = procedureTable.addItem();
-//            Item row = procedureTable.getItem(itemId);
-//            row.getItemProperty("Procedure").setValue(uuid);
-//            row.getItemProperty("State").setValue(state);
-//            if (remotelyCreatedUuids.contains(uuid)) {
-//                row.getItemProperty("Remote object created").setValue(true);
-//            } else {
-//                row.getItemProperty("Remote object created").setValue(false);
-//            }
-//
-//        }
-//        layout.addComponent(procedureTable);
+        Label something = new Label("Welcome to the management page");
+        something.setStyleName("bold");
+        layout.addComponent(something);
+
+        // well, i guess this is now time
+        procedureUuids = procedureRunner.getStartedProcedures();
+        Table procedureTable = new Table("All procedures:");
+        procedureTable.addContainerProperty("Procedure", String.class, null);
+        procedureTable.addContainerProperty("State", String.class, null);
+        procedureTable.addContainerProperty("User", String.class, null);
+        procedureTable.addContainerProperty("Remote object created", Boolean.class, Boolean.FALSE);
+        procedureTable.setColumnReorderingAllowed(true);
+        procedureTable.setColumnCollapsingAllowed(true);
+
+        for (String uuid : procedureUuids) {
+            ProcedureRunnerInterface.STATE state = procedureRunner.queryState(uuid);
+
+            Object itemId = procedureTable.addItem();
+            Item row = procedureTable.getItem(itemId);
+            row.getItemProperty("Procedure").setValue(uuid);
+            row.getItemProperty("State").setValue(state);
+            // @TODO add the means of getting the user which created the procedure
+            row.getItemProperty("User").setValue("username");
+            if (remotelyCreatedUuids.contains(uuid)) {
+                row.getItemProperty("Remote object created").setValue(true);
+            } else {
+                row.getItemProperty("Remote object created").setValue(false);
+            }
+
+        }
+        layout.addComponent(procedureTable);
 
 
         addComponent(layout);
     }
 
-    private class SimpleLoginForm extends DefaultHorizontalLoginForm {
+    /*private class SimpleLoginForm extends DefaultHorizontalLoginForm {
 
         public SimpleLoginForm() {
             addLoginListener(new LoginListener() {
@@ -107,7 +114,6 @@ public class ManagementView extends VerticalLayout implements View {
                     ));
                 }
             });
-
         }
 
         @Override
@@ -133,7 +139,7 @@ public class ManagementView extends VerticalLayout implements View {
         protected Button createLoginButton() {
             return new NativeButton("Login");
         }
-    }
+    }*/
 
     class ManagementListener implements DistributedObjectListener {
 

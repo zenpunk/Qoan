@@ -161,7 +161,11 @@
 			<artifactId>jetty-jmx</artifactId>
 			<version>${jetty9.version}</version>
 		</dependency>
-
+        <dependency>
+            <groupId>javax.servlet</groupId>
+            <artifactId>javax.servlet-api</artifactId>
+            <version>3.1.0</version>
+        </dependency>
         <!-- Guice is pretty important after all -->
         <dependency>
             <groupId>com.google.inject</groupId>
@@ -230,6 +234,7 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
     </dependencies>
 
 	<build>

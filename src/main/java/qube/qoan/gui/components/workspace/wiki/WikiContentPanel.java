@@ -38,7 +38,7 @@ public class WikiContentPanel extends Panel {
         HorizontalLayout buttonLayout = new HorizontalLayout();
 
         Button addWikiNetworkButton = new Button("Create Wiki-Network");
-//        addWikiNetworkButton.setStyleName("link");
+        addWikiNetworkButton.setStyleName("link");
         addWikiNetworkButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -53,7 +53,7 @@ public class WikiContentPanel extends Panel {
         buttonLayout.addComponent(addWikiNetworkButton);
 
         Button addSemanticNetwork = new Button("Create Semantic-Network");
-//        addSemanticNetwork.setStyleName("link");
+        addSemanticNetwork.setStyleName("link");
         addSemanticNetwork.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
