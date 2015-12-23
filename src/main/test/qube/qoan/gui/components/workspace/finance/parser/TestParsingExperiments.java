@@ -12,28 +12,24 @@ import opennlp.tools.tokenize.Tokenizer;
 import opennlp.tools.tokenize.TokenizerME;
 import opennlp.tools.tokenize.TokenizerModel;
 import opennlp.tools.util.Span;
-import org.apache.tools.ant.util.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
-import qube.qai.services.implementation.SearchResult;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Collection;
 import java.util.Set;
 
 /**
  * Created by rainbird on 12/21/15.
  */
-public class TestWikiArticleRipper extends QoanTestBase {
+public class TestParsingExperiments extends QoanTestBase {
 
-    private static Logger logger = LoggerFactory.getLogger("TestWikiTableVisitor");
+    private static Logger logger = LoggerFactory.getLogger("TestParsingExperiments");
 
     private String stockListingPage = "Lists of companies by stock exchange listing.xml";
 
@@ -86,7 +82,7 @@ public class TestWikiArticleRipper extends QoanTestBase {
     /**
      * POS-part of speech analysis experiment
      */
-    public void restPOS() throws Exception {
+    public void testPOS() throws Exception {
 
         WikiArticle pythagorasArticle = searchService.retrieveDocumentContentFromZipFile(pythagorasTheorem);
         assertNotNull("oh come on!!!", pythagorasArticle);
@@ -102,13 +98,12 @@ public class TestWikiArticleRipper extends QoanTestBase {
             logger.info("token: '" + tokens[i] + "' tag: '" + tags[i] + "'");
         }
 
-
     }
 
     /**
      * this is an experiment in name-detection
      */
-    public void restNameDetection() throws Exception {
+    public void testNameDetection() throws Exception {
 
         WikiArticle darwinArticle = searchService.retrieveDocumentContentFromZipFile(darwinPage);
         assertNotNull("oh come on!!!", darwinArticle);
@@ -138,7 +133,7 @@ public class TestWikiArticleRipper extends QoanTestBase {
     /**
      * this is for trying out how sentence detection works
      */
-    public void restSenteceDetection() throws Exception {
+    public void testSenteceDetection() throws Exception {
 
         // load first the article we want to try the things out
         WikiArticle mouseArticle = searchService.retrieveDocumentContentFromZipFile(mousePage);
@@ -165,7 +160,7 @@ public class TestWikiArticleRipper extends QoanTestBase {
      * converted to stock-quotes
      * @throws Exception
      */
-    public void restWikiTableParser() throws Exception {
+    public void testWikiTableParser() throws Exception {
 
         // in any case, this is the page we are interested in
         WikiArticle wikiArticle = searchService.retrieveDocumentContentFromZipFile(stockListingPage);
@@ -173,7 +168,7 @@ public class TestWikiArticleRipper extends QoanTestBase {
 
         String articleContent = wikiArticle.getContent();
         logger.info("original content: " + articleContent);
-        WikiArticleRipper ripper = createRipper(wikiArticle);
+        WikiIntegration ripper = createRipper(wikiArticle);
         Set<String> links = ripper.getLinks();
         if (links == null) {
             logger.error("there is something terribly wrong- no links, using bliki instead...");
@@ -207,7 +202,7 @@ public class TestWikiArticleRipper extends QoanTestBase {
         String linkContent = linkArticle.getContent();
         logger.info("original article content: " + linkContent);
 
-        WikiArticleRipper wikiRipper = createRipper(linkArticle);
+        WikiIntegration wikiRipper = createRipper(linkArticle);
         String linkHtml = wikiRipper.toHtml(linkContent);
         logger.info("generated text: " + linkHtml);
     }
@@ -218,8 +213,8 @@ public class TestWikiArticleRipper extends QoanTestBase {
         return filename;
     }
 
-    private WikiArticleRipper createRipper(WikiArticle article) {
-        WikiArticleRipper wikiRipper = new WikiArticleRipper("${image}", "${title}");
+    private WikiIntegration createRipper(WikiArticle article) {
+        WikiIntegration wikiRipper = new WikiIntegration("${image}", "${title}");
 
         try {
             StringBuilder bufferOut = new StringBuilder();

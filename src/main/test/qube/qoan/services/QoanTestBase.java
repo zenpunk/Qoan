@@ -40,7 +40,7 @@ public class QoanTestBase extends TestCase {
         suite.addTestSuite(TestSearchMenu.class);
 
         // this one is for parsing wiki-tables
-        suite.addTestSuite(TestWikiTableVisitor.class);
+        suite.addTestSuite(TestParsingExperiments.class);
 
         return suite;
     }*/
