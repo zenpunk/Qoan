@@ -1,5 +1,6 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
+import com.vaadin.ui.Table;
 import info.bliki.wiki.filter.HTMLConverter;
 import info.bliki.wiki.model.WikiModel;
 import opennlp.tools.namefind.NameFinderME;
@@ -22,6 +23,8 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by rainbird on 12/23/15.
@@ -86,42 +89,111 @@ public class TestWikiArticleIntegration extends QoanTestBase {
 
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
-//
-//        WikiIntegration jack = createRipper(snp500, bufferOut);
-//        log("converted html content:");
-//        log(bufferOut.toString());
+
+        String html = WikiIntegration.wikiToHtml(snp500);
+        log(html);
 
         // here goes nothing...
-        StringBuilder bufferOut = new StringBuilder();
-        Document doc = Jsoup.parse(bufferOut.toString());
-        Element table = doc.select("table").get(1); //select the first table.
-        Elements header = table.select("th");
-        StringBuffer headerBuffer = new StringBuffer();
-        for (int i = 0; i < header.size(); i++) {
-            Element element = header.get(i);
-            Elements children = element.children();
-            if (children != null && children.size() > 0) {
-                headerBuffer.append(children.get(0).text());
-            } else {
-                headerBuffer.append(element.text());
-            }
-            headerBuffer.append(" ");
-        }
-        log("header: " + headerBuffer.toString());
+//        StringBuilder bufferOut = new StringBuilder();
+//        Document doc = Jsoup.parse(bufferOut.toString());
+//        Element table = doc.select("table").get(1); //select the first table.
+//        Elements header = table.select("th");
+//        StringBuffer headerBuffer = new StringBuffer();
+//        for (int i = 0; i < header.size(); i++) {
+//            Element element = header.get(i);
+//            Elements children = element.children();
+//            if (children != null && children.size() > 0) {
+//                headerBuffer.append(children.get(0).text());
+//            } else {
+//                headerBuffer.append(element.text());
+//            }
+//            headerBuffer.append(" ");
+//        }
+//        log("header: " + headerBuffer.toString());
+//
+//        Elements rows = table.select("tr");
+//        for (int i = 1; i < rows.size(); i++) {
+//            Element row = rows.get(i);
+//            Elements cols = row.select("td");
+//            StringBuffer buffer = new StringBuffer();
+//            for (int j = 0; j < cols.size(); j++) {
+//                Element td = cols.get(j);
+//                buffer.append(td.text());
+//                buffer.append(" ");
+//            }
+//            log("row: " + buffer.toString());
+//        }
 
-        Elements rows = table.select("tr");
-        for (int i = 1; i < rows.size(); i++) {
-            Element row = rows.get(i);
-            Elements cols = row.select("td");
-            StringBuffer buffer = new StringBuffer();
-            for (int j = 0; j < cols.size(); j++) {
-                Element td = cols.get(j);
-                buffer.append(td.text());
-                buffer.append(" ");
-            }
-            log("row: " + buffer.toString());
+    }
+
+    public void testVaadinTable() throws Exception {
+        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+        assertNotNull("we are here to play with this file", snp500);
+
+        // and now... tataa
+        WikiIntegration wiki = new WikiIntegration();
+        Table table = wiki.convertHtmlTable(snp500);
+        assertNotNull("this should really not happen", table);
+        String[] columnHeaders = table.getColumnHeaders();
+        assertNotNull("has the table not been initialized?", columnHeaders);
+        Set<String> headerTitles = headerTitles();
+        assertTrue(columnHeaders.length == headerTitles.size());
+        for (String header : columnHeaders) {
+            assertTrue("these should be same", headerTitles.contains(header));
         }
 
+        // i don't know how i could check the data though
+    }
+
+    public void testStripTableData() throws Exception {
+
+        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+        assertNotNull("we are here to play with this file", snp500);
+
+        WikiIntegration wiki = new WikiIntegration();
+        String html = wiki.wikiToHtml(snp500.getContent());
+        String[][] data = wiki.stripTableData(html);
+        assertNotNull("really?!?", data);
+
+//        for (int i = 0; i < data.length; i++) {
+//            StringBuffer buffer = new StringBuffer();
+//            for (int j = 0; j < data[i].length; j++) {
+//                buffer.append(data[i][j]);
+//                buffer.append("|"); // why not
+//            }
+//            log(buffer.toString());
+//        }
+    }
+
+    public void testStripHeader() {
+
+        Set<String> titles = headerTitles();
+
+        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+        assertNotNull("we are here to play with this file", snp500);
+
+        WikiIntegration wiki = new WikiIntegration();
+        String html = WikiIntegration.wikiToHtml(snp500.getContent());
+        String[] header = wiki.stripHeader(html);
+        assertNotNull("should not be null", header);
+
+        for (String name : header) {
+            logger.info("header title: " + name);
+            assertTrue("has to be here somewhere", titles.contains(name));
+        }
+    }
+
+    private Set<String> headerTitles() {
+        String[] headerTitles = {"Ticker symbol", "Security",
+                "SEC filings", "GICS", "GICS Sub Industry",
+                "Address of Headquarters", "Date first added", "CIK"};
+
+        Set<String> titles = new HashSet<>();
+        for (String title : headerTitles) {
+            titles.add(title);
+        }
+
+        return titles;
     }
 
     /**

@@ -57,7 +57,7 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     private VerticalLayout layout;
 
-    private WorkSpace workSpace;
+    //private WorkSpace workSpace;
 
     private Table resultTable;
 

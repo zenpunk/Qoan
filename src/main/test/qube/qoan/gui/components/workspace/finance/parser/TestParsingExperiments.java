@@ -168,8 +168,9 @@ public class TestParsingExperiments extends QoanTestBase {
 
         String articleContent = wikiArticle.getContent();
         logger.info("original content: " + articleContent);
-        WikiIntegration ripper = createRipper(wikiArticle);
-        Set<String> links = ripper.getLinks();
+        StringBuilder builder = new StringBuilder();
+        WikiModel wikiModel = WikiIntegration.createModel(wikiArticle.getContent(), builder);
+        Set<String> links = wikiModel.getLinks();
         if (links == null) {
             logger.error("there is something terribly wrong- no links, using bliki instead...");
             fail("parsing a html-text which consists only of links, finding none... fail");
@@ -202,29 +203,28 @@ public class TestParsingExperiments extends QoanTestBase {
         String linkContent = linkArticle.getContent();
         logger.info("original article content: " + linkContent);
 
-        WikiIntegration wikiRipper = createRipper(linkArticle);
-        String linkHtml = wikiRipper.toHtml(linkContent);
+        //WikiIntegration wikiRipper = createRipper(linkArticle);
+        String linkHtml = WikiIntegration.wikiToHtml(linkContent);
         logger.info("generated text: " + linkHtml);
     }
 
     private String convertToFilename(String link) {
         //String filename = StringUtils.replace(link, " ", "_");
-        String filename = link + ".xml";
-        return filename;
+        return link + ".xml";
     }
 
-    private WikiIntegration createRipper(WikiArticle article) {
-        WikiIntegration wikiRipper = new WikiIntegration("${image}", "${title}");
-
-        try {
-            StringBuilder bufferOut = new StringBuilder();
-            WikiModel.toText(wikiRipper, new HTMLConverter(), article.getContent(), bufferOut, false, false);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return wikiRipper;
-    }
+//    private WikiIntegration createRipper(WikiArticle article) {
+//        WikiIntegration wikiRipper = new WikiIntegration("${image}", "${title}");
+//
+//        try {
+//            StringBuilder bufferOut = new StringBuilder();
+//            WikiModel.toText(wikiRipper, new HTMLConverter(), article.getContent(), bufferOut, false, false);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//
+//        return wikiRipper;
+//    }
 
     private WikiModel createModel(WikiArticle wikiArticle) {
         WikiModel wikiModel = new WikiModel("${image}", "${title}");
