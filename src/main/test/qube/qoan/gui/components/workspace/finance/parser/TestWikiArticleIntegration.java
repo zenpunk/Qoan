@@ -1,18 +1,6 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
 import com.vaadin.ui.Table;
-import info.bliki.wiki.filter.HTMLConverter;
-import info.bliki.wiki.model.WikiModel;
-import opennlp.tools.namefind.NameFinderME;
-import opennlp.tools.namefind.TokenNameFinderModel;
-import opennlp.tools.tokenize.Tokenizer;
-import opennlp.tools.tokenize.TokenizerME;
-import opennlp.tools.tokenize.TokenizerModel;
-import opennlp.tools.util.Span;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.persistence.WikiArticle;
@@ -21,8 +9,6 @@ import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -47,7 +33,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
      * functions pretty well.
      * @throws Exception
      */
-    public void restSnP500Fun() throws Exception {
+    /*public void restSnP500Fun() throws Exception {
 
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
@@ -78,7 +64,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
             buffer.deleteCharAt(buffer.length() - 1);
             log("found name: '" + buffer.toString() + "'");
         }
-    }
+    }*/
 
     /**
      * open-nlp is fantastic in finding names of company names,
@@ -90,7 +76,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
 
-        String html = WikiIntegration.wikiToHtml(snp500);
+        String html = WikiIntegrationUtils.wikiToHtml(snp500);
         log(html);
 
         // here goes nothing...
@@ -131,7 +117,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
         assertNotNull("we are here to play with this file", snp500);
 
         // and now... tataa
-        WikiIntegration wiki = new WikiIntegration();
+        WikiIntegrationUtils wiki = new WikiIntegrationUtils();
         Table table = wiki.convertHtmlTable(snp500);
         assertNotNull("this should really not happen", table);
         String[] columnHeaders = table.getColumnHeaders();
@@ -145,44 +131,10 @@ public class TestWikiArticleIntegration extends QoanTestBase {
         // i don't know how i could check the data though
     }
 
-    public void testStripTableData() throws Exception {
-
-        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
-        assertNotNull("we are here to play with this file", snp500);
-
-        WikiIntegration wiki = new WikiIntegration();
-        String html = wiki.wikiToHtml(snp500.getContent());
-        String[][] data = wiki.stripTableData(html);
-        assertNotNull("really?!?", data);
-
-//        for (int i = 0; i < data.length; i++) {
-//            StringBuffer buffer = new StringBuffer();
-//            for (int j = 0; j < data[i].length; j++) {
-//                buffer.append(data[i][j]);
-//                buffer.append("|"); // why not
-//            }
-//            log(buffer.toString());
-//        }
-    }
-
-    public void testStripHeader() {
-
-        Set<String> titles = headerTitles();
-
-        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
-        assertNotNull("we are here to play with this file", snp500);
-
-        WikiIntegration wiki = new WikiIntegration();
-        String html = WikiIntegration.wikiToHtml(snp500.getContent());
-        String[] header = wiki.stripHeader(html);
-        assertNotNull("should not be null", header);
-
-        for (String name : header) {
-            logger.info("header title: " + name);
-            assertTrue("has to be here somewhere", titles.contains(name));
-        }
-    }
-
+    /**
+     * these are the header titles on S&P 500 page table
+     * @return
+     */
     private Set<String> headerTitles() {
         String[] headerTitles = {"Ticker symbol", "Security",
                 "SEC filings", "GICS", "GICS Sub Industry",

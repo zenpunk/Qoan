@@ -14,15 +14,16 @@ import qube.qai.persistence.WikiArticle;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.Set;
 
 /**
  * Created by rainbird on 12/21/15.
  */
-public class WikiIntegration {
+public class WikiIntegrationUtils {
 
-    private static Logger logger = LoggerFactory.getLogger("WikiIntegration");
+    private static Logger logger = LoggerFactory.getLogger("WikiIntegrationUtils");
 
     /**
      * this at least at this point, a class to integrate
@@ -31,7 +32,7 @@ public class WikiIntegration {
      * to vaadin tables, so that they can be used in
      * the gui and allow better user-interaction
      */
-    public WikiIntegration() {
+    public WikiIntegrationUtils() {
     }
 
     public Table convertHtmlTable(WikiArticle wikiArticle) {
@@ -103,20 +104,36 @@ public class WikiIntegration {
         return titles;
     }
 
+    /**
+     * converts contents of wikiModel to html-string
+     * @param wikiArticle
+     * @return
+     */
     public static String wikiToHtml(WikiArticle wikiArticle) {
         return wikiToHtml(wikiArticle.getContent());
     }
 
+    /**
+     * converts contents of wikiModel to html-string
+     * @param wiki
+     * @return
+     */
     public static String wikiToHtml(String wiki) {
         StringBuilder builder = new StringBuilder();
         WikiModel model = createModel(wiki, builder);
         return builder.toString();
     }
 
-    public static WikiModel createModel(String html, StringBuilder builder) {
+    /**
+     * creates a model out of the given html
+     * @param wiki
+     * @param builder
+     * @return
+     */
+    public static WikiModel createModel(String wiki, StringBuilder builder) {
         WikiModel wikiModel = new WikiModel("${image}", "${title}");
         try {
-            WikiModel.toText(wikiModel, new HTMLConverter(), html, builder, false, false);
+            WikiModel.toText(wikiModel, new HTMLConverter(), wiki, builder, false, false);
         } catch (IOException e) {
             logger.error("error while converting wiki-data to html");
         }
@@ -124,6 +141,33 @@ public class WikiIntegration {
         return wikiModel;
     }
 
+    /**
+     * creates a model out of the given html
+     * @param article
+     * @param builder
+     * @return
+     */
+    public static WikiModel createModel(WikiArticle article, StringBuilder builder) {
+        return createModel(article.getContent(), builder);
+    }
+
+    /**
+     * creates a model of the wiki-article
+     * and returns the links found in that model
+     * @param article
+     * @return
+     */
+    public static Collection<String> getLinksOf(WikiArticle article) {
+        StringBuilder builder = new StringBuilder();
+        return createModel(article, builder).getLinks();
+    }
+
+    /**
+     * strips the data found in a given wiki-html table
+     * assumes that the html is from wiki nad as the style "wikitable"
+     * @param html
+     * @return
+     */
     public String[][] stripTableData(String html) {
         Document doc = Jsoup.parse(html);
         Element table = doc.select("table.wikitable").first();
