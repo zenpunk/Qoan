@@ -3,6 +3,7 @@ package qube.qoan.gui.components.workspace.procedure;
 import com.google.inject.Injector;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.procedure.Procedure;
@@ -31,8 +32,7 @@ public class ProcedureMenu extends Panel {
 
         super();
 
-        // @TODO is there a way of getting rid of this?
-        Injector injector = QoanUI.getInjector();
+        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
         initialize();

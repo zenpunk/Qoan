@@ -2,10 +2,7 @@ package qube.qoan.gui.components.workspace.procedure;
 
 import com.google.inject.Injector;
 import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.QoanUI;
 
@@ -30,8 +27,7 @@ public class ProcedureRepositoryPanel extends Panel {
 
         super();
 
-        // @TODO is there a way to get rid of this?
-        Injector injector = QoanUI.getInjector();
+        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
         initialize();

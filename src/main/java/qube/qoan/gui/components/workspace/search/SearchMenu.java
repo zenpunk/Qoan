@@ -65,7 +65,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         super();
 
         // start with self-inoculation
-        Injector injector = QoanUI.getInjector();
+        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         // this can only happen in case of tests, obviously
         if (injector != null) {
             injector.injectMembers(this);

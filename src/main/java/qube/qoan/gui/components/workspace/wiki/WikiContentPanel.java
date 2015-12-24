@@ -58,7 +58,7 @@ public class WikiContentPanel extends Panel {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 SemanticNetwork semanticNetwork = new SemanticNetwork();
-                semanticNetwork.buildNetwork(wikiArticle);
+                //semanticNetwork.buildNetwork(wikiArticle);
                 NetworkPanel networkPanel = new NetworkPanel(semanticNetwork);
                 networkPanel.setSizeFull();
                 tabbedContent.addTab(networkPanel).setCaption("Semantic-Network");

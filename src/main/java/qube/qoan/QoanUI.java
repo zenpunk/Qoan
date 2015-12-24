@@ -8,10 +8,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import qube.qai.main.QaiModule;
-import qube.qoan.gui.views.ComponentsView;
-import qube.qoan.gui.views.ManagementView;
-import qube.qoan.gui.views.StartView;
-import qube.qoan.gui.views.WorkspaceView;
+import qube.qai.user.User;
+import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanModule;
 
 /**
@@ -27,7 +25,11 @@ public class QoanUI extends UI {
 
     protected ManagementView managementView;
 
-    protected static Injector injector;
+    protected Injector injector;
+
+    protected User user;
+
+    protected String targetViewName;
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -54,13 +56,29 @@ public class QoanUI extends UI {
 
         // Create and register the views- not that this way, the pages will always be new instances!
         navigator.addView("", StartView.class);
+        navigator.addView(LoginView.NAME, LoginView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
         navigator.addView(WorkspaceView.NAME, workspaceView);
         navigator.addView(ManagementView.NAME, managementView);
     }
 
-    public static Injector getInjector() {
+    public Injector getInjector() {
         return injector;
     }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public String getTargetViewName() {
+        return targetViewName;
+    }
+
+    public void setTargetViewName(String targetViewName) {
+        this.targetViewName = targetViewName;
+    }
 }

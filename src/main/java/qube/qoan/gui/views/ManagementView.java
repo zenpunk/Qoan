@@ -1,6 +1,5 @@
 package qube.qoan.gui.views;
 
-import com.ejt.vaadin.loginform.DefaultHorizontalLoginForm;
 import com.hazelcast.core.DistributedObjectEvent;
 import com.hazelcast.core.DistributedObjectListener;
 import com.hazelcast.core.HazelcastInstance;
@@ -11,6 +10,8 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.services.ProcedureRunnerInterface;
+import qube.qai.user.User;
+import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.QoanHeader;
 
 import javax.inject.Inject;
@@ -87,7 +88,7 @@ public class ManagementView extends VerticalLayout implements View {
             Item row = procedureTable.getItem(itemId);
             row.getItemProperty("Procedure").setValue(uuid);
             row.getItemProperty("State").setValue(state);
-            // @TODO add the means of getting the user which created the procedure
+            // @TODO procedure table should have user as well
             row.getItemProperty("User").setValue("username");
             if (remotelyCreatedUuids.contains(uuid)) {
                 row.getItemProperty("Remote object created").setValue(true);

@@ -3,10 +3,9 @@ package qube.qoan.gui.components.common;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import qube.qoan.gui.views.ComponentsView;
-import qube.qoan.gui.views.ManagementView;
-import qube.qoan.gui.views.StartView;
-import qube.qoan.gui.views.WorkspaceView;
+import qube.qai.user.User;
+import qube.qoan.QoanUI;
+import qube.qoan.gui.views.*;
 
 /**
  * Created by rainbird on 11/9/15.
@@ -50,7 +49,10 @@ public class QoanHeader extends Panel {
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (!UI.getCurrent().getEmbedId().equals(WorkspaceView.NAME)) {
+                if (authenticationRequired(WorkspaceView.NAME)) {
+                    ((QoanUI)UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
+                    UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
+                } else {
                     UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
                 }
             }
@@ -74,7 +76,10 @@ public class QoanHeader extends Panel {
         Button managementButton = new Button("Management", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (!UI.getCurrent().getEmbedId().equals(ManagementView.NAME)) {
+                if (authenticationRequired(ManagementView.NAME)) {
+                    ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
+                    UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
+                } else {
                     UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
                 }
             }
@@ -83,5 +88,22 @@ public class QoanHeader extends Panel {
         layout.addComponent(managementButton);
 
         setContent(layout);
+    }
+
+    private boolean authenticationRequired(String viewName) {
+
+        String currentPage = UI.getCurrent().getEmbedId();
+        User user = ((QoanUI) UI.getCurrent()).getUser();
+        if (currentPage.equals(viewName)) {
+            return false;
+        }
+
+        if (ManagementView.NAME.equals(viewName)
+                || WorkspaceView.NAME.equals(viewName)
+                && user == null) {
+            return true;
+        }
+
+        return false;
     }
 }
