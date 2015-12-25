@@ -50,6 +50,9 @@ public class LoginView extends VerticalLayout implements View {
                 if (user != null) {
                     ((QoanUI) UI.getCurrent()).setUser(user);
                     String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
+                    if (targetPage == null) {
+                        targetPage = StartView.NAME;
+                    }
                     UI.getCurrent().getNavigator().navigateTo(targetPage);
                 }
             }

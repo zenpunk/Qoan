@@ -9,6 +9,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 import qube.qai.main.QaiModule;
 import qube.qai.user.User;
+import qube.qoan.authentication.SecureViewChangeListener;
 import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanModule;
 
@@ -20,6 +21,8 @@ import qube.qoan.services.QoanModule;
 public class QoanUI extends UI {
 
     protected Navigator navigator;
+
+    protected SecureViewChangeListener changeListener;
 
     protected WorkspaceView workspaceView;
 
@@ -41,6 +44,8 @@ public class QoanUI extends UI {
 
         // Create a navigator to control the views
         navigator = new Navigator(this, this);
+        changeListener = new SecureViewChangeListener();
+        navigator.addViewChangeListener(changeListener);
 
         // instantiate the workspace-view
         if (workspaceView == null) {

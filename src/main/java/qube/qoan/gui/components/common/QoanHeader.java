@@ -37,9 +37,8 @@ public class QoanHeader extends Panel {
         Button homeButton = new Button("Home", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (!UI.getCurrent().getEmbedId().equals(StartView.NAME)) {
-                    UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
-                }
+                ((QoanUI) UI.getCurrent()).setTargetViewName(StartView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
             }
         });
         homeButton.setStyleName("link");
@@ -49,12 +48,8 @@ public class QoanHeader extends Panel {
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (authenticationRequired(WorkspaceView.NAME)) {
-                    ((QoanUI)UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
-                    UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
-                } else {
-                    UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
-                }
+                ((QoanUI)UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
             }
         });
         workspaceButton.setStyleName("link");
@@ -64,9 +59,8 @@ public class QoanHeader extends Panel {
         Button componentsButton = new Button("Components", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (!UI.getCurrent().getEmbedId().equals(ComponentsView.NAME)) {
-                    UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
-                }
+                ((QoanUI)UI.getCurrent()).setTargetViewName(ComponentsView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
             }
         });
         componentsButton.setStyleName("link");
@@ -76,12 +70,8 @@ public class QoanHeader extends Panel {
         Button managementButton = new Button("Management", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                if (authenticationRequired(ManagementView.NAME)) {
-                    ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
-                    UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
-                } else {
-                    UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
-                }
+                ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
             }
         });
         managementButton.setStyleName("link");
@@ -90,19 +80,27 @@ public class QoanHeader extends Panel {
         setContent(layout);
     }
 
-    private boolean authenticationRequired(String viewName) {
+    private boolean isOnPage(String viewName) {
 
-        String currentPage = UI.getCurrent().getEmbedId();
-        User user = ((QoanUI) UI.getCurrent()).getUser();
+        String currentPage = UI.getCurrent().getPage().getWindowName();
         if (currentPage.equals(viewName)) {
             return false;
         }
+        return true;
+    }
 
-        if (ManagementView.NAME.equals(viewName)
-                || WorkspaceView.NAME.equals(viewName)
-                && user == null) {
-            return true;
-        }
+    private boolean authenticationRequired(String viewName) {
+
+//        String currentPage = UI.getCurrent().getEmbedId();
+//        User user = ((QoanUI) UI.getCurrent()).getUser();
+
+        // for the time being stop this so
+        // can't be bothered
+//        if (ManagementView.NAME.equals(viewName)
+//                || WorkspaceView.NAME.equals(viewName)
+//                && user == null) {
+//            return true;
+//        }
 
         return false;
     }

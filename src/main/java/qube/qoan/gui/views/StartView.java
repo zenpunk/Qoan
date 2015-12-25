@@ -2,11 +2,9 @@ package qube.qoan.gui.views;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import qube.qoan.gui.components.common.QoanHeader;
 
 /**
@@ -26,8 +24,8 @@ public class StartView extends VerticalLayout implements View {
                     "Sed consequat consequat tortor ullamcorper tempor. Maecenas tincidunt sodales tellus quis pharetra. " +
                     "Donec imperdiet varius enim, a tempor nulla tristique quis. " +
                     "Aenean ac leo sed elit maximus maximus."+
-            "</p>" +
-            "<p text-align: center;>"+
+            "</p>";
+    private static String loremIpsumRest = "<p>"+
             "Mauris metus nisi, pulvinar vel odio eget, tempus tristique velit. " +
                     "Sed venenatis libero velit, sit amet facilisis urna aliquam in. " +
                     "Nunc id nibh eget nisl interdum faucibus non nec odio. " +
@@ -40,7 +38,7 @@ public class StartView extends VerticalLayout implements View {
                     "Morbi fermentum augue eu nisi suscipit, sit amet fermentum dolor tristique. " +
                     "Proin lacus mauris, cursus in gravida sit amet, vestibulum non eros."+
             "</p>" +
-            "<p text-align: center;>"+
+            "<p>"+
                     "Etiam vulputate ante ut sapien aliquet feugiat. Vivamus sed lectus vitae felis egestas posuere imperdiet in nulla. " +
                     "Donec tincidunt posuere sem quis rhoncus. Duis congue diam et lectus pellentesque, quis ornare erat malesuada. " +
                     "Praesent malesuada eget neque nec maximus. Quisque quis imperdiet mauris, vel fringilla erat. " +
@@ -51,7 +49,7 @@ public class StartView extends VerticalLayout implements View {
                     "Phasellus a felis turpis. Sed sed risus bibendum, vulputate dui ut, accumsan dolor. " +
                     "Vivamus faucibus turpis a ipsum viverra, at hendrerit nisi tincidunt." +
             "</p>" +
-            "<p text-align: center;>"+
+            "<p>"+
                     "Nunc fringilla, odio ac dignissim commodo, purus odio laoreet lectus, lobortis mollis ex turpis non leo. " +
                     "Fusce ac consequat risus. Quisque ut velit velit. " +
                     "Suspendisse vestibulum, eros sit amet dignissim pharetra, tellus nisl rutrum libero, " +
@@ -64,7 +62,7 @@ public class StartView extends VerticalLayout implements View {
                     "Nullam sodales dolor velit, id pharetra leo tempus vel. Aenean molestie nibh vitae quam convallis tempor. " +
                     "Donec varius mi sed libero sollicitudin dignissim a vitae mi."+
             "</p>" +
-            "<p text-align: center;>"+
+            "<p>"+
                     "Duis in turpis eu odio pharetra placerat. Curabitur sed nibh felis. " +
                     "Fusce lacinia auctor dui sit amet ultricies. Ut accumsan felis sit amet leo varius, at tristique magna iaculis. " +
                     "Maecenas rhoncus ipsum lectus, eget mollis turpis maximus quis. Etiam consequat varius neque, ac finibus turpis. " +
@@ -81,32 +79,28 @@ public class StartView extends VerticalLayout implements View {
         layout.setWidth("100%");
 
         QoanHeader header = new QoanHeader();
-        //header.setWidth("100%");
         layout.addComponent(header);
 
         UI.getCurrent().getPage().setTitle("Welcome to Qoan");
 
-        //setWidth("1200px");
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setWidth("800px");
-        Label label = new Label(loremIpsum, ContentMode.HTML);
-        contentLayout.addComponent(label);
-        contentLayout.setComponentAlignment(label, Alignment.TOP_RIGHT);
-//        Button componentsButton = new Button("Components Display", new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
-//            }
-//        });
-//        addComponent(componentsButton);
-//
-//        Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
-//            }
-//        });
-//        addComponent(workspaceButton);
+
+        HorizontalLayout firstRow = new HorizontalLayout();
+        firstRow.setWidth("800px");
+        ClassResource resource = new ClassResource("/images/kokoline.gif");
+        Image image = new Image("Qoan", resource);
+        firstRow.addComponent(image);
+
+        Label loremIpsum = new Label(StartView.loremIpsum, ContentMode.HTML);
+        loremIpsum.setStyleName("justified", true);
+        firstRow.addComponent(loremIpsum);
+        contentLayout.addComponent(firstRow);
+
+        Label loremIpsumRest = new Label(StartView.loremIpsumRest, ContentMode.HTML);
+        loremIpsumRest.setStyleName("justified", true);
+        contentLayout.addComponent(loremIpsumRest);
+
         layout.addComponent(contentLayout);
         addComponent(layout);
     }
