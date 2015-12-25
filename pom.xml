@@ -310,7 +310,7 @@
 				<configuration>
 					<filesets>
 						<fileset>
-							<directory>src/main/webapp/VAADIN/themes</directory>
+							<indexDirectory>src/main/webapp/VAADIN/themes</indexDirectory>
 							<includes>
 								<include>**/styles.css</include>
 								<include>**/styles.scss.cache</include>
