@@ -92,7 +92,7 @@ public class ProcedureTag extends Panel {
      * @param event
      */
     public void onClickRemove(Button.ClickEvent event) {
-        // we are removing the parent- which is the d&d-wrapper
+        // we are removing the toDecorate- which is the d&d-wrapper
         Component parent = getParent();
         parentLayout.removeComponent(parent);
     }
@@ -134,7 +134,7 @@ public class ProcedureTag extends Panel {
 
         windowContent.setContent(layout);
         InnerPanel window = new InnerPanel(title, windowContent);
-        // if parent is an absolute layout, we need a position to add the thing as well
+        // if toDecorate is an absolute layout, we need a position to add the thing as well
         if (parentLayout instanceof AbsoluteLayout) {
             left = left + 5;
             top = top + 5;

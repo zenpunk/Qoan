@@ -52,7 +52,7 @@ public class WikiArticleTag extends Panel {
                 InnerPanel window = new InnerPanel(title, contentPanel);
 //                window.setWidth("600px");
 //                window.setHeight("400px");
-                // if parent is an absolute layout, we need a position to add the thing as well
+                // if toDecorate is an absolute layout, we need a position to add the thing as well
                 if (parentLayout instanceof AbsoluteLayout) {
                     left = left + 5;
                     top = top + 5;
@@ -75,7 +75,7 @@ public class WikiArticleTag extends Panel {
         remove.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                // we are removing the parent- which is the dnd-wrapper
+                // we are removing the toDecorate- which is the dnd-wrapper
                 Component parent = getParent();
                 parentLayout.removeComponent(parent);
             }
