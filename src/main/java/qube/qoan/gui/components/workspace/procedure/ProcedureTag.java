@@ -18,7 +18,7 @@ import qube.qai.data.analysis.Statistics;
 import qube.qai.matrix.Matrix;
 import qube.qai.network.Network;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureChain;
+import qube.qai.procedure.ProcedureConstants;
 import qube.qoan.gui.components.common.InnerPanel;
 import qube.qoan.gui.components.common.MetricsPanel;
 import qube.qoan.gui.components.workspace.network.NetworkPanel;
@@ -151,43 +151,43 @@ public class ProcedureTag extends Panel {
     private void addDisplayOfResults(TabSheet tabSheet, Arguments arguments) {
 
         // if we have these things, we add a metric for them, to begin with
-        if (arguments.getResultNames().contains(ProcedureChain.AVERAGE_TIME_SEQUENCE)
-                && arguments.getResultNames().contains(ProcedureChain.SORTED_ITEMS)) {
+        if (arguments.getResultNames().contains(ProcedureConstants.AVERAGE_TIME_SEQUENCE)
+                && arguments.getResultNames().contains(ProcedureConstants.SORTED_ITEMS)) {
 
-            Map<String, Statistics> sortedTimeSequences = (Map<String, Statistics>) arguments.getResult(ProcedureChain.SORTED_ITEMS);
-            TimeSequence<Double> averageTimeSequence = (TimeSequence<Double>) arguments.getResult(ProcedureChain.AVERAGE_TIME_SEQUENCE);
+            Map<String, Statistics> sortedTimeSequences = (Map<String, Statistics>) arguments.getResult(ProcedureConstants.SORTED_ITEMS);
+            TimeSequence<Double> averageTimeSequence = (TimeSequence<Double>) arguments.getResult(ProcedureConstants.AVERAGE_TIME_SEQUENCE);
             // say, two best, two worst and average
             String[] names = collectRankedNames(sortedTimeSequences);
-            Map<String, Selector> timeSeriesMap = (Map<String, Selector>) arguments.getSelector(ProcedureChain.FROM).getData();
+            Map<String, Selector> timeSeriesMap = (Map<String, Selector>) arguments.getSelector(ProcedureConstants.FROM).getData();
             Component chart = createChartsFor(timeSeriesMap, names);
             tabSheet.addTab(chart).setCaption("Selected time-series");
 
-        } else if (arguments.getResultNames().contains(ProcedureChain.TIME_SEQUENCE_METRICS)) {
+        } else if (arguments.getResultNames().contains(ProcedureConstants.TIME_SEQUENCE_METRICS)) {
 
-            String name = ProcedureChain.TIME_SEQUENCE_METRICS;
-            TimeSequence timeSequence = (TimeSequence) arguments.getSelector(ProcedureChain.INPUT_TIME_SEQUENCE).getData();
+            String name = ProcedureConstants.TIME_SEQUENCE_METRICS;
+            TimeSequence timeSequence = (TimeSequence) arguments.getSelector(ProcedureConstants.INPUT_TIME_SEQUENCE).getData();
             Component chart = createChartFor(timeSequence);
 
             addMetricsToTabSheet(name, tabSheet, arguments, chart);
 
-        } else if (arguments.getResultNames().contains(ProcedureChain.NETWORK_METRICS)) {
+        } else if (arguments.getResultNames().contains(ProcedureConstants.NETWORK_METRICS)) {
 
-            String name = ProcedureChain.NETWORK_METRICS;
+            String name = ProcedureConstants.NETWORK_METRICS;
             addMetricsToTabSheet(name, tabSheet, arguments, null);
-            Network network = (Network) arguments.getSelector(ProcedureChain.INPUT_NETWORK).getData();
+            Network network = (Network) arguments.getSelector(ProcedureConstants.INPUT_NETWORK).getData();
             NetworkPanel networkPanel = new NetworkPanel(network);
             tabSheet.addTab(networkPanel).setCaption("Graph");
 
-        } else if (arguments.getResultNames().contains(ProcedureChain.MATRIX_METRICS)
-                || arguments.getResultNames().contains(ProcedureChain.MATRIX_DATA_METRICS)) {
+        } else if (arguments.getResultNames().contains(ProcedureConstants.MATRIX_METRICS)
+                || arguments.getResultNames().contains(ProcedureConstants.MATRIX_DATA_METRICS)) {
 
-            String name = ProcedureChain.MATRIX_METRICS;
-            Matrix matrix = (Matrix) arguments.getSelector(ProcedureChain.INPUT_MATRIX).getData();
+            String name = ProcedureConstants.MATRIX_METRICS;
+            Matrix matrix = (Matrix) arguments.getSelector(ProcedureConstants.INPUT_MATRIX).getData();
             Component chart = createHistogramFor(matrix.toArray());
             addMetricsToTabSheet(name, tabSheet, arguments, chart);
-            addMetricsToTabSheet(ProcedureChain.MATRIX_DATA_METRICS, tabSheet, arguments, null);
+            addMetricsToTabSheet(ProcedureConstants.MATRIX_DATA_METRICS, tabSheet, arguments, null);
 
-        } /*else if (arguments.getResultNames().contains(ProcedureChain.MATRIX_DATA_METRICS)) {
+        } /*else if (arguments.getResultNames().contains(ProcedureConstants.MATRIX_DATA_METRICS)) {
 
             String name = ProcedureChain.MATRIX_DATA_METRICS;
 

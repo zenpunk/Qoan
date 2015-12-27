@@ -6,8 +6,13 @@ import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
+import qube.qai.data.AcceptsVisitors;
+import qube.qai.data.DataVisitor;
+import qube.qai.network.Network;
+import qube.qai.persistence.StockEntity;
+import qube.qai.persistence.StockQuote;
+import qube.qai.persistence.WikiArticle;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureVisitor;
 
 import java.io.Serializable;
 
@@ -72,19 +77,34 @@ public class ProcedureListPanel extends Panel {
         procedureAccordion.addTab(panel).setCaption(name);
     }
 
-    class ProcedureTreeBuilder implements ProcedureVisitor {
+    class ProcedureTreeBuilder implements DataVisitor {
 
         @Override
-        public Object visit(Procedure procedure, Object parent) {
+        public Object visit(StockEntity visitee, Object data) {
+            return data;
+        }
 
-            String name = procedure.getName();
-            ProcedureItem current = new ProcedureItem(procedure.getUuid(), procedure.getName());
+        @Override
+        public Object visit(StockQuote visitee, Object data) {
+            return data;
+        }
+
+        @Override
+        public Object visit(WikiArticle visitee, Object data) {
+            return data;
+        }
+
+        @Override
+        public Object visit(Network visitee, Object data) {
+            return data;
+        }
+
+        @Override
+        public Object visit(Procedure visitee, Object parent) {
+            ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getName());
             procedureTree.addItem(current);
             procedureTree.setParent(current, parent);
-
-            procedure.childrenAccept(this, current);
-
-            return name;
+            return parent;
         }
     }
 
