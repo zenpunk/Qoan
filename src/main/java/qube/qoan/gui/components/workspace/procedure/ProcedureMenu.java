@@ -10,8 +10,11 @@ import qube.qai.procedure.Procedure;
 import qube.qai.procedure.analysis.NeuralNetworkAnalysis;
 import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.QoanUI;
+import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by rainbird on 12/2/15.
@@ -19,7 +22,7 @@ import javax.inject.Inject;
 public class ProcedureMenu extends Panel {
 
     @Inject
-    private ProcedureSourceInterface procedureSource;
+    private ProcedureCache procedureCache;
 
     /**
      * this is the container for elements which will be
@@ -57,10 +60,12 @@ public class ProcedureMenu extends Panel {
                 // @TODO this is perhaps really only temporary
                 // this is what we do when we need to create a dummy procedure
                 if (StringUtils.containsIgnoreCase(name, "dummy")) {
-                    procedure = NeuralNetworkAnalysis.Factory.constructProcedure();
+                    procedure = NeuralNetworkAnalysis.Factory.constructProcedure(null);
+                    procedureCache.cacheProcedure(procedure);
                 } else {
-                    procedure = procedureSource.getProcedureWithName(name);
+                    procedure = procedureCache.getProcedureWithName(name);
                 }
+
                 procedureListPanel.displayProcedure(procedure);
             }
         });

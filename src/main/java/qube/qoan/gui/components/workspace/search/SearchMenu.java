@@ -24,6 +24,7 @@ import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
 import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
 import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
 import qube.qoan.gui.interfaces.SearchAgent;
+import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -50,7 +51,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     private HazelcastInstance hazelcastInstance;
 
     @Inject
-    private ProcedureSourceInterface procedureSource;
+    private ProcedureCache procedureCache;
 
     @Inject
     private UUIDServiceInterface uuidService;
@@ -231,7 +232,7 @@ public class SearchMenu extends Panel implements SearchAgent {
             if (itemId instanceof ProcedureListPanel.ProcedureItem) {
 
                 ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
-                Procedure procedure = procedureSource.getProcedureWithName(pItem.getName());
+                Procedure procedure = procedureCache.getProcedureWithName(pItem.getUuid());
                 ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
                 tagWrapper = new DragAndDropWrapper(procedureTag);
 

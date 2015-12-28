@@ -6,7 +6,9 @@ import com.google.inject.Singleton;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
+import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.authentication.UserManager;
+import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -17,10 +19,16 @@ public class QoanModule extends AbstractModule {
     private static String QAI_NODE_NAME = "QaiNode";
     private HazelcastInstance hazelcastInstance;
     private UserManager userManager;
+
     @Override
     protected void configure() {
         // for the moment being there is not much here to configure really
-        //bind(ProcedureSource.class).to(ProcedureSourceService.class);
+        //bind(ProcedureSourceInterface.class).to(ProcedureMenu.class);
+    }
+
+    @Provides @Singleton
+    ProcedureCache provideProcedureSource() {
+        return new ProcedureCache();
     }
 
     @Provides @Singleton

@@ -70,7 +70,7 @@ public class ProcedureListPanel extends Panel {
 
         // use our smart-visitor for building the tree
         ProcedureTreeBuilder treeBuilder = new ProcedureTreeBuilder();
-        treeBuilder.visit(procedure, name);
+        procedure.accept(treeBuilder, null);
         layout.addComponent(procedureTree);
 
         Panel panel = new Panel(layout);
@@ -101,10 +101,13 @@ public class ProcedureListPanel extends Panel {
 
         @Override
         public Object visit(Procedure visitee, Object parent) {
+            if (parent == null) {
+                parent = visitee.getName();
+            }
             ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getName());
             procedureTree.addItem(current);
             procedureTree.setParent(current, parent);
-            return parent;
+            return current;
         }
     }
 
