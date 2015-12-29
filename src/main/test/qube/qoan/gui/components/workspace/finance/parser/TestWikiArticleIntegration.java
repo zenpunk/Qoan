@@ -1,5 +1,6 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
+import com.vaadin.data.Item;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,6 +11,7 @@ import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
@@ -31,7 +33,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
     @Named("Wikipedia_en")
     private SearchServiceInterface searchService;
 
-    public void rtestVaadinTable() throws Exception {
+    public void testVaadinTable() throws Exception {
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
 
@@ -47,10 +49,17 @@ public class TestWikiArticleIntegration extends QoanTestBase {
             assertTrue("these should be same", headerTitles.contains(header));
         }
 
-        // i don't know how i could check the data though
+        Collection itemIds = table.getItemIds();
+        assertNotNull("there have to be some items in there", itemIds);
+        assertTrue("and there has to be something in there as well", !itemIds.isEmpty());
+        for (Object itemId : itemIds) {
+            Item item = table.getItem(itemId);
+            logger.info("found item: " + item.toString());
+        }
+
     }
 
-    public void testWikiUtilLayout() throws Exception {
+    public void restWikiUtilLayout() throws Exception {
         WikiArticle darwin = searchService.retrieveDocumentContentFromZipFile(darwinArticleName);
         assertNotNull("we need this one for the test after all", darwin);
 

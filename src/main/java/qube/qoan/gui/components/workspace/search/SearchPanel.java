@@ -58,11 +58,6 @@ public class SearchPanel extends Panel {
                 String source = (String) wikiSource.getValue();
                 String part = (String) searchIn.getValue();
                 String search = (String) searchTerm.getValue();
-//                Integer maxHits = (Integer) searchLimit.getValue();
-//                searchService.searchInputString(search, part, maxHits);
-
-
-
                 searchAgent.searchFor(source, search, part, 100);
             }
         });

@@ -1,12 +1,8 @@
 package qube.qoan.gui.components.workspace.procedure;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.data.util.PropertysetItem;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
-import qube.qai.data.AcceptsVisitors;
 import qube.qai.data.DataVisitor;
 import qube.qai.network.Network;
 import qube.qai.persistence.StockEntity;
@@ -21,7 +17,7 @@ import java.io.Serializable;
  */
 public class ProcedureListPanel extends Panel {
 
-    private Tree procedureTree;
+    private Tree currentTree;
 
     private Accordion procedureAccordion;
 
@@ -61,17 +57,17 @@ public class ProcedureListPanel extends Panel {
         Label descriptionLabel = new Label(procedure.getDescription());
         layout.addComponent(descriptionLabel);
 
-        procedureTree = new Tree("Procedure: " + name);
-        procedureTree.setImmediate(true);
-        procedureTree.setSelectable(true);
-        procedureTree.setDragMode(Tree.TreeDragMode.NODE);
-        procedureTree.addContainerProperty("Name", String.class, "Name");
-        procedureTree.addContainerProperty("UUID", String.class, "UUID");
+        currentTree = new Tree("Procedure: " + name);
+        currentTree.setImmediate(true);
+        currentTree.setSelectable(true);
+        currentTree.setDragMode(Tree.TreeDragMode.NODE);
+        currentTree.addContainerProperty("Name", String.class, "Name");
+        currentTree.addContainerProperty("UUID", String.class, "UUID");
 
         // use our smart-visitor for building the tree
         ProcedureTreeBuilder treeBuilder = new ProcedureTreeBuilder();
         procedure.accept(treeBuilder, null);
-        layout.addComponent(procedureTree);
+        layout.addComponent(currentTree);
 
         Panel panel = new Panel(layout);
         procedureAccordion.addTab(panel).setCaption(name);
@@ -105,8 +101,8 @@ public class ProcedureListPanel extends Panel {
                 parent = visitee.getName();
             }
             ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getName());
-            procedureTree.addItem(current);
-            procedureTree.setParent(current, parent);
+            currentTree.addItem(current);
+            currentTree.setParent(current, parent);
             return current;
         }
     }

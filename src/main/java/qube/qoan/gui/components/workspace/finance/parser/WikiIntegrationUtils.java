@@ -47,16 +47,16 @@ public class WikiIntegrationUtils {
         String[] header = WikiIntegration.stripHeader(html);
         String[][] data = WikiIntegration.stripTableData(html);
 
-        Table table = new Table(title);
-        table.setVisible(false);
+        Table table = new Table();
+        table.setVisible(true);
         table.setSelectable(true);
         table.setImmediate(true);
         table.setDragMode(Table.TableDragMode.ROW);
         table.setColumnReorderingAllowed(true);
-        table.setSizeUndefined();
         table.setColumnCollapsingAllowed(true);
         table.setFooterVisible(true);
         table.setSortAscending(true);
+        //table.setSizeUndefined();
         // begin with adding the headers
         for (int i = 0; i < header.length; i++) {
             table.addContainerProperty(header[i], String.class, null);

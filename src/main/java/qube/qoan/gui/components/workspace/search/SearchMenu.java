@@ -101,11 +101,10 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setVisible(false);
         resultTable.setSelectable(true);
         resultTable.setImmediate(true);
-        //resultTable.setColumnReorderingAllowed(true);
         resultTable.setPageLength(5);
         resultTable.setDragMode(Table.TableDragMode.ROW);
-        resultTable.setColumnReorderingAllowed(true);
         resultTable.setSizeUndefined();
+        resultTable.setColumnReorderingAllowed(true);
         resultTable.setColumnCollapsingAllowed(true);
         resultTable.setFooterVisible(true);
         resultTable.setSortAscending(true);
@@ -153,7 +152,6 @@ public class SearchMenu extends Panel implements SearchAgent {
             results.addAll(wiktionarySearchService.searchInputString(searchTerm, searchIn, maxResults));
             addRowsToTable("Wiktionary", results);
         }
-
 
     }
 
