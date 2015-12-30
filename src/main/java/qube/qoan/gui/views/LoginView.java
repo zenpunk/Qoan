@@ -34,11 +34,11 @@ public class LoginView extends VerticalLayout implements View {
         addComponent(header);
 
         FormLayout layout = new FormLayout();
-        ObjectProperty<String> username = new ObjectProperty<String>("");
+        final ObjectProperty<String> username = new ObjectProperty<String>("");
         TextField userField = new TextField("Username", username);
         layout.addComponent(userField);
 
-        ObjectProperty<String> password = new ObjectProperty<String>("");
+        final ObjectProperty<String> password = new ObjectProperty<String>("");
         PasswordField passwordField = new PasswordField("Password", password);
         layout.addComponent(passwordField);
 

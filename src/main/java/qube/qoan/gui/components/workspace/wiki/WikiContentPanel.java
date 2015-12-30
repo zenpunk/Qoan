@@ -27,7 +27,7 @@ public class WikiContentPanel extends Panel {
     private void initialize(WikiArticle wikiArticle) {
         VerticalLayout layout = new VerticalLayout();
 
-        TabSheet tabbedContent = new TabSheet();
+        final TabSheet tabbedContent = new TabSheet();
         tabbedContent.setSizeFull();
         String content = WikiModel.toHtml(wikiArticle.getContent());
         Label contentText = new Label(content, ContentMode.HTML);
@@ -37,7 +37,7 @@ public class WikiContentPanel extends Panel {
 
         HorizontalLayout buttonLayout = new HorizontalLayout();
 
-        Button addWikiNetworkButton = new Button("Create Wiki-Network");
+        final Button addWikiNetworkButton = new Button("Create Wiki-Network");
         addWikiNetworkButton.setStyleName("link");
         addWikiNetworkButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -52,7 +52,7 @@ public class WikiContentPanel extends Panel {
         });
         buttonLayout.addComponent(addWikiNetworkButton);
 
-        Button addSemanticNetwork = new Button("Create Semantic-Network");
+        final Button addSemanticNetwork = new Button("Create Semantic-Network");
         addSemanticNetwork.setStyleName("link");
         addSemanticNetwork.addClickListener(new Button.ClickListener() {
             @Override

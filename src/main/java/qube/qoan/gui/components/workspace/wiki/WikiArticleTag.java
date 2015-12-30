@@ -33,7 +33,7 @@ public class WikiArticleTag extends Panel {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 
-        String title = wikiArticle.getTitle();
+        final String title = wikiArticle.getTitle();
         Label titleLabel = new Label(title);
         titleLabel.setStyleName("bold");
         layout.addComponent(titleLabel);
@@ -49,7 +49,7 @@ public class WikiArticleTag extends Panel {
                 contentPanel.setSizeFull();
 
                 //Window window = new Window(title);
-                InnerPanel window = new InnerPanel(title, contentPanel);
+                final InnerPanel window = new InnerPanel(title, contentPanel);
 //                window.setWidth("600px");
 //                window.setHeight("400px");
                 // if toDecorate is an absolute layout, we need a position to add the thing as well

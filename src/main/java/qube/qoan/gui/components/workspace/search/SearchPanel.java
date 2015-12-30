@@ -23,7 +23,7 @@ public class SearchPanel extends Panel {
         VerticalLayout layout = new VerticalLayout();
 
         // now we add a select-box for wiki-source
-        ObjectProperty wikiSource = new ObjectProperty("Wikipedia", String.class);
+        final ObjectProperty wikiSource = new ObjectProperty("Wikipedia", String.class);
         ComboBox wikiSourceBox = new ComboBox("Wiki Source");
         wikiSourceBox.addItem("Wikipedia");
         wikiSourceBox.addItem("Wiktionary");
@@ -32,7 +32,7 @@ public class SearchPanel extends Panel {
         layout.addComponent(wikiSourceBox);
 
         // use a select box for the part where the search should take place
-        ObjectProperty searchIn = new ObjectProperty("title", String.class);
+        final ObjectProperty searchIn = new ObjectProperty("title", String.class);
         ComboBox searchInBox = new ComboBox("Search In");
         searchInBox.addItem("title and content");
         searchInBox.addItem("title");
@@ -46,7 +46,7 @@ public class SearchPanel extends Panel {
 //        parentLayout.addComponent(searchLimitField);
 
         // text field for the actual search term to be used
-        ObjectProperty searchTerm = new ObjectProperty("", String.class);
+        final ObjectProperty searchTerm = new ObjectProperty("", String.class);
         TextField searchField = new TextField("Search Term", searchTerm);
         layout.addComponent(searchField);
 
