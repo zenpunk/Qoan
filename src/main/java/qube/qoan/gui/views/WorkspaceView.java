@@ -61,7 +61,7 @@ public class WorkspaceView extends VerticalLayout implements View {
         HorizontalLayout innerLayout = new HorizontalLayout();
         //AbsoluteLayout innerLayout = new AbsoluteLayout();
 //        innerLayout.setWidth("1200px");
-        innerLayout.setHeight("500px");
+//        innerLayout.setHeight("500px");
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it

@@ -1,10 +1,7 @@
 package qube.qoan.gui.components.workspace;
 
 import com.vaadin.event.dd.DropHandler;
-import com.vaadin.ui.AbsoluteLayout;
-import com.vaadin.ui.DragAndDropWrapper;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.*;
 
 /**
  * Created by rainbird on 11/14/15.
@@ -26,8 +23,11 @@ public class WorkspacePanel extends Panel {
     private void initialize() {
 
         layout = new AbsoluteLayout();
-        layout.setWidth("1400px");
-        layout.setHeight("500px");
+        int width = UI.getCurrent().getPage().getBrowserWindowWidth();
+        int height = UI.getCurrent().getPage().getBrowserWindowHeight();
+
+        layout.setWidth(width + "px");
+        layout.setHeight(height + "px");
 
         Label titleLabel = new Label(title);
         DragAndDropWrapper wrapper = new DragAndDropWrapper(titleLabel);
