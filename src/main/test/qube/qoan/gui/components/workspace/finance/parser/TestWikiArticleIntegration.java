@@ -90,7 +90,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
                 "SEC filings", "GICS", "GICS Sub Industry",
                 "Address of Headquarters", "Date first added", "CIK"};
 
-        Set<String> titles = new HashSet<>();
+        Set<String> titles = new HashSet<String>();
         for (String title : headerTitles) {
             titles.add(title);
         }
