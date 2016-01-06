@@ -7,8 +7,12 @@ import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import qube.qai.services.ProcedureSourceInterface;
+import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
+
+import javax.inject.Named;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -51,9 +55,27 @@ public class QoanModule extends AbstractModule {
 
         ClientConfig clientConfig = new ClientConfig();
         //clientConfig.setInstanceName(QAI_NODE_NAME);
-        clientConfig.getNetworkConfig().addAddress("127.0.0.1:5701");
+        clientConfig.getNetworkConfig().addAddress("192.168.1.2:5701");
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
         return hazelcastInstance;
+    }
+
+    @Provides @Named("Wiktionary_en") @Singleton
+    SearchServiceInterface provideWiktionarySearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
+    }
+
+    @Provides @Named("Wikipedia_en") @Singleton
+    SearchServiceInterface provideWikipediaSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Wikipedia_en");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
     }
 }
