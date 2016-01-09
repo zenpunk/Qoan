@@ -19,6 +19,8 @@ import javax.inject.Named;
  */
 public class QoanModule extends AbstractModule {
 
+    private boolean isServerQaiNode = true;
+
     // for the time being we leave it at that
     private static String QAI_NODE_NAME = "QaiNode";
     private HazelcastInstance hazelcastInstance;
@@ -55,7 +57,15 @@ public class QoanModule extends AbstractModule {
 
         ClientConfig clientConfig = new ClientConfig();
         //clientConfig.setInstanceName(QAI_NODE_NAME);
-        clientConfig.getNetworkConfig().addAddress("192.168.1.2:5701");
+        if (isServerQaiNode) {
+            // Qai-Node
+            clientConfig.getNetworkConfig().addAddress("192.168.1.7:5701");
+        } else {
+            // zenpunk
+            clientConfig.getNetworkConfig().addAddress("192.168.1.6:5701");
+
+        }
+
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
         return hazelcastInstance;
