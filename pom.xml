@@ -26,6 +26,20 @@
 
     <repositories>
         <repository>
+            <id>vaadin-addons</id>
+            <url>http://maven.vaadin.com/vaadin-addons</url>
+        </repository>
+        <repository>
+            <id>vaadin-snapshots</id>
+            <url>https://oss.sonatype.org/content/repositories/vaadin-snapshots/</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+        <repository>
             <id>central</id>
             <url>http://192.168.1.4:8081/artifactory/libs-release</url>
             <snapshots>
@@ -69,13 +83,13 @@
 		
 		<dependency>
             <groupId>info.bliki</groupId>
-            <artifactId>bliki.core</artifactId>
+            <artifactId>bliki-core</artifactId>
             <version>3.0.19</version>
         </dependency>
 
 		<dependency>
             <groupId>info.bliki</groupId>
-            <artifactId>bliki.pdf</artifactId>
+            <artifactId>bliki-pdf</artifactId>
             <version>3.0.19</version>
         </dependency>
 
