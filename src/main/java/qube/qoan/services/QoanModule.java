@@ -63,7 +63,6 @@ public class QoanModule extends AbstractModule {
         } else {
             // zenpunk
             clientConfig.getNetworkConfig().addAddress("192.168.1.6:5701");
-
         }
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
