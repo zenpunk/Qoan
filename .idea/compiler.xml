@@ -31,8 +31,16 @@
         <processorPath useClasspath="true" />
         <module name="qoan" />
       </profile>
+      <profile default="false" name="Annotation profile for qai" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="true" />
+        <module name="qai" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="qai" target="1.7" />
       <module name="qoan" target="1.7" />
       <module name="qube.qai" target="1.5" />
     </bytecodeTargetLevel>

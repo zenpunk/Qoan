@@ -82,13 +82,13 @@
         </dependency>
 		
 		<dependency>
-            <groupId>info.bliki</groupId>
+            <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
             <version>3.0.19</version>
         </dependency>
 
 		<dependency>
-            <groupId>info.bliki</groupId>
+            <groupId>info.bliki.pdf</groupId>
             <artifactId>bliki-pdf</artifactId>
             <version>3.0.19</version>
         </dependency>

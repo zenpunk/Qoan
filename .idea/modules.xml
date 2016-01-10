@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/../qai/qai.iml" filepath="$PROJECT_DIR$/../qai/qai.iml" />
       <module fileurl="file://$PROJECT_DIR$/qoan.iml" filepath="$PROJECT_DIR$/qoan.iml" />
-      <module fileurl="file://$PROJECT_DIR$/../qai/qube.qai.iml" filepath="$PROJECT_DIR$/../qai/qube.qai.iml" />
     </modules>
   </component>
 </project>
