@@ -65,6 +65,7 @@ public class QoanUI extends UI {
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
         navigator.addView(WorkspaceView.NAME, workspaceView);
         navigator.addView(ManagementView.NAME, managementView);
+        navigator.addView(WikiView.NAME, WikiView.class);
     }
 
     public Injector getInjector() {

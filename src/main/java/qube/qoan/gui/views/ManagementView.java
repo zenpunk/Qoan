@@ -57,6 +57,8 @@ public class ManagementView extends VerticalLayout implements View {
 
         remotelyCreatedUuids = new TreeSet<String>();
 
+        UI.getCurrent().getPage().setTitle("Qoan Management");
+
         layout = new VerticalLayout();
         layout.setWidth("100%");
 

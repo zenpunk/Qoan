@@ -19,7 +19,7 @@ import javax.inject.Named;
  */
 public class QoanModule extends AbstractModule {
 
-    private boolean isServerQaiNode = true;
+    private boolean isServerQaiNode = false;
 
     // for the time being we leave it at that
     private static String QAI_NODE_NAME = "QaiNode";

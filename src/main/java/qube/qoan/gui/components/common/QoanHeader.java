@@ -77,6 +77,16 @@ public class QoanHeader extends Panel {
         managementButton.setStyleName("link");
         layout.addComponent(managementButton);
 
+        Button wikiButton = new Button("Wiki", new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                ((QoanUI) UI.getCurrent()).setTargetViewName(WikiView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(WikiView.NAME);
+            }
+        });
+        wikiButton.setStyleName("link");
+        layout.addComponent(wikiButton);
+
         setContent(layout);
     }
 
