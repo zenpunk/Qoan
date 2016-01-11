@@ -6,6 +6,10 @@ import com.google.inject.Singleton;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
+import net.jmob.guice.conf.core.BindConfig;
+import net.jmob.guice.conf.core.ConfigurationModule;
+import net.jmob.guice.conf.core.InjectConfig;
+import net.jmob.guice.conf.core.Syntax;
 import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
@@ -17,19 +21,25 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 11/2/15.
  */
+@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
 public class QoanModule extends AbstractModule {
 
-    private boolean isServerQaiNode = false;
+    private boolean isServerQaiNode = true;
 
     // for the time being we leave it at that
     private static String QAI_NODE_NAME = "QaiNode";
     private HazelcastInstance hazelcastInstance;
     private UserManager userManager;
 
+    @InjectConfig(value = "QAI_NODE_TO_CONNECT")
+    public String qaiNodeToConnect;
+
     @Override
     protected void configure() {
-        // for the moment being there is not much here to configure really
-        //bind(ProcedureSourceInterface.class).to(ProcedureMenu.class);
+
+        install(ConfigurationModule.create());
+        requestInjection(this);
+
     }
 
     @Provides @Singleton
@@ -57,13 +67,7 @@ public class QoanModule extends AbstractModule {
 
         ClientConfig clientConfig = new ClientConfig();
         //clientConfig.setInstanceName(QAI_NODE_NAME);
-        if (isServerQaiNode) {
-            // Qai-Node
-            clientConfig.getNetworkConfig().addAddress("192.168.1.7:5701");
-        } else {
-            // zenpunk
-            clientConfig.getNetworkConfig().addAddress("192.168.1.6:5701");
-        }
+        clientConfig.getNetworkConfig().addAddress(qaiNodeToConnect);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
