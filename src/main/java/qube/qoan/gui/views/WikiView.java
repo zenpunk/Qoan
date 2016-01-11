@@ -14,6 +14,9 @@ import qube.qoan.gui.components.common.QoanHeader;
 public class WikiView extends VerticalLayout implements View {
 
     public static String NAME = "qoanwiki";
+
+    private String wikiUrl = "http://192.168.1.4:8081/wiki/en/Welcome_Page";
+
     /**
      * this is mainly for redirecting the view to QoanWiki which is
      * already running on the network- in way of documentation and etc.
@@ -33,7 +36,7 @@ public class WikiView extends VerticalLayout implements View {
 
         float headerHeight = header.getHeight();
 
-        BrowserFrame frame = new BrowserFrame(null, new ExternalResource("http://192.168.1.4:8081/wiki/en/Welcome_Page"));
+        BrowserFrame frame = new BrowserFrame(null, new ExternalResource(wikiUrl));
         frame.setWidth(width + "px");
         frame.setHeight((height-headerHeight) + "px");
         addComponent(frame);

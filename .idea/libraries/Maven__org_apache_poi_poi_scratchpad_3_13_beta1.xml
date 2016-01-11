@@ -3,9 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi-scratchpad/3.13-beta1/poi-scratchpad-3.13-beta1.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi-scratchpad/3.13-beta1/poi-scratchpad-3.13-beta1-javadoc.jar!/" />
-    </JAVADOC>
+    <JAVADOC />
     <SOURCES>
       <root url="jar://$MAVEN_REPOSITORY$/org/apache/poi/poi-scratchpad/3.13-beta1/poi-scratchpad-3.13-beta1-sources.jar!/" />
     </SOURCES>

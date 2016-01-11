@@ -7,15 +7,13 @@
 	<packaging>jar</packaging>
 	<version>1.0-SNAPSHOT</version>
     <!--<modules>
-        <module>../qai</module>
+        <module>../qube.qai</module>
     </modules>-->
     <name>qube.qoan</name>
 
 	<properties>
 		<vaadin.version>7.5.8</vaadin.version>
 		<vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
-		<project.source.version>1.7</project.source.version>
-		<project.target.version>1.7</project.target.version>
 		<project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.2.6.v20141205</jetty9.version>
         <guice.version>4.0</guice.version>
@@ -39,20 +37,20 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>central</id>
-            <url>http://192.168.1.4:8081/artifactory/libs-release</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
-        </repository>
-        <repository>
-            <id>snapshots</id>
-            <url>http://192.168.1.4:8081/artifactory/libs-snapshot</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-        </repository>
+        <!--<repository>-->
+            <!--<id>central</id>-->
+            <!--<url>http://192.168.1.4:8081/artifactory/libs-release</url>-->
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
+        <!--</repository>-->
+        <!--<repository>-->
+            <!--<id>snapshots</id>-->
+            <!--<url>http://192.168.1.4:8081/artifactory/libs-snapshot</url>-->
+            <!--<releases>-->
+                <!--<enabled>false</enabled>-->
+            <!--</releases>-->
+        <!--</repository>-->
     </repositories>
 
 	<dependencyManagement>
@@ -214,6 +212,14 @@
             <artifactId>guice-servlet</artifactId>
             <version>${guice.version}</version>
         </dependency>
+
+        <!-- Guice-config for using external configurations -->
+        <dependency>
+            <groupId>net.jmob</groupId>
+            <artifactId>guice.conf</artifactId>
+            <version>1.2.0</version>
+        </dependency>
+
 
         <!-- Lucene & Tika -->
         <!-- Tika does parsing and lucene does search and indexing -->

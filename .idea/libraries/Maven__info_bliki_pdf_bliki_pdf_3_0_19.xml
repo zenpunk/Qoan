@@ -3,11 +3,7 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/info/bliki/pdf/bliki-pdf/3.0.19/bliki-pdf-3.0.19.jar!/" />
     </CLASSES>
-    <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/info/bliki/pdf/bliki-pdf/3.0.19/bliki-pdf-3.0.19-javadoc.jar!/" />
-    </JAVADOC>
-    <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/info/bliki/pdf/bliki-pdf/3.0.19/bliki-pdf-3.0.19-sources.jar!/" />
-    </SOURCES>
+    <JAVADOC />
+    <SOURCES />
   </library>
 </component>
