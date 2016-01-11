@@ -220,7 +220,6 @@
             <version>1.2.0</version>
         </dependency>
 
-
         <!-- Lucene & Tika -->
         <!-- Tika does parsing and lucene does search and indexing -->
         <dependency>
