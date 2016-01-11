@@ -15,6 +15,8 @@ public class WikiView extends VerticalLayout implements View {
 
     public static String NAME = "qoanwiki";
 
+    // for the moment, this need to be in a configuration even, as i have
+    // only one wiki-server after all... later, much later...
     private String wikiUrl = "http://192.168.1.4:8081/wiki/en/Welcome_Page";
 
     /**
