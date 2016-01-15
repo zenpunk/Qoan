@@ -18,7 +18,7 @@ public class StartView extends VerticalLayout implements View {
             "<p><b>Koan:</b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and " +
                     "to force them into gaining sudden intuitive enlightenment." +
-                    "<br><b>Merriam Webster Online Dictionary</b></p>";
+                    "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {

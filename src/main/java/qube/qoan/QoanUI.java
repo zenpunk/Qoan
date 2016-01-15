@@ -19,7 +19,7 @@ import qube.qoan.services.QoanModule;
  */
 @Theme("mytheme")
 @Widgetset("qube.qoan.MyAppWidgetset")
-@JavaScript("js/mathjax/MathJax.js")
+@JavaScript({"js/mathjax/MathJax.js", "js/jspdf/jspdf.min.js"})
 public class QoanUI extends UI {
 
     protected Navigator navigator;

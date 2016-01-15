@@ -56,6 +56,7 @@ public class WikiIntegrationUtils {
         table.setColumnCollapsingAllowed(true);
         table.setFooterVisible(true);
         table.setSortAscending(true);
+        table.setPageLength(9);
         //table.setSizeUndefined();
         // begin with adding the headers
         for (int i = 0; i < header.length; i++) {
