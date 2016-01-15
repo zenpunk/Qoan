@@ -21,11 +21,9 @@ public class WorkspaceView extends VerticalLayout implements View {
 
     private boolean initialized = false;
 
-    public static String NAME = "workspace";
+    private boolean debug = true;
 
-    private boolean searchMenuVisible;
-    private boolean financeMenuVisible;
-    private boolean procedureVisible;
+    public static String NAME = "workspace";
 
     private SearchMenu searchMenu;
     private FinanceMenu financeMenu;
@@ -51,41 +49,29 @@ public class WorkspaceView extends VerticalLayout implements View {
      */
     private void initialize() {
 
-        // there is no real setting to this, just depends on what you are doing
-        // and if the things are in the way really
-        searchMenuVisible = false;
-        financeMenuVisible = false;
-        procedureVisible = false;
-
         QoanHeader header = new QoanHeader();
         header.setWidth("100%");
         addComponent(header);
 
-        //HorizontalLayout innerLayout = new HorizontalLayout();
         splitPanel = new HorizontalSplitPanel();
-
+        // create and add a dummy-component as place-filler
         currentComponent = new Panel();
         splitPanel.setFirstComponent(currentComponent);
+        splitPanel.getFirstComponent().setVisible(false);
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
         searchMenu.setSizeUndefined();
-        searchMenu.setVisible(searchMenuVisible);
-        //splitPanel.setFirstComponent(searchMenu); // , "top:10px; left:10px;"
 
         financeMenu = new FinanceMenu();
         financeMenu.setSizeUndefined();
-        financeMenu.setVisible(financeMenuVisible);
-        //splitPanel.setFirstComponent(financeMenu); // , "top: 0px; left: 200px;"
 
         procedureMenu = new ProcedureMenu();
         procedureMenu.setSizeUndefined();
-        procedureMenu.setVisible(procedureVisible);
-        //splitPanel.setFirstComponent(procedureMenu); // , "top: 0px; left: 400px;"
 
         workspace = new WorkSpace(searchMenu);
-        splitPanel.setSecondComponent(workspace); // , "top:10px; left:210px;"
+        splitPanel.setSecondComponent(workspace);
 
         addComponent(splitPanel);
 
@@ -128,13 +114,13 @@ public class WorkspaceView extends VerticalLayout implements View {
     }
 
     public void onShowProcedure(Button.ClickEvent event) {
-        procedureVisible = !procedureVisible;
         splitPanel.removeComponent(currentComponent);
         currentComponent = procedureMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(procedureMenu);
-        procedureMenu.setVisible(procedureVisible);
-        Notification.show("Show process-menu");
+        if (debug) {
+            Notification.show("Show process-menu");
+        }
     }
 
     /**
@@ -142,13 +128,13 @@ public class WorkspaceView extends VerticalLayout implements View {
      * @param event
      */
     public void onShowFinance(Button.ClickEvent event) {
-        financeMenuVisible = !financeMenuVisible;
         splitPanel.removeComponent(currentComponent);
         currentComponent = financeMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(financeMenu);
-        financeMenu.setVisible(financeMenuVisible);
-        Notification.show("Show finance-menu");
+        if (debug) {
+            Notification.show("Show finance-menu");
+        }
     }
 
     /**
@@ -156,13 +142,13 @@ public class WorkspaceView extends VerticalLayout implements View {
      * @param event
      */
     public void onShowSearch(Button.ClickEvent event) {
-        searchMenuVisible = !searchMenuVisible;
         splitPanel.removeComponent(currentComponent);
         currentComponent = searchMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(searchMenu);
-        searchMenu.setVisible(searchMenuVisible);
-        Notification.show("Show search menu");
+        if (debug) {
+            Notification.show("Show search menu");
+        }
     }
 
     /**
@@ -171,6 +157,8 @@ public class WorkspaceView extends VerticalLayout implements View {
      */
     public void onAddTab(Button.ClickEvent event) {
         workspace.addNewTab();
-        Notification.show("Add-tab button was clicked");
+        if (debug) {
+            Notification.show("Add-tab button was clicked");
+        }
     }
 }
