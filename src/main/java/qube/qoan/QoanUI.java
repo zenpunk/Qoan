@@ -2,6 +2,7 @@ package qube.qoan;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
@@ -18,6 +19,7 @@ import qube.qoan.services.QoanModule;
  */
 @Theme("mytheme")
 @Widgetset("qube.qoan.MyAppWidgetset")
+@JavaScript("js/mathjax/MathJax.js")
 public class QoanUI extends UI {
 
     protected Navigator navigator;
