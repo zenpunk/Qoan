@@ -20,7 +20,7 @@ public class FinanceMenu extends Panel {
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
-        layout.setWidth("300px");
+        //layout.setWidth("300px");
 
         financeRepository = new FinanceRepository();
         layout.addComponent(financeRepository);

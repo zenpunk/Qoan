@@ -78,7 +78,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     private void initialize() {
 
         layout = new VerticalLayout();
-        layout.setWidth("350px");
+        //layout.setWidth("350px");
         // some dummy label do fill in the display
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);

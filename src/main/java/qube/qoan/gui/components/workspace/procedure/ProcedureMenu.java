@@ -44,7 +44,7 @@ public class ProcedureMenu extends Panel {
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
-        layout.setWidth("300px");
+        //layout.setWidth("300px");
 
         final ProcedureRepositoryPanel repositoryPanel = new ProcedureRepositoryPanel();
         layout.addComponent(repositoryPanel);

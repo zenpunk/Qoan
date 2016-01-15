@@ -15,62 +15,10 @@ public class StartView extends VerticalLayout implements View {
     public static String NAME = "";
 
     private static String loremIpsum =
-            "<p>"+
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ut sapien vel lacus varius feugiat. " +
-                    "Duis sit amet quam et ligula lacinia pulvinar non vitae massa. " +
-                    "Vestibulum finibus sapien vel elit suscipit, " +
-                    "et dapibus felis tincidunt. Ut porttitor felis purus. " +
-                    "Integer facilisis quam id facilisis luctus. Quisque euismod libero arcu, vel fringilla enim pretium quis. " +
-                    "Sed consequat consequat tortor ullamcorper tempor. Maecenas tincidunt sodales tellus quis pharetra. " +
-                    "Donec imperdiet varius enim, a tempor nulla tristique quis. " +
-                    "Aenean ac leo sed elit maximus maximus."+
-            "</p>";
-    private static String loremIpsumRest = "<p>"+
-            "Mauris metus nisi, pulvinar vel odio eget, tempus tristique velit. " +
-                    "Sed venenatis libero velit, sit amet facilisis urna aliquam in. " +
-                    "Nunc id nibh eget nisl interdum faucibus non nec odio. " +
-                    "In venenatis finibus tortor, vel gravida orci malesuada ac. " +
-                    "Ut mollis, eros nec blandit rhoncus, ipsum dui posuere nisi, ac tempor eros eros non dui. " +
-                    "Praesent et vulputate justo, nec eleifend nibh. Proin eget cursus massa. " +
-                    "Morbi eu ultrices eros. In a sodales ex. " +
-                    "Morbi id molestie odio, at placerat metus. Proin mattis euismod fringilla. " +
-                    "Curabitur eget dolor risus. Curabitur ornare sagittis purus, eu mollis leo vulputate in. " +
-                    "Morbi fermentum augue eu nisi suscipit, sit amet fermentum dolor tristique. " +
-                    "Proin lacus mauris, cursus in gravida sit amet, vestibulum non eros."+
-            "</p>" +
-            "<p>"+
-                    "Etiam vulputate ante ut sapien aliquet feugiat. Vivamus sed lectus vitae felis egestas posuere imperdiet in nulla. " +
-                    "Donec tincidunt posuere sem quis rhoncus. Duis congue diam et lectus pellentesque, quis ornare erat malesuada. " +
-                    "Praesent malesuada eget neque nec maximus. Quisque quis imperdiet mauris, vel fringilla erat. " +
-                    "In condimentum leo lorem, cursus porttitor felis ultricies laoreet. " +
-                    "Maecenas magna nisl, posuere in nisl eu, tristique commodo est. " +
-                    "Vestibulum finibus tortor nisi, id facilisis risus ultrices eget. " +
-                    "Donec rutrum mauris augue, et aliquam lorem semper ac. " +
-                    "Phasellus a felis turpis. Sed sed risus bibendum, vulputate dui ut, accumsan dolor. " +
-                    "Vivamus faucibus turpis a ipsum viverra, at hendrerit nisi tincidunt." +
-            "</p>" +
-            "<p>"+
-                    "Nunc fringilla, odio ac dignissim commodo, purus odio laoreet lectus, lobortis mollis ex turpis non leo. " +
-                    "Fusce ac consequat risus. Quisque ut velit velit. " +
-                    "Suspendisse vestibulum, eros sit amet dignissim pharetra, tellus nisl rutrum libero, " +
-                    "et egestas risus augue non velit. Aenean nec nulla non sapien iaculis ullamcorper at in sem. " +
-                    "Mauris eu ligula sed ex volutpat ultricies. Aliquam sollicitudin leo ipsum, et consectetur enim imperdiet tristique. " +
-                    "Ut dignissim felis elit, vel suscipit quam molestie eget. " +
-                    "Vestibulum sit amet nulla sollicitudin, vestibulum mi at, scelerisque purus. " +
-                    "Cras imperdiet blandit ex ut malesuada. Praesent lacinia venenatis risus, vel fringilla nibh commodo in. " +
-                    "Morbi facilisis diam lacinia aliquet molestie. Aenean eu magna faucibus diam ullamcorper eleifend. " +
-                    "Nullam sodales dolor velit, id pharetra leo tempus vel. Aenean molestie nibh vitae quam convallis tempor. " +
-                    "Donec varius mi sed libero sollicitudin dignissim a vitae mi."+
-            "</p>" +
-            "<p>"+
-                    "Duis in turpis eu odio pharetra placerat. Curabitur sed nibh felis. " +
-                    "Fusce lacinia auctor dui sit amet ultricies. Ut accumsan felis sit amet leo varius, at tristique magna iaculis. " +
-                    "Maecenas rhoncus ipsum lectus, eget mollis turpis maximus quis. Etiam consequat varius neque, ac finibus turpis. " +
-                    "Morbi hendrerit tincidunt scelerisque. Praesent faucibus dictum nisi. " +
-                    "Aliquam pulvinar dapibus enim, rhoncus rutrum tortor placerat nec. " +
-                    "Quisque lobortis ligula in augue finibus, suscipit sagittis elit lacinia. " +
-                    "Sed accumsan imperdiet maximus. " +
-            "</p>" ;
+            "<p><b>Koan:</b> a paradox to be meditated upon that is used to train " +
+                    "Zen Buddhist monks to abandon ultimate dependence on reason and " +
+                    "to force them into gaining sudden intuitive enlightenment." +
+                    "<br><b>Merriam Webster Online Dictionary</b></p>";
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -89,17 +37,13 @@ public class StartView extends VerticalLayout implements View {
         HorizontalLayout firstRow = new HorizontalLayout();
         firstRow.setWidth("800px");
         ClassResource resource = new ClassResource("/images/kokoline.gif");
-        Image image = new Image("Qoan", resource);
+        Image image = new Image(null, resource);
         firstRow.addComponent(image);
 
         Label loremIpsum = new Label(StartView.loremIpsum, ContentMode.HTML);
         loremIpsum.setStyleName("justified", true);
         firstRow.addComponent(loremIpsum);
         contentLayout.addComponent(firstRow);
-
-        Label loremIpsumRest = new Label(StartView.loremIpsumRest, ContentMode.HTML);
-        loremIpsumRest.setStyleName("justified", true);
-        contentLayout.addComponent(loremIpsumRest);
 
         layout.addComponent(contentLayout);
         addComponent(layout);

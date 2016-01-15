@@ -32,6 +32,9 @@ public class WorkspaceView extends VerticalLayout implements View {
     private ProcedureMenu procedureMenu;
     private WorkSpace workspace;
 
+    private HorizontalSplitPanel splitPanel;
+    private Component currentComponent;
+
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
@@ -58,58 +61,33 @@ public class WorkspaceView extends VerticalLayout implements View {
         header.setWidth("100%");
         addComponent(header);
 
-        HorizontalLayout innerLayout = new HorizontalLayout();
-        //AbsoluteLayout innerLayout = new AbsoluteLayout();
-//        innerLayout.setWidth("1200px");
-//        innerLayout.setHeight("500px");
+        //HorizontalLayout innerLayout = new HorizontalLayout();
+        splitPanel = new HorizontalSplitPanel();
+
+        currentComponent = new Panel();
+        splitPanel.setFirstComponent(currentComponent);
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
         searchMenu.setSizeUndefined();
         searchMenu.setVisible(searchMenuVisible);
-//        ResizableCssLayout searchMenuWrapper = new ResizableCssLayout();
-//        searchMenuWrapper.addComponent(searchMenu);
-//        searchMenuWrapper.setCaption("Drag to resize panel");
-//        searchMenuWrapper.setWidth("200px");
-//        searchMenuWrapper.setHeight("500px");
-//        searchMenuWrapper.setResizable(true);
-        innerLayout.addComponent(searchMenu); // , "top:10px; left:10px;"
+        //splitPanel.setFirstComponent(searchMenu); // , "top:10px; left:10px;"
 
         financeMenu = new FinanceMenu();
         financeMenu.setSizeUndefined();
         financeMenu.setVisible(financeMenuVisible);
-//        ResizableCssLayout financeMenuWrapper = new ResizableCssLayout();
-//        financeMenuWrapper.addComponent(financeMenu);
-//        financeMenuWrapper.setWidth("200px");
-//        financeMenuWrapper.setHeight("500px");
-//        financeMenuWrapper.setResizable(true);
-//        financeMenuWrapper.setAutoAcceptResize(true);
-//        financeMenuWrapper.setSidesResizable();
-        innerLayout.addComponent(financeMenu); // , "top: 0px; left: 200px;"
+        //splitPanel.setFirstComponent(financeMenu); // , "top: 0px; left: 200px;"
 
         procedureMenu = new ProcedureMenu();
         procedureMenu.setSizeUndefined();
         procedureMenu.setVisible(procedureVisible);
-//        ResizableCssLayout procedureMenuWrapper = new ResizableCssLayout();
-//        procedureMenuWrapper.addComponent(procedureMenu);
-//        procedureMenuWrapper.setWidth("20%");
-//        procedureMenuWrapper.setHeight("100%");
-//        procedureMenuWrapper.setResizable(true);
-//        procedureMenuWrapper.setAutoAcceptResize(true);
-//        procedureMenuWrapper.setSidesResizable();
-        innerLayout.addComponent(procedureMenu); // , "top: 0px; left: 400px;"
+        //splitPanel.setFirstComponent(procedureMenu); // , "top: 0px; left: 400px;"
 
         workspace = new WorkSpace(searchMenu);
-//        ResizableCssLayout workspaceWrapper = new ResizableCssLayout();
-//        workspaceWrapper.addComponent(workspace);
-//        workspaceWrapper.setCaption("Drag to resize panel");
-//        workspaceWrapper.setWidth("800px");
-//        workspaceWrapper.setHeight("500px");
-//        workspaceWrapper.setResizable(true);
-        innerLayout.addComponent(workspace); // , "top:10px; left:210px;"
+        splitPanel.setSecondComponent(workspace); // , "top:10px; left:210px;"
 
-        addComponent(innerLayout);
+        addComponent(splitPanel);
 
         HorizontalLayout lowerLayout = new HorizontalLayout();
 
@@ -151,6 +129,10 @@ public class WorkspaceView extends VerticalLayout implements View {
 
     public void onShowProcedure(Button.ClickEvent event) {
         procedureVisible = !procedureVisible;
+        splitPanel.removeComponent(currentComponent);
+        currentComponent = procedureMenu;
+        currentComponent.setSizeFull();
+        splitPanel.setFirstComponent(procedureMenu);
         procedureMenu.setVisible(procedureVisible);
         Notification.show("Show process-menu");
     }
@@ -161,6 +143,10 @@ public class WorkspaceView extends VerticalLayout implements View {
      */
     public void onShowFinance(Button.ClickEvent event) {
         financeMenuVisible = !financeMenuVisible;
+        splitPanel.removeComponent(currentComponent);
+        currentComponent = financeMenu;
+        currentComponent.setSizeFull();
+        splitPanel.setFirstComponent(financeMenu);
         financeMenu.setVisible(financeMenuVisible);
         Notification.show("Show finance-menu");
     }
@@ -171,6 +157,10 @@ public class WorkspaceView extends VerticalLayout implements View {
      */
     public void onShowSearch(Button.ClickEvent event) {
         searchMenuVisible = !searchMenuVisible;
+        splitPanel.removeComponent(currentComponent);
+        currentComponent = searchMenu;
+        currentComponent.setSizeFull();
+        splitPanel.setFirstComponent(searchMenu);
         searchMenu.setVisible(searchMenuVisible);
         Notification.show("Show search menu");
     }
