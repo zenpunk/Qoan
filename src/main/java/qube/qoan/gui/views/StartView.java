@@ -36,7 +36,7 @@ public class StartView extends VerticalLayout implements View {
 
         HorizontalLayout firstRow = new HorizontalLayout();
         firstRow.setWidth("800px");
-        ClassResource resource = new ClassResource("/images/kokoline.gif");
+        ClassResource resource = new ClassResource("images/kokoline.gif");
         Image image = new Image(null, resource);
         firstRow.addComponent(image);
 

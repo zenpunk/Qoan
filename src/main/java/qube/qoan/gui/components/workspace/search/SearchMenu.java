@@ -101,7 +101,7 @@ public class SearchMenu extends Panel implements SearchAgent {
         resultTable.setVisible(false);
         resultTable.setSelectable(true);
         resultTable.setImmediate(true);
-        resultTable.setPageLength(5);
+        resultTable.setPageLength(9);
         resultTable.setDragMode(Table.TableDragMode.ROW);
         resultTable.setSizeUndefined();
         resultTable.setColumnReorderingAllowed(true);
