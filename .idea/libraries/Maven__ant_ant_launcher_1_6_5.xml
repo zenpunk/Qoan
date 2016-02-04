@@ -3,7 +3,11 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/ant/ant-launcher/1.6.5/ant-launcher-1.6.5.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/ant/ant-launcher/1.6.5/ant-launcher-1.6.5-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/ant/ant-launcher/1.6.5/ant-launcher-1.6.5-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

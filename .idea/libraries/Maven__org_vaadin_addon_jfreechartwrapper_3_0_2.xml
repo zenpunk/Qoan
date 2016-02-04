@@ -3,7 +3,11 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/org/vaadin/addon/jfreechartwrapper/3.0.2/jfreechartwrapper-3.0.2.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/vaadin/addon/jfreechartwrapper/3.0.2/jfreechartwrapper-3.0.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/vaadin/addon/jfreechartwrapper/3.0.2/jfreechartwrapper-3.0.2-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

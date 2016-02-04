@@ -3,7 +3,11 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/qube/samsroad/samsroad/1.0/samsroad-1.0.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/qube/samsroad/samsroad/1.0/samsroad-1.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/qube/samsroad/samsroad/1.0/samsroad-1.0-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>

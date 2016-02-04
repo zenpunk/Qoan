@@ -21,8 +21,8 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 11/2/15.
  */
-//@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
-@BindConfig(value = "qube/qoan/services/config_deploy", syntax = Syntax.PROPERTIES)
+@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
+//@BindConfig(value = "qube/qoan/services/config_deploy", syntax = Syntax.PROPERTIES)
 public class QoanModule extends AbstractModule {
 
     private boolean isServerQaiNode = true;

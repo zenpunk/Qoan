@@ -3,7 +3,11 @@
     <CLASSES>
       <root url="jar://$MAVEN_REPOSITORY$/grph/grph.all/1.6.29/grph.all-1.6.29.jar!/" />
     </CLASSES>
-    <JAVADOC />
-    <SOURCES />
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/grph/grph.all/1.6.29/grph.all-1.6.29-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/grph/grph.all/1.6.29/grph.all-1.6.29-sources.jar!/" />
+    </SOURCES>
   </library>
 </component>
