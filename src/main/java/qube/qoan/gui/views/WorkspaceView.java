@@ -57,7 +57,7 @@ public class WorkspaceView extends VerticalLayout implements View {
         // create and add a dummy-component as place-filler
         currentComponent = new Panel();
         splitPanel.setFirstComponent(currentComponent);
-        splitPanel.getFirstComponent().setVisible(false);
+        splitPanel.getFirstComponent().setVisible(true);
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it

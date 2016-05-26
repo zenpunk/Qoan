@@ -26,25 +26,4 @@ public class QoanTestBase extends TestCase {
 
     }
 
-
-    public static void main(String[] params) {
-        String[] tests = {QoanTestBase.class.getName()};
-        TestRunner.main(tests);
-    }
-
-    /**
-     * shame really that there are not more tests, i suppose
-     * @TODO think of some ways of gui-testing
-     */
-//    public static Test suite() {
-//        TestSuite suite = new TestSuite("All tests");
-//
-//        // this one tests search menu drag-n-drop things
-//        suite.addTestSuite(TestSearchMenu.class);
-//
-//        // this one is for parsing wiki-tables
-//        suite.addTestSuite(TestWikiArticleIntegration.class);
-//
-//        return suite;
-//    }
 }
