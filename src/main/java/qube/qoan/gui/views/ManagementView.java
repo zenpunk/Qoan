@@ -27,8 +27,8 @@ public class ManagementView extends VerticalLayout implements View {
 
     public static String NAME = "ManagementView";
 
-    @Inject
-    private HazelcastInstance hazelcastInstance;
+//    @Inject
+//    private HazelcastInstance hazelcastInstance;
 
     @Inject
     private ProcedureRunnerInterface procedureRunner;
