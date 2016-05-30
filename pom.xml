@@ -19,9 +19,9 @@
 
         <guice.version>4.0</guice.version>
         <guice-conf.version>1.2.0</guice-conf.version>
-        <hazelcast.version>3.6.3</hazelcast.version>
+        <hazelcast.version>3.5.4</hazelcast.version>
         <lucene.version>5.3.1</lucene.version>
-        <tika.version>1.13</tika.version>
+        <tika.version>1.10</tika.version>
         <bliki.version>3.0.19</bliki.version>
         <encog.version>3.3.0</encog.version>
         <opennlp.version>1.6.0</opennlp.version>
