@@ -15,7 +15,7 @@ public class StartView extends VerticalLayout implements View {
     public static String NAME = "";
 
     private static String loremIpsum =
-            "<p><b><i>Koan:</i></b> a paradox to be meditated upon that is used to train " +
+            "<p><b><i><u>Koan:</u></i></b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";
