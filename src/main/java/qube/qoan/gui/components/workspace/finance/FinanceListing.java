@@ -53,13 +53,13 @@ public class FinanceListing extends Panel {
         IMap<String,WikiArticle> wikiMap = hazelcastInstance.getMap("WIKIPEDIA_EN");
         WikiArticle article = wikiMap.get(listingName);
 
-        WikiIntegrationUtils wikiIntegration = new WikiIntegrationUtils();
+        WikiIntegrationUtils wikiIntegration = new WikiIntegrationUtils(hazelcastInstance);
         Table entitiesTable = wikiIntegration.convertHtmlTable(article);
 
         // check whether the stock-entities which are in the listing
         // have been added to hazelcast and if that is not the
         // case add them
-
+        //entitiesTable.
 
         // create and add the panel to on screen
         Panel content = new Panel(entitiesTable);

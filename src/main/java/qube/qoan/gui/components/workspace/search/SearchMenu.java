@@ -4,6 +4,7 @@ import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
@@ -12,6 +13,9 @@ import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
+import org.apache.commons.lang3.StringUtils;
+import qube.qai.persistence.StockEntity;
+import qube.qai.persistence.StockEntityId;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.ProcedureSourceInterface;
@@ -20,6 +24,7 @@ import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.WorkSpace;
+import qube.qoan.gui.components.workspace.finance.StockEntityTag;
 import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
 import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
 import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
@@ -40,6 +45,10 @@ public class SearchMenu extends Panel implements SearchAgent {
     private String WIKIPEDIA = "WIKIPEDIA_EN";
 
     private String WIKTIONARY = "WIKTIONARY_EN";
+
+    private String STOCK_QUOTES = "STOCK_QUOTES";
+
+    private String STOCK_ENTITIES = "STOCK_ENTITIES";
 
     @Inject @Named("Wiktionary_en")
     private SearchServiceInterface wiktionarySearchService;
@@ -225,6 +234,9 @@ public class SearchMenu extends Panel implements SearchAgent {
         private void handleDropEvent(DataBoundTransferable transferable) {
 
             Object itemId = transferable.getItemId();
+            Container container = transferable.getSourceContainer();
+            Item item = container.getItem(itemId);
+
             DragAndDropWrapper tagWrapper = null;
 
             if (itemId instanceof ProcedureListPanel.ProcedureItem) {
@@ -234,9 +246,8 @@ public class SearchMenu extends Panel implements SearchAgent {
                 ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
                 tagWrapper = new DragAndDropWrapper(procedureTag);
 
-            } else {
+            } else if (item.getItemPropertyIds().contains("File")) {
 
-                Item item = resultTable.getItem(itemId);
                 String file = (String) item.getItemProperty("File").getValue();
                 String source = (String) item.getItemProperty("Source").getValue();
 
@@ -258,6 +269,18 @@ public class SearchMenu extends Panel implements SearchAgent {
 
                 WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
                 tagWrapper = new DragAndDropWrapper(wikiTag);
+
+            } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
+
+                IMap<StockEntityId, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
+                String property = (String) item.getItemProperty("Ticker symbol").getValue();
+                String tradedIn = StringUtils.substringBetween(property, "{{", "|");
+                String ticker = StringUtils.substringBetween(property, "|", "}}");
+                StockEntityId id = new StockEntityId(ticker, tradedIn);
+                StockEntity stockEntity = map.get(id);
+                StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
+                tagWrapper = new DragAndDropWrapper(stockTag);
+
             }
 
             tagWrapper.setSizeUndefined();

@@ -2,7 +2,6 @@ package qube.qoan.services;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.Singleton;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
@@ -17,6 +16,7 @@ import qube.qoan.authentication.UserManager;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 
 import javax.inject.Named;
+import javax.inject.Singleton;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -87,6 +87,15 @@ public class QoanModule extends AbstractModule {
     @Provides @Named("Wikipedia_en") @Singleton
     SearchServiceInterface provideWikipediaSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Wikipedia_en");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
+    }
+
+    @Provides @Named("Stock_Quotes") @Singleton
+    SearchServiceInterface provideStockQuoteSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Quotes");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
         distributedSearch.initialize();
 

@@ -1,10 +1,17 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
+import bsh.StringUtil;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Table;
 import info.bliki.wiki.filter.HTMLConverter;
 import info.bliki.wiki.model.WikiModel;
+import org.apache.commons.lang3.StringUtils;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -12,13 +19,13 @@ import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.parsers.WikiIntegration;
+import qube.qai.persistence.StockEntity;
+import qube.qai.persistence.StockEntityId;
 import qube.qai.persistence.WikiArticle;
 
+import javax.inject.Inject;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by rainbird on 12/21/15.
@@ -26,6 +33,11 @@ import java.util.Set;
 public class WikiIntegrationUtils {
 
     private static Logger logger = LoggerFactory.getLogger("WikiIntegrationUtils");
+
+    @Inject
+    private HazelcastInstance hazelcastInstance;
+
+    private String STOCK_ENTITIES = "STOCK_ENTITIES";
 
     /**
      * this at least at this point, a class to integrate
@@ -35,6 +47,10 @@ public class WikiIntegrationUtils {
      * the gui and allow better user-interaction
      */
     public WikiIntegrationUtils() {
+    }
+
+    public WikiIntegrationUtils(HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
     }
 
     public Table convertHtmlTable(WikiArticle wikiArticle) {
@@ -72,7 +88,57 @@ public class WikiIntegrationUtils {
             }
         }
 
+        if (hazelcastInstance != null) {
+            insertEntitiesToMap(header, data);
+        }
+
         return table;
+    }
+
+    private void insertEntitiesToMap(String[] header, String[][] data) {
+
+        IMap<StockEntityId, StockEntity> entityMap = hazelcastInstance.getMap(STOCK_ENTITIES);
+
+        for (int i = 0; i < data.length; i++) {
+
+            StockEntity entity = new StockEntity();
+
+            try {
+                for (int j = 0; j < data[i].length; j++) {
+
+                    if ((StringUtils.startsWith(header[j], "Ticker symbol"))) {
+                        String tradedIn = StringUtils.substringBetween(data[i][j], "{{", "|");
+                        String ticker = StringUtils.substringBetween(data[i][j], "|", "}}");
+                        entity.setTradedIn(tradedIn);
+                        entity.setTickerSymbol(ticker);
+                    } else if (StringUtils.startsWith(header[j], "Security")) {
+                        entity.setName(data[i][j]);
+                        entity.setSecurity(data[i][j]);
+                    } else if (StringUtils.startsWith(header[j], "SEC filings")) {
+                        entity.setSecFilings(data[i][j]);
+                    } else if (StringUtils.startsWith(header[j], "GICS") && !StringUtils.startsWith(header[j], "GICS Sub Industry")) {
+                        entity.setGicsSector(data[i][j]);
+                    } else if (StringUtils.startsWith(header[j], "GICS Sub Industry")) {
+                        entity.setGicsSubIndustry(data[i][j]);
+                    } else if (StringUtils.startsWith(header[j], "Address")) {
+                        entity.setAddress(data[i][j]);
+                    } else if (StringUtils.startsWith(header[j], "Date") && StringUtils.isNotBlank(data[i][j])) {
+                        DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy-MM-dd");
+                        DateTime dateTime = formatter.parseDateTime(data[i][j]);
+                        entity.setDateFirstAdded(dateTime.toDate());
+                    } else if (StringUtils.startsWith(header[j], "CIK")) {
+                        entity.setCIK(data[i][j]);
+                    }
+                }
+            } catch (Exception e) {
+                logger.info("Skipping entity due to exception: " + e.getMessage());
+                break;
+            }
+            // and now add the create entity to the map if it is not already there
+            if (!entityMap.containsKey(entity.getId())) {
+                entityMap.put(entity.getId(), entity);
+            }
+        }
     }
 
     /**
