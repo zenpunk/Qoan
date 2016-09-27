@@ -95,6 +95,11 @@ public class WikiIntegrationUtils {
         return table;
     }
 
+    /**
+     * @TODO make a test for this method
+     * @param header
+     * @param data
+     */
     private void insertEntitiesToMap(String[] header, String[][] data) {
 
         IMap<StockEntityId, StockEntity> entityMap = hazelcastInstance.getMap(STOCK_ENTITIES);

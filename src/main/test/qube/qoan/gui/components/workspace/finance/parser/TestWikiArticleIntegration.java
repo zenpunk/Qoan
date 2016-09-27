@@ -1,5 +1,6 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.data.Item;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
@@ -33,6 +34,9 @@ public class TestWikiArticleIntegration extends QoanTestBase {
     @Named("Wikipedia_en")
     private SearchServiceInterface searchService;
 
+    //@Inject
+    private HazelcastInstance hazelcastInstance;
+
     public void testVaadinTable() throws Exception {
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
@@ -56,6 +60,16 @@ public class TestWikiArticleIntegration extends QoanTestBase {
             Item item = table.getItem(itemId);
             logger.info("found item: " + item.toString());
         }
+
+    }
+
+    // @TODO inplement the rest of the test
+    public void restInsertEntitiesToMap() throws Exception {
+
+        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+        assertNotNull("we are here to play with this file", snp500);
+
+        fail("rest of the test not yet implemented");
 
     }
 

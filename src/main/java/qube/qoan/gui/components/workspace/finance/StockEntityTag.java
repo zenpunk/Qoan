@@ -27,12 +27,12 @@ public class StockEntityTag extends Panel {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 
-        final String title = stockEntity.getTickerSymbol();
+        final String title = stockEntity.getId().toString();
         Label titleLabel = new Label(title);
         titleLabel.setStyleName("bold");
         layout.addComponent(titleLabel);
 
-        Label sourceLabel = new Label("from: " + stockEntity.getSecurity());
+        Label sourceLabel = new Label("name: " + stockEntity.getSecurity());
         layout.addComponent(sourceLabel);
 
         HorizontalLayout buttonsLayout = new HorizontalLayout();

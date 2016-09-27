@@ -288,8 +288,8 @@ public class SearchMenu extends Panel implements SearchAgent {
 
             // try to find out the component position to enter
             String positionString;
-            left = left + 5;
-            top = top + 5;
+            left += 10;
+            top += 10;
             positionString = "left: " + left + "px; top: " + top + "px;";
             parentLayout.addComponent(tagWrapper, positionString);
 
