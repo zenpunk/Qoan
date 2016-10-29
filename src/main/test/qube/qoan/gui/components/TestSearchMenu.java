@@ -24,22 +24,18 @@ public class TestSearchMenu extends QoanTestBase {
         AbsoluteLayout layout = new AbsoluteLayout();
         DropHandler dropHandler = searchMenu.createDropHandler(layout);
         Transferable transferable = new Transferable() {
-            @Override
             public Object getData(String dataFlavor) {
                 return null;
             }
 
-            @Override
             public void setData(String dataFlavor, Object value) {
 
             }
 
-            @Override
             public Collection<String> getDataFlavors() {
                 return null;
             }
 
-            @Override
             public Component getSourceComponent() {
                 return null;
             }

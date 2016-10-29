@@ -19,7 +19,10 @@ import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
+import pl.pdfviewer.PdfViewer;
 import qube.qoan.gui.components.common.QoanHeader;
+
+import java.io.File;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -48,6 +51,10 @@ public class ComponentsView extends VerticalLayout implements View {
 
         Component histogram = createHistogram();
         addComponent(histogram);
+
+        File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+        Component pdfViewer = new PdfViewer(pdfFile);
+        addComponent(pdfViewer);
 
 //        Button button = new Button("Click Me");
 //        button.addClickListener(new Button.ClickListener() {

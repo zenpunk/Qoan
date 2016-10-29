@@ -31,8 +31,6 @@
         <apache-commons-compress.version>1.11</apache-commons-compress.version>
 	</properties>
 
-
-
 	<dependencies>
         <!-- Qai is after all also a dependency -->
         <dependency>
@@ -122,6 +120,13 @@
             <groupId>org.vaadin.addon</groupId>
             <artifactId>visjs-addon</artifactId>
             <version>1.0.1.0</version>
+        </dependency>
+
+        <!-- pdf-viewer add on for Vaadin -->
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>pdfviewer</artifactId>
+            <version>1.1.0</version>
         </dependency>
 
         <!-- Vaadin plug-in to make components resizable-->
@@ -302,93 +307,112 @@
 	<build>
 		<plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.19</version>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.version}</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <strict>true</strict>
+                    <force>true</force>
+                    <!-- Enable during development to speed compiling. -->
+                    <!-- <draftCompile>true</draftCompile>
+                    <style>DETAILED</style> -->
+                    <!--<userAgents>ie8</userAgents>-->
+                    <!-- <userAgents>gecko1_8</userAgents> -->
+                    <!-- End development options -->
+                    <webappDirectory>src/main/webapp/VAADIN/widgetsets</webappDirectory>
+                    <modules>
+                        <module>qube.qoan.MyWidgetset</module>
+                    </modules>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.0</version>
-                <configuration>
-                    <source>1.7</source>
-                    <target>1.7</target>
-                </configuration>
-            </plugin>
-			<!--<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<encoding>${project.encoding}</encoding>
-					<source>${project.source.version}</source>
-					<target>${project.target.version}</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>${project.encoding}</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<packagingExcludes>WEB-INF/classes/VAADIN/gwt-unitCache/**,
-						WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**</packagingExcludes>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-maven-plugin</artifactId>
-				<version>${vaadin.plugin.version}</version>
-				<configuration>
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
-					<draftCompile>false</draftCompile>
-					<compileReport>false</compileReport>
-					<style>OBF</style>
-					<strict>true</strict>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>update-theme</goal>
-							<goal>update-widgetset</goal>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.6.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<indexDirectory>src/main/webapp/VAADIN/themes</indexDirectory>
-							<includes>
-								<include>**/styles.css</include>
-								<include>**/styles.scss.cache</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>2.19</version>-->
+                <!--<configuration>-->
+                    <!--<skipTests>true</skipTests>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-compiler-plugin</artifactId>-->
+                <!--<version>3.0</version>-->
+                <!--<configuration>-->
+                    <!--<source>1.8</source>-->
+                    <!--<target>1.8</target>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-compiler-plugin</artifactId>-->
+				<!--<version>3.0</version>-->
+				<!--<configuration>-->
+					<!--<encoding>${project.encoding}</encoding>-->
+					<!--<source>1.8</source>-->
+					<!--<target>1.8</target>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-resources-plugin</artifactId>-->
+				<!--<version>2.6</version>-->
+				<!--<configuration>-->
+					<!--<encoding>${project.encoding}</encoding>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-war-plugin</artifactId>-->
+				<!--<version>2.3</version>-->
+				<!--<configuration>-->
+					<!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
+					<!--<packagingExcludes>WEB-INF/classes/VAADIN/gwt-unitCache/**,-->
+						<!--WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**</packagingExcludes>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>com.vaadin</groupId>-->
+				<!--<artifactId>vaadin-maven-plugin</artifactId>-->
+				<!--<version>${vaadin.plugin.version}</version>-->
+				<!--<configuration>-->
+					<!--<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>-->
+					<!--<webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>-->
+					<!--<draftCompile>false</draftCompile>-->
+					<!--<compileReport>false</compileReport>-->
+					<!--<style>OBF</style>-->
+					<!--<strict>true</strict>-->
+				<!--</configuration>-->
+				<!--<executions>-->
+					<!--<execution>-->
+						<!--<goals>-->
+							<!--<goal>update-theme</goal>-->
+							<!--<goal>update-widgetset</goal>-->
+							<!--<goal>compile</goal>-->
+						<!--</goals>-->
+					<!--</execution>-->
+				<!--</executions>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-source-plugin</artifactId>-->
+				<!--<version>2.4</version>-->
+			<!--</plugin>-->
+			<!--<plugin>-->
+				<!--<groupId>org.apache.maven.plugins</groupId>-->
+				<!--<artifactId>maven-clean-plugin</artifactId>-->
+				<!--<version>2.6.1</version>-->
+				<!--<configuration>-->
+					<!--<filesets>-->
+						<!--<fileset>-->
+							<!--<indexDirectory>src/main/webapp/VAADIN/themes</indexDirectory>-->
+							<!--<includes>-->
+								<!--<include>**/styles.css</include>-->
+								<!--<include>**/styles.scss.cache</include>-->
+							<!--</includes>-->
+						<!--</fileset>-->
+					<!--</filesets>-->
+				<!--</configuration>-->
+			<!--</plugin>-->
 		</plugins>
 	</build>
 
