@@ -27,7 +27,6 @@ public class FinanceMenu extends Panel {
 
         Button showSelectedListingButton = new Button("Show selected listing");
         showSelectedListingButton.addClickListener(new Button.ClickListener() {
-            @Override
             public void buttonClick(Button.ClickEvent event) {
                 String listingName = financeRepository.getSelectedListingName();
                 financeListing.displayListing(listingName);

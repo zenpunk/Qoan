@@ -12,7 +12,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.vaadin.addon.JFreeChartWrapper;
 import qube.qai.data.Arguments;
 import qube.qai.data.Metrics;
-import qube.qai.data.Selector;
+import qube.qai.data.SelectionOperator;
 import qube.qai.data.TimeSequence;
 import qube.qai.data.analysis.Statistics;
 import qube.qai.matrix.Matrix;
@@ -158,7 +158,7 @@ public class ProcedureTag extends Panel {
             TimeSequence<Double> averageTimeSequence = (TimeSequence<Double>) arguments.getResult(ProcedureConstants.AVERAGE_TIME_SEQUENCE);
             // say, two best, two worst and average
             String[] names = collectRankedNames(sortedTimeSequences);
-            Map<String, Selector> timeSeriesMap = (Map<String, Selector>) arguments.getSelector(ProcedureConstants.FROM).getData();
+            Map<String, SelectionOperator> timeSeriesMap = (Map<String, SelectionOperator>) arguments.getSelector(ProcedureConstants.FROM).getData();
             Component chart = createChartsFor(timeSeriesMap, names);
             tabSheet.addTab(chart).setCaption("Selected time-series");
 
@@ -292,7 +292,7 @@ public class ProcedureTag extends Panel {
      * @param names
      * @return
      */
-    private Component createChartsFor(Map<String, Selector> timeSequenceMap, String... names) {
+    private Component createChartsFor(Map<String, SelectionOperator> timeSequenceMap, String... names) {
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
 
