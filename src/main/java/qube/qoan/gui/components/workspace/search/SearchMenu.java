@@ -140,7 +140,7 @@ public class SearchMenu extends Panel implements SearchAgent {
      * @param searchIn
      * @param maxResults
      */
-    @Override
+    //@Override
     public void searchFor(String source, String searchTerm, String searchIn, int maxResults) {
         // for the time being simply display search terms
         String message = "Search from: " + source + " in: " + searchIn + " for: " + searchTerm; // + " with: " + maxHits + " max. results";

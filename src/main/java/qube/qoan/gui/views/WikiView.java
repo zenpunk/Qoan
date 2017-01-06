@@ -24,7 +24,6 @@ public class WikiView extends VerticalLayout implements View {
      * already running on the network- in way of documentation and etc.
      * @param event
      */
-    @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         UI.getCurrent().getPage().setTitle("Qoan Wiki");

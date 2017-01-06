@@ -33,7 +33,7 @@ public class WorkspaceView extends VerticalLayout implements View {
     private HorizontalSplitPanel splitPanel;
     private Component currentComponent;
 
-    @Override
+    //@Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         UI.getCurrent().getPage().setTitle("Qoan Workspace");

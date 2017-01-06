@@ -61,7 +61,7 @@ public class QoanUI extends UI {
             injector.injectMembers(managementView);
         }
 
-        // Create and register the views- not that this way, the pages will always be new instances!
+        // Create and register the views
         navigator.addView("", StartView.class);
         navigator.addView(LoginView.NAME, LoginView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);

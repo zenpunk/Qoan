@@ -26,6 +26,7 @@ public class FinanceRepository extends Panel {
     private ObjectProperty<String> listingName;
 
     private String defaultListingName = "List of S&P 500 companies.xml";
+
     public FinanceRepository() {
         super();
         initialize();
