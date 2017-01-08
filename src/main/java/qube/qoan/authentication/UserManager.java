@@ -14,11 +14,33 @@ public class UserManager {
      * @param password
      * @return
      */
-    public User authenticateUser(String username, String password) {
+    public User authenticateUser(String username, String password) throws UserNotAuthenticatedException {
 
         User user = new User();
-        user.setUserName(username);
+        user.setUsername(username);
+        user.setPassword(password);
+
+        // save the thing somewhere perhaps?
 
         return user;
+    }
+
+    public boolean isUserAuthorized(String username, String password, String actionDescription)
+            throws UserNotAuthenticatedException, UserNotAuthorizedException {
+
+        User user = authenticateUser(username, password);
+        if (user != null) {
+            return isUserAuthorized(user, actionDescription);
+        }
+
+        return false;
+    }
+
+    public boolean isUserAuthorized(User user, String actionDescription) throws UserNotAuthorizedException {
+
+        // here action-descriptions will be converted tand be checked-
+        // no idea how that is supposed to work right now
+
+        return true;
     }
 }

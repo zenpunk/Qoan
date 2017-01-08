@@ -27,7 +27,7 @@ public class StockEntityTag extends Panel {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 
-        final String title = stockEntity.getId().toString();
+        final String title = stockEntity.getUuid().toString();
         Label titleLabel = new Label(title);
         titleLabel.setStyleName("bold");
         layout.addComponent(titleLabel);
@@ -49,7 +49,7 @@ public class StockEntityTag extends Panel {
         // add a button to remove this tag from workspace
         Button remove = new Button("remove");
         remove.addClickListener(new Button.ClickListener() {
-            @Override
+
             public void buttonClick(Button.ClickEvent event) {
                 // we are removing the toDecorate- which is the dnd-wrapper
                 Component parent = getParent();

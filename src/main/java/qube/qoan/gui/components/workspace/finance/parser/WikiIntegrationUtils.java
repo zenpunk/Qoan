@@ -20,7 +20,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.parsers.WikiIntegration;
 import qube.qai.persistence.StockEntity;
-import qube.qai.persistence.StockEntityId;
 import qube.qai.persistence.WikiArticle;
 
 import javax.inject.Inject;
@@ -102,7 +101,7 @@ public class WikiIntegrationUtils {
      */
     private void insertEntitiesToMap(String[] header, String[][] data) {
 
-        IMap<StockEntityId, StockEntity> entityMap = hazelcastInstance.getMap(STOCK_ENTITIES);
+        IMap<String, StockEntity> entityMap = hazelcastInstance.getMap(STOCK_ENTITIES);
 
         for (int i = 0; i < data.length; i++) {
 
@@ -140,8 +139,8 @@ public class WikiIntegrationUtils {
                 break;
             }
             // and now add the create entity to the map if it is not already there
-            if (!entityMap.containsKey(entity.getId())) {
-                entityMap.put(entity.getId(), entity);
+            if (!entityMap.containsKey(entity.getUuid())) {
+                entityMap.put(entity.getUuid(), entity);
             }
         }
     }

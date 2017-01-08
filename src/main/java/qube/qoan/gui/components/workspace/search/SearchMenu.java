@@ -15,7 +15,6 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.persistence.StockEntity;
-import qube.qai.persistence.StockEntityId;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.ProcedureSourceInterface;
@@ -272,11 +271,11 @@ public class SearchMenu extends Panel implements SearchAgent {
 
             } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
 
-                IMap<StockEntityId, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
+                IMap<String, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
                 String property = (String) item.getItemProperty("Ticker symbol").getValue();
                 String tradedIn = StringUtils.substringBetween(property, "{{", "|");
                 String ticker = StringUtils.substringBetween(property, "|", "}}");
-                StockEntityId id = new StockEntityId(ticker, tradedIn);
+                String id = ""; //new StockEntityId(ticker, tradedIn);
                 StockEntity stockEntity = map.get(id);
                 StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
                 tagWrapper = new DragAndDropWrapper(stockTag);
