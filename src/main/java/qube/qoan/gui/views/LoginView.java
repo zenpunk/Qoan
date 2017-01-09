@@ -5,9 +5,12 @@ import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.authentication.UserManager;
+import qube.qoan.authentication.UserNotAuthenticatedException;
 import qube.qoan.gui.components.common.QoanHeader;
 
 import javax.inject.Inject;
@@ -17,12 +20,13 @@ import javax.inject.Inject;
  */
 public class LoginView extends VerticalLayout implements View {
 
+    private Logger logger = LoggerFactory.getLogger("LoginView");
+
     public static String NAME = "LoginView";
 
     @Inject
     private UserManager userManager;
 
-    @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
 
         UI.getCurrent().getPage().setTitle("Qoan Login");
@@ -44,17 +48,19 @@ public class LoginView extends VerticalLayout implements View {
 
         Button loginButton = new Button("Login");
         loginButton.addClickListener(new Button.ClickListener() {
-            @Override
             public void buttonClick(Button.ClickEvent event) {
-                User user = userManager.authenticateUser(username.getValue(), password.getValue());
-                if (user != null) {
-                    ((QoanUI) UI.getCurrent()).setUser(user);
-                    String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
-                    if (targetPage == null) {
-                        targetPage = StartView.NAME;
-                    }
-                    UI.getCurrent().getNavigator().navigateTo(targetPage);
+                User user = null;
+                try {
+                    user = userManager.authenticateUser(username.getValue(), password.getValue());
+                } catch (UserNotAuthenticatedException e) {
+                    logger.error("User: '" + username + "' with password: '" + password + "' cannot be authenticated", e);
                 }
+                ((QoanUI) UI.getCurrent()).setUser(user);
+                String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
+                if (targetPage == null) {
+                    targetPage = StartView.NAME;
+                }
+                UI.getCurrent().getNavigator().navigateTo(targetPage);
             }
         });
         layout.addComponent(loginButton);
