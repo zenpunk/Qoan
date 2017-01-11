@@ -35,7 +35,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
     private SearchServiceInterface searchService;
 
     //@Inject
-    private HazelcastInstance hazelcastInstance;
+    //private HazelcastInstance hazelcastInstance;
 
     public void testVaadinTable() throws Exception {
         WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);

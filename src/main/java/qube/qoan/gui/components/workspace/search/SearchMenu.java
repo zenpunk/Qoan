@@ -55,7 +55,7 @@ public class SearchMenu extends Panel implements SearchAgent {
     @Inject @Named("Wikipedia_en")
     private SearchServiceInterface wikipediaSearchService;
 
-    @Inject
+    @Inject @javax.inject.Named("HAZELCAST_CLIENT")
     private HazelcastInstance hazelcastInstance;
 
     @Inject

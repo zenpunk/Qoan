@@ -23,6 +23,7 @@ import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.WikiArticle;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.io.IOException;
 import java.util.*;
 
@@ -33,7 +34,7 @@ public class WikiIntegrationUtils {
 
     private static Logger logger = LoggerFactory.getLogger("WikiIntegrationUtils");
 
-    @Inject
+    @Inject @Named("HAZELCAST_CLIENT")
     private HazelcastInstance hazelcastInstance;
 
     private String STOCK_ENTITIES = "STOCK_ENTITIES";
