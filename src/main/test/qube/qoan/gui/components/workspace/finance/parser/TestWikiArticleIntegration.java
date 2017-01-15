@@ -63,15 +63,15 @@ public class TestWikiArticleIntegration extends QoanTestBase {
 
     }
 
-    // @TODO inplement the rest of the test
-    public void restInsertEntitiesToMap() throws Exception {
-
-        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
-        assertNotNull("we are here to play with this file", snp500);
-
-        fail("rest of the test not yet implemented");
-
-    }
+//    // inplement the rest of the test
+//    public void restInsertEntitiesToMap() throws Exception {
+//
+//        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+//        assertNotNull("we are here to play with this file", snp500);
+//
+//        fail("rest of the test not yet implemented");
+//
+//    }
 
     public void restWikiUtilLayout() throws Exception {
         WikiArticle darwin = searchService.retrieveDocumentContentFromZipFile(darwinArticleName);
