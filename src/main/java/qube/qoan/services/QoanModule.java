@@ -59,7 +59,7 @@ public class QoanModule extends AbstractModule {
         return userManager;
     }
 
-    @Provides @Singleton @Named("HAZELCAST_CLIENT")
+    @Provides @Singleton //@Named("HAZELCAST_CLIENT")
     HazelcastInstance provideHazelcastInstance() {
 
         if (hazelcastInstance != null) {

@@ -89,7 +89,7 @@ public class QoanTestModule extends AbstractModule {
         return entityManager;
     }
 
-    @Provides @Singleton @Named("HAZELCAST_CLIENT")
+    @Provides @Singleton //@Named("HAZELCAST_CLIENT")
     HazelcastInstance provideHazelcastInstance() {
         if (hazelcastInstance != null) {
             return hazelcastInstance;

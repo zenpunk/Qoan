@@ -13,7 +13,7 @@ public class WebServer {
 
     private static String contextPath = "/";
     //private static String resourceBase = "./webapp";
-    private static String resourceBase = "./target/webapp";
+    private static String resourceBase = "./target/classes/webapp";
     private static int httpPort = 8080;
 
     /**

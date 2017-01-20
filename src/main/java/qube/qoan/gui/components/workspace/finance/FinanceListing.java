@@ -24,7 +24,7 @@ import java.util.List;
 public class FinanceListing extends Panel {
 
 
-    @Inject @Named("HAZELCAST_CLIENT")
+    @Inject //@Named("HAZELCAST_CLIENT")
     private HazelcastInstance hazelcastInstance;
 
     private Accordion listingsAccordion;

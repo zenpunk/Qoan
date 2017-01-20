@@ -34,7 +34,7 @@ public class WikiIntegrationUtils {
 
     private static Logger logger = LoggerFactory.getLogger("WikiIntegrationUtils");
 
-    @Inject @Named("HAZELCAST_CLIENT")
+    @Inject //@Named("HAZELCAST_CLIENT")
     private HazelcastInstance hazelcastInstance;
 
     private String STOCK_ENTITIES = "STOCK_ENTITIES";
