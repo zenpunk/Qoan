@@ -128,7 +128,6 @@ public class SearchMenu extends Panel implements SearchAgent {
      */
     public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
         DropHandler dropHandler = new MoveAndDropHandler(parentLayout);
-
         return dropHandler;
     }
 
@@ -178,16 +177,8 @@ public class SearchMenu extends Panel implements SearchAgent {
                 row.getItemProperty("Title").setValue(result.getTitle());
                 row.getItemProperty("Relevance").setValue(result.getRelevance());
                 row.getItemProperty("File").setValue(result.getFilename());
-
             }
         }
-    }
-
-    /**
-     * @TODO use as item-id class for searches so that the event doesn't need reference to the table
-     */
-    class SearchMenuItem {
-
     }
 
     /**
