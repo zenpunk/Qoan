@@ -49,7 +49,7 @@ public class ProcedureTag extends Panel {
         VerticalLayout layout = new VerticalLayout();
         layout.setWidth("200px");
 
-        String name = procedure.getName();
+        String name = procedure.getNameString();
 
         Label nameLabel = new Label(name);
         nameLabel.setStyleName("bold");
@@ -103,7 +103,7 @@ public class ProcedureTag extends Panel {
      */
     public void onClickOpen(Button.ClickEvent event) {
 
-        String title = procedure.getName();
+        String title = procedure.getNameString();
         Panel windowContent = new Panel();
         VerticalLayout layout = new VerticalLayout();
         // if procedure has already executed, then add the views to results as well

@@ -48,7 +48,7 @@ public class ProcedureListPanel extends Panel {
     }
 
     public void displayProcedure(Procedure procedure) {
-        String name = procedure.getName();
+        String name = procedure.getNameString();
 
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
@@ -100,7 +100,7 @@ public class ProcedureListPanel extends Panel {
             if (parent == null) {
                 parent = visitee.getName();
             }
-            ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getName());
+            ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getNameString());
             currentTree.addItem(current);
             currentTree.setParent(current, parent);
             return current;
