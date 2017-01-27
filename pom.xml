@@ -398,8 +398,8 @@
 				<executions>
 					<execution>
 						<goals>
-							<goal>update-theme</goal>
-							<goal>update-widgetset</goal>
+							<goal>remove-theme</goal>
+							<goal>remove-widgetset</goal>
 							<goal>compile</goal>
 						</goals>
 					</execution>
