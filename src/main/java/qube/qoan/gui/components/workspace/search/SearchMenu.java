@@ -2,33 +2,12 @@ package qube.qoan.gui.components.workspace.search;
 
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.vaadin.data.Container;
 import com.vaadin.data.Item;
-import com.vaadin.event.DataBoundTransferable;
-import com.vaadin.event.Transferable;
-import com.vaadin.event.dd.DragAndDropEvent;
-import com.vaadin.event.dd.DropHandler;
-import com.vaadin.event.dd.acceptcriteria.AcceptAll;
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
-import org.apache.commons.lang3.StringUtils;
-import qube.qai.persistence.StockEntity;
-import qube.qai.persistence.WikiArticle;
-import qube.qai.procedure.Procedure;
-import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
-import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.workspace.WorkSpace;
-import qube.qoan.gui.components.workspace.finance.StockEntityTag;
-import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
-import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
-import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
 import qube.qoan.gui.interfaces.SearchAgent;
-import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -41,28 +20,28 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     private boolean debug = true;
 
-    private String WIKIPEDIA = "WIKIPEDIA_EN";
-
-    private String WIKTIONARY = "WIKTIONARY_EN";
-
-    private String STOCK_QUOTES = "STOCK_QUOTES";
-
-    private String STOCK_ENTITIES = "STOCK_ENTITIES";
-
+    //    private String WIKIPEDIA = "WIKIPEDIA_EN";
+//
+//    private String WIKTIONARY = "WIKTIONARY_EN";
+//
+//    private String STOCK_QUOTES = "STOCK_QUOTES";
+//
+//    private String STOCK_ENTITIES = "STOCK_ENTITIES";
+//
     @Inject @Named("Wiktionary_en")
     private SearchServiceInterface wiktionarySearchService;
 
     @Inject @Named("Wikipedia_en")
     private SearchServiceInterface wikipediaSearchService;
-
-    @Inject //@Named("HAZELCAST_CLIENT")
-    private HazelcastInstance hazelcastInstance;
-
-    @Inject
-    private ProcedureCache procedureCache;
-
-    @Inject
-    private UUIDServiceInterface uuidService;
+//
+//    @Inject
+//    private HazelcastInstance hazelcastInstance;
+//
+//    @Inject
+//    private ProcedureCache procedureCache;
+//
+//    @Inject
+//    private UUIDServiceInterface uuidService;
 
     private VerticalLayout layout;
 
@@ -126,10 +105,10 @@ public class SearchMenu extends Panel implements SearchAgent {
      * creates a drag-n-drop handler which would handle the added table rows
      * @return
      */
-    public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
-        DropHandler dropHandler = new MoveAndDropHandler(parentLayout);
-        return dropHandler;
-    }
+//    public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
+//        DropHandler dropHandler = new BaseQoanView.createDropHandler(parentLayout);
+//        return dropHandler;
+//    }
 
     /**
      * does the actual searching in the source-index
@@ -186,33 +165,33 @@ public class SearchMenu extends Panel implements SearchAgent {
      * Handles drops both on an AbsoluteLayout and
      * on components contained within it
      */
-    class MoveAndDropHandler implements DropHandler {
-
-        int left = 40;
-        int top = 40;
-
-        AbsoluteLayout parentLayout;
-
-        public MoveAndDropHandler(AbsoluteLayout layout) {
-            this.parentLayout = layout;
-        }
-
-        public AcceptCriterion getAcceptCriterion() {
-            return AcceptAll.get();
-        }
-
-        public void drop(DragAndDropEvent event) {
-
-            Transferable transferable = event.getTransferable();
-
-            // check what source we are receiving events from
-            if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
-                handleDragEvent(event);
-            } else if (transferable instanceof DataBoundTransferable) {
-                handleDropEvent((DataBoundTransferable) transferable);
-            }
-
-        }
+//    class MoveAndDropHandler implements DropHandler {
+//
+//        int left = 40;
+//        int top = 40;
+//
+//        AbsoluteLayout parentLayout;
+//
+//        public MoveAndDropHandler(AbsoluteLayout layout) {
+//            this.parentLayout = layout;
+//        }
+//
+//        public AcceptCriterion getAcceptCriterion() {
+//            return AcceptAll.get();
+//        }
+//
+//        public void drop(DragAndDropEvent event) {
+//
+//            Transferable transferable = event.getTransferable();
+//
+//            // check what source we are receiving events from
+//            if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
+//                handleDragEvent(event);
+//            } else if (transferable instanceof DataBoundTransferable) {
+//                handleDropEvent((DataBoundTransferable) transferable);
+//            }
+//
+//        }
 
         /**
          * this handles the dragging on the layout itself
@@ -221,96 +200,96 @@ public class SearchMenu extends Panel implements SearchAgent {
          * @TODO extend this to work selectors
          * @param transferable
          */
-        private void handleDropEvent(DataBoundTransferable transferable) {
-
-            Object itemId = transferable.getItemId();
-            Container container = transferable.getSourceContainer();
-            Item item = container.getItem(itemId);
-
-            DragAndDropWrapper tagWrapper = null;
-
-            if (itemId instanceof ProcedureListPanel.ProcedureItem) {
-
-                ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
-                Procedure procedure = procedureCache.getProcedureWithName(pItem.getUuid());
-                ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
-                tagWrapper = new DragAndDropWrapper(procedureTag);
-
-            } else if (item.getItemPropertyIds().contains("File")) {
-
-                String file = (String) item.getItemProperty("File").getValue();
-                String source = (String) item.getItemProperty("Source").getValue();
-
-                WikiArticle wikiArticle = null;
-                IMap<String,WikiArticle> map = null;
-                if ("Wikipedia".equalsIgnoreCase(source)) {
-                    map = hazelcastInstance.getMap(WIKIPEDIA);
-                } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                    map = hazelcastInstance.getMap(WIKTIONARY);
-                }
-
-                wikiArticle = map.get(file);
-                if (wikiArticle == null) {
-                    return;
-                }
-
-                wikiArticle.setSource(source);
-                wikiArticle.setId(uuidService.createUUIDString());
-
-                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
-                tagWrapper = new DragAndDropWrapper(wikiTag);
-
-            } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
-
-                IMap<String, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
-                String property = (String) item.getItemProperty("Ticker symbol").getValue();
-                String tradedIn = StringUtils.substringBetween(property, "{{", "|");
-                String ticker = StringUtils.substringBetween(property, "|", "}}");
-                String id = ""; //new StockEntityId(ticker, tradedIn);
-                StockEntity stockEntity = map.get(id);
-                StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
-                tagWrapper = new DragAndDropWrapper(stockTag);
-
-            }
-
-            tagWrapper.setSizeUndefined();
-            tagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-
-            // try to find out the component position to enter
-            String positionString;
-            left += 10;
-            top += 10;
-            positionString = "left: " + left + "px; top: " + top + "px;";
-            parentLayout.addComponent(tagWrapper, positionString);
-
-        }
-
-        /**
-         * this handles the drop events from external sources
-         * in this case, drops from search-menu result-table on workspace
-         * @param event
-         */
-        private void handleDragEvent(DragAndDropEvent event) {
-            DragAndDropWrapper.WrapperTransferable t =
-                    (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
-            DragAndDropWrapper.WrapperTargetDetails details =
-                    (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
-
-            // Calculate the drag coordinate difference
-            int xChange = details.getMouseEvent().getClientX()
-                    - t.getMouseDownEvent().getClientX();
-            int yChange = details.getMouseEvent().getClientY()
-                    - t.getMouseDownEvent().getClientY();
-
-            // Move the component in the absolute parentLayout
-            AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
-            // check to make sure there is indeed a position to be changed
-            // can happen that something dragged on layout, but not part of the
-            // layout is being dropped- we can't change positions of those, after all
-            if (pos != null) {
-                pos.setLeftValue(pos.getLeftValue() + xChange);
-                pos.setTopValue(pos.getTopValue() + yChange);
-            }
-        }
-    }
+//        private void handleDropEvent(DataBoundTransferable transferable) {
+//
+//            Object itemId = transferable.getItemId();
+//            Container container = transferable.getSourceContainer();
+//            Item item = container.getItem(itemId);
+//
+//            DragAndDropWrapper tagWrapper = null;
+//
+//            if (itemId instanceof ProcedureListPanel.ProcedureItem) {
+//
+//                ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
+//                Procedure procedure = procedureCache.getProcedureWithName(pItem.getUuid());
+//                ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(procedureTag);
+//
+//            } else if (item.getItemPropertyIds().contains("File")) {
+//
+//                String file = (String) item.getItemProperty("File").getValue();
+//                String source = (String) item.getItemProperty("Source").getValue();
+//
+//                WikiArticle wikiArticle = null;
+//                IMap<String,WikiArticle> map = null;
+//                if ("Wikipedia".equalsIgnoreCase(source)) {
+//                    map = hazelcastInstance.getMap(WIKIPEDIA);
+//                } else if ("Wiktionary".equalsIgnoreCase(source)) {
+//                    map = hazelcastInstance.getMap(WIKTIONARY);
+//                }
+//
+//                wikiArticle = map.get(file);
+//                if (wikiArticle == null) {
+//                    return;
+//                }
+//
+//                wikiArticle.setSource(source);
+//                wikiArticle.setId(uuidService.createUUIDString());
+//
+//                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(wikiTag);
+//
+//            } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
+//
+//                IMap<String, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
+//                String property = (String) item.getItemProperty("Ticker symbol").getValue();
+//                String tradedIn = StringUtils.substringBetween(property, "{{", "|");
+//                String ticker = StringUtils.substringBetween(property, "|", "}}");
+//                String id = ""; //new StockEntityId(ticker, tradedIn);
+//                StockEntity stockEntity = map.get(id);
+//                StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(stockTag);
+//
+//            }
+//
+//            tagWrapper.setSizeUndefined();
+//            tagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+//
+//            // try to find out the component position to enter
+//            String positionString;
+//            left += 10;
+//            top += 10;
+//            positionString = "left: " + left + "px; top: " + top + "px;";
+//            parentLayout.addComponent(tagWrapper, positionString);
+//
+//        }
+//
+//        /**
+//         * this handles the drop events from external sources
+//         * in this case, drops from search-menu result-table on workspace
+//         * @param event
+//         */
+//        private void handleDragEvent(DragAndDropEvent event) {
+//            DragAndDropWrapper.WrapperTransferable t =
+//                    (DragAndDropWrapper.WrapperTransferable) event.getTransferable();
+//            DragAndDropWrapper.WrapperTargetDetails details =
+//                    (DragAndDropWrapper.WrapperTargetDetails) event.getTargetDetails();
+//
+//            // Calculate the drag coordinate difference
+//            int xChange = details.getMouseEvent().getClientX()
+//                    - t.getMouseDownEvent().getClientX();
+//            int yChange = details.getMouseEvent().getClientY()
+//                    - t.getMouseDownEvent().getClientY();
+//
+//            // Move the component in the absolute parentLayout
+//            AbsoluteLayout.ComponentPosition pos = parentLayout.getPosition(t.getSourceComponent());
+//            // check to make sure there is indeed a position to be changed
+//            // can happen that something dragged on layout, but not part of the
+//            // layout is being dropped- we can't change positions of those, after all
+//            if (pos != null) {
+//                pos.setLeftValue(pos.getLeftValue() + xChange);
+//                pos.setTopValue(pos.getTopValue() + yChange);
+//            }
+//        }
+//    }
 }

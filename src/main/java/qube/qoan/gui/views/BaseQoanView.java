@@ -13,6 +13,8 @@ import qube.qoan.gui.components.common.QoanHeader;
  */
 public abstract class BaseQoanView extends VerticalLayout implements View {
 
+    private boolean debug = true;
+
     protected boolean initialized = false;
 
     protected String viewTitle = "Base Qoan Page";
@@ -43,4 +45,5 @@ public abstract class BaseQoanView extends VerticalLayout implements View {
     }
 
     protected abstract void initialize();
+
 }

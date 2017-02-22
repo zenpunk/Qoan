@@ -1,21 +1,14 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
-import bsh.StringUtil;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.vaadin.data.Item;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Table;
-import info.bliki.wiki.filter.HTMLConverter;
-import info.bliki.wiki.model.WikiModel;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.parsers.WikiIntegration;
@@ -23,9 +16,6 @@ import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.WikiArticle;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.io.IOException;
-import java.util.*;
 
 /**
  * Created by rainbird on 12/21/15.

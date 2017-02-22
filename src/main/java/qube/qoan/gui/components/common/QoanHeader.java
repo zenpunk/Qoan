@@ -3,7 +3,6 @@ package qube.qoan.gui.components.common;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.views.*;
 

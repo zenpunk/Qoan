@@ -2,8 +2,6 @@ package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.ui.*;
 import qube.qai.persistence.StockEntity;
-import qube.qoan.gui.components.common.InnerPanel;
-import qube.qoan.gui.components.workspace.wiki.WikiContentPanel;
 
 /**
  * Created by rainbird on 12/28/15.

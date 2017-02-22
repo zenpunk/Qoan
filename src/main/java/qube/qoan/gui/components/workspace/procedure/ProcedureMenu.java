@@ -8,13 +8,10 @@ import com.vaadin.ui.VerticalLayout;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.analysis.NeuralNetworkAnalysis;
-import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.QoanUI;
 import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
-import java.util.Map;
-import java.util.TreeMap;
 
 /**
  * Created by rainbird on 12/2/15.

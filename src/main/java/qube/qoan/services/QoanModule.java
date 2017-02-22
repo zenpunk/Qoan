@@ -9,11 +9,9 @@ import net.jmob.guice.conf.core.BindConfig;
 import net.jmob.guice.conf.core.ConfigurationModule;
 import net.jmob.guice.conf.core.InjectConfig;
 import net.jmob.guice.conf.core.Syntax;
-import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
-import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 
 import javax.inject.Named;
 import javax.inject.Singleton;

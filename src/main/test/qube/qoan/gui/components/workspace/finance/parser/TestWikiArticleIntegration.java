@@ -1,11 +1,9 @@
 package qube.qoan.gui.components.workspace.finance.parser;
 
-import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.data.Item;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qube.qai.parsers.WikiIntegration;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.services.QoanTestBase;

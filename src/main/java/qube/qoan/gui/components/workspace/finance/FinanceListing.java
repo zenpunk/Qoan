@@ -5,18 +5,11 @@ import com.google.inject.Injector;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.vaadin.ui.*;
-import qube.qai.data.stores.DataStore;
-import qube.qai.data.stores.StockEntityDataStore;
-import qube.qai.parsers.WikiIntegration;
-import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.WikiArticle;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.finance.parser.WikiIntegrationUtils;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by rainbird on 12/28/15.

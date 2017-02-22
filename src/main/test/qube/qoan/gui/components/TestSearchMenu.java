@@ -5,6 +5,7 @@ import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Component;
+import qube.qoan.gui.components.workspace.WorkSpace;
 import qube.qoan.gui.components.workspace.search.SearchMenu;
 import qube.qoan.services.QoanTestBase;
 
@@ -21,8 +22,10 @@ public class TestSearchMenu extends QoanTestBase {
         // @TODO add the proper test here
         SearchMenu searchMenu = new SearchMenu();
 
+        WorkSpace workspace = new WorkSpace(searchMenu);
+
         AbsoluteLayout layout = new AbsoluteLayout();
-        DropHandler dropHandler = searchMenu.createDropHandler(layout);
+        DropHandler dropHandler = workspace.createDropHandler(layout);
         Transferable transferable = new Transferable() {
             public Object getData(String dataFlavor) {
                 return null;
