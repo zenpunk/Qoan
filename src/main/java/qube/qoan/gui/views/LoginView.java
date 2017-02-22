@@ -1,9 +1,6 @@
 package qube.qoan.gui.views;
 
-import com.google.inject.Injector;
 import com.vaadin.data.util.ObjectProperty;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,14 +8,13 @@ import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.authentication.UserManager;
 import qube.qoan.authentication.UserNotAuthenticatedException;
-import qube.qoan.gui.components.common.QoanHeader;
 
 import javax.inject.Inject;
 
 /**
  * Created by rainbird on 12/24/15.
  */
-public class LoginView extends VerticalLayout implements View {
+public class LoginView extends BaseQoanView {
 
     private Logger logger = LoggerFactory.getLogger("LoginView");
 
@@ -27,16 +23,25 @@ public class LoginView extends VerticalLayout implements View {
     @Inject
     private UserManager userManager;
 
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+    public LoginView() {
+        this.viewTitle = "Qoan Login";
+    }
 
-        UI.getCurrent().getPage().setTitle("Qoan Login");
+    //    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//
+//        UI.getCurrent().getPage().setTitle("Qoan Login");
+//
+//        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+//        injector.injectMembers(this);
+//
+//        QoanHeader header = new QoanHeader();
+//        addComponent(header);
+//
+//
+//    }
 
-        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-        injector.injectMembers(this);
-
-        QoanHeader header = new QoanHeader();
-        addComponent(header);
-
+    @Override
+    protected void initialize() {
         FormLayout layout = new FormLayout();
         final ObjectProperty<String> username = new ObjectProperty<String>("");
         TextField userField = new TextField("Username", username);
@@ -68,5 +73,4 @@ public class LoginView extends VerticalLayout implements View {
         addComponent(layout);
         setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
     }
-
 }

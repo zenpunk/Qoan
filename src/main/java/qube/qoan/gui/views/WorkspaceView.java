@@ -1,23 +1,21 @@
 package qube.qoan.gui.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-//import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.ui.*;
-import qube.qoan.gui.components.common.QoanHeader;
-import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
-import qube.qoan.gui.components.workspace.search.SearchMenu;
 import qube.qoan.gui.components.workspace.WorkSpace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
+import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
+import qube.qoan.gui.components.workspace.search.SearchMenu;
 
 import java.lang.reflect.Method;
+
+//import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 
 /**
  * Created by rainbird on 10/30/15.
  * here we need absolute layout, because we want this part of the application to be
  * drag & drop
  */
-public class WorkspaceView extends VerticalLayout implements View {
+public class WorkspaceView extends BaseQoanView {
 
     private boolean initialized = false;
 
@@ -34,24 +32,29 @@ public class WorkspaceView extends VerticalLayout implements View {
     private Component currentComponent;
 
     //@Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//
+//        UI.getCurrent().getPage().setTitle("Qoan Workspace");
+//
+//        QoanHeader header = new QoanHeader();
+//        header.setWidth("100%");
+//        addComponent(header);
+//
+//        if (!initialized) {
+//            initialize();
+//            initialized = true;
+//        }
+//    }
 
-        UI.getCurrent().getPage().setTitle("Qoan Workspace");
 
-        if (!initialized) {
-            initialize();
-            initialized = true;
-        }
+    public WorkspaceView() {
+        this.viewTitle = "Qoan Workspace";
     }
 
     /**
      * adds all of the components to the view
      */
-    private void initialize() {
-
-        QoanHeader header = new QoanHeader();
-        header.setWidth("100%");
-        addComponent(header);
+    protected void initialize() {
 
         splitPanel = new HorizontalSplitPanel();
         // create and add a dummy-component as place-filler

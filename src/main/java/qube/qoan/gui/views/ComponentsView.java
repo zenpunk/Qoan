@@ -1,8 +1,7 @@
 package qube.qoan.gui.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Label;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -20,25 +19,43 @@ import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
 import pl.pdfviewer.PdfViewer;
-import qube.qoan.gui.components.common.QoanHeader;
 
 import java.io.File;
 
 /**
  * Created by rainbird on 10/29/15.
  */
-public class ComponentsView extends VerticalLayout implements View {
+public class ComponentsView extends BaseQoanView {
 
     public static String NAME = "components";
 
+    public ComponentsView() {
+        this.viewTitle = "Qoan Components";
+    }
+
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//
+//        UI.getCurrent().getPage().setTitle("Qoan Components Display");
+//
+//        QoanHeader header = new QoanHeader();
+//        addComponent(header);
+//
+//
+//
+//        Button button = new Button("Click Me");
+//        button.addClickListener(new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent event) {
+//                Label label = new Label("Thank you for clicking");
+//                addComponent(label);
+//            }
+//        });
+//
+//        addComponent(button);
+//    }
 
-        UI.getCurrent().getPage().setTitle("Qoan Components Display");
-
-        QoanHeader header = new QoanHeader();
-        addComponent(header);
-
+    protected void initialize() {
         Label chartLabel = new Label("A small graph");
         addComponent(chartLabel);
         Component graph = createNetworkDiagram();
@@ -55,17 +72,6 @@ public class ComponentsView extends VerticalLayout implements View {
         File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
         Component pdfViewer = new PdfViewer(pdfFile);
         addComponent(pdfViewer);
-
-//        Button button = new Button("Click Me");
-//        button.addClickListener(new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                Label label = new Label("Thank you for clicking");
-//                addComponent(label);
-//            }
-//        });
-//
-//        addComponent(button);
     }
 
     private Component createTimeSeries() {

@@ -1,16 +1,16 @@
 package qube.qoan.gui.views;
 
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
-import qube.qoan.gui.components.common.QoanHeader;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * Created by rainbird on 10/29/15.
  */
-public class StartView extends VerticalLayout implements View {
+public class StartView extends BaseQoanView {
 
     public static String NAME = "";
 
@@ -20,16 +20,26 @@ public class StartView extends VerticalLayout implements View {
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//    @Override
+//    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//
+//        VerticalLayout layout = new VerticalLayout();
+//        layout.setWidth("100%");
+//
+//        QoanHeader header = new QoanHeader();
+//        layout.addComponent(header);
+//
+//        UI.getCurrent().getPage().setTitle("Welcome to Qoan");
+//
+//
+//    }
 
-        VerticalLayout layout = new VerticalLayout();
-        layout.setWidth("100%");
 
-        QoanHeader header = new QoanHeader();
-        layout.addComponent(header);
+    public StartView() {
+        this.viewTitle = "Welcome to Qoan";
+    }
 
-        UI.getCurrent().getPage().setTitle("Welcome to Qoan");
+    protected void initialize() {
 
         VerticalLayout contentLayout = new VerticalLayout();
         contentLayout.setWidth("800px");
@@ -45,7 +55,7 @@ public class StartView extends VerticalLayout implements View {
         firstRow.addComponent(loremIpsum);
         contentLayout.addComponent(firstRow);
 
-        layout.addComponent(contentLayout);
-        addComponent(layout);
+        addComponent(contentLayout);
+        //addComponent(layout);
     }
 }

@@ -2,17 +2,12 @@ package qube.qoan.gui.views;
 
 import com.hazelcast.core.DistributedObjectEvent;
 import com.hazelcast.core.DistributedObjectListener;
-import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.data.Item;
-import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.services.ProcedureRunnerInterface;
-import qube.qai.user.User;
-import qube.qoan.QoanUI;
-import qube.qoan.gui.components.common.QoanHeader;
 
 import javax.inject.Inject;
 import java.util.Set;
@@ -21,7 +16,7 @@ import java.util.TreeSet;
 /**
  * Created by rainbird on 11/27/15.
  */
-public class ManagementView extends VerticalLayout implements View {
+public class ManagementView extends BaseQoanView {
 
     private static Logger logger = LoggerFactory.getLogger("ManagementView");
 
@@ -37,33 +32,38 @@ public class ManagementView extends VerticalLayout implements View {
 
     protected Set<String> remotelyCreatedUuids;
 
-    protected VerticalLayout layout;
+//    protected VerticalLayout layout;
 
-    private boolean initialized = false;
+//    private boolean initialized = false;
 
-    @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) {
-        if (!initialized) {
-            initialize();
-            initialized = true;
-        }
+    public ManagementView() {
+        this.viewTitle = "Qoan Management";
     }
+
+
+//    @Override
+//    public void enter(ViewChangeListener.ViewChangeEvent event) {
+//        if (!initialized) {
+//            initialize();
+//            initialized = true;
+//        }
+//    }
 
     /**
      * traditional way for getting the gui done,
      * nothing original really
      */
-    private void initialize() {
+    protected void initialize() {
 
         remotelyCreatedUuids = new TreeSet<String>();
 
-        UI.getCurrent().getPage().setTitle("Qoan Management");
+//        UI.getCurrent().getPage().setTitle("Qoan Management");
 
-        layout = new VerticalLayout();
-        layout.setWidth("100%");
-
-        QoanHeader header = new QoanHeader();
-        layout.addComponent(header);
+//        layout = new VerticalLayout();
+//        layout.setWidth("100%");
+//
+//        QoanHeader header = new QoanHeader();
+//        layout.addComponent(header);
 
 //        final SimpleLoginForm loginForm = new SimpleLoginForm();
 //        loginForm.clear(); // should work even if not displayed
@@ -71,7 +71,7 @@ public class ManagementView extends VerticalLayout implements View {
 
         Label something = new Label("Welcome to the management page");
         something.setStyleName("bold");
-        layout.addComponent(something);
+        addComponent(something);
 
         // well, i guess this is now time
         procedureUuids = procedureRunner.getStartedProcedures();
@@ -99,10 +99,10 @@ public class ManagementView extends VerticalLayout implements View {
             }
 
         }
-        layout.addComponent(procedureTable);
+        addComponent(procedureTable);
 
 
-        addComponent(layout);
+        //addComponent(layout);
     }
 
     /*private class SimpleLoginForm extends DefaultHorizontalLoginForm {
