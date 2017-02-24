@@ -95,6 +95,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
 
     /**
      * these are the header titles on S&P 500 page table
+     *
      * @return
      */
     private Set<String> headerTitles() {
@@ -114,6 +115,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
      * this time it is even right to have this
      * logger-lines are terrible for reading
      * and getting this test done requires a lot of reading
+     *
      * @param message
      */
     private void log(String message) {

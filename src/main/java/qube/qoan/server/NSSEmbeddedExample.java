@@ -13,16 +13,16 @@ import org.apache.log4j.Logger;
 public class NSSEmbeddedExample implements Runnable {
 
     /**
-     -Dlog4j.configuration=${workspace_loc:bigdata-jar}/src/main/resources/log4j.properties
-     -Djetty.home=${workspace_loc:bigdata-war-html}/src/main/webapp/
-     -Djetty.resourceBase=${workspace_loc:bigdata-war-html}/src/main/webapp/
-     -DjettyXml=${workspace_loc:bigdata-jar}/src/main/webapp/WEB-INF/jetty.xml
-     -Djetty.overrideWebXml=${workspace_loc:bigdata-war-html}/src/main/webapp/WEB-INF/override-web.xml
+     * -Dlog4j.configuration=${workspace_loc:bigdata-jar}/src/main/resources/log4j.properties
+     * -Djetty.home=${workspace_loc:bigdata-war-html}/src/main/webapp/
+     * -Djetty.resourceBase=${workspace_loc:bigdata-war-html}/src/main/webapp/
+     * -DjettyXml=${workspace_loc:bigdata-jar}/src/main/webapp/WEB-INF/jetty.xml
+     * -Djetty.overrideWebXml=${workspace_loc:bigdata-war-html}/src/main/webapp/WEB-INF/override-web.xml
      */
 
     private static final Logger log = Logger.getLogger(NSSEmbeddedExample.class);
 
-//    private int port;
+    //    private int port;
 //    private final IIndexManager indexManager;
 //    private final Map<String, String> initParams;
 //

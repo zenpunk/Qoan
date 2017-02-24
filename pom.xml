@@ -1,21 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<groupId>qube.qoan</groupId>
-	<artifactId>qoan</artifactId>
-	<packaging>jar</packaging>
-	<version>1.0-SNAPSHOT</version>
+    <groupId>qube.qoan</groupId>
+    <artifactId>qoan</artifactId>
+    <packaging>jar</packaging>
+    <version>1.0-SNAPSHOT</version>
     <!--<modules>
         <module>../qube.qai</module>
     </modules>-->
     <name>qube.qoan</name>
 
-	<properties>
-		<!--<vaadin.version>7.6.5</vaadin.version>-->
+    <properties>
+        <!--<vaadin.version>7.6.5</vaadin.version>-->
         <vaadin.version>7.7.1</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
-		<project.encoding>UTF-8</project.encoding>
+        <project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.2.6.v20141205</jetty9.version>
 
         <guice.version>4.0</guice.version>
@@ -29,9 +30,9 @@
         <jsoup.version>1.9.2</jsoup.version>
         <apache-commons-lang3.version>3.4</apache-commons-lang3.version>
         <apache-commons-compress.version>1.11</apache-commons-compress.version>
-	</properties>
+    </properties>
 
-	<dependencies>
+    <dependencies>
         <!-- Qai is after all also a dependency -->
         <dependency>
             <groupId>qube.qai</groupId>
@@ -39,25 +40,25 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
-		<dependency>
+        <dependency>
             <groupId>qube.samsroad</groupId>
             <artifactId>samsroad</artifactId>
             <version>1.0</version>
         </dependency>
-		
-		<dependency>
+
+        <dependency>
             <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
             <version>${bliki.version}</version>
         </dependency>
 
-		<dependency>
+        <dependency>
             <groupId>info.bliki.pdf</groupId>
             <artifactId>bliki-pdf</artifactId>
             <version>${bliki.version}</version>
         </dependency>
 
-		<dependency>
+        <dependency>
             <groupId>grph</groupId>
             <artifactId>grph.all</artifactId>
             <version>1.6.29</version>
@@ -68,52 +69,52 @@
             <version>${encog.version}</version>
         </dependency>
 
-		<!-- Vaadin and etc. -->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-server</artifactId>
-		</dependency>
+        <!-- Vaadin and etc. -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-server</artifactId>
+        </dependency>
 
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client</artifactId>
-		</dependency>
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client</artifactId>
+        </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
-		<!--
-		  Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
-		  For widgetset compilation, vaadin-client-compiler is automatically added on the
-		  compilation classpath by vaadin-maven-plugin so normally there is no need for an
-		  explicit dependency.
-		-->
-		<dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-client-compiler</artifactId>
+        <!--
+          Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
+          For widgetset compilation, vaadin-client-compiler is automatically added on the
+          compilation classpath by vaadin-maven-plugin so normally there is no need for an
+          explicit dependency.
+        -->
+        <dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-client-compiler</artifactId>
             <version>${vaadin.version}</version>
-			<!--<scope>provided</scope>-->
-		</dependency>
+            <!--<scope>provided</scope>-->
+        </dependency>
 
         <dependency>
-			<groupId>com.vaadin</groupId>
-			<artifactId>vaadin-themes</artifactId>
-		</dependency>
+            <groupId>com.vaadin</groupId>
+            <artifactId>vaadin-themes</artifactId>
+        </dependency>
 
-		<!-- jFreeChart Vaadin adapter for charts and plots -->
-		<dependency>
-			<groupId>org.vaadin.addon</groupId>
-			<artifactId>jfreechartwrapper</artifactId>
-			<version>3.0.2</version>
+        <!-- jFreeChart Vaadin adapter for charts and plots -->
+        <dependency>
+            <groupId>org.vaadin.addon</groupId>
+            <artifactId>jfreechartwrapper</artifactId>
+            <version>3.0.2</version>
             <exclusions>
                 <exclusion>
                     <groupId>javax-servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
             </exclusions>
-		</dependency>
+        </dependency>
 
         <!-- Visjs Vaadin adapter for network rendering -->
         <dependency>
@@ -142,32 +143,32 @@
             <version>1.4.01</version>
         </dependency>
 
-		<!--  Jetty & Dependencies -->
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-server</artifactId>
-			<version>${jetty9.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-webapp</artifactId>
-			<version>${jetty9.version}</version>
-		</dependency>
+        <!--  Jetty & Dependencies -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-server</artifactId>
+            <version>${jetty9.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-webapp</artifactId>
+            <version>${jetty9.version}</version>
+        </dependency>
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-servlet</artifactId>
             <version>${jetty9.version}</version>
         </dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-util</artifactId>
-			<version>${jetty9.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse.jetty</groupId>
-			<artifactId>jetty-jmx</artifactId>
-			<version>${jetty9.version}</version>
-		</dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-util</artifactId>
+            <version>${jetty9.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-jmx</artifactId>
+            <version>${jetty9.version}</version>
+        </dependency>
         <!--<dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-io</artifactId>
@@ -256,9 +257,9 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.eclipse.rdf4j</groupId>-->
-            <!--<artifactId>rdf4j-runtime</artifactId>-->
-            <!--<version>2.0M2</version>-->
+        <!--<groupId>org.eclipse.rdf4j</groupId>-->
+        <!--<artifactId>rdf4j-runtime</artifactId>-->
+        <!--<version>2.0M2</version>-->
         <!--</dependency>-->
 
         <!-- nano-sparql etc. -->
@@ -269,22 +270,22 @@
         </dependency>
 
         <!--<dependency>-->
-            <!--<groupId>org.openrdf.sesame</groupId>-->
-            <!--<artifactId>sesame-rio-api</artifactId>-->
-            <!--<version>4.1.2</version>-->
+        <!--<groupId>org.openrdf.sesame</groupId>-->
+        <!--<artifactId>sesame-rio-api</artifactId>-->
+        <!--<version>4.1.2</version>-->
         <!--</dependency>-->
 
         <!--<dependency>-->
-            <!--<groupId>org.openrdf.sesame</groupId>-->
-            <!--<artifactId>sesame-model</artifactId>-->
-            <!--<version>4.1.2</version>-->
+        <!--<groupId>org.openrdf.sesame</groupId>-->
+        <!--<artifactId>sesame-model</artifactId>-->
+        <!--<version>4.1.2</version>-->
         <!--</dependency>-->
 
         <!-- slf4j -->
         <!--<dependency>-->
-            <!--<groupId>org.slf4j</groupId>-->
-            <!--<artifactId>slf4j-jdk14</artifactId>-->
-            <!--<version>1.7.13</version>-->
+        <!--<groupId>org.slf4j</groupId>-->
+        <!--<artifactId>slf4j-jdk14</artifactId>-->
+        <!--<version>1.7.13</version>-->
         <!--</dependency>-->
 
         <!-- apache commons tarball compression is what we need -->
@@ -304,8 +305,8 @@
 
     </dependencies>
 
-	<build>
-		<plugins>
+    <build>
+        <plugins>
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -333,34 +334,35 @@
                     <skipTests>true</skipTests>
                 </configuration>
             </plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.0</version>
-				<configuration>
-					<encoding>${project.encoding}</encoding>
-					<source>1.8</source>
-					<target>1.8</target>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.6</version>
-				<configuration>
-					<encoding>${project.encoding}</encoding>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-war-plugin</artifactId>
-				<version>2.3</version>
-				<configuration>
-					<failOnMissingWebXml>false</failOnMissingWebXml>
-					<packagingExcludes>WEB-INF/classes/VAADIN/gwt-unitCache/**,
-						WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**</packagingExcludes>
-				</configuration>
-			</plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.0</version>
+                <configuration>
+                    <encoding>${project.encoding}</encoding>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>2.6</version>
+                <configuration>
+                    <encoding>${project.encoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <failOnMissingWebXml>false</failOnMissingWebXml>
+                    <packagingExcludes>WEB-INF/classes/VAADIN/gwt-unitCache/**,
+                        WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**
+                    </packagingExcludes>
+                </configuration>
+            </plugin>
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-client-compiler</artifactId>
@@ -383,51 +385,51 @@
                     </execution>
                 </executions>
             </plugin>
-			<!--<plugin>
-				<groupId>com.vaadin</groupId>
-				<artifactId>vaadin-maven-plugin</artifactId>
-				<version>${vaadin.plugin.version}</version>
-				<configuration>
-					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-					<webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
-					<draftCompile>false</draftCompile>
-					<compileReport>false</compileReport>
-					<style>OBF</style>
-					<strict>true</strict>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>remove-theme</goal>
-							<goal>remove-widgetset</goal>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>-->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-source-plugin</artifactId>
-				<version>2.4</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-clean-plugin</artifactId>
-				<version>2.6.1</version>
-				<configuration>
-					<filesets>
-						<fileset>
-							<indexDirectory>src/main/webapp/VAADIN/themes</indexDirectory>
-							<includes>
-								<include>**/styles.css</include>
-								<include>**/styles.scss.cache</include>
-							</includes>
-						</fileset>
-					</filesets>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+            <!--<plugin>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-maven-plugin</artifactId>
+                <version>${vaadin.plugin.version}</version>
+                <configuration>
+                    <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
+                    <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
+                    <draftCompile>false</draftCompile>
+                    <compileReport>false</compileReport>
+                    <style>OBF</style>
+                    <strict>true</strict>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>remove-theme</goal>
+                            <goal>remove-widgetset</goal>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>2.4</version>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>2.6.1</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <indexDirectory>src/main/webapp/VAADIN/themes</indexDirectory>
+                            <includes>
+                                <include>**/styles.css</include>
+                                <include>**/styles.scss.cache</include>
+                            </includes>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 
     <repositories>
         <repository>
@@ -445,18 +447,18 @@
             </snapshots>
         </repository>
         <!--<repository>-->
-            <!--<id>central</id>-->
-            <!--<url>http://192.168.1.4:8081/artifactory/libs-release</url>-->
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
+        <!--<id>central</id>-->
+        <!--<url>http://192.168.1.4:8081/artifactory/libs-release</url>-->
+        <!--<snapshots>-->
+        <!--<enabled>false</enabled>-->
+        <!--</snapshots>-->
         <!--</repository>-->
         <!--<repository>-->
-            <!--<id>snapshots</id>-->
-            <!--<url>http://192.168.1.4:8081/artifactory/libs-snapshot</url>-->
-            <!--<releases>-->
-                <!--<enabled>false</enabled>-->
-            <!--</releases>-->
+        <!--<id>snapshots</id>-->
+        <!--<url>http://192.168.1.4:8081/artifactory/libs-snapshot</url>-->
+        <!--<releases>-->
+        <!--<enabled>false</enabled>-->
+        <!--</releases>-->
         <!--</repository>-->
     </repositories>
 

@@ -108,12 +108,13 @@ public class ComponentsBaseView extends QoanBaseView {
         };
     }
 
-    private XYDataset createDataset(String... names)
-    {
+    private XYDataset createDataset(String... names) {
         int size = 100;
         RandomNumber generator = new Normal(0.5, 10.0);
-        TimeSeriesCollection dataset = new TimeSeriesCollection( );
-        int day = 01; int month = 01; int year = 2000;
+        TimeSeriesCollection dataset = new TimeSeriesCollection();
+        int day = 01;
+        int month = 01;
+        int year = 2000;
         for (String name : names) {
             TimeSeries firefox = new TimeSeries(name);
             Day current = new Day(day, month, year);
@@ -137,7 +138,7 @@ public class ComponentsBaseView extends QoanBaseView {
         RandomNumber generator = new Normal(0.5, 10.0);
         //RandomNumber generator = new Weibull(1.0, 1.5);
         //RandomNumber generator = new Poisson(15);
-        for (int i=1; i < number; i++) {
+        for (int i = 1; i < number; i++) {
             value[i] = generator.doubleValue();
         }
 
@@ -151,7 +152,7 @@ public class ComponentsBaseView extends QoanBaseView {
         boolean show = false; // show legends- if there is only one series not necessary
         boolean toolTips = false;
         boolean urls = false;
-        JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis,
+        JFreeChart chart = ChartFactory.createHistogram(plotTitle, xaxis, yaxis,
                 dataset, orientation, show, toolTips, urls);
 
         return new JFreeChartWrapper(chart) {
@@ -172,24 +173,24 @@ public class ComponentsBaseView extends QoanBaseView {
         NetworkDiagram networkDiagram = new NetworkDiagram(options);
         //networkDiagram.setSizeFull();
         //crete nodes
-        Node node1 = new Node(1,"vienna");
-        Node node2 = new Node(2,"bergen");
-        Node node3 = new Node(3,"paris");
-        Node node4 = new Node(4,"london");
-        Node node5 = new Node(5,"helsinki");
-        Node node6 = new Node(6,"timbuktu");
+        Node node1 = new Node(1, "vienna");
+        Node node2 = new Node(2, "bergen");
+        Node node3 = new Node(3, "paris");
+        Node node4 = new Node(4, "london");
+        Node node5 = new Node(5, "helsinki");
+        Node node6 = new Node(6, "timbuktu");
 
         //create edges
-        Edge edge1 = new Edge(node1.getId(),node2.getId());
-        Edge edge2 = new Edge(node1.getId(),node3.getId());
-        Edge edge3 = new Edge(node2.getId(),node5.getId());
-        Edge edge4 = new Edge(node2.getId(),node4.getId());
-        Edge edge5 = new Edge(node6.getId(),node4.getId());
-        Edge edge6 = new Edge(node1.getId(),node5.getId());
+        Edge edge1 = new Edge(node1.getId(), node2.getId());
+        Edge edge2 = new Edge(node1.getId(), node3.getId());
+        Edge edge3 = new Edge(node2.getId(), node5.getId());
+        Edge edge4 = new Edge(node2.getId(), node4.getId());
+        Edge edge5 = new Edge(node6.getId(), node4.getId());
+        Edge edge6 = new Edge(node1.getId(), node5.getId());
 
         networkDiagram.addNode(node1);
-        networkDiagram.addNode(node2,node3,node4,node5,node6);
-        networkDiagram.addEdge(edge1,edge2,edge3,edge4, edge5, edge6);
+        networkDiagram.addNode(node2, node3, node4, node5, node6);
+        networkDiagram.addEdge(edge1, edge2, edge3, edge4, edge5, edge6);
 
         return networkDiagram;
     }

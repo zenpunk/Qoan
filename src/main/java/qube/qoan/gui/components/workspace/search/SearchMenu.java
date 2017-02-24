@@ -28,10 +28,12 @@ public class SearchMenu extends Panel implements SearchAgent {
 //
 //    private String STOCK_ENTITIES = "STOCK_ENTITIES";
 //
-    @Inject @Named("Wiktionary_en")
+    @Inject
+    @Named("Wiktionary_en")
     private SearchServiceInterface wiktionarySearchService;
 
-    @Inject @Named("Wikipedia_en")
+    @Inject
+    @Named("Wikipedia_en")
     private SearchServiceInterface wikipediaSearchService;
 //
 //    @Inject
@@ -112,6 +114,7 @@ public class SearchMenu extends Panel implements SearchAgent {
 
     /**
      * does the actual searching in the source-index
+     *
      * @param source
      * @param searchTerm
      * @param searchIn
@@ -193,13 +196,13 @@ public class SearchMenu extends Panel implements SearchAgent {
 //
 //        }
 
-        /**
-         * this handles the dragging on the layout itself
-         * and changes the positions of the components
-         * which are being dragged around
-         * @TODO extend this to work selectors
-         * @param transferable
-         */
+    /**
+     * this handles the dragging on the layout itself
+     * and changes the positions of the components
+     * which are being dragged around
+     * @TODO extend this to work selectors
+     * @param transferable
+     */
 //        private void handleDropEvent(DataBoundTransferable transferable) {
 //
 //            Object itemId = transferable.getItemId();

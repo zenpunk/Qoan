@@ -17,8 +17,8 @@
 
         <!-- If not using the default widget set-->
         <!--<init-param>-->
-            <!--<param-name>widgetset</param-name>-->
-            <!--<param-value>com.ex.myprj.MyWidgetSet</param-value>-->
+        <!--<param-name>widgetset</param-name>-->
+        <!--<param-value>com.ex.myprj.MyWidgetSet</param-value>-->
         <!--</init-param>-->
     </servlet>
 

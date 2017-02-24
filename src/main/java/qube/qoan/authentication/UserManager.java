@@ -10,6 +10,7 @@ public class UserManager {
     /**
      * this is in order to authenticate the user with the
      * given username and password
+     *
      * @param username
      * @param password
      * @return

@@ -86,9 +86,9 @@ public class WikiIntegrationUtils {
     }
 
     /**
-     * @TODO make a test for this method
      * @param header
      * @param data
+     * @TODO make a test for this method
      */
     private void insertEntitiesToMap(String[] header, String[][] data) {
 
@@ -139,6 +139,7 @@ public class WikiIntegrationUtils {
     /**
      * method adds contents of the wiki-article to the layout
      * images and tables will be replaced by vaadin images and tables
+     *
      * @param article
      * @param layout
      */

@@ -19,22 +19,6 @@ public class StartBaseView extends QoanBaseView {
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";// +
-    //"<p><i>Singularity is nigh!</i></p>";
-
-//    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        VerticalLayout layout = new VerticalLayout();
-//        layout.setWidth("100%");
-//
-//        QoanHeader header = new QoanHeader();
-//        layout.addComponent(header);
-//
-//        UI.getCurrent().getPage().setTitle("Welcome to Qoan");
-//
-//
-//    }
-
 
     public StartBaseView() {
         this.viewTitle = "Welcome to Qoan";

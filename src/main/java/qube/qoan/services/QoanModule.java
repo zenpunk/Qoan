@@ -41,12 +41,14 @@ public class QoanModule extends AbstractModule {
 
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     ProcedureCache provideProcedureSource() {
         return new ProcedureCache();
     }
 
-    @Provides @Singleton
+    @Provides
+    @Singleton
     UserManager provideUserManager() {
 
         if (userManager != null) {
@@ -57,7 +59,9 @@ public class QoanModule extends AbstractModule {
         return userManager;
     }
 
-    @Provides @Singleton //@Named("HAZELCAST_CLIENT")
+    @Provides
+    @Singleton
+        //@Named("HAZELCAST_CLIENT")
     HazelcastInstance provideHazelcastInstance() {
 
         if (hazelcastInstance != null) {
@@ -73,7 +77,9 @@ public class QoanModule extends AbstractModule {
         return hazelcastInstance;
     }
 
-    @Provides @Named("Wiktionary_en") @Singleton
+    @Provides
+    @Named("Wiktionary_en")
+    @Singleton
     SearchServiceInterface provideWiktionarySearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
@@ -82,7 +88,9 @@ public class QoanModule extends AbstractModule {
         return distributedSearch;
     }
 
-    @Provides @Named("Wikipedia_en") @Singleton
+    @Provides
+    @Named("Wikipedia_en")
+    @Singleton
     SearchServiceInterface provideWikipediaSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Wikipedia_en");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
@@ -91,7 +99,9 @@ public class QoanModule extends AbstractModule {
         return distributedSearch;
     }
 
-    @Provides @Named("Stock_Quotes") @Singleton
+    @Provides
+    @Named("Stock_Quotes")
+    @Singleton
     SearchServiceInterface provideStockQuoteSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Quotes");
         distributedSearch.setHazelcastInstance(hazelcastInstance);

@@ -29,7 +29,7 @@ public class FinanceListing extends Panel {
 
     private void initialize() {
 
-        Injector injector = ((QoanUI)UI.getCurrent()).getInjector();
+        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
         VerticalLayout layout = new VerticalLayout();
@@ -43,7 +43,7 @@ public class FinanceListing extends Panel {
 
     public void displayListing(String listingName) {
 
-        IMap<String,WikiArticle> wikiMap = hazelcastInstance.getMap("WIKIPEDIA_EN");
+        IMap<String, WikiArticle> wikiMap = hazelcastInstance.getMap("WIKIPEDIA_EN");
         WikiArticle article = wikiMap.get(listingName);
 
         WikiIntegrationUtils wikiIntegration = new WikiIntegrationUtils(hazelcastInstance);

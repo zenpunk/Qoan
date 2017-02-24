@@ -16,10 +16,10 @@ import java.util.TreeMap;
  */
 public class ProcedureCache implements ProcedureSourceInterface {
 
-    private Map<String,Procedure> procedureMap;
+    private Map<String, Procedure> procedureMap;
 
     public ProcedureCache() {
-        procedureMap = new TreeMap<String,Procedure>();
+        procedureMap = new TreeMap<String, Procedure>();
     }
 
     public void cacheProcedure(Procedure procedure) {

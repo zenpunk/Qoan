@@ -21,8 +21,7 @@ public class WebServer {
      *
      * @param args
      */
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) {
         Server server = new Server(httpPort);
 
         WebAppContext webAppContext = new WebAppContext();

@@ -128,6 +128,7 @@ public class WorkspaceBaseView extends QoanBaseView {
 
     /**
      * listener method for showing market-menu
+     *
      * @param event
      */
     public void onShowFinance(Button.ClickEvent event) {
@@ -142,6 +143,7 @@ public class WorkspaceBaseView extends QoanBaseView {
 
     /**
      * listener method for showing search-menu
+     *
      * @param event
      */
     public void onShowSearch(Button.ClickEvent event) {
@@ -156,6 +158,7 @@ public class WorkspaceBaseView extends QoanBaseView {
 
     /**
      * listener method for adding a new tab to workspace
+     *
      * @param event
      */
     public void onAddTab(Button.ClickEvent event) {

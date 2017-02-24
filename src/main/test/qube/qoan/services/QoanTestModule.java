@@ -89,7 +89,9 @@ public class QoanTestModule extends AbstractModule {
         return entityManager;
     }
 
-    @Provides @Singleton //@Named("HAZELCAST_CLIENT")
+    @Provides
+    @Singleton
+        //@Named("HAZELCAST_CLIENT")
     HazelcastInstance provideHazelcastInstance() {
         if (hazelcastInstance != null) {
             return hazelcastInstance;
@@ -110,14 +112,16 @@ public class QoanTestModule extends AbstractModule {
         return selectorfactory;
     }
 
-    @Provides @Named("Wiktionary_en")
+    @Provides
+    @Named("Wiktionary_en")
     SearchServiceInterface provideWiktionarySearchServiceInterface() {
         SearchServiceInterface searchService = new WikiSearchService(wiktionaryDirectory, wiktionaryZipFileName);
 
         return searchService;
     }
 
-    @Provides @Named("Wikipedia_en")
+    @Provides
+    @Named("Wikipedia_en")
     SearchServiceInterface provideWikipediaSearchServiceInterface() {
         SearchServiceInterface searchService = new WikiSearchService(wikipediaDirectory, wikipediaZipFileName);
 

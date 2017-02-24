@@ -32,7 +32,7 @@ public class SecureViewChangeListener implements ViewChangeListener {
         if (nextView instanceof WorkspaceBaseView
                 || nextView instanceof ManagementBaseView) {
 
-            User user = ((QoanUI)UI.getCurrent()).getUser();
+            User user = ((QoanUI) UI.getCurrent()).getUser();
             if (user == null) {
                 UI.getCurrent().getNavigator().navigateTo(LoginBaseView.NAME);
                 return false;

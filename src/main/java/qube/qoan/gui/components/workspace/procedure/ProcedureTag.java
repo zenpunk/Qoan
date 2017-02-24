@@ -91,6 +91,7 @@ public class ProcedureTag extends Panel {
 
     /**
      * event handler for removing the tag from desktop
+     *
      * @param event
      */
     public void onClickRemove(Button.ClickEvent event) {
@@ -101,6 +102,7 @@ public class ProcedureTag extends Panel {
 
     /**
      * event handler for opening ProcedureTags
+     *
      * @param event
      */
     public void onClickOpen(Button.ClickEvent event) {
@@ -144,7 +146,7 @@ public class ProcedureTag extends Panel {
             DragAndDropWrapper dndWrapper = new DragAndDropWrapper(window);
             dndWrapper.setSizeUndefined();
             dndWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-            ((AbsoluteLayout)parentLayout).addComponent(dndWrapper, positionString);
+            ((AbsoluteLayout) parentLayout).addComponent(dndWrapper, positionString);
         } else {
             parentLayout.addComponent(window);
         }
@@ -200,6 +202,7 @@ public class ProcedureTag extends Panel {
 
     /**
      * returns first, second, one-from-last and last element names in collection
+     *
      * @param sortedTimeSequence
      * @return
      */
@@ -214,10 +217,10 @@ public class ProcedureTag extends Panel {
             if (count == 1) {
                 names[1] = name;
             }
-            if (count == max-2) {
+            if (count == max - 2) {
                 names[2] = name;
             }
-            if (count== max-1) {
+            if (count == max - 1) {
                 names[3] = name;
             }
             count++;
@@ -256,7 +259,7 @@ public class ProcedureTag extends Panel {
         boolean show = false; // show legends- if there is only one series not necessary
         boolean toolTips = false;
         boolean urls = false;
-        JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis,
+        JFreeChart chart = ChartFactory.createHistogram(plotTitle, xaxis, yaxis,
                 dataset, orientation, show, toolTips, urls);
 
         return createChart(chart);
@@ -290,6 +293,7 @@ public class ProcedureTag extends Panel {
     /**
      * if the procedure was sorting of time-series
      * the first two, average and last two time-series are displayed
+     *
      * @param timeSequenceMap
      * @param names
      * @return

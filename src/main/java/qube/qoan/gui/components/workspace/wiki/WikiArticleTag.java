@@ -60,7 +60,7 @@ public class WikiArticleTag extends Panel {
                     DragAndDropWrapper dndWrapper = new DragAndDropWrapper(window);
                     dndWrapper.setSizeUndefined();
                     dndWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-                    ((AbsoluteLayout)parentLayout).addComponent(dndWrapper, positionString);
+                    ((AbsoluteLayout) parentLayout).addComponent(dndWrapper, positionString);
                 } else {
                     parentLayout.addComponent(window);
                 }

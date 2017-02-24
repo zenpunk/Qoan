@@ -49,7 +49,7 @@ public class ProcedureMenu extends Panel {
         final ProcedureListPanel procedureListPanel = new ProcedureListPanel();
         // create the button which does the work
         Button showSelectedProcedureButton = new Button("Show selected procedure");
-        showSelectedProcedureButton.addClickListener(new Button.ClickListener(){
+        showSelectedProcedureButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 String name = repositoryPanel.getSelectedProcedure();

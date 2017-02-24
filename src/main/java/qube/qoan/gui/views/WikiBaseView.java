@@ -23,6 +23,7 @@ public class WikiBaseView extends QoanBaseView {
     /**
      * this is mainly for redirecting the view to QoanWiki which is
      * already running on the network- in way of documentation and etc.
+     *
      * @param
      */
 //    public void enter(ViewChangeListener.ViewChangeEvent event) {
@@ -41,7 +42,7 @@ public class WikiBaseView extends QoanBaseView {
 
         BrowserFrame frame = new BrowserFrame(null, new ExternalResource(wikiUrl));
         frame.setWidth(width + "px");
-        frame.setHeight((height-headerHeight) + "px");
+        frame.setHeight((height - headerHeight) + "px");
         addComponent(frame);
     }
 }

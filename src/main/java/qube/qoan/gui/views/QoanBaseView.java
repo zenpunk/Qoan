@@ -31,14 +31,15 @@ public abstract class QoanBaseView extends VerticalLayout implements View {
 
         UI.getCurrent().getPage().setTitle(viewTitle);
 
-        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-        injector.injectMembers(this);
-
-        header = new QoanHeader();
-        header.setWidth("100%");
-        addComponent(header);
-
         if (!initialized) {
+
+            Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+            injector.injectMembers(this);
+
+            header = new QoanHeader();
+            header.setWidth("100%");
+            addComponent(header);
+
             initialize();
             initialized = true;
         }

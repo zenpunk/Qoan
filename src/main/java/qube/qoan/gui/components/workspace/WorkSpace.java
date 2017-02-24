@@ -62,6 +62,7 @@ public class WorkSpace extends Panel {
 
     @Inject
     private UUIDServiceInterface uuidService;
+
     public WorkSpace(SearchMenu searchMenu) {
         super();
 

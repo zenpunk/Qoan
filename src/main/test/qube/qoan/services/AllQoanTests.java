@@ -14,6 +14,7 @@ public class AllQoanTests extends TestCase {
 
     /**
      * shame really that there are not more tests, i suppose
+     *
      * @TODO think of some ways of gui-testing
      */
     public static Test suite() {

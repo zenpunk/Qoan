@@ -34,7 +34,7 @@ public class FinanceRepository extends Panel {
 
     private void initialize() {
 
-        Injector injector = ((QoanUI)UI.getCurrent()).getInjector();
+        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
         VerticalLayout layout = new VerticalLayout();

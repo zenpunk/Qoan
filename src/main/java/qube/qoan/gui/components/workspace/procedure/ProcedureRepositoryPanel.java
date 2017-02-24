@@ -18,6 +18,7 @@ public class ProcedureRepositoryPanel extends Panel {
     private String dummyName = "Dummy neural-network analysis";
 
     private ObjectProperty<String> name;
+
     /**
      * this is supposed to read the existing and already
      * defined procedure templates and return the selected
