@@ -7,9 +7,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.views.LoginView;
-import qube.qoan.gui.views.ManagementView;
-import qube.qoan.gui.views.WorkspaceView;
+import qube.qoan.gui.views.LoginBaseView;
+import qube.qoan.gui.views.ManagementBaseView;
+import qube.qoan.gui.views.WorkspaceBaseView;
 
 /**
  * Created by rainbird on 12/25/15.
@@ -29,12 +29,12 @@ public class SecureViewChangeListener implements ViewChangeListener {
         }
 
         // check if user is already logged in
-        if (nextView instanceof WorkspaceView
-                || nextView instanceof ManagementView) {
+        if (nextView instanceof WorkspaceBaseView
+                || nextView instanceof ManagementBaseView) {
 
             User user = ((QoanUI)UI.getCurrent()).getUser();
             if (user == null) {
-                UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(LoginBaseView.NAME);
                 return false;
             }
         }

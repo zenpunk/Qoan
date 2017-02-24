@@ -1,7 +1,6 @@
 package qube.qoan.gui.views;
 
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -25,11 +24,11 @@ import java.io.File;
 /**
  * Created by rainbird on 10/29/15.
  */
-public class ComponentsView extends BaseQoanView {
+public class ComponentsBaseView extends QoanBaseView {
 
     public static String NAME = "components";
 
-    public ComponentsView() {
+    public ComponentsBaseView() {
         this.viewTitle = "Qoan Components";
     }
 
@@ -68,6 +67,21 @@ public class ComponentsView extends BaseQoanView {
 
         Component histogram = createHistogram();
         addComponent(histogram);
+
+        Button openWindowButton = new Button("Open Window");
+        openWindowButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                Window window = new Window("A Window");
+                VerticalLayout content = new VerticalLayout();
+                content.setMargin(true);
+                Label label = new Label("this is some test text to display in the window");
+                content.addComponent(label);
+                window.setContent(content);
+                UI.getCurrent().addWindow(window);
+            }
+        });
+        addComponent(openWindowButton);
 
         File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
         Component pdfViewer = new PdfViewer(pdfFile);

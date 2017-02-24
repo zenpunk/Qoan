@@ -7,7 +7,7 @@ import com.vaadin.ui.UI;
 /**
  * Created by rainbird on 1/10/16.
  */
-public class WikiView extends BaseQoanView {
+public class WikiBaseView extends QoanBaseView {
 
     public static String NAME = "qoanwiki";
 
@@ -15,7 +15,7 @@ public class WikiView extends BaseQoanView {
     // only one wiki-server after all... later, much later...
     private String wikiUrl = "http://192.168.1.4:8081/wiki/en/Welcome_Page";
 
-    public WikiView() {
+    public WikiBaseView() {
         this.viewTitle = "Qoan Wiki";
     }
 

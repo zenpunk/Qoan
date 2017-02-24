@@ -2,7 +2,7 @@ package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
-import qube.qoan.gui.components.common.InnerPanel;
+import qube.qoan.gui.components.common.InnerWindow;
 
 /**
  * Created by rainbird on 11/13/15.
@@ -49,7 +49,7 @@ public class WikiArticleTag extends Panel {
                 contentPanel.setSizeFull();
 
                 //Window window = new Window(title);
-                final InnerPanel window = new InnerPanel(title, contentPanel);
+                final InnerWindow window = new InnerWindow(title, contentPanel);
 //                window.setWidth("600px");
 //                window.setHeight("400px");
                 // if toDecorate is an absolute layout, we need a position to add the thing as well

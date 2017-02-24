@@ -11,7 +11,7 @@ import qube.qoan.gui.components.common.QoanHeader;
 /**
  * Created by rainbird on 2/22/17.
  */
-public abstract class BaseQoanView extends VerticalLayout implements View {
+public abstract class QoanBaseView extends VerticalLayout implements View {
 
     private boolean debug = true;
 
@@ -23,7 +23,7 @@ public abstract class BaseQoanView extends VerticalLayout implements View {
 
     protected QoanHeader header;
 
-    public BaseQoanView() {
+    public QoanBaseView() {
     }
 
     @Override

@@ -66,7 +66,7 @@ public class SearchMenu extends Panel implements SearchAgent {
 
         layout = new VerticalLayout();
         //layout.setWidth("350px");
-        // some dummy label do fill in the display
+        // some dummy label to fill in the display
         SearchPanel searchPanel = new SearchPanel(this);
         layout.addComponent(searchPanel);
 
@@ -106,7 +106,7 @@ public class SearchMenu extends Panel implements SearchAgent {
      * @return
      */
 //    public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
-//        DropHandler dropHandler = new BaseQoanView.createDropHandler(parentLayout);
+//        DropHandler dropHandler = new QoanBaseView.createDropHandler(parentLayout);
 //        return dropHandler;
 //    }
 

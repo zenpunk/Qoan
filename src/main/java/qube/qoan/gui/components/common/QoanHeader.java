@@ -36,8 +36,8 @@ public class QoanHeader extends Panel {
         Button homeButton = new Button("Home", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(StartView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
+                ((QoanUI) UI.getCurrent()).setTargetViewName(StartBaseView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(StartBaseView.NAME);
             }
         });
         homeButton.setStyleName("link");
@@ -47,8 +47,8 @@ public class QoanHeader extends Panel {
         Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI)UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+                ((QoanUI) UI.getCurrent()).setTargetViewName(WorkspaceBaseView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(WorkspaceBaseView.NAME);
             }
         });
         workspaceButton.setStyleName("link");
@@ -58,8 +58,8 @@ public class QoanHeader extends Panel {
         Button componentsButton = new Button("Components", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI)UI.getCurrent()).setTargetViewName(ComponentsView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
+                ((QoanUI) UI.getCurrent()).setTargetViewName(ComponentsBaseView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(ComponentsBaseView.NAME);
             }
         });
         componentsButton.setStyleName("link");
@@ -69,8 +69,8 @@ public class QoanHeader extends Panel {
         Button managementButton = new Button("Management", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
+                ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementBaseView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(ManagementBaseView.NAME);
             }
         });
         managementButton.setStyleName("link");
@@ -79,8 +79,8 @@ public class QoanHeader extends Panel {
         Button wikiButton = new Button("Wiki", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(WikiView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(WikiView.NAME);
+                ((QoanUI) UI.getCurrent()).setTargetViewName(WikiBaseView.NAME);
+                UI.getCurrent().getNavigator().navigateTo(WikiBaseView.NAME);
             }
         });
         wikiButton.setStyleName("link");
@@ -105,8 +105,8 @@ public class QoanHeader extends Panel {
 
         // for the time being stop this so
         // can't be bothered
-//        if (ManagementView.NAME.equals(viewName)
-//                || WorkspaceView.NAME.equals(viewName)
+//        if (ManagementBaseView.NAME.equals(viewName)
+//                || WorkspaceBaseView.NAME.equals(viewName)
 //                && user == null) {
 //            return true;
 //        }

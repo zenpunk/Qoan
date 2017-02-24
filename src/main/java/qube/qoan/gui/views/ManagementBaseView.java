@@ -16,11 +16,11 @@ import java.util.TreeSet;
 /**
  * Created by rainbird on 11/27/15.
  */
-public class ManagementView extends BaseQoanView {
+public class ManagementBaseView extends QoanBaseView {
 
-    private static Logger logger = LoggerFactory.getLogger("ManagementView");
+    private static Logger logger = LoggerFactory.getLogger("ManagementBaseView");
 
-    public static String NAME = "ManagementView";
+    public static String NAME = "ManagementBaseView";
 
 //    @Inject
 //    private HazelcastInstance hazelcastInstance;
@@ -36,7 +36,7 @@ public class ManagementView extends BaseQoanView {
 
 //    private boolean initialized = false;
 
-    public ManagementView() {
+    public ManagementBaseView() {
         this.viewTitle = "Qoan Management";
     }
 

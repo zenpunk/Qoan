@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Created by rainbird on 12/3/15.
  */
-public class InnerPanel extends Panel {
+public class InnerWindow extends Window {
 
     /**
      * this class is a substitute to Vaadin's native
@@ -14,7 +14,7 @@ public class InnerPanel extends Panel {
      * InnerPanels can be opened, closed and dragged around
      * on the Workspace
      */
-    public InnerPanel(String title, Component content) {
+    public InnerWindow(String title, Component content) {
 
         super();
 

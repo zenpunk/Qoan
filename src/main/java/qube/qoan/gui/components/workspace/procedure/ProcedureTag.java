@@ -19,7 +19,7 @@ import qube.qai.matrix.Matrix;
 import qube.qai.network.Network;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureConstants;
-import qube.qoan.gui.components.common.InnerPanel;
+import qube.qoan.gui.components.common.InnerWindow;
 import qube.qoan.gui.components.common.MetricsPanel;
 import qube.qoan.gui.components.workspace.network.NetworkPanel;
 
@@ -135,7 +135,7 @@ public class ProcedureTag extends Panel {
         }
 
         windowContent.setContent(layout);
-        InnerPanel window = new InnerPanel(title, windowContent);
+        InnerWindow window = new InnerWindow(title, windowContent);
         // if toDecorate is an absolute layout, we need a position to add the thing as well
         if (parentLayout instanceof AbsoluteLayout) {
             left = left + 5;
