@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 /**
  * Created by rainbird on 12/3/15.
  */
-public class InnerWindow extends Window {
+public class InnerWindow extends Panel {
 
     /**
      * this class is a substitute to Vaadin's native

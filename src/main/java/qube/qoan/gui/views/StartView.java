@@ -10,7 +10,7 @@ import com.vaadin.ui.VerticalLayout;
 /**
  * Created by rainbird on 10/29/15.
  */
-public class StartBaseView extends QoanBaseView {
+public class StartView extends QoanView {
 
     public static String NAME = "";
 
@@ -20,7 +20,7 @@ public class StartBaseView extends QoanBaseView {
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";// +
 
-    public StartBaseView() {
+    public StartView() {
         this.viewTitle = "Welcome to Qoan";
     }
 
@@ -35,7 +35,7 @@ public class StartBaseView extends QoanBaseView {
         Image image = new Image("Singularity is nigh!", resource);
         firstRow.addComponent(image);
 
-        Label loremIpsum = new Label(StartBaseView.loremIpsum, ContentMode.HTML);
+        Label loremIpsum = new Label(StartView.loremIpsum, ContentMode.HTML);
         loremIpsum.setStyleName("justified", true);
         firstRow.addComponent(loremIpsum);
         contentLayout.addComponent(firstRow);

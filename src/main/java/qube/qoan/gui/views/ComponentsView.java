@@ -24,11 +24,11 @@ import java.io.File;
 /**
  * Created by rainbird on 10/29/15.
  */
-public class ComponentsBaseView extends QoanBaseView {
+public class ComponentsView extends QoanView {
 
     public static String NAME = "components";
 
-    public ComponentsBaseView() {
+    public ComponentsView() {
         this.viewTitle = "Qoan Components";
     }
 

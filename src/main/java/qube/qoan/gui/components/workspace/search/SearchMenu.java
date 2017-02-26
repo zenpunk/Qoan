@@ -108,7 +108,7 @@ public class SearchMenu extends Panel implements SearchAgent {
      * @return
      */
 //    public DropHandler createDropHandler(AbsoluteLayout parentLayout) {
-//        DropHandler dropHandler = new QoanBaseView.createDropHandler(parentLayout);
+//        DropHandler dropHandler = new QoanView.createDropHandler(parentLayout);
 //        return dropHandler;
 //    }
 

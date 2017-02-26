@@ -26,9 +26,9 @@ public class QoanUI extends UI {
 
     protected SecureViewChangeListener changeListener;
 
-    protected WorkspaceBaseView workspaceView;
+    protected WorkspaceView workspaceView;
 
-    protected ManagementBaseView managementView;
+    protected ManagementView managementView;
 
     protected Injector injector;
 
@@ -51,23 +51,23 @@ public class QoanUI extends UI {
 
         // instantiate the workspace-view
         if (workspaceView == null) {
-            workspaceView = new WorkspaceBaseView();
+            workspaceView = new WorkspaceView();
         }
 
         // instantiate the management-view,
         // so that the thing has time to create its listeners and things
         if (managementView == null) {
-            managementView = new ManagementBaseView();
+            managementView = new ManagementView();
             injector.injectMembers(managementView);
         }
 
         // Create and register the views
-        navigator.addView("", StartBaseView.class);
-        navigator.addView(LoginBaseView.NAME, LoginBaseView.class);
-        navigator.addView(ComponentsBaseView.NAME, ComponentsBaseView.class);
-        navigator.addView(WorkspaceBaseView.NAME, workspaceView);
-        navigator.addView(ManagementBaseView.NAME, managementView);
-        navigator.addView(WikiBaseView.NAME, WikiBaseView.class);
+        navigator.addView("", StartView.class);
+        navigator.addView(LoginView.NAME, LoginView.class);
+        navigator.addView(ComponentsView.NAME, ComponentsView.class);
+        navigator.addView(WorkspaceView.NAME, workspaceView);
+        navigator.addView(ManagementView.NAME, managementView);
+        navigator.addView(WikiView.NAME, WikiView.class);
     }
 
     public Injector getInjector() {

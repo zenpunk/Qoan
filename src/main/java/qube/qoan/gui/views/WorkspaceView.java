@@ -15,7 +15,7 @@ import java.lang.reflect.Method;
  * here we need absolute layout, because we want this part of the application to be
  * drag & drop
  */
-public class WorkspaceBaseView extends QoanBaseView {
+public class WorkspaceView extends QoanView {
 
     private boolean initialized = false;
 
@@ -47,7 +47,7 @@ public class WorkspaceBaseView extends QoanBaseView {
 //    }
 
 
-    public WorkspaceBaseView() {
+    public WorkspaceView() {
         this.viewTitle = "Qoan Workspace";
     }
 

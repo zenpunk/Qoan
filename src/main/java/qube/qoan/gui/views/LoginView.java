@@ -14,16 +14,16 @@ import javax.inject.Inject;
 /**
  * Created by rainbird on 12/24/15.
  */
-public class LoginBaseView extends QoanBaseView {
+public class LoginView extends QoanView {
 
-    private Logger logger = LoggerFactory.getLogger("LoginBaseView");
+    private Logger logger = LoggerFactory.getLogger("LoginView");
 
-    public static String NAME = "LoginBaseView";
+    public static String NAME = "LoginView";
 
     @Inject
     private UserManager userManager;
 
-    public LoginBaseView() {
+    public LoginView() {
         this.viewTitle = "Qoan Login";
     }
 
@@ -63,7 +63,7 @@ public class LoginBaseView extends QoanBaseView {
                 ((QoanUI) UI.getCurrent()).setUser(user);
                 String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
                 if (targetPage == null) {
-                    targetPage = StartBaseView.NAME;
+                    targetPage = StartView.NAME;
                 }
                 UI.getCurrent().getNavigator().navigateTo(targetPage);
             }
