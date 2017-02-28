@@ -1,3 +1,17 @@
+/*
+ * Copyright 2017 Qoan Software Association. All rights reserved.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and limitations under the License.
+ *
+ */
+
 package qube.qoan.services;
 
 import com.google.inject.AbstractModule;
@@ -9,6 +23,8 @@ import net.jmob.guice.conf.core.BindConfig;
 import net.jmob.guice.conf.core.ConfigurationModule;
 import net.jmob.guice.conf.core.InjectConfig;
 import net.jmob.guice.conf.core.Syntax;
+import qube.qai.persistence.ModelStore;
+import qube.qai.services.DataServiceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
@@ -39,6 +55,14 @@ public class QoanModule extends AbstractModule {
         install(ConfigurationModule.create());
         requestInjection(this);
 
+    }
+
+    @Provides
+    @Singleton
+    @Named("USER")
+    DataServiceInterface provideUserDataService() {
+        // @TODO add the additional configuraiton of the whole
+        return new ModelStore();
     }
 
     @Provides
