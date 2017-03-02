@@ -42,7 +42,7 @@ public class WikiView extends QoanView {
      */
 //    public void enter(ViewChangeListener.ViewChangeEvent event) {
 //
-//        UI.getCurrent().getPage().setTitle("Qoan Wiki");
+//        UI.getCurrent().getPage().setContext("Qoan Wiki");
 //        QoanHeader header = new QoanHeader();
 //        header.setWidth("100%");
 //        addComponent(header);

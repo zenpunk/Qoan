@@ -48,7 +48,7 @@ public class WorkspaceView extends QoanView {
     //@Override
 //    public void enter(ViewChangeListener.ViewChangeEvent event) {
 //
-//        UI.getCurrent().getPage().setTitle("Qoan Workspace");
+//        UI.getCurrent().getPage().setContext("Qoan Workspace");
 //
 //        QoanHeader header = new QoanHeader();
 //        header.setWidth("100%");

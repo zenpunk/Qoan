@@ -71,7 +71,7 @@ public class ManagementView extends QoanView {
 
         remotelyCreatedUuids = new TreeSet<String>();
 
-//        UI.getCurrent().getPage().setTitle("Qoan Management");
+//        UI.getCurrent().getPage().setContext("Qoan Management");
 
 //        layout = new VerticalLayout();
 //        layout.setWidth("100%");

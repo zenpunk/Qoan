@@ -49,7 +49,7 @@ public class ComponentsView extends QoanView {
     @Override
 //    public void enter(ViewChangeListener.ViewChangeEvent event) {
 //
-//        UI.getCurrent().getPage().setTitle("Qoan Components Display");
+//        UI.getCurrent().getPage().setContext("Qoan Components Display");
 //
 //        QoanHeader header = new QoanHeader();
 //        addComponent(header);

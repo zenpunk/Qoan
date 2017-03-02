@@ -170,9 +170,9 @@ public class SearchMenu extends Panel implements SearchAgent {
                 Object itemId = resultTable.addItem();
                 Item row = resultTable.getItem(itemId);
                 row.getItemProperty("Source").setValue(source);
-                row.getItemProperty("Title").setValue(result.getTitle());
+                row.getItemProperty("Title").setValue(result.getContext());
                 row.getItemProperty("Relevance").setValue(result.getRelevance());
-                row.getItemProperty("File").setValue(result.getFilename());
+                row.getItemProperty("File").setValue(result.getUuid());
             }
         }
     }

@@ -43,7 +43,7 @@ public class LoginView extends QoanView {
 
     //    public void enter(ViewChangeListener.ViewChangeEvent event) {
 //
-//        UI.getCurrent().getPage().setTitle("Qoan Login");
+//        UI.getCurrent().getPage().setContext("Qoan Login");
 //
 //        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
 //        injector.injectMembers(this);
