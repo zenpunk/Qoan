@@ -26,6 +26,7 @@ import net.jmob.guice.conf.core.Syntax;
 import qube.qai.persistence.ModelStore;
 import qube.qai.services.DataServiceInterface;
 import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.implementation.DistributedDataService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
 
@@ -128,6 +129,17 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideStockQuoteSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Quotes");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
+    }
+
+    @Provides
+    @Named("USER")
+    @Singleton
+    DataServiceInterface provideUserSearchService() {
+        DistributedDataService distributedSearch = new DistributedDataService("USER");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
         distributedSearch.initialize();
 
