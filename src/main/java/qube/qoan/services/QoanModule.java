@@ -23,7 +23,6 @@ import net.jmob.guice.conf.core.BindConfig;
 import net.jmob.guice.conf.core.ConfigurationModule;
 import net.jmob.guice.conf.core.InjectConfig;
 import net.jmob.guice.conf.core.Syntax;
-import qube.qai.persistence.ModelStore;
 import qube.qai.services.DataServiceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.DistributedDataService;
@@ -58,13 +57,13 @@ public class QoanModule extends AbstractModule {
 
     }
 
-    @Provides
-    @Singleton
-    @Named("USER")
-    DataServiceInterface provideUserDataService() {
-        // @TODO add the additional configuraiton of the whole
-        return new ModelStore();
-    }
+//    @Provides
+//    @Singleton
+//    @Named("USER")
+//    DataServiceInterface provideUserDataService() {
+//        // @TODO add the additional configuraiton of the whole
+//        return new ModelStore();
+//    }
 
     @Provides
     @Singleton

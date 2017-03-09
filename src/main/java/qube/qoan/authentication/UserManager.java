@@ -15,12 +15,10 @@
 package qube.qoan.authentication;
 
 import qube.qai.services.DataServiceInterface;
-import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
 
 /**
  * Created by rainbird on 12/24/15.
@@ -46,7 +44,7 @@ public class UserManager {
         user.setUsername(username);
         user.setPassword(password);
 
-        Collection<SearchResult> results = userSearchService.searchInputString(username, "USER", 1);
+        //Collection<SearchResult> results = userSearchService.searchInputString(username, "USER", 1);
 
 
         // save the thing somewhere perhaps?
