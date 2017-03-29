@@ -277,11 +277,11 @@
         <!--</dependency>-->
 
         <!-- nano-sparql etc. -->
-        <dependency>
-            <groupId>com.blazegraph</groupId>
-            <artifactId>bigdata-jar</artifactId>
-            <version>2.1.0</version>
-        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.blazegraph</groupId>-->
+        <!--<artifactId>bigdata-jar</artifactId>-->
+        <!--<version>2.1.0</version>-->
+        <!--</dependency>-->
 
         <!--<dependency>-->
         <!--<groupId>org.openrdf.sesame</groupId>-->
@@ -326,7 +326,7 @@
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
                 <configuration>
-                    <strict>true</strict>
+                    <!--<strict>true</strict>-->
                     <force>true</force>
                     <!-- Enable during development to speed compiling. -->
                     <!-- <draftCompile>true</draftCompile>
