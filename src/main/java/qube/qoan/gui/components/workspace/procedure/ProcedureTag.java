@@ -65,7 +65,7 @@ public class ProcedureTag extends Panel {
         VerticalLayout layout = new VerticalLayout();
         layout.setWidth("200px");
 
-        String name = procedure.getNameString();
+        String name = procedure.getName().getName();
 
         Label nameLabel = new Label(name);
         nameLabel.setStyleName("bold");
@@ -121,7 +121,7 @@ public class ProcedureTag extends Panel {
      */
     public void onClickOpen(Button.ClickEvent event) {
 
-        String title = procedure.getNameString();
+        String title = procedure.getName().getName();
         Panel windowContent = new Panel();
         VerticalLayout layout = new VerticalLayout();
         // if procedure has already executed, then add the views to results as well
@@ -134,20 +134,20 @@ public class ProcedureTag extends Panel {
             VerticalLayout panelLayout = new VerticalLayout();
             Label description = new Label(procedure.getDescription());
             panelLayout.addComponent(description);
-            MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
-            panelLayout.addComponent(metricsPanel);
-            firstPanel.setContent(panelLayout);
-
-            tabSheet.addTab(firstPanel).setCaption("Procedure:");
-            addDisplayOfResults(tabSheet, procedure.getArguments());
+//            MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
+//            panelLayout.addComponent(metricsPanel);
+//            firstPanel.setContent(panelLayout);
+//
+//            tabSheet.addTab(firstPanel).setCaption("Procedure:");
+//            addDisplayOfResults(tabSheet, procedure.getArguments());
 
             layout.addComponent(tabSheet);
         } else {
             // if procedure has not yet executed don't bother with display of results in tabs
-            Label description = new Label(procedure.getDescription());
-            layout.addComponent(description);
-            MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
-            layout.addComponent(metricsPanel);
+//            Label description = new Label(procedure.getDescription());
+//            layout.addComponent(description);
+//            MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
+//            layout.addComponent(metricsPanel);
         }
 
         windowContent.setContent(layout);
