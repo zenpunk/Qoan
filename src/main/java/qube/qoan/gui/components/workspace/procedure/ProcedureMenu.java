@@ -71,7 +71,7 @@ public class ProcedureMenu extends Panel {
                 // @TODO this is perhaps really only temporary
                 // this is what we do when we need to create a dummy procedure
                 if (StringUtils.containsIgnoreCase(name, "dummy")) {
-                    procedure = NeuralNetworkAnalysis.Factory.constructProcedure(null);
+                    procedure = new NeuralNetworkAnalysis();
                     procedureCache.cacheProcedure(procedure);
                 } else {
                     procedure = procedureCache.getProcedureWithName(name);
