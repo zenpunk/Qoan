@@ -68,8 +68,8 @@ public class ProcedureListPanel extends Panel {
         layout.setMargin(true);
 
         // put a description of the procedure
-        Label descriptionLabel = new Label(procedure.getDescription());
-        layout.addComponent(descriptionLabel);
+//        Label descriptionLabel = new Label(procedure.getDescription());
+//        layout.addComponent(descriptionLabel);
 
         currentTree = new Tree("Procedure: " + name);
         currentTree.setImmediate(true);

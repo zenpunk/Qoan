@@ -125,8 +125,8 @@ public class ProcedureTag extends Panel {
             // in the first panel we have the procedure description and parameters
             Panel firstPanel = new Panel();
             VerticalLayout panelLayout = new VerticalLayout();
-            Label description = new Label(procedure.getDescription());
-            panelLayout.addComponent(description);
+//            Label description = new Label(procedure.getDescription());
+//            panelLayout.addComponent(description);
 //            MetricsPanel metricsPanel = new MetricsPanel("Parameters:", procedure.getArguments());
 //            panelLayout.addComponent(metricsPanel);
 //            firstPanel.setContent(panelLayout);
