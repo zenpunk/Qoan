@@ -26,7 +26,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="qai" exported="" />
+    <orderEntry type="module" module-name="qai" />
     <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:39.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-persist:4.0" level="project" />
     <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-all:3.8.1" level="project" />
