@@ -23,9 +23,7 @@ import net.jmob.guice.conf.core.BindConfig;
 import net.jmob.guice.conf.core.ConfigurationModule;
 import net.jmob.guice.conf.core.InjectConfig;
 import net.jmob.guice.conf.core.Syntax;
-import qube.qai.services.DataServiceInterface;
 import qube.qai.services.SearchServiceInterface;
-import qube.qai.services.implementation.DistributedDataService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
 
@@ -57,14 +55,6 @@ public class QoanModule extends AbstractModule {
 
     }
 
-//    @Provides
-//    @Singleton
-//    @Named("USER")
-//    DataServiceInterface provideUserDataService() {
-//        // @TODO add the additional configuraiton of the whole
-//        return new ModelStore();
-//    }
-
     @Provides
     @Singleton
     ProcedureCache provideProcedureSource() {
@@ -85,7 +75,6 @@ public class QoanModule extends AbstractModule {
 
     @Provides
     @Singleton
-        //@Named("HAZELCAST_CLIENT")
     HazelcastInstance provideHazelcastInstance() {
 
         if (hazelcastInstance != null) {
@@ -102,10 +91,10 @@ public class QoanModule extends AbstractModule {
     }
 
     @Provides
-    @Named("Wiktionary_en")
+    @Named("Users")
     @Singleton
-    SearchServiceInterface provideWiktionarySearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
+    SearchServiceInterface provideUserSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Users");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
         distributedSearch.initialize();
 
@@ -124,10 +113,10 @@ public class QoanModule extends AbstractModule {
     }
 
     @Provides
-    @Named("Stock_Quotes")
+    @Named("Wiktionary_en")
     @Singleton
-    SearchServiceInterface provideStockQuoteSearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Quotes");
+    SearchServiceInterface provideWiktionarySearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
         distributedSearch.initialize();
 
@@ -135,10 +124,32 @@ public class QoanModule extends AbstractModule {
     }
 
     @Provides
-    @Named("USER")
+    @Named("WikiResources_en")
     @Singleton
-    DataServiceInterface provideUserSearchService() {
-        DistributedDataService distributedSearch = new DistributedDataService("USER");
+    SearchServiceInterface provideWikiResourcesSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("WikiResources_en");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
+    }
+
+    @Provides
+    @Named("Stock_Entities")
+    @Singleton
+    SearchServiceInterface provideStockEntitiesSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Entities");
+        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.initialize();
+
+        return distributedSearch;
+    }
+
+    @Provides
+    @Named("Procedures")
+    @Singleton
+    SearchServiceInterface provideProceduresSearchService() {
+        DistributedSearchService distributedSearch = new DistributedSearchService("Procedures");
         distributedSearch.setHazelcastInstance(hazelcastInstance);
         distributedSearch.initialize();
 

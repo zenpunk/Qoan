@@ -18,6 +18,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
+import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
 
@@ -28,11 +29,12 @@ public class AllQoanTests extends TestCase {
 
     /**
      * shame really that there are not more tests, i suppose
-     *
-     * @TODO think of some ways of gui-testing
      */
     public static Test suite() {
         TestSuite suite = new TestSuite("All tests");
+
+        // user manager tests
+        suite.addTestSuite(TestUserManager.class);
 
         // this one tests search menu drag-n-drop things
         suite.addTestSuite(TestSearchMenu.class);

@@ -14,11 +14,15 @@
 
 package qube.qoan.authentication;
 
-import qube.qai.services.DataServiceInterface;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.Collection;
 
 /**
  * Created by rainbird on 12/24/15.
@@ -27,8 +31,11 @@ public class UserManager {
 
 
     @Inject
-    @Named("USER")
-    private DataServiceInterface userSearchService;
+    @Named("Users")
+    private SearchServiceInterface userSearchService;
+
+    @Inject
+    private HazelcastInstance hazelcastInstance;
 
     /**
      * this is in order to authenticate the user with the
@@ -40,14 +47,16 @@ public class UserManager {
      */
     public User authenticateUser(String username, String password) throws UserNotAuthenticatedException {
 
-        User user = new User();
-        user.setUsername(username);
-        user.setPassword(password);
+        User user = null;
 
-        //Collection<SearchResult> results = userSearchService.searchInputString(username, "USER", 1);
+        Collection<SearchResult> results = userSearchService.searchInputString(username, "USERS", 1);
+        if (results == null || results.isEmpty()) {
+            return user;
+        }
 
-
-        // save the thing somewhere perhaps?
+        String userUuid = results.iterator().next().getUuid();
+        IMap<String, User> userMap = hazelcastInstance.getMap("USERS");
+        user = userMap.get(userUuid);
 
         return user;
     }
@@ -69,5 +78,13 @@ public class UserManager {
         // no idea how that is supposed to work right now
 
         return true;
+    }
+
+    public SearchServiceInterface getUserSearchService() {
+        return userSearchService;
+    }
+
+    public void setUserSearchService(SearchServiceInterface userSearchService) {
+        this.userSearchService = userSearchService;
     }
 }

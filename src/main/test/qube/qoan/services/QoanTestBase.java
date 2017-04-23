@@ -29,7 +29,6 @@ public class QoanTestBase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        // @TODO QaiModule is not right here... find a way to make the QaiTestModule to be accessible
         injector = Guice.createInjector(new QoanTestModule());
         injector.injectMembers(this);
 

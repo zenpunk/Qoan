@@ -24,15 +24,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.message.MessageQueue;
 import qube.qai.message.MessageQueueInterface;
+import qube.qai.persistence.ModelStore;
 import qube.qai.services.*;
 import qube.qai.services.implementation.*;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by rainbird on 11/19/15.
@@ -74,39 +71,46 @@ public class QoanTestModule extends AbstractModule {
     }
 
     @Provides
-    @Singleton
-    public EntityManagerFactory provideEntityManagerFactory() {
-        Map<String, String> properties = new HashMap<String, String>();
-        properties.put("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
-        properties.put("hibernate.connection.url", "jdbc:hsqldb:" + STOCK_QUOTES_DIRECTORY);
-        properties.put("hibernate.connection.username", "sa");
-        properties.put("hibernate.connection.password", "");
-        properties.put("hibernate.connection.pool_size", "1");
-        properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
-        properties.put("hibernate.hbm2ddl.auto", "create");
-
-        properties.put("current_session_context_class", "org.hibernate.context.ManagedSessionContext");
-        properties.put("hibernate.cache.use_second_level_cache", "false");
-        properties.put("hibernate.cache.use_query_cache", "false");
-        properties.put("cache.provider_class", "org.hibernate.cache.NoCacheProvider");
-        properties.put("show_sql", "true");
-
-        return Persistence.createEntityManagerFactory("db-manager", properties);
+    @Named("USER")
+    public SearchServiceInterface provideUserDataService() {
+        SearchServiceInterface dataService = new ModelStore("./test/dummy.model.directory");
+        ((ModelStore) dataService).init();
+        return dataService;
     }
 
-    @Provides
-    public EntityManager provideEntityManager(EntityManagerFactory entityManagerFactory) {
-        EntityManager entityManager = ENTITY_MANAGER_CACHE.get();
-        if (entityManager == null) {
-            ENTITY_MANAGER_CACHE.set(entityManager = entityManagerFactory.createEntityManager());
-        }
-        return entityManager;
-    }
+//    @Provides
+//    @Singleton
+//    public EntityManagerFactory provideEntityManagerFactory() {
+//        Map<String, String> properties = new HashMap<String, String>();
+//        properties.put("hibernate.connection.driver_class", "org.hsqldb.jdbcDriver");
+//        properties.put("hibernate.connection.url", "jdbc:hsqldb:" + STOCK_QUOTES_DIRECTORY);
+//        properties.put("hibernate.connection.username", "sa");
+//        properties.put("hibernate.connection.password", "");
+//        properties.put("hibernate.connection.pool_size", "1");
+//        properties.put("hibernate.dialect", "org.hibernate.dialect.HSQLDialect");
+//        properties.put("hibernate.hbm2ddl.auto", "create");
+//
+//        properties.put("current_session_context_class", "org.hibernate.context.ManagedSessionContext");
+//        properties.put("hibernate.cache.use_second_level_cache", "false");
+//        properties.put("hibernate.cache.use_query_cache", "false");
+//        properties.put("cache.provider_class", "org.hibernate.cache.NoCacheProvider");
+//        properties.put("show_sql", "true");
+//
+//        return Persistence.createEntityManagerFactory("db-manager", properties);
+//    }
+//
+//    @Provides
+//    public EntityManager provideEntityManager(EntityManagerFactory entityManagerFactory) {
+//        EntityManager entityManager = ENTITY_MANAGER_CACHE.get();
+//        if (entityManager == null) {
+//            ENTITY_MANAGER_CACHE.set(entityManager = entityManagerFactory.createEntityManager());
+//        }
+//        return entityManager;
+//    }
 
     @Provides
     @Singleton
-        //@Named("HAZELCAST_CLIENT")
-    HazelcastInstance provideHazelcastInstance() {
+    public HazelcastInstance provideHazelcastInstance() {
         if (hazelcastInstance != null) {
             return hazelcastInstance;
         }
@@ -127,9 +131,9 @@ public class QoanTestModule extends AbstractModule {
     }
 
     @Provides
-    @Named("Wiktionary_en")
-    SearchServiceInterface provideWiktionarySearchServiceInterface() {
-        SearchServiceInterface searchService = new WikiSearchService(wiktionaryDirectory, wiktionaryZipFileName);
+    @Named("Users")
+    SearchServiceInterface provideUsersSearchServiceInterface() {
+        SearchServiceInterface searchService = new DistributedSearchService("Users");
 
         return searchService;
     }
@@ -137,7 +141,39 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Wikipedia_en")
     SearchServiceInterface provideWikipediaSearchServiceInterface() {
-        SearchServiceInterface searchService = new WikiSearchService(wikipediaDirectory, wikipediaZipFileName);
+        SearchServiceInterface searchService = new DistributedSearchService("Wikipedia_en");
+
+        return searchService;
+    }
+
+    @Provides
+    @Named("Wiktionary_en")
+    SearchServiceInterface provideWiktionarySearchServiceInterface() {
+        SearchServiceInterface searchService = new DistributedSearchService("Wiktionary_en");
+
+        return searchService;
+    }
+
+    @Provides
+    @Named("WikiResources_en")
+    SearchServiceInterface provideWikiResourcesSearchServiceInterface() {
+        SearchServiceInterface searchService = new DistributedSearchService("WikiResources_en");
+
+        return searchService;
+    }
+
+    @Provides
+    @Named("StockEntities")
+    SearchServiceInterface provideStockEntitiesSearchServiceInterface() {
+        SearchServiceInterface searchService = new DistributedSearchService("StockEntities");
+
+        return searchService;
+    }
+
+    @Provides
+    @Named("Procedures")
+    SearchServiceInterface provideProceduresSearchServiceInterface() {
+        SearchServiceInterface searchService = new DistributedSearchService("Procedures");
 
         return searchService;
     }
