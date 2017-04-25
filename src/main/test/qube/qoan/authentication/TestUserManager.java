@@ -34,9 +34,6 @@ public class TestUserManager extends QoanTestBase {
 
         UserManager manager = new UserManager();
         injector.injectMembers(manager);
-//        ModelStore modelStore = new ModelStore("./test/dummy.model.directory");
-//        modelStore.init();
-//        manager.setUserSearchService(modelStore);
 
         SearchServiceInterface modelStore = manager.getUserSearchService();
 

@@ -21,6 +21,7 @@ import junit.textui.TestRunner;
 import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
+import qube.qoan.services.implementation.TestDistributedSearchServices;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -41,6 +42,8 @@ public class AllQoanTests extends TestCase {
 
         // this one is for parsing wiki-tables
         suite.addTestSuite(TestWikiArticleIntegration.class);
+
+        suite.addTestSuite(TestDistributedSearchServices.class);
 
         return suite;
     }
