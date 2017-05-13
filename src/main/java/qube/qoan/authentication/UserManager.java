@@ -49,13 +49,13 @@ public class UserManager {
 
         User user = null;
 
-        Collection<SearchResult> results = userSearchService.searchInputString(username, "USERS", 1);
+        Collection<SearchResult> results = userSearchService.searchInputString(username, "Users", 1);
         if (results == null || results.isEmpty()) {
             return user;
         }
 
         String userUuid = results.iterator().next().getUuid();
-        IMap<String, User> userMap = hazelcastInstance.getMap("USERS");
+        IMap<String, User> userMap = hazelcastInstance.getMap("Users");
         user = userMap.get(userUuid);
 
         return user;
