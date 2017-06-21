@@ -23,6 +23,8 @@ import qube.qoan.services.QoanServletConfig;
 /**
  * Created by rainbird on 10/26/15.
  */
+//@WebServlet(value = "/*", asyncSupported = true)
+//@VaadinServletConfiguration(productionMode = false, ui = QoanUI.class)
 public class WebServer {
 
     private static String contextPath = "/";
@@ -44,6 +46,17 @@ public class WebServer {
         webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         //webAppContext.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
         webAppContext.addEventListener(new QoanServletConfig());
+
+//        webAppContext.setConfigurations(new Configuration[] {
+//                new AnnotationConfiguration(),
+//                new WebXmlConfiguration(),
+//                new WebInfConfiguration(),
+//                new TagLibConfiguration(),
+//                new PlusConfiguration(),
+//                new MetaInfConfiguration(),
+//                new FragmentConfiguration(),
+//                new EnvConfiguration() });
+
         server.setHandler(webAppContext);
 
         System.out.println("Go to http://localhost:" + httpPort + contextPath);

@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.views;
 
+import com.vaadin.shared.ui.Connect;
 import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -38,6 +39,7 @@ import java.io.File;
 /**
  * Created by rainbird on 10/29/15.
  */
+@Connect(pl.pdfviewer.PdfViewer.class)
 public class ComponentsView extends QoanView {
 
     public static String NAME = "components";
@@ -69,18 +71,27 @@ public class ComponentsView extends QoanView {
 //    }
 
     protected void initialize() {
+
+        Layout layout = new VerticalLayout();
+
+        Label pdfLabel = new Label("example of pdf-file display");
+        layout.addComponent(pdfLabel);
+        File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+        Component pdfViewer = new PdfViewer(pdfFile);
+        layout.addComponent(pdfViewer);
+
         Label chartLabel = new Label("A small graph");
-        addComponent(chartLabel);
+        layout.addComponent(chartLabel);
         Component graph = createNetworkDiagram();
         graph.setHeight("600px");
         graph.setWidth("800px");
-        addComponent(graph);
+        layout.addComponent(graph);
 
         Component timeSeries = createTimeSeries();
-        addComponent(timeSeries);
+        layout.addComponent(timeSeries);
 
         Component histogram = createHistogram();
-        addComponent(histogram);
+        layout.addComponent(histogram);
 
         Button openWindowButton = new Button("Open Window");
         openWindowButton.addClickListener(new Button.ClickListener() {
@@ -95,11 +106,9 @@ public class ComponentsView extends QoanView {
                 UI.getCurrent().addWindow(window);
             }
         });
-        addComponent(openWindowButton);
+        layout.addComponent(openWindowButton);
 
-        File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
-        Component pdfViewer = new PdfViewer(pdfFile);
-        addComponent(pdfViewer);
+        addComponent(layout);
     }
 
     private Component createTimeSeries() {

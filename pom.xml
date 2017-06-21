@@ -28,7 +28,7 @@
 
     <properties>
         <!--<vaadin.version>7.6.5</vaadin.version>-->
-        <vaadin.version>7.7.1</vaadin.version>
+        <vaadin.version>7.7.10</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.2.6.v20141205</jetty9.version>
@@ -90,11 +90,13 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-server</artifactId>
+            <version>${vaadin.version}</version>
         </dependency>
 
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client</artifactId>
+            <version>${vaadin.version}</version>
         </dependency>
 
         <dependency>
@@ -184,6 +186,11 @@
         <dependency>
             <groupId>org.eclipse.jetty</groupId>
             <artifactId>jetty-jmx</artifactId>
+            <version>${jetty9.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <artifactId>jetty-annotations</artifactId>
             <version>${jetty9.version}</version>
         </dependency>
         <!--<dependency>
@@ -337,7 +344,7 @@
                     <!--<userAgents>ie8</userAgents>-->
                     <!-- <userAgents>gecko1_8</userAgents> -->
                     <!-- End development options -->
-                    <webappDirectory>src/main/webapp/VAADIN/widgetsets</webappDirectory>
+                    <webappDirectory>src/main/resources/webapp/VAADIN/widgetsets</webappDirectory>
                     <modules>
                         <module>qube.qoan.MyWidgetset</module>
                     </modules>
@@ -375,8 +382,8 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
-                    <packagingExcludes>WEB-INF/classes/VAADIN/gwt-unitCache/**,
-                        WEB-INF/classes/VAADIN/widgetsets/WEB-INF/**
+                    <packagingExcludes>WEB-INF/classes/webapp/VAADIN/gwt-unitCache/**,
+                        WEB-INF/classes/webapp/VAADIN/widgetsets/WEB-INF/**
                     </packagingExcludes>
                 </configuration>
             </plugin>
@@ -402,7 +409,7 @@
                     </execution>
                 </executions>
             </plugin>
-            <!--<plugin>
+            <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.plugin.version}</version>
@@ -423,7 +430,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>-->
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>

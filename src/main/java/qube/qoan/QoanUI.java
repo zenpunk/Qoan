@@ -31,8 +31,10 @@ import qube.qoan.services.QoanModule;
 /**
  *
  */
+//@WebServlet(value = "/*", asyncSupported = true)
+//@VaadinServletConfiguration(productionMode = false, ui = QoanUI.class)
 @Theme("mytheme")
-@Widgetset("qube.qoan.MyAppWidgetset")
+@Widgetset("qube.qoan.MyWidgetset")
 @JavaScript({"js/mathjax/MathJax.js"})
 public class QoanUI extends UI {
 
