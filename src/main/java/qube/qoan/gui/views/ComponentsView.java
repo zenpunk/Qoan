@@ -51,7 +51,7 @@ public class ComponentsView extends QoanView {
 
         Layout layout = new VerticalLayout();
 
-        NglAdapter nglViewer = new NglAdapter("<i>NglAdapter</i>");
+        NglAdapter nglViewer = new NglAdapter("<b><i>NglAdapter</i></b>");
         layout.addComponent(nglViewer);
 
         Component timeSeries = createTimeSeries();
@@ -71,11 +71,20 @@ public class ComponentsView extends QoanView {
                 Label pdfLabel = new Label("example of pdf-file display");
                 content.addComponent(pdfLabel);
                 File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
-                Component pdfViewer = new PdfViewer(pdfFile);
-                //pdfViewer.setWidthUndefined();
+                PdfViewer pdfViewer = new PdfViewer(pdfFile);
+//                pdfViewer.setHeight(400	,Unit.PIXELS);
+//                pdfViewer.setWidth(800,Unit.PIXELS);
+//                pdfViewer.setBackAngleButtonCaption(VaadinIcons.ROTATE_LEFT.getHtml());
+//                pdfViewer.setNextAngleButtonCaption(VaadinIcons.ROTATE_RIGHT.getHtml());
+//                pdfViewer.setIncreaseButtonCaption(VaadinIcons.SEARCH_PLUS.getHtml());
+//                pdfViewer.setDecreaseButtonCaption(VaadinIcons.SEARCH_MINUS.getHtml());
+//                pdfViewer.setPreviousPageCaption(VaadinIcons.ANGLE_LEFT.getHtml()+" Back");
+//                pdfViewer.setNextPageCaption("Next "+VaadinIcons.ANGLE_RIGHT.getHtml());
+                pdfViewer.setWidth("800px");
                 content.addComponent(pdfViewer);
 
                 window.setContent(content);
+                window.setWidth("800px");
                 UI.getCurrent().addWindow(window);
             }
         });
