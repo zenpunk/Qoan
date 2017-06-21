@@ -1,2 +1,0 @@
-# Module qube.qoan.MyWidgetset
-# RPC service class, partial path of RPC policy file
