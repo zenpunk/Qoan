@@ -16,7 +16,6 @@ package qube.qoan;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-import com.vaadin.annotations.JavaScript;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
@@ -35,7 +34,7 @@ import qube.qoan.services.QoanModule;
 //@VaadinServletConfiguration(productionMode = false, ui = QoanUI.class)
 @Theme("mytheme")
 @Widgetset("qube.qoan.MyWidgetset")
-@JavaScript({"js/mathjax/MathJax.js"})
+//@JavaScript({"js/mathjax/MathJax.js"})
 public class QoanUI extends UI {
 
     protected Navigator navigator;

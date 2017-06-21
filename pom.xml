@@ -149,6 +149,13 @@
             <version>1.1.0</version>
         </dependency>
 
+        <!-- for maths editing and rendering -->
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>mathquill-integration</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+
         <!-- Vaadin plug-in to make components resizable-->
         <!--<dependency>
             <groupId>com.vaadin.pekka</groupId>
@@ -415,7 +422,7 @@
                 <version>${vaadin.plugin.version}</version>
                 <configuration>
                     <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                    <webappDirectory>${basedir}/target/classes/VAADIN/widgetsets</webappDirectory>
+                    <webappDirectory>${basedir}/target/classes/webapp/VAADIN/widgetsets</webappDirectory>
                     <draftCompile>false</draftCompile>
                     <compileReport>false</compileReport>
                     <style>OBF</style>

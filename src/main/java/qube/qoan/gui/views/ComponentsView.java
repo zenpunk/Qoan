@@ -14,7 +14,6 @@
 
 package qube.qoan.gui.views;
 
-import com.vaadin.shared.ui.Connect;
 import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -33,13 +32,13 @@ import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
 import org.vaadin.visjs.networkDiagram.options.Options;
 import pl.pdfviewer.PdfViewer;
+import qube.qoan.gui.components.common.NglAdapter;
 
 import java.io.File;
 
 /**
  * Created by rainbird on 10/29/15.
  */
-@Connect(pl.pdfviewer.PdfViewer.class)
 public class ComponentsView extends QoanView {
 
     public static String NAME = "components";
@@ -48,44 +47,12 @@ public class ComponentsView extends QoanView {
         this.viewTitle = "Qoan Components";
     }
 
-    @Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        UI.getCurrent().getPage().setContext("Qoan Components Display");
-//
-//        QoanHeader header = new QoanHeader();
-//        addComponent(header);
-//
-//
-//
-//        Button button = new Button("Click Me");
-//        button.addClickListener(new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent event) {
-//                Label label = new Label("Thank you for clicking");
-//                addComponent(label);
-//            }
-//        });
-//
-//        addComponent(button);
-//    }
-
     protected void initialize() {
 
         Layout layout = new VerticalLayout();
 
-        Label pdfLabel = new Label("example of pdf-file display");
-        layout.addComponent(pdfLabel);
-        File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
-        Component pdfViewer = new PdfViewer(pdfFile);
-        layout.addComponent(pdfViewer);
-
-        Label chartLabel = new Label("A small graph");
-        layout.addComponent(chartLabel);
-        Component graph = createNetworkDiagram();
-        graph.setHeight("600px");
-        graph.setWidth("800px");
-        layout.addComponent(graph);
+        NglAdapter nglViewer = new NglAdapter("<i>NglAdapter</i>");
+        layout.addComponent(nglViewer);
 
         Component timeSeries = createTimeSeries();
         layout.addComponent(timeSeries);
@@ -93,20 +60,48 @@ public class ComponentsView extends QoanView {
         Component histogram = createHistogram();
         layout.addComponent(histogram);
 
-        Button openWindowButton = new Button("Open Window");
-        openWindowButton.addClickListener(new Button.ClickListener() {
+        Button showPdfViewerButton = new Button("Show Pdf-Viewer");
+        showPdfViewerButton.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent clickEvent) {
+                Window window = new Window("A Window");
+                VerticalLayout content = new VerticalLayout();
+                content.setMargin(true);
+
+                Label pdfLabel = new Label("example of pdf-file display");
+                content.addComponent(pdfLabel);
+                File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+                Component pdfViewer = new PdfViewer(pdfFile);
+                //pdfViewer.setWidthUndefined();
+                content.addComponent(pdfViewer);
+
+                window.setContent(content);
+                UI.getCurrent().addWindow(window);
+            }
+        });
+        layout.addComponent(showPdfViewerButton);
+
+        Button showGraphButton = new Button("Open Window for example Graph");
+        showGraphButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 Window window = new Window("A Window");
                 VerticalLayout content = new VerticalLayout();
                 content.setMargin(true);
-                Label label = new Label("this is some test text to display in the window");
-                content.addComponent(label);
+                //Label label = new Label("this is some test text to display in the window");
+                //content.addComponent(label);
+                Label chartLabel = new Label("A small graph");
+                content.addComponent(chartLabel);
+                Component graph = createNetworkDiagram();
+                graph.setHeight("600px");
+                graph.setWidth("800px");
+                content.addComponent(graph);
+
                 window.setContent(content);
                 UI.getCurrent().addWindow(window);
             }
         });
-        layout.addComponent(openWindowButton);
+        layout.addComponent(showGraphButton);
 
         addComponent(layout);
     }
