@@ -150,11 +150,12 @@
         </dependency>
 
         <!-- for maths editing and rendering -->
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>mathquill-integration</artifactId>
-            <version>0.9.5</version>
-        </dependency>
+        <!-- bug in the library, can't be used -->
+        <!--<dependency>-->
+        <!--<groupId>org.vaadin.addons</groupId>-->
+        <!--<artifactId>mathquill-integration</artifactId>-->
+        <!--<version>0.9.5</version>-->
+        <!--</dependency>-->
 
         <!-- Vaadin plug-in to make components resizable-->
         <!--<dependency>

@@ -47,9 +47,36 @@ public class ComponentsView extends QoanView {
         this.viewTitle = "Qoan Components";
     }
 
+    protected CssLayout mathDisplay;
+
     protected void initialize() {
 
         Layout layout = new VerticalLayout();
+
+        Label welcomeLabel = new Label("Welcome to the demo page for Qoan components.");
+        layout.addComponent(welcomeLabel);
+
+//        RichMathArea mathArea = new RichMathArea();
+//        layout.addComponent(mathArea);
+//
+//        mathDisplay = new CssLayout();
+//        mathDisplay.setWidth("400px");
+//        mathDisplay.setHeight("300px");
+//        mathDisplay.setCaption("Rendered labels");
+//        layout.addComponent(mathDisplay);
+//
+//        Button renderMathsButton = new Button("Render Maths Expression");
+//        renderMathsButton.addClickListener(new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent clickEvent) {
+//                mathDisplay.removeAllComponents();
+//                List<Component> components = MathValueParser.get().getMathValueAsComponents(mathArea);
+//                for (Component c : components) {
+//                    mathDisplay.addComponent(c);
+//                }
+//            }
+//        });
+//        layout.addComponent(renderMathsButton);
 
         NglAdapter nglViewer = new NglAdapter("<b><i>NglAdapter</i></b>");
         layout.addComponent(nglViewer);
@@ -116,7 +143,7 @@ public class ComponentsView extends QoanView {
     }
 
     private Component createTimeSeries() {
-        XYDataset dataset = createDataset("microsoft", "apple", "google");
+        XYDataset dataset = createDataset("microsoft", "apple", "google", "oracle");
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
                 "Computing Test",
                 "Days",
@@ -136,7 +163,7 @@ public class ComponentsView extends QoanView {
     }
 
     private XYDataset createDataset(String... names) {
-        int size = 100;
+        int size = 50;
         RandomNumber generator = new Normal(0.5, 10.0);
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         int day = 01;
@@ -159,7 +186,7 @@ public class ComponentsView extends QoanView {
     private Component createHistogram() {
 
         // try our hand with an histogram
-        int number = 1000;
+        int number = 10000;
         double[] value = new double[number];
         //Random generator = new Random();
         RandomNumber generator = new Normal(0.5, 10.0);
@@ -171,7 +198,7 @@ public class ComponentsView extends QoanView {
 
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
-        dataset.addSeries("Histogram", value, 50);
+        dataset.addSeries("Histogram", value, 100);
         String plotTitle = "Histogram";
         String xaxis = "value";
         String yaxis = "frequency";
