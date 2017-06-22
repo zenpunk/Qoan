@@ -24,8 +24,17 @@ import com.vaadin.ui.AbstractJavaScriptComponent;
  * to make it in its own library, so that it can be released as a real Vaadin
  * addon too. for that is for later...
  */
-@JavaScript({"ngl/ngl_viewer_adapter.js"})
+@JavaScript({"ngl/ngl_viewer_adapter.js", "ngl/ngl.embedded.min.js"})
 public class NglAdapter extends AbstractJavaScriptComponent {
+
+    private String uuid;
+
+    private String basic = "<div id='viewport' style='width:600px; height:400px;'></div>";
+
+    public NglAdapter() {
+        //this.uuid = UUIDService.uuidString();
+        getState().xhtml = basic;
+    }
 
     public NglAdapter(String xhtml) {
         getState().xhtml = xhtml;
@@ -37,5 +46,13 @@ public class NglAdapter extends AbstractJavaScriptComponent {
     @Override
     protected NglAdapterState getState() {
         return (NglAdapterState) super.getState();
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

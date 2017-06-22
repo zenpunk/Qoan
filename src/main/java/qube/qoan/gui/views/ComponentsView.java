@@ -78,7 +78,7 @@ public class ComponentsView extends QoanView {
 //        });
 //        layout.addComponent(renderMathsButton);
 
-        NglAdapter nglViewer = new NglAdapter("<b><i>NglAdapter</i></b>");
+        NglAdapter nglViewer = new NglAdapter();
         layout.addComponent(nglViewer);
 
         Component timeSeries = createTimeSeries();
