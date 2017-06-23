@@ -47,7 +47,10 @@ public class ComponentsView extends QoanView {
         this.viewTitle = "Qoan Components";
     }
 
-    protected CssLayout mathDisplay;
+    private String jsExec = //"function onInit()" +
+            //"{ var stage = new NGL.Stage(\"viewport\"); " +
+            //"stage.loadFile( \"rcsb://1crn\", { defaultRepresentation: true } ); } " +
+            "NGL.init( onInit );";
 
     protected void initialize() {
 
@@ -56,30 +59,38 @@ public class ComponentsView extends QoanView {
         Label welcomeLabel = new Label("Welcome to the demo page for Qoan components.");
         layout.addComponent(welcomeLabel);
 
-//        RichMathArea mathArea = new RichMathArea();
-//        layout.addComponent(mathArea);
-//
-//        mathDisplay = new CssLayout();
-//        mathDisplay.setWidth("400px");
-//        mathDisplay.setHeight("300px");
-//        mathDisplay.setCaption("Rendered labels");
-//        layout.addComponent(mathDisplay);
-//
-//        Button renderMathsButton = new Button("Render Maths Expression");
-//        renderMathsButton.addClickListener(new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent clickEvent) {
-//                mathDisplay.removeAllComponents();
-//                List<Component> components = MathValueParser.get().getMathValueAsComponents(mathArea);
-//                for (Component c : components) {
-//                    mathDisplay.addComponent(c);
-//                }
-//            }
-//        });
-//        layout.addComponent(renderMathsButton);
-
         NglAdapter nglViewer = new NglAdapter();
         layout.addComponent(nglViewer);
+        Button showNgl = new Button("Show 1CRM");
+        showNgl.addClickListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                JavaScript.getCurrent().execute(jsExec);
+                //JavaScript.getCurrent().execute("alert('initialization complete')");
+            }
+        });
+        layout.addComponent(showNgl);
+//
+//        MyComponent mycomponent = new MyComponent();
+//        layout.addComponent(mycomponent);
+//
+//        Button showNglButton = new Button("Show NGL-Viewer");
+//        showNglButton.addClickListener(new Button.ClickListener() {
+//            @Override
+//            public void buttonClick(Button.ClickEvent clickEvent) {
+//                Window window = new Window("A Window");
+//                VerticalLayout content = new VerticalLayout();
+//                content.setMargin(true);
+//
+//                NglAdapter nglViewer = new NglAdapter("");
+//                content.addComponent(nglViewer);
+//
+//                window.setContent(content);
+//                window.setWidth("800px");
+//                UI.getCurrent().addWindow(window);
+//            }
+//        });
+//        layout.addComponent(showNglButton);
 
         Component timeSeries = createTimeSeries();
         layout.addComponent(timeSeries);

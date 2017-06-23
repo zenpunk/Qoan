@@ -31,13 +31,12 @@
         <vaadin.version>7.7.10</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
         <project.encoding>UTF-8</project.encoding>
-        <jetty9.version>9.2.6.v20141205</jetty9.version>
+        <jetty9.version>9.4.6.v20170531</jetty9.version>
 
         <guice.version>4.0</guice.version>
         <guice-conf.version>1.2.0</guice-conf.version>
 
         <hazelcast.version>3.8.1</hazelcast.version>
-        <!--<hazelcast.version>3.5.4</hazelcast.version>-->
 
         <lucene.version>5.3.1</lucene.version>
         <tika.version>1.10</tika.version>
@@ -427,13 +426,13 @@
                     <draftCompile>false</draftCompile>
                     <compileReport>false</compileReport>
                     <style>OBF</style>
-                    <strict>true</strict>
+                    <!--<strict>true</strict>-->
                 </configuration>
                 <executions>
                     <execution>
                         <goals>
-                            <goal>remove-theme</goal>
-                            <goal>remove-widgetset</goal>
+                            <!--<goal>remove-theme</goal>-->
+                            <!--<goal>remove-widgetset</goal>-->
                             <goal>compile</goal>
                         </goals>
                     </execution>

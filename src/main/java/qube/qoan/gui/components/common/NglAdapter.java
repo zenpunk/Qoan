@@ -16,6 +16,9 @@ package qube.qoan.gui.components.common;
 
 import com.vaadin.annotations.JavaScript;
 import com.vaadin.ui.AbstractJavaScriptComponent;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 
 /**
  * Created by rainbird on 6/21/17.
@@ -24,20 +27,33 @@ import com.vaadin.ui.AbstractJavaScriptComponent;
  * to make it in its own library, so that it can be released as a real Vaadin
  * addon too. for that is for later...
  */
-@JavaScript({"ngl/ngl_viewer_adapter.js", "ngl/ngl.embedded.min.js"})
-public class NglAdapter extends AbstractJavaScriptComponent {
+@JavaScript({"ngl_viewer_adapter.js", "ngl.embedded.min.js"})
+public class NglAdapter extends AbstractJavaScriptComponent implements Component.Listener {
 
     private String uuid;
 
-    private String basic = "<div id='viewport' style='width:600px; height:400px;'></div>";
+    private String basic = "<div id='viewport' style='width:800px; height:600px;'></div>";
 
     public NglAdapter() {
-        //this.uuid = UUIDService.uuidString();
+
         getState().xhtml = basic;
+
+        UI.getCurrent().addListener(this);
     }
 
     public NglAdapter(String xhtml) {
         getState().xhtml = xhtml;
+    }
+
+    @Override
+    public void componentEvent(Event event) {
+        // Display source component and event class names
+        String eventString = "Event from " + event.getSource().getClass().getName() + ": " + event.getClass().getName();
+        Notification.show(eventString);
+    }
+
+    public void onClick() {
+        Notification.show("OnCLick has been called on client-side");
     }
 
     /**

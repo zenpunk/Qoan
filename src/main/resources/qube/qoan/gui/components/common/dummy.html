@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+
+Something to try out- useful for trying out the ngl-viewer alone
+<script src="ngl.embedded.min.js"></script>
+
+<script>
+
+		if( !Detector.webgl ) Detector.addGetWebGLMessage();
+
+		NGL.mainScriptFilePath = "ngl.embedded.min.js";
+
+		function onInit(){
+			var stage = new NGL.Stage( "viewport" );
+			stage.loadFile( "rcsb://1crn", { defaultRepresentation: true } );
+		}
+
+		document.addEventListener( "DOMContentLoaded", function() {
+			NGL.init( onInit );
+		} );
+
+
+</script>
+
+<div id="viewport" style="width:800px; height:500px;"></div>
+
+</body>
+</html>
