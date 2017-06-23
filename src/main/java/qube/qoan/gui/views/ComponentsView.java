@@ -15,6 +15,7 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.ui.*;
+import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -47,10 +48,9 @@ public class ComponentsView extends QoanView {
         this.viewTitle = "Qoan Components";
     }
 
-    private String jsExec = //"function onInit()" +
-            //"{ var stage = new NGL.Stage(\"viewport\"); " +
-            //"stage.loadFile( \"rcsb://1crn\", { defaultRepresentation: true } ); } " +
-            "NGL.init( onInit );";
+    private String jsExec = "NGL.init( onInit );";
+
+    private String jsExecParam = "NGL.init( onInitLoad('";
 
     protected void initialize() {
 
@@ -61,15 +61,29 @@ public class ComponentsView extends QoanView {
 
         NglAdapter nglViewer = new NglAdapter();
         layout.addComponent(nglViewer);
-        Button showNgl = new Button("Show 1CRM");
+
+        HorizontalLayout selectLine = new HorizontalLayout();
+
+        TextField text = new TextField("Molecule name");
+        text.setValue("1ihm");
+        selectLine.addComponent(text);
+
+        Button showNgl = new Button("Show molecule");
         showNgl.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                JavaScript.getCurrent().execute(jsExec);
-                //JavaScript.getCurrent().execute("alert('initialization complete')");
+                String moleculeName = text.getValue();
+                if (StringUtils.isEmpty(moleculeName)) {
+                    JavaScript.getCurrent().execute(jsExec);
+                } else {
+                    String toExecute = jsExecParam + moleculeName + "' ))";
+                    JavaScript.getCurrent().execute("alert('" + toExecute + "')");
+                    JavaScript.getCurrent().execute(toExecute);
+                }
             }
         });
-        layout.addComponent(showNgl);
+        selectLine.addComponent(showNgl);
+        layout.addComponent(selectLine);
 //
 //        MyComponent mycomponent = new MyComponent();
 //        layout.addComponent(mycomponent);

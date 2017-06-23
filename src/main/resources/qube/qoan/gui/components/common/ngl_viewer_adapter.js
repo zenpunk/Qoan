@@ -30,3 +30,8 @@ function onInit(){
     var stage = new NGL.Stage("viewport");
     stage.loadFile( "rcsb://1crn", { defaultRepresentation: true } );
 }
+
+function onInitLoad(name) {
+    var stage = new NGL.Stage("viewport");
+    stage.loadFile( "rcsb://" + name, { defaultRepresentation: true } );
+}

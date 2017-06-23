@@ -29,9 +29,10 @@ public class QoanTestBase extends TestCase {
     protected void setUp() throws Exception {
         super.setUp();
 
-        injector = Guice.createInjector(new QoanTestModule());
-        injector.injectMembers(this);
-
+        if (injector == null) {
+            injector = Guice.createInjector(new QoanTestModule());
+            injector.injectMembers(this);
+        }
     }
 
 }
