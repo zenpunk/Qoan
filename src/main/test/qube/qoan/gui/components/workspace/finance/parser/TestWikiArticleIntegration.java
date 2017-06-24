@@ -14,8 +14,12 @@
 
 package qube.qoan.gui.components.workspace.finance.parser;
 
-import com.vaadin.data.Item;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.ui.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.persistence.WikiArticle;

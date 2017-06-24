@@ -16,7 +16,7 @@ package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 import qube.qai.persistence.StockEntity;
 
 /**

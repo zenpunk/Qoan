@@ -18,7 +18,7 @@ import com.google.inject.Injector;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.analysis.NeuralNetworkAnalysis;

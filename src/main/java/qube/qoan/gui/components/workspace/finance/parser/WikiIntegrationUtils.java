@@ -16,9 +16,9 @@ package qube.qoan.gui.components.workspace.finance.parser;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
-import com.vaadin.data.Item;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.ui.Table;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;

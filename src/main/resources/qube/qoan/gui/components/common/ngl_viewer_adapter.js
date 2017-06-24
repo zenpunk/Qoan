@@ -12,7 +12,7 @@ qube_qoan_gui_components_common_NglAdapter = function() {
   e.innerHTML = this.getState().xhtml;
   if( !Detector.webgl ) Detector.addGetWebGLMessage();
 
-  // /VAADIN/themes/mytheme/
+  // /VAADIN/js/ works just fine, right is /APP/PUBLISHED/ ?
   NGL.mainScriptFilePath = "/VAADIN/js/ngl.embedded.min.js";
 
   //function onInit(){

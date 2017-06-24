@@ -16,9 +16,9 @@ package qube.qoan.gui.views;
 
 import com.hazelcast.core.DistributedObjectEvent;
 import com.hazelcast.core.DistributedObjectListener;
-import com.vaadin.data.Item;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.ui.Label;
+import com.vaadin.v7.ui.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.services.ProcedureRunnerInterface;

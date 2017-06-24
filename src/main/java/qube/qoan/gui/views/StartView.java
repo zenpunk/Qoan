@@ -15,11 +15,11 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.server.ClassResource;
-import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.shared.ui.label.ContentMode;
+import com.vaadin.v7.ui.HorizontalLayout;
+import com.vaadin.v7.ui.Label;
+import com.vaadin.v7.ui.VerticalLayout;
 
 /**
  * Created by rainbird on 10/29/15.

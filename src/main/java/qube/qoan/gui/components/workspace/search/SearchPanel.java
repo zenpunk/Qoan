@@ -14,8 +14,8 @@
 
 package qube.qoan.gui.components.workspace.search;
 
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;
+import com.vaadin.v7.data.util.ObjectProperty;
 import qube.qoan.gui.interfaces.SearchAgent;
 
 /**
@@ -39,19 +39,15 @@ public class SearchPanel extends Panel {
         // now we add a select-box for wiki-source
         final ObjectProperty wikiSource = new ObjectProperty("Wikipedia", String.class);
         ComboBox wikiSourceBox = new ComboBox("Wiki Source");
-        wikiSourceBox.addItem("Wikipedia");
-        wikiSourceBox.addItem("Wiktionary");
-        wikiSourceBox.addItem("Wikipedia & Wiktionary");
-        wikiSourceBox.setPropertyDataSource(wikiSource);
+        wikiSourceBox.setItems("Wikipedia", "Wiktionary", "Wikipedia & Wiktionary");
+        //wikiSourceBox.setPropertyDataSource(wikiSource);
         layout.addComponent(wikiSourceBox);
 
         // use a select box for the part where the search should take place
         final ObjectProperty searchIn = new ObjectProperty("title", String.class);
         ComboBox searchInBox = new ComboBox("Search In");
-        searchInBox.addItem("title and content");
-        searchInBox.addItem("title");
-        searchInBox.addItem("content");
-        searchInBox.setPropertyDataSource(searchIn);
+        searchInBox.setItems("title and content", "title", "content");
+        //searchInBox.setPropertyDataSource(searchIn);
         layout.addComponent(searchInBox);
 
         // text field for maximum results
@@ -61,7 +57,8 @@ public class SearchPanel extends Panel {
 
         // text field for the actual search term to be used
         final ObjectProperty searchTerm = new ObjectProperty("", String.class);
-        TextField searchField = new TextField("Search Term", searchTerm);
+        TextField searchField = new TextField("Search Term");
+        //searchField.setCaption(searchTerm);
         layout.addComponent(searchField);
 
         // and finally the button to activate the search

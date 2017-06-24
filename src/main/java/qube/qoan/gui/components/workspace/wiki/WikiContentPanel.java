@@ -14,7 +14,7 @@
 
 package qube.qoan.gui.components.workspace.wiki;
 
-import com.vaadin.shared.ui.label.ContentMode;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import info.bliki.wiki.model.WikiModel;
 import qube.qai.network.Network;

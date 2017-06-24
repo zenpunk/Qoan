@@ -15,7 +15,6 @@
 package qube.qoan.gui.components.workspace.procedure;
 
 import com.google.inject.Injector;
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;
 import qube.qai.services.ProcedureSourceInterface;
 import qube.qoan.QoanUI;
@@ -31,7 +30,7 @@ public class ProcedureRepositoryPanel extends Panel {
     private ProcedureSourceInterface procedureSource;
     private String dummyName = "Dummy neural-network analysis";
 
-    private ObjectProperty<String> name;
+    //private ObjectProperty<String> name;
 
     /**
      * this is supposed to read the existing and already
@@ -57,13 +56,13 @@ public class ProcedureRepositoryPanel extends Panel {
 
         // for the time being only one procedure is for selection
         ComboBox procedureSelectBox = new ComboBox("Procedures");
-        name = new ObjectProperty<String>("", String.class);
-        procedureSelectBox.setPropertyDataSource(name);
-        procedureSelectBox.addItem(dummyName);
-        String[] procedureNames = procedureSource.getProcedureNames();
-        for (String name : procedureNames) {
-            procedureSelectBox.addItem(name);
-        }
+//        name = new ObjectProperty<String>("", String.class);
+//        procedureSelectBox.setPropertyDataSource(name);
+//        procedureSelectBox.addItem(dummyName);
+//        String[] procedureNames = procedureSource.getProcedureNames();
+//        for (String name : procedureNames) {
+//            procedureSelectBox.addItem(name);
+//        }
 
         layout.addComponent(procedureSelectBox);
 
@@ -73,7 +72,8 @@ public class ProcedureRepositoryPanel extends Panel {
     public String getSelectedProcedure() {
 //        NeuralNetworkAnalysis neuralNetworkAnalysis = (NeuralNetworkAnalysis) NeuralNetworkAnalysis.Factory.constructProcedure();
 //        return neuralNetworkAnalysis;
-        return name.getValue();
+        //return name.getValue();
+        return "";
     }
 
 //    @Override

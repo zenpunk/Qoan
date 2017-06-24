@@ -14,7 +14,11 @@
 
 package qube.qoan.gui.components.workspace.procedure;
 
-import com.vaadin.ui.*;
+import com.vaadin.ui.Accordion;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.Tree;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import qube.qai.data.DataVisitor;

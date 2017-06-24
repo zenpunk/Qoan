@@ -14,14 +14,12 @@
 
 package qube.qoan.gui.views;
 
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.authentication.UserManager;
-import qube.qoan.authentication.UserNotAuthenticatedException;
 
 import javax.inject.Inject;
 
@@ -57,24 +55,22 @@ public class LoginView extends QoanView {
     @Override
     protected void initialize() {
         FormLayout layout = new FormLayout();
-        final ObjectProperty<String> username = new ObjectProperty<String>("");
-        TextField userField = new TextField("Username", username);
+        TextField userField = new TextField("Username");
         layout.addComponent(userField);
 
-        final ObjectProperty<String> password = new ObjectProperty<String>("");
-        PasswordField passwordField = new PasswordField("Password", password);
+        PasswordField passwordField = new PasswordField("Password");
         layout.addComponent(passwordField);
 
         Button loginButton = new Button("Login");
         loginButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
                 User user = null;
-                try {
-                    user = userManager.authenticateUser(username.getValue(), password.getValue());
-                } catch (UserNotAuthenticatedException e) {
-                    logger.error("User: '" + username + "' with password: '" + password + "' cannot be authenticated", e);
-                }
-                ((QoanUI) UI.getCurrent()).setUser(user);
+//                try {
+//                    user = userManager.authenticateUser(userField.getValue(), passwordField.getValue());
+//                } catch (UserNotAuthenticatedException e) {
+//                    logger.error("User: '" + userField.getValue() + "' with password: '" + passwordField.getValue() + "' cannot be authenticated", e);
+//                }
+//                ((QoanUI) UI.getCurrent()).setUser(user);
                 String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
                 if (targetPage == null) {
                     targetPage = StartView.NAME;

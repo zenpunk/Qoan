@@ -16,7 +16,7 @@ package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 
 /**
  * Created by rainbird on 11/18/15.
@@ -42,8 +42,9 @@ public class FinanceMenu extends Panel {
         Button showSelectedListingButton = new Button("Show selected listing");
         showSelectedListingButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                String listingName = financeRepository.getSelectedListingName();
-                financeListing.displayListing(listingName);
+                // @TODO how is this supposed to be the right way?
+//                String listingName = financeRepository.getSelectedListingName();
+//                financeListing.displayListing(listingName);
             }
         });
         showSelectedListingButton.setStyleName("link");

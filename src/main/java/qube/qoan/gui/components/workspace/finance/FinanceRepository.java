@@ -15,10 +15,9 @@
 package qube.qoan.gui.components.workspace.finance;
 
 import com.google.inject.Injector;
-import com.vaadin.data.util.ObjectProperty;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.ui.VerticalLayout;
 import qube.qoan.QoanUI;
 
 /**
@@ -30,7 +29,7 @@ public class FinanceRepository extends Panel {
 //    @Named("StockEntities")
 //    private DataStore dataStore;
 
-    private ObjectProperty<String> listingName;
+    //private ObjectProperty<String> listingName;
 
     private String defaultListingName = "List of S&P 500 companies.xml";
 
@@ -60,8 +59,8 @@ public class FinanceRepository extends Panel {
         setContent(layout);
     }
 
-    public String getSelectedListingName() {
+   /* public String getSelectedListingName() {
         return listingName.getValue();
-    }
+    }*/
 
 }

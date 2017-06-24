@@ -16,8 +16,12 @@ package qube.qoan.gui.components.workspace.search;
 
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
-import com.vaadin.data.Item;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.UI;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.v7.data.Item;
+import com.vaadin.v7.ui.Table;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;

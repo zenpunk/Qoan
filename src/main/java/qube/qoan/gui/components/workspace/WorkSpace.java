@@ -16,27 +16,15 @@ package qube.qoan.gui.components.workspace;
 
 import com.google.inject.name.Named;
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import com.vaadin.data.Container;
-import com.vaadin.data.Item;
-import com.vaadin.event.DataBoundTransferable;
 import com.vaadin.event.Transferable;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
-import org.apache.commons.lang3.StringUtils;
-import qube.qai.persistence.StockEntity;
-import qube.qai.persistence.WikiArticle;
-import qube.qai.procedure.Procedure;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
-import qube.qoan.gui.components.workspace.finance.StockEntityTag;
-import qube.qoan.gui.components.workspace.procedure.ProcedureListPanel;
-import qube.qoan.gui.components.workspace.procedure.ProcedureTag;
 import qube.qoan.gui.components.workspace.search.SearchMenu;
-import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
 import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
@@ -152,83 +140,84 @@ public class WorkSpace extends Panel {
             // check what source we are receiving events from
             if (transferable instanceof DragAndDropWrapper.WrapperTransferable) {
                 handleDragEvent(event);
-            } else if (transferable instanceof DataBoundTransferable) {
-                handleDropEvent((DataBoundTransferable) transferable);
             }
-
+////            else if (transferable instanceof DataBoundTransferable) {
+////                handleDropEvent((DataBoundTransferable) transferable);
+////            }
+//
         }
-
-        /**
-         * this handles the dragging on the layout itself
-         * and changes the positions of the components
-         * which are being dragged around
-         *
-         * @param transferable
-         * @TODO extend this to work selectors
-         */
-        private void handleDropEvent(DataBoundTransferable transferable) {
-
-            Object itemId = transferable.getItemId();
-            Container container = transferable.getSourceContainer();
-            Item item = container.getItem(itemId);
-
-            DragAndDropWrapper tagWrapper = null;
-
-            if (itemId instanceof ProcedureListPanel.ProcedureItem) {
-
-                ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
-                Procedure procedure = procedureCache.getProcedureWithName(pItem.getUuid());
-                ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
-                tagWrapper = new DragAndDropWrapper(procedureTag);
-
-            } else if (item.getItemPropertyIds().contains("File")) {
-
-                String file = (String) item.getItemProperty("File").getValue();
-                String source = (String) item.getItemProperty("Source").getValue();
-
-                WikiArticle wikiArticle = null;
-                IMap<String, WikiArticle> map = null;
-                if ("Wikipedia".equalsIgnoreCase(source)) {
-                    map = hazelcastInstance.getMap(WIKIPEDIA);
-                } else if ("Wiktionary".equalsIgnoreCase(source)) {
-                    map = hazelcastInstance.getMap(WIKTIONARY);
-                }
-
-                wikiArticle = map.get(file);
-                if (wikiArticle == null) {
-                    return;
-                }
-
-                wikiArticle.setSource(source);
-                wikiArticle.setId(uuidService.createUUIDString());
-
-                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
-                tagWrapper = new DragAndDropWrapper(wikiTag);
-
-            } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
-
-                IMap<String, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
-                String property = (String) item.getItemProperty("Ticker symbol").getValue();
-                String tradedIn = StringUtils.substringBetween(property, "{{", "|");
-                String ticker = StringUtils.substringBetween(property, "|", "}}");
-                String id = ""; //new StockEntityId(ticker, tradedIn);
-                StockEntity stockEntity = map.get(id);
-                StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
-                tagWrapper = new DragAndDropWrapper(stockTag);
-
-            }
-
-            tagWrapper.setSizeUndefined();
-            tagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-
-            // try to find out the component position to enter
-            String positionString;
-            left += 10;
-            top += 10;
-            positionString = "left: " + left + "px; top: " + top + "px;";
-            parentLayout.addComponent(tagWrapper, positionString);
-
-        }
+//
+//        /**
+//         * this handles the dragging on the layout itself
+//         * and changes the positions of the components
+//         * which are being dragged around
+//         *
+//         * @param transferable
+//         * @TODO extend this to work selectors
+//         */
+//        private void handleDropEvent(DataBoundTransferable transferable) {
+//
+//            Object itemId = transferable.getItemId();
+//            Container container = transferable.getSourceContainer();
+//            Item item = container.getItem(itemId);
+//
+//            DragAndDropWrapper tagWrapper = null;
+//
+//            if (itemId instanceof ProcedureListPanel.ProcedureItem) {
+//
+//                ProcedureListPanel.ProcedureItem pItem = (ProcedureListPanel.ProcedureItem) itemId;
+//                Procedure procedure = procedureCache.getProcedureWithName(pItem.getUuid());
+//                ProcedureTag procedureTag = new ProcedureTag(procedure, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(procedureTag);
+//
+//            } else if (item.getItemPropertyIds().contains("File")) {
+//
+//                String file = (String) item.getItemProperty("File").getValue();
+//                String source = (String) item.getItemProperty("Source").getValue();
+//
+//                WikiArticle wikiArticle = null;
+//                IMap<String, WikiArticle> map = null;
+//                if ("Wikipedia".equalsIgnoreCase(source)) {
+//                    map = hazelcastInstance.getMap(WIKIPEDIA);
+//                } else if ("Wiktionary".equalsIgnoreCase(source)) {
+//                    map = hazelcastInstance.getMap(WIKTIONARY);
+//                }
+//
+//                wikiArticle = map.get(file);
+//                if (wikiArticle == null) {
+//                    return;
+//                }
+//
+//                wikiArticle.setSource(source);
+//                wikiArticle.setId(uuidService.createUUIDString());
+//
+//                WikiArticleTag wikiTag = new WikiArticleTag(source, wikiArticle, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(wikiTag);
+//
+//            } else if (item.getItemPropertyIds().contains("Ticker symbol")) {
+//
+//                IMap<String, StockEntity> map = hazelcastInstance.getMap(STOCK_ENTITIES);
+//                String property = (String) item.getItemProperty("Ticker symbol").getValue();
+//                String tradedIn = StringUtils.substringBetween(property, "{{", "|");
+//                String ticker = StringUtils.substringBetween(property, "|", "}}");
+//                String id = ""; //new StockEntityId(ticker, tradedIn);
+//                StockEntity stockEntity = map.get(id);
+//                StockEntityTag stockTag = new StockEntityTag(stockEntity, parentLayout);
+//                tagWrapper = new DragAndDropWrapper(stockTag);
+//
+//            }
+//
+//            tagWrapper.setSizeUndefined();
+//            tagWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+//
+//            // try to find out the component position to enter
+//            String positionString;
+//            left += 10;
+//            top += 10;
+//            positionString = "left: " + left + "px; top: " + top + "px;";
+//            parentLayout.addComponent(tagWrapper, positionString);
+//
+//        }
 
         /**
          * this handles the drop events from external sources

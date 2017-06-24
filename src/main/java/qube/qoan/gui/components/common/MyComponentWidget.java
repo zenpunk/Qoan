@@ -14,7 +14,7 @@
 
 package qube.qoan.gui.components.common;
 
-import com.vaadin.ui.Label;
+import com.vaadin.v7.ui.Label;
 
 /**
  * Created by rainbird on 6/22/17.
