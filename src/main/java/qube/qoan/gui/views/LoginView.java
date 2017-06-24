@@ -70,7 +70,7 @@ public class LoginView extends QoanView {
 //                } catch (UserNotAuthenticatedException e) {
 //                    logger.error("User: '" + userField.getValue() + "' with password: '" + passwordField.getValue() + "' cannot be authenticated", e);
 //                }
-//                ((QoanUI) UI.getCurrent()).setUser(user);
+                ((QoanUI) UI.getCurrent()).setUser(user);
                 String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
                 if (targetPage == null) {
                     targetPage = StartView.NAME;

@@ -14,11 +14,7 @@
 
 package qube.qoan.gui.components.workspace.procedure;
 
-import com.vaadin.ui.Accordion;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.v7.ui.Tree;
+import com.vaadin.ui.*;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import qube.qai.data.DataVisitor;
@@ -76,11 +72,11 @@ public class ProcedureListPanel extends Panel {
 //        layout.addComponent(descriptionLabel);
 
         currentTree = new Tree("Procedure: " + name);
-        currentTree.setImmediate(true);
-        currentTree.setSelectable(true);
-        currentTree.setDragMode(Tree.TreeDragMode.NODE);
-        currentTree.addContainerProperty("Name", String.class, "Name");
-        currentTree.addContainerProperty("UUID", String.class, "UUID");
+//        currentTree.setImmediate(true);
+//        currentTree.setSelectable(true);
+//        currentTree.setDragMode(Tree.TreeDragMode.NODE);
+//        currentTree.addContainerProperty("Name", String.class, "Name");
+//        currentTree.addContainerProperty("UUID", String.class, "UUID");
 
         // use our smart-visitor for building the tree
         ProcedureTreeBuilder treeBuilder = new ProcedureTreeBuilder();
@@ -119,8 +115,8 @@ public class ProcedureListPanel extends Panel {
                 parent = visitee.getName();
             }
             ProcedureItem current = new ProcedureItem(visitee.getUuid(), visitee.getName().getName());
-            currentTree.addItem(current);
-            currentTree.setParent(current, parent);
+            //currentTree.addItem(current);
+            //currentTree.setParent(current, parent);
             return current;
         }
     }
