@@ -64,7 +64,7 @@ public class LoginView extends QoanView {
         Button loginButton = new Button("Login");
         loginButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                User user = null;
+                User user = new User("sa", "");
 //                try {
 //                    user = userManager.authenticateUser(userField.getValue(), passwordField.getValue());
 //                } catch (UserNotAuthenticatedException e) {

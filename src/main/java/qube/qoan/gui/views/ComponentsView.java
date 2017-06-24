@@ -64,15 +64,15 @@ public class ComponentsView extends QoanView {
 
         HorizontalLayout selectLine = new HorizontalLayout();
 
-        TextField text = new TextField("Molecule name");
-        text.setValue("1ihm");
-        selectLine.addComponent(text);
+        TextField nameField = new TextField("Molecule name");
+        nameField.setValue("1crm");
+        selectLine.addComponent(nameField);
 
         Button showNgl = new Button("Show molecule");
         showNgl.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                String moleculeName = text.getValue();
+                String moleculeName = nameField.getValue();
                 if (StringUtils.isEmpty(moleculeName)) {
                     JavaScript.getCurrent().execute(jsExec);
                 } else {
