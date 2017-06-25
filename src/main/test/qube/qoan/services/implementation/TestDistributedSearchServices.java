@@ -61,67 +61,67 @@ public class TestDistributedSearchServices extends QoanTestBase {
     @Inject
     private HazelcastInstance hazelcastInstance;
 
-    public void testDistributedUserSearch() throws Exception {
+    public void estDistributedUserSearch() throws Exception {
 
-        String topicName = "Users";
+        String topicName = USERS;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Test_User");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "User", searchTopics);
     }
 
     public void testDistributedWikipediaSearch() throws Exception {
 
-        String topicName = "Wikipedia_en";
+        String topicName = WIKIPEDIA;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mickey Mouse");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void testDistributedWiktionarySearch() throws Exception {
+    public void estDistributedWiktionarySearch() throws Exception {
 
-        String topicName = "Wiktionary_en";
+        String topicName = WIKTIONARY;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void testDistributedWikiResourcesSearch() throws Exception {
+    public void estDistributedWikiResourcesSearch() throws Exception {
 
-        String topicName = "WikiResources_en";
+        String topicName = WIKIPEDIA_RESOURCES;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void testDistributedStockEntitySearch() throws Exception {
+    public void estDistributedStockEntitySearch() throws Exception {
 
-        String topicName = "Stock_Entities";
+        String topicName = STOCK_ENTITIES;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("GOOG");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "", searchTopics);
     }
 
-    public void testDistributedProcedureSearch() throws Exception {
+    public void estDistributedProcedureSearch() throws Exception {
 
-        String topicName = "Procedures";
+        String topicName = PROCEDURES;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("*");
 
-        checkSearchService(topicName, searchTopics);
+        checkSearchService(topicName, "", searchTopics);
     }
 
-    private void checkSearchService(String topicName, Collection<String> searchTopics) {
+    private void checkSearchService(String topicName, String fieldName, Collection<String> searchTopics) {
 
         SearchServiceInterface distributedSearch = getSearchListener(topicName);
         IMap<String, Object> topicMap = hazelcastInstance.getMap(topicName);
 
         for (String search : searchTopics) {
-            Collection<SearchResult> results = distributedSearch.searchInputString(search, topicName, 100);
+            Collection<SearchResult> results = distributedSearch.searchInputString(search, fieldName, 100);
             assertNotNull("have to return something", results);
             assertTrue("has to be something in there as well", !results.isEmpty());
             for (SearchResult result : results) {

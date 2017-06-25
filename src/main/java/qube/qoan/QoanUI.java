@@ -16,6 +16,7 @@ package qube.qoan;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
@@ -46,6 +47,8 @@ public class QoanUI extends UI {
 
     protected Injector injector;
 
+    protected HazelcastInstance hazelcastInstance;
+
     protected User user;
 
     protected String targetViewName;
@@ -55,6 +58,8 @@ public class QoanUI extends UI {
 
         // this way we have a different injector for each thread
         injector = Guice.createInjector(new QoanModule(), new QaiModule());
+
+        hazelcastInstance = injector.getInstance(HazelcastInstance.class);
 
         getPage().setTitle("Qoan");
 

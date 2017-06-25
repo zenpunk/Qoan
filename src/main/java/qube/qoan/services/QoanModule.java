@@ -16,26 +16,32 @@ package qube.qoan.services;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
+import com.google.inject.name.Names;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
-import net.jmob.guice.conf.core.BindConfig;
-import net.jmob.guice.conf.core.ConfigurationModule;
-import net.jmob.guice.conf.core.InjectConfig;
-import net.jmob.guice.conf.core.Syntax;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qoan.authentication.UserManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Properties;
 
 /**
  * Created by rainbird on 11/2/15.
  */
-@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
+//@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
 //@BindConfig(value = "qube/qoan/services/config_deploy", syntax = Syntax.PROPERTIES)
 public class QoanModule extends AbstractModule {
+
+    private static Logger logger = LoggerFactory.getLogger("QoanModule");
+
+    public static final String CONFIG_FILE_NAME = "config_dev.properties";
 
     private boolean isServerQaiNode = true;
 
@@ -44,14 +50,22 @@ public class QoanModule extends AbstractModule {
     private HazelcastInstance hazelcastInstance;
     private UserManager userManager;
 
-    @InjectConfig(value = "QAI_NODE_TO_CONNECT")
+    //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
     public String qaiNodeToConnect;
 
     @Override
     protected void configure() {
 
-        install(ConfigurationModule.create());
-        requestInjection(this);
+        //install(ConfigurationModule.create());
+        //requestInjection(this);
+
+        try {
+            Properties properties = new Properties();
+            properties.load(new FileReader(CONFIG_FILE_NAME));
+            Names.bindProperties(binder(), properties);
+        } catch (IOException e) {
+            logger.error("Error while loading configuration file: " + CONFIG_FILE_NAME, e);
+        }
 
     }
 
@@ -94,8 +108,9 @@ public class QoanModule extends AbstractModule {
     @Named("Users")
     @Singleton
     SearchServiceInterface provideUserSearchService() {
+
         DistributedSearchService distributedSearch = new DistributedSearchService("Users");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
@@ -105,8 +120,10 @@ public class QoanModule extends AbstractModule {
     @Named("Wikipedia_en")
     @Singleton
     SearchServiceInterface provideWikipediaSearchService() {
+
         DistributedSearchService distributedSearch = new DistributedSearchService("Wikipedia_en");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
@@ -117,7 +134,8 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideWiktionarySearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
@@ -128,7 +146,8 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideWikiResourcesSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("WikiResources_en");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
@@ -139,7 +158,8 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideStockEntitiesSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Entities");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
@@ -150,9 +170,19 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideProceduresSearchService() {
         DistributedSearchService distributedSearch = new DistributedSearchService("Procedures");
-        distributedSearch.setHazelcastInstance(hazelcastInstance);
+
+        distributedSearch.setHazelcastInstance(getHazelcastInstance());
         distributedSearch.initialize();
 
         return distributedSearch;
+    }
+
+    private HazelcastInstance getHazelcastInstance() {
+
+        if (hazelcastInstance == null) {
+            hazelcastInstance = provideHazelcastInstance();
+        }
+
+        return hazelcastInstance;
     }
 }

@@ -17,17 +17,24 @@ package qube.qoan.services;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import junit.framework.TestCase;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import qube.qai.main.QaiConstants;
 
 /**
  * Created by rainbird on 11/19/15.
  */
-public class QoanTestBase extends TestCase {
+public class QoanTestBase extends TestCase implements QaiConstants {
+
+    private Logger logger = LoggerFactory.getLogger("QoanTestBase");
 
     protected Injector injector;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        logger.info("injecting members for the test");
 
         if (injector == null) {
             injector = Guice.createInjector(new QoanTestModule());
