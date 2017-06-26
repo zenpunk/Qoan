@@ -90,7 +90,7 @@ public class TestDistributedSearchServices extends QoanTestBase {
         checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void estDistributedWikiResourcesSearch() throws Exception {
+    public void testDistributedWikiResourcesSearch() throws Exception {
 
         String topicName = WIKIPEDIA_RESOURCES;
         Collection<String> searchTopics = new ArrayList<>();
@@ -100,8 +100,6 @@ public class TestDistributedSearchServices extends QoanTestBase {
     }
 
     public void testDistributedGroupSearch() throws Exception {
-
-        String groupName = "S&P_500_constituents_financials.csv";
 
         Collection<SearchResult> results = stocksSearchService.searchInputString("*", STOCK_GROUPS, 0);
 
