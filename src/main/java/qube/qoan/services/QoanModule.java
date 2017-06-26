@@ -16,21 +16,21 @@ package qube.qoan.services;
 
 import com.google.inject.AbstractModule;
 import com.google.inject.Provides;
-import com.google.inject.name.Names;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.services.ProcedureRunnerInterface;
+import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
+import qube.qai.services.implementation.ProcedureRunner;
 import qube.qoan.authentication.UserManager;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.Properties;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -51,7 +51,7 @@ public class QoanModule extends AbstractModule {
     private UserManager userManager;
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
-    public String qaiNodeToConnect;
+    public String QAI_NODE_TO_CONNECT = "127.0.0.1:5701";
 
     @Override
     protected void configure() {
@@ -59,14 +59,22 @@ public class QoanModule extends AbstractModule {
         //install(ConfigurationModule.create());
         //requestInjection(this);
 
-        try {
-            Properties properties = new Properties();
-            properties.load(new FileReader(CONFIG_FILE_NAME));
-            Names.bindProperties(binder(), properties);
-        } catch (IOException e) {
-            logger.error("Error while loading configuration file: " + CONFIG_FILE_NAME, e);
-        }
+//        try {
+//            Properties properties = new Properties();
+//            properties.load(new FileReader(CONFIG_FILE_NAME));
+//            Names.bindProperties(binder(), properties);
+//        } catch (IOException e) {
+//            logger.error("Error while loading configuration file: " + CONFIG_FILE_NAME, e);
+//        }
 
+        // executorService
+        bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
+
+    }
+
+    @Provides
+    ProcedureSourceInterface provideProcedureSourceInterface() {
+        return CachedProcedureSourceService.getInstance();
     }
 
     @Provides
@@ -97,7 +105,7 @@ public class QoanModule extends AbstractModule {
 
         ClientConfig clientConfig = new ClientConfig();
         //clientConfig.setInstanceName(QAI_NODE_NAME);
-        clientConfig.getNetworkConfig().addAddress(qaiNodeToConnect);
+        clientConfig.getNetworkConfig().addAddress(QAI_NODE_TO_CONNECT);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 

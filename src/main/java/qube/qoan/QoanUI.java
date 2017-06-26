@@ -22,7 +22,6 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
-import qube.qai.main.QaiModule;
 import qube.qai.user.User;
 import qube.qoan.authentication.SecureViewChangeListener;
 import qube.qoan.gui.views.*;
@@ -57,7 +56,7 @@ public class QoanUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         // this way we have a different injector for each thread
-        injector = Guice.createInjector(new QoanModule(), new QaiModule());
+        injector = Guice.createInjector(new QoanModule()); // , new QaiModule() do i really need this here???
 
         hazelcastInstance = injector.getInstance(HazelcastInstance.class);
 
