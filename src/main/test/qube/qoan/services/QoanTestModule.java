@@ -72,8 +72,8 @@ public class QoanTestModule extends AbstractModule {
 //    @Provides
 //    @Named("USER")
 //    public SearchServiceInterface provideUserDataService() {
-//        SearchServiceInterface dataService = new ModelStore("./test/dummy.model.directory");
-//        ((ModelStore) dataService).init();
+//        SearchServiceInterface dataService = new ModelSearchService("./test/dummy.model.directory");
+//        ((ModelSearchService) dataService).init();
 //        return dataService;
 //    }
 
