@@ -132,7 +132,10 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Users")
     SearchServiceInterface provideUsersSearchServiceInterface() {
-        SearchServiceInterface searchService = new DistributedSearchService("Users");
+        DistributedSearchService searchService = new DistributedSearchService("Users");
+
+        searchService.setHazelcastInstance(getHazelcastInstance());
+        searchService.initialize();
 
         return searchService;
     }

@@ -18,8 +18,10 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
+import qube.qai.user.User;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
@@ -63,11 +65,16 @@ public class TestDistributedSearchServices extends QoanTestBase {
 
     public void estDistributedUserSearch() throws Exception {
 
-        String topicName = USERS;
-        Collection<String> searchTopics = new ArrayList<>();
-        searchTopics.add("Test_User");
+        User user = new User("Test_User", "");
+        IMap<String, User> userMap = hazelcastInstance.getMap(USERS);
+        userMap.put(user.getUuid(), user);
+        userMap.flush();
 
-        checkSearchService(topicName, "User", searchTopics);
+        Collection<SearchResult> results = userSearchService.searchInputString(USERS, "", 1);
+
+        assertNotNull("there has to be some results", results);
+        assertTrue("there has to be a user", !results.isEmpty());
+        assertTrue("user uuids must be equal", user.getUuid().equals(results.iterator().next().getUuid()));
     }
 
     public void testDistributedWikipediaSearch() throws Exception {
@@ -79,7 +86,7 @@ public class TestDistributedSearchServices extends QoanTestBase {
         checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void estDistributedWiktionarySearch() throws Exception {
+    public void testDistributedWiktionarySearch() throws Exception {
 
         String topicName = WIKTIONARY;
         Collection<String> searchTopics = new ArrayList<>();
@@ -97,13 +104,20 @@ public class TestDistributedSearchServices extends QoanTestBase {
         checkSearchService(topicName, "title", searchTopics);
     }
 
-    public void estDistributedStockEntitySearch() throws Exception {
+    public void testDistributedGroupSearch() throws Exception {
 
-        String topicName = STOCK_ENTITIES;
-        Collection<String> searchTopics = new ArrayList<>();
-        searchTopics.add("GOOG");
+        String groupName = "S&P_500_constituents_financials.csv";
 
-        checkSearchService(topicName, "", searchTopics);
+        Collection<SearchResult> results = stocksSearchService.searchInputString("*", STOCK_GROUPS, 0);
+
+        assertNotNull("there has to be a result", results);
+        assertTrue("the list must be populated", results.size() > 0);
+
+        IMap<String, StockGroup> groupMap = hazelcastInstance.getMap(STOCK_GROUPS);
+        for (SearchResult result : results) {
+            StockGroup group = groupMap.get(result.getUuid());
+            assertNotNull("found group must exist", group);
+        }
     }
 
     public void estDistributedProcedureSearch() throws Exception {
@@ -118,7 +132,6 @@ public class TestDistributedSearchServices extends QoanTestBase {
     private void checkSearchService(String topicName, String fieldName, Collection<String> searchTopics) {
 
         SearchServiceInterface distributedSearch = getSearchListener(topicName);
-        IMap<String, Object> topicMap = hazelcastInstance.getMap(topicName);
 
         for (String search : searchTopics) {
             Collection<SearchResult> results = distributedSearch.searchInputString(search, fieldName, 100);
@@ -126,6 +139,7 @@ public class TestDistributedSearchServices extends QoanTestBase {
             assertTrue("has to be something in there as well", !results.isEmpty());
             for (SearchResult result : results) {
                 logger.info("found result: " + result.getContext());
+                IMap<String, Object> topicMap = hazelcastInstance.getMap(result.getContext());
                 Object resultObject = topicMap.get(result.getUuid());
                 assertNotNull("there has to be a corresponding object", resultObject);
             }
@@ -134,17 +148,17 @@ public class TestDistributedSearchServices extends QoanTestBase {
 
     private SearchServiceInterface getSearchListener(String topicName) {
 
-        if ("Users".equals(topicName)) {
+        if (USERS.equals(topicName)) {
             return userSearchService;
-        } else if ("Wikipedia_en".equals(topicName)) {
+        } else if (WIKIPEDIA.equals(topicName)) {
             return wikipediaSearchService;
-        } else if ("Wiktionary_en".equals(topicName)) {
+        } else if (WIKTIONARY.equals(topicName)) {
             return wiktionarySearchService;
-        } else if ("WikiResources_en".equals(topicName)) {
+        } else if (WIKIPEDIA_RESOURCES.equals(topicName)) {
             return wikiResourcesSearchService;
-        } else if ("Stock_Entities".equals(topicName)) {
+        } else if (STOCK_GROUPS.equals(topicName)) {
             return stocksSearchService;
-        } else if ("Procedures".equals(topicName)) {
+        } else if (PROCEDURES.equals(topicName)) {
             return proceduresSearchService;
         }
 
