@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.workspace.finance.parser;
 
+import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
@@ -46,6 +47,9 @@ public class TestWikiArticleIntegration extends QoanTestBase {
     private String SnP500Page = "List of S&P 500 companies.xml";
 
     private String darwinArticleName = "Charles Darwin.xml";
+
+    @Inject
+    private HazelcastInstance hazelcastInstance;
 
     @Inject
     @Named("Wikipedia_en")

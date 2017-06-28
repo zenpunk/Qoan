@@ -58,20 +58,35 @@ public class SearchMenu extends Panel implements QaiConstants {
     private void initialize() {
 
         layout = new VerticalLayout();
-
+        resultSink.initialize();
         searchSettings = new Accordion();
         searchSettings.setCaption("Search settings");
 
+        // put the text-field and the search buton on the same row
+        HorizontalLayout searchRow = new HorizontalLayout();
+
         TextField searchText = new TextField("Search");
-        layout.addComponent(searchText);
+        searchRow.addComponent(searchText);
 
         Button doSearch = new Button("Do Search");
+        doSearch.setStyleName("link");
         doSearch.addClickListener(clickEvent -> this.doSearch(searchText.getValue()));
-        layout.addComponent(doSearch);
+        searchRow.addComponent(doSearch);
+        layout.addComponent(searchRow);
 
-        Button toggleButton = new Button("Toggle search-setting visibility");
-        toggleButton.addClickListener(clickEvent -> searchSettings.setVisible(!searchSettings.isVisible()));
-        layout.addComponent(toggleButton);
+
+        HorizontalLayout toggleLine = new HorizontalLayout();
+        Button toggleSettingsButton = new Button("Toggle search-setting visibility");
+        toggleSettingsButton.setStyleName("link");
+        toggleSettingsButton.addClickListener(clickEvent -> searchSettings.setVisible(!searchSettings.isVisible()));
+        toggleLine.addComponent(toggleSettingsButton);
+
+        Button toggleResultsButton = new Button("Toggle search results visibility");
+        toggleResultsButton.setStyleName("link");
+        toggleResultsButton.addClickListener(clickEvent -> resultSink.setVisible(!resultSink.isVisible()));
+        toggleLine.addComponent(toggleResultsButton);
+
+        layout.addComponent(toggleLine);
 
         Set<String> serviceNames = ((QoanUI) UI.getCurrent()).getSearchServiceNames();
         for (String name : serviceNames) {
@@ -80,12 +95,11 @@ public class SearchMenu extends Panel implements QaiConstants {
             searchSettings.addTab(source, source.getName());
             searchSources.add(source);
         }
+        searchSettings.setWidth("100%");
         layout.addComponent(searchSettings);
 
         // and finally below all else put the result sink
-        resultSink.initialize();
         layout.addComponent(resultSink);
-
         setContent(layout);
     }
 

@@ -48,10 +48,12 @@ public class SearchResultSink extends Panel {
         setContent(layout);
 
         resultGrid = new Grid<>("Search Results");
-        resultGrid.addColumn(SearchResult::getTitle).setCaption("Title");
         resultGrid.addColumn(SearchResult::getContext).setCaption("Context");
+        resultGrid.addColumn(SearchResult::getTitle).setCaption("Title");
+        resultGrid.addColumn(SearchResult::getDescription).setCaption("Description");
         resultGrid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
-        //resultGrid.addColumn(SearchResult::getUuid).setCaption("UUID");
+//        resultGrid.addColumn(SearchResult::getUuid).setCaption("UUID");
+        resultGrid.setWidth("100%");
         layout.addComponent(resultGrid);
 
         clearResults = new CheckBox("Clear results before adding new ones");
@@ -59,6 +61,7 @@ public class SearchResultSink extends Panel {
 
         Button clearButton = new Button("Clear results");
         clearButton.addClickListener(clickEvent -> searchResults.clear());
+        clearButton.setStyleName("link");
         layout.addComponent(clearButton);
     }
 

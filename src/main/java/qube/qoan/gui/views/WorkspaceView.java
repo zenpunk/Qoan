@@ -71,10 +71,6 @@ public class WorkspaceView extends QoanView {
     protected void initialize() {
 
         splitPanel = new HorizontalSplitPanel();
-        // create and add a dummy-component as place-filler
-        currentComponent = new Panel();
-        splitPanel.setFirstComponent(currentComponent);
-        splitPanel.getFirstComponent().setVisible(true);
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
@@ -89,6 +85,11 @@ public class WorkspaceView extends QoanView {
 
         workspace = new WorkSpace(searchMenu);
         splitPanel.setSecondComponent(workspace);
+
+        currentComponent = searchMenu;
+        currentComponent.setWidth("100%");
+        splitPanel.setFirstComponent(currentComponent);
+        splitPanel.getFirstComponent().setVisible(true);
 
         addComponent(splitPanel);
 
