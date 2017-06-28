@@ -34,7 +34,7 @@
         <project.encoding>UTF-8</project.encoding>
         <jetty9.version>9.4.6.v20170531</jetty9.version>
 
-        <guice.version>4.0</guice.version>
+        <guice.version>4.1.0</guice.version>
         <guice-conf.version>1.2.0</guice-conf.version>
 
         <hazelcast.version>3.8.2</hazelcast.version>

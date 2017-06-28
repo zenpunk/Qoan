@@ -21,6 +21,7 @@ import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.main.QaiConstants;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.ProcedureSourceInterface;
 import qube.qai.services.SearchServiceInterface;
@@ -28,16 +29,20 @@ import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qoan.authentication.UserManager;
+import qube.qoan.gui.components.workspace.search.SearchResultSink;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by rainbird on 11/2/15.
  */
 //@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
 //@BindConfig(value = "qube/qoan/services/config_deploy", syntax = Syntax.PROPERTIES)
-public class QoanModule extends AbstractModule {
+public class QoanModule extends AbstractModule implements QaiConstants {
 
     private static Logger logger = LoggerFactory.getLogger("QoanModule");
 
@@ -47,8 +52,21 @@ public class QoanModule extends AbstractModule {
 
     // for the time being we leave it at that
     private static String QAI_NODE_NAME = "QaiNode";
+
     private HazelcastInstance hazelcastInstance;
+
     private UserManager userManager;
+
+    private SearchResultSink searchResultSink;
+
+    private SearchServiceInterface userSearchService;
+    private SearchServiceInterface wikipediaSearchService;
+    private SearchServiceInterface wiktionarySearchService;
+    private SearchServiceInterface wikiResourcesSearchService;
+    private SearchServiceInterface stockEntitiesSearchService;
+    private SearchServiceInterface proceduresSearchService;
+
+    private Map<String, SearchServiceInterface> namedSearchServices;
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
     public String QAI_NODE_TO_CONNECT = "127.0.0.1:5701";
@@ -70,6 +88,11 @@ public class QoanModule extends AbstractModule {
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
 
+        // make injection of SearchResultSink possible
+        // i don't think it really matters which version is used
+        // or where the thing gets instantiated
+        searchResultSink = new SearchResultSink();
+        bind(SearchResultSink.class).toInstance(searchResultSink);
     }
 
     @Provides
@@ -117,72 +140,134 @@ public class QoanModule extends AbstractModule {
     @Singleton
     SearchServiceInterface provideUserSearchService() {
 
-        DistributedSearchService distributedSearch = new DistributedSearchService("Users");
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        userSearchService = new DistributedSearchService(USERS);
+        ((DistributedSearchService) userSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) userSearchService).initialize();
 
-        return distributedSearch;
+        return userSearchService;
     }
 
     @Provides
     @Named("Wikipedia_en")
     @Singleton
-    SearchServiceInterface provideWikipediaSearchService() {
+    public SearchServiceInterface provideWikipediaSearchService() {
 
-        DistributedSearchService distributedSearch = new DistributedSearchService("Wikipedia_en");
+        wikipediaSearchService = new DistributedSearchService(WIKIPEDIA);
 
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        ((DistributedSearchService) wikipediaSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wikipediaSearchService).initialize();
 
-        return distributedSearch;
+        return wikipediaSearchService;
     }
 
     @Provides
     @Named("Wiktionary_en")
     @Singleton
-    SearchServiceInterface provideWiktionarySearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("Wiktionary_en");
+    public SearchServiceInterface provideWiktionarySearchService() {
 
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        wiktionarySearchService = new DistributedSearchService(WIKTIONARY);
 
-        return distributedSearch;
+        ((DistributedSearchService) wiktionarySearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wiktionarySearchService).initialize();
+
+        return wiktionarySearchService;
     }
 
     @Provides
     @Named("WikiResources_en")
     @Singleton
     SearchServiceInterface provideWikiResourcesSearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("WikiResources_en");
 
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES);
 
-        return distributedSearch;
+        ((DistributedSearchService) wikiResourcesSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wikiResourcesSearchService).initialize();
+
+        return wikiResourcesSearchService;
+    }
+
+    private SearchServiceInterface stockGroupsSearchService;
+
+    @Provides
+    @Named("Stock_Groups")
+    @Singleton
+    SearchServiceInterface provideStockGroupssSearchService() {
+
+        stockGroupsSearchService = new DistributedSearchService(STOCK_GROUPS);
+
+        ((DistributedSearchService) stockGroupsSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) stockGroupsSearchService).initialize();
+
+        return stockGroupsSearchService;
     }
 
     @Provides
     @Named("Stock_Entities")
     @Singleton
     SearchServiceInterface provideStockEntitiesSearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("Stock_Entities");
 
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        stockEntitiesSearchService = new DistributedSearchService(STOCK_ENTITIES);
 
-        return distributedSearch;
+        ((DistributedSearchService) stockEntitiesSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) stockEntitiesSearchService).initialize();
+
+        return stockEntitiesSearchService;
     }
+
 
     @Provides
     @Named("Procedures")
     @Singleton
     SearchServiceInterface provideProceduresSearchService() {
-        DistributedSearchService distributedSearch = new DistributedSearchService("Procedures");
 
-        distributedSearch.setHazelcastInstance(getHazelcastInstance());
-        distributedSearch.initialize();
+        proceduresSearchService = new DistributedSearchService(PROCEDURES);
 
-        return distributedSearch;
+        ((DistributedSearchService) proceduresSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) proceduresSearchService).initialize();
+
+        return proceduresSearchService;
+    }
+
+    public SearchServiceInterface getNamedService(String name) {
+
+        initKnownNamedServers();
+
+        return namedSearchServices.get(name);
+    }
+
+    /**
+     * when a new service is created, use this to be able to use it
+     *
+     * @param name
+     * @param service
+     */
+    public void addNamedSearchService(String name, SearchServiceInterface service) {
+
+        initKnownNamedServers();
+
+        namedSearchServices.put(name, service);
+    }
+
+    public Set<String> getSearchServiceNames() {
+
+        initKnownNamedServers();
+
+        return namedSearchServices.keySet();
+    }
+
+    private void initKnownNamedServers() {
+
+        if (namedSearchServices == null) {
+
+            namedSearchServices = new HashMap<>();
+
+            namedSearchServices.put(WIKIPEDIA, wikipediaSearchService);
+            namedSearchServices.put(WIKTIONARY, wiktionarySearchService);
+//            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+//            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+//            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+//            namedSearchServices.put(PROCEDURES, proceduresSearchService);
+        }
     }
 
     private HazelcastInstance getHazelcastInstance() {

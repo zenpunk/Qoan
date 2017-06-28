@@ -22,10 +22,13 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
+import qube.qai.services.SearchServiceInterface;
 import qube.qai.user.User;
 import qube.qoan.authentication.SecureViewChangeListener;
 import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanModule;
+
+import java.util.Set;
 
 /**
  *
@@ -46,7 +49,13 @@ public class QoanUI extends UI {
 
     protected Injector injector;
 
+    protected QoanModule qoanModule;
+
     protected HazelcastInstance hazelcastInstance;
+
+    protected SearchServiceInterface wikipediaSearchService;
+
+    protected SearchServiceInterface wiktionarySearchService;
 
     protected User user;
 
@@ -56,9 +65,13 @@ public class QoanUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         // this way we have a different injector for each thread
-        injector = Guice.createInjector(new QoanModule()); // , new QaiModule() do i really need this here???
+        qoanModule = new QoanModule();
+        injector = Guice.createInjector(qoanModule); // , new QaiModule() do i really need this here???
 
         hazelcastInstance = injector.getInstance(HazelcastInstance.class);
+        //injector.injectMembers(this);
+        wikipediaSearchService = qoanModule.provideWikipediaSearchService();
+        wiktionarySearchService = qoanModule.provideWiktionarySearchService();
 
         getPage().setTitle("Qoan");
 
@@ -86,6 +99,14 @@ public class QoanUI extends UI {
         navigator.addView(WorkspaceView.NAME, workspaceView);
         navigator.addView(ManagementView.NAME, managementView);
         navigator.addView(WikiView.NAME, WikiView.class);
+    }
+
+    public SearchServiceInterface getNamedService(String name) {
+        return qoanModule.getNamedService(name);
+    }
+
+    public Set<String> getSearchServiceNames() {
+        return qoanModule.getSearchServiceNames();
     }
 
     public Injector getInjector() {
