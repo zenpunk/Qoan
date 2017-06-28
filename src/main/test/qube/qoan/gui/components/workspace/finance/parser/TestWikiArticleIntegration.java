@@ -22,6 +22,7 @@ import com.vaadin.v7.data.Item;
 import com.vaadin.v7.ui.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.persistence.DataProvider;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.services.QoanTestBase;
@@ -50,11 +51,12 @@ public class TestWikiArticleIntegration extends QoanTestBase {
     @Named("Wikipedia_en")
     private SearchServiceInterface searchService;
 
-    //@Inject
-    //private HazelcastInstance hazelcastInstance;
+    @Inject
+    @Named("Wikipedia_en")
+    private DataProvider<WikiArticle> wikiProvider;
 
     public void testVaadinTable() throws Exception {
-        WikiArticle snp500 = searchService.retrieveDocumentContentFromZipFile(SnP500Page);
+        WikiArticle snp500 = wikiProvider.getData(SnP500Page);
         assertNotNull("we are here to play with this file", snp500);
 
         // and now... tataa
@@ -90,7 +92,7 @@ public class TestWikiArticleIntegration extends QoanTestBase {
 //    }
 
     public void restWikiUtilLayout() throws Exception {
-        WikiArticle darwin = searchService.retrieveDocumentContentFromZipFile(darwinArticleName);
+        WikiArticle darwin = wikiProvider.getData(darwinArticleName);
         assertNotNull("we need this one for the test after all", darwin);
 
         Layout layout = new VerticalLayout();
