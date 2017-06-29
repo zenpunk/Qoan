@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.workspace.search;
 
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.ui.*;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
@@ -31,11 +33,16 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
 
     private List<SearchResult> searchResults;
 
+    ListDataProvider<SearchResult> searchResultProvider;
+
     private CheckBox clearResults;
 
     public SearchResultSinkComponent() {
 
         searchResults = new ArrayList<>();
+        //SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
+        //searchResults.add(result);
+        searchResultProvider = DataProvider.ofCollection(searchResults);
         initialize();
 
     }
@@ -53,8 +60,10 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         resultGrid.addColumn(SearchResult::getTitle).setCaption("Title");
         resultGrid.addColumn(SearchResult::getDescription).setCaption("Description");
         resultGrid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
-//        resultGrid.addColumn(SearchResult::getUuid).setCaption("UUID");
+        resultGrid.addColumn(SearchResult::getUuid).setCaption("UUID");
         resultGrid.setWidth("100%");
+        resultGrid.setDataProvider(searchResultProvider);
+
         layout.addComponent(resultGrid);
 
         clearResults = new CheckBox("Clear results before adding new ones");
@@ -66,6 +75,22 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         layout.addComponent(clearButton);
     }
 
+    private Grid createGrid(Collection<SearchResult> results) {
+
+        ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
+
+        Grid<SearchResult> grid = new Grid<>("Search Results");
+        grid.addColumn(SearchResult::getContext).setCaption("Context");
+        grid.addColumn(SearchResult::getTitle).setCaption("Title");
+        grid.addColumn(SearchResult::getDescription).setCaption("Description");
+        grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
+        grid.addColumn(SearchResult::getUuid).setCaption("UUID");
+        grid.setDataProvider(provider);
+        grid.setWidth("100%");
+        grid.setHeight("100%");
+        return grid;
+    }
+
     public void addResults(Collection<SearchResult> results) {
 
         // if there are no results, don't bother add them
@@ -73,12 +98,22 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
             return;
         }
 
-        if (clearResults.getValue()) {
-            resultGrid.setItems(new ArrayList<>());
-            searchResults.clear();
-        }
+        // @TODO i hope i can change this soon back to what it should be
+        Window window = new Window("Search results: " + results.size() + " of them...");
+        Grid<SearchResult> grid = createGrid(results);
+        window.setContent(grid);
+        window.setWidth("800px");
+        window.setHeight("600px");
 
-        searchResults.addAll(results);
-        resultGrid.setItems(searchResults);
+        UI.getCurrent().addWindow(window);
+
+//        if (clearResults.getValue()) {
+//            searchResults.clear();
+//        }
+//        // updating the grid has a problem...
+//        Notification.show("Adding " + results.size() + " rows for display");
+//        searchResults.addAll(results);
+//        resultGrid.getDataProvider().refreshAll();
+//        //initialize();
     }
 }

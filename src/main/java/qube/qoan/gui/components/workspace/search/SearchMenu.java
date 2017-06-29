@@ -58,7 +58,7 @@ public class SearchMenu extends Panel implements QaiConstants {
     private void initialize() {
 
         layout = new VerticalLayout();
-        resultSink.initialize();
+        //resultSink.initialize();
         searchSettings = new Accordion();
         searchSettings.setCaption("Search settings");
 

@@ -21,6 +21,7 @@ import org.slf4j.LoggerFactory;
 import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
+import qube.qai.user.User;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
@@ -63,6 +64,10 @@ public class TestDistributedSearchServices extends QoanTestBase {
     private HazelcastInstance hazelcastInstance;
 
     public void testDistributedUserSearch() throws Exception {
+
+        IMap<String, User> usersMap = hazelcastInstance.getMap(USERS);
+        User dummyUser = new User("Test_User", "");
+        usersMap.put(dummyUser.getUuid(), dummyUser);
 
         // just assume there is something in there
         Collection<SearchResult> results = userSearchService.searchInputString(USERS, "", 1);
