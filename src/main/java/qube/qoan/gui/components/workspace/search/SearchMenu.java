@@ -35,7 +35,7 @@ public class SearchMenu extends Panel implements QaiConstants {
     private VerticalLayout layout;
 
     @Inject
-    private SearchResultSink resultSink;
+    private SearchResultSinkComponent resultSink;
 
     private List<SearchSource> searchSources;
 

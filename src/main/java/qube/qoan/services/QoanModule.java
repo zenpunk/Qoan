@@ -24,12 +24,13 @@ import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.ProcedureSourceInterface;
+import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qoan.authentication.UserManager;
-import qube.qoan.gui.components.workspace.search.SearchResultSink;
+import qube.qoan.gui.components.workspace.search.SearchResultSinkComponent;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -57,7 +58,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private UserManager userManager;
 
-    private SearchResultSink searchResultSink;
+    private SearchResultSinkComponent searchResultSink;
 
     private SearchServiceInterface userSearchService;
     private SearchServiceInterface wikipediaSearchService;
@@ -88,10 +89,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
 
-        // make injection of SearchResultSink possible
+        // make injection of SearchResultSinkComponent possible
         // i don't think it really matters which version is used
         // or where the thing gets instantiated
-        searchResultSink = new SearchResultSink();
+        searchResultSink = new SearchResultSinkComponent();
         bind(SearchResultSink.class).toInstance(searchResultSink);
     }
 
@@ -142,6 +143,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         userSearchService = new DistributedSearchService(USERS);
         ((DistributedSearchService) userSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) userSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) userSearchService).initialize();
 
         return userSearchService;
@@ -155,6 +157,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         wikipediaSearchService = new DistributedSearchService(WIKIPEDIA);
 
         ((DistributedSearchService) wikipediaSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wikipediaSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) wikipediaSearchService).initialize();
 
         return wikipediaSearchService;
@@ -168,6 +171,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         wiktionarySearchService = new DistributedSearchService(WIKTIONARY);
 
         ((DistributedSearchService) wiktionarySearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wiktionarySearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) wiktionarySearchService).initialize();
 
         return wiktionarySearchService;
@@ -181,6 +185,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES);
 
         ((DistributedSearchService) wikiResourcesSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wikiResourcesSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) wikiResourcesSearchService).initialize();
 
         return wikiResourcesSearchService;
@@ -196,6 +201,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         stockGroupsSearchService = new DistributedSearchService(STOCK_GROUPS);
 
         ((DistributedSearchService) stockGroupsSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) stockGroupsSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) stockGroupsSearchService).initialize();
 
         return stockGroupsSearchService;
@@ -209,6 +215,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         stockEntitiesSearchService = new DistributedSearchService(STOCK_ENTITIES);
 
         ((DistributedSearchService) stockEntitiesSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) stockEntitiesSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) stockEntitiesSearchService).initialize();
 
         return stockEntitiesSearchService;
@@ -223,6 +230,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         proceduresSearchService = new DistributedSearchService(PROCEDURES);
 
         ((DistributedSearchService) proceduresSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) proceduresSearchService).setResultSink(searchResultSink);
         ((DistributedSearchService) proceduresSearchService).initialize();
 
         return proceduresSearchService;

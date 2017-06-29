@@ -16,6 +16,7 @@ package qube.qoan.gui.components.workspace.search;
 
 import com.google.inject.Injector;
 import com.vaadin.ui.*;
+import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
@@ -32,7 +33,7 @@ public class SearchSource extends Panel {
     private SearchServiceInterface searchService;
 
     //@Inject
-    private SearchResultSink resultSink;
+    private SearchResultSinkComponent resultSink;
 
     private String searchContext;
 
@@ -55,7 +56,7 @@ public class SearchSource extends Panel {
 
         Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
 
-        resultSink = injector.getInstance(SearchResultSink.class);
+        resultSink = injector.getInstance(SearchResultSinkComponent.class);
         searchService = ((QoanUI) UI.getCurrent()).getNamedService(searchContext);
 
         VerticalLayout layout = new VerticalLayout();
@@ -82,7 +83,13 @@ public class SearchSource extends Panel {
             return;
         }
 
-        Collection<SearchResult> results = searchService.searchInputString(searchString, searchContext, numResults);
+        Collection<SearchResult> results;
+        if (QaiConstants.WIKIPEDIA.equals(searchContext) || QaiConstants.WIKTIONARY.equalsIgnoreCase(searchContext)) {
+            results = searchService.searchInputString(searchString, "content", numResults);
+        } else {
+            results = searchService.searchInputString(searchString, searchContext, numResults);
+        }
+
         resultSink.addResults(results);
     }
 

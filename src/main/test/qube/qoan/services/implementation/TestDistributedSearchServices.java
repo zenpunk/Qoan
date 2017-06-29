@@ -113,7 +113,7 @@ public class TestDistributedSearchServices extends QoanTestBase {
         }
     }
 
-    public void testDistributedProcedureSearch() throws Exception {
+    public void estDistributedProcedureSearch() throws Exception {
 
         String topicName = PROCEDURES;
         Collection<String> searchTopics = new ArrayList<>();

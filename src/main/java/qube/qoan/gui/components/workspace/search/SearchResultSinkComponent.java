@@ -15,6 +15,7 @@
 package qube.qoan.gui.components.workspace.search;
 
 import com.vaadin.ui.*;
+import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
 
 import java.util.ArrayList;
@@ -24,7 +25,7 @@ import java.util.List;
 /**
  * Created by rainbird on 6/27/17.
  */
-public class SearchResultSink extends Panel {
+public class SearchResultSinkComponent extends Panel implements SearchResultSink {
 
     private Grid<SearchResult> resultGrid;
 
@@ -32,7 +33,7 @@ public class SearchResultSink extends Panel {
 
     private CheckBox clearResults;
 
-    public SearchResultSink() {
+    public SearchResultSinkComponent() {
 
         searchResults = new ArrayList<>();
         initialize();
