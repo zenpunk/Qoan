@@ -22,6 +22,7 @@ import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
 import qube.qoan.services.implementation.TestDistributedSearchServices;
+import qube.qoan.util.TestGsonSerializer;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -32,6 +33,7 @@ public class AllQoanTests extends TestCase {
      * shame really that there are not more tests, i suppose
      */
     public static Test suite() {
+
         TestSuite suite = new TestSuite("All tests");
 
         // user manager tests
@@ -43,7 +45,11 @@ public class AllQoanTests extends TestCase {
         // this one is for parsing wiki-tables
         suite.addTestSuite(TestWikiArticleIntegration.class);
 
+        // this is the most imortant of all, really, to see if you have live-data
         suite.addTestSuite(TestDistributedSearchServices.class);
+
+        // Gson serialization experiments
+        suite.addTestSuite(TestGsonSerializer.class);
 
         return suite;
     }

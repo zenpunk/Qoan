@@ -40,8 +40,8 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
     public SearchResultSinkComponent() {
 
         searchResults = new ArrayList<>();
-        //SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
-        //searchResults.add(result);
+        SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
+        searchResults.add(result);
         searchResultProvider = DataProvider.ofCollection(searchResults);
         initialize();
 
