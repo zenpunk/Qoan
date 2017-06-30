@@ -18,11 +18,14 @@ import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import junit.framework.TestCase;
+import org.apache.commons.lang3.StringUtils;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.services.implementation.UUIDService;
 
 import java.lang.reflect.Type;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Vector;
 
 /**
@@ -31,6 +34,7 @@ import java.util.Vector;
 public class TestGsonSerializer extends TestCase implements QaiConstants {
 
     public void testGsonSearchResult() {
+
         Gson gson = new GsonBuilder().create();
 
         SearchResult result = new SearchResult(WIKIPEDIA, "dummy search", UUIDService.uuidString(), "dummy description", 1.0);
@@ -42,7 +46,7 @@ public class TestGsonSerializer extends TestCase implements QaiConstants {
         assertNotNull("there has to be something", serialResult);
         assertTrue("the objects must be same", serialResult.equals(result));
 
-        Vector<SearchResult> dummyResults = createResults(100);
+        Vector<SearchResult> dummyResults = createResultVector(100);
         String serializedList = gson.toJson(dummyResults);
         Type listType = new TypeToken<Vector<SearchResult>>() {
         }.getType();
@@ -57,9 +61,61 @@ public class TestGsonSerializer extends TestCase implements QaiConstants {
             SearchResult dj = deserialList.get(i);
             assertTrue("the objects must be the same", di.equals(dj));
         }
+
     }
 
-    private Vector<SearchResult> createResults(int number) {
+    public void testGsonSerializationWithSets() throws Exception {
+
+        Gson gson = new GsonBuilder().create();
+
+        Set<SearchResult> resultSet = createResultSet(100);
+        String asGsonString = gson.toJson(resultSet);
+
+        assertTrue("there must be a string", StringUtils.isNoneEmpty(asGsonString));
+
+        Type setType = new TypeToken<Set<SearchResult>>() {
+        }.getType();
+        Set<SearchResult> deserialList = gson.fromJson(asGsonString, setType);
+
+        assertNotNull("there has to be result", deserialList);
+        assertTrue("the results must not be empty", deserialList.size() > 0);
+        assertTrue("the result lists must be of same length", resultSet.size() == deserialList.size());
+
+        for (SearchResult result : resultSet) {
+            assertTrue("the has to be the same results", deserialList.contains(result));
+        }
+    }
+
+    public void testGsonSerializationWithUtilityClass() throws Exception {
+
+        Set<SearchResult> resultSet = createResultSet(100);
+        String asGsonString = GsonSerializer.serializeSet(resultSet);
+
+        assertTrue("there must be a string", StringUtils.isNoneEmpty(asGsonString));
+
+        Set<SearchResult> deserialList = GsonSerializer.deserializeSet(asGsonString);
+
+        assertNotNull("there has to be result", deserialList);
+        assertTrue("the results must not be empty", deserialList.size() > 0);
+        assertTrue("the result lists must be of same length", resultSet.size() == deserialList.size());
+
+        for (SearchResult result : resultSet) {
+            assertTrue("the has to be the same results", deserialList.contains(result));
+        }
+    }
+
+    private Set<SearchResult> createResultSet(int number) {
+        Set<SearchResult> results = new HashSet<>();
+
+        for (int i = 0; i <= number; i++) {
+            SearchResult result = new SearchResult(WIKIPEDIA, "dummy result " + i, UUIDService.uuidString(), "result with number " + i, 1.0);
+            results.add(result);
+        }
+
+        return results;
+    }
+
+    private Vector<SearchResult> createResultVector(int number) {
         Vector<SearchResult> results = new Vector<>();
 
         for (int i = 0; i <= number; i++) {

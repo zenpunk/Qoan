@@ -16,13 +16,16 @@ package qube.qoan.gui.components.workspace.search;
 
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.shared.ui.dnd.DropEffect;
+import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.*;
+import com.vaadin.ui.components.grid.GridDragSource;
+import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.util.GsonSerializer;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by rainbird on 6/27/17.
@@ -55,13 +58,7 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         VerticalLayout layout = new VerticalLayout();
         setContent(layout);
 
-        resultGrid = new Grid<>("Search Results");
-        resultGrid.addColumn(SearchResult::getContext).setCaption("Context");
-        resultGrid.addColumn(SearchResult::getTitle).setCaption("Title");
-        resultGrid.addColumn(SearchResult::getDescription).setCaption("Description");
-        resultGrid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
-        resultGrid.addColumn(SearchResult::getUuid).setCaption("UUID");
-        resultGrid.setWidth("100%");
+        resultGrid = createGrid(null);
         resultGrid.setDataProvider(searchResultProvider);
 
         layout.addComponent(resultGrid);
@@ -77,18 +74,68 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
 
     private Grid createGrid(Collection<SearchResult> results) {
 
-        ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
-
         Grid<SearchResult> grid = new Grid<>("Search Results");
         grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getTitle).setCaption("Title");
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-        grid.setDataProvider(provider);
+
+        if (results != null) {
+            ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
+            grid.setDataProvider(provider);
+        }
+
+        DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
+
         grid.setWidth("100%");
         grid.setHeight("100%");
         return grid;
+    }
+
+    private DragSourceExtension<Grid<SearchResult>> createDragSource(Grid<SearchResult> grid) {
+
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+        final Set<SearchResult> draggedItems = new HashSet<>();
+
+        //DragSourceExtension<Grid<SearchResult>> dragSource = new DragSourceExtension<>(grid);
+        GridDragSource<SearchResult> dragSource = new GridDragSource<>(grid);
+        dragSource.setEffectAllowed(EffectAllowed.MOVE);
+
+        dragSource.addDragStartListener(event -> {
+
+            Set<SearchResult> selectedItems = grid.getSelectedItems();
+            String gsonSet = GsonSerializer.serializeSet(selectedItems);
+            dragSource.setDataTransferText(gsonSet);
+            Notification.show("Transferring: " + gsonSet);
+        });
+
+        dragSource.addDragEndListener(event -> {
+            if (event.isCanceled()) {
+                Notification.show("Drag event was canceled");
+            } else {
+                Notification.show("Drag event finished");
+            }
+        });
+
+        dragSource.addGridDragStartListener(event -> {
+            // Keep reference to the dragged items
+            Set<SearchResult> resultSet = event.getDraggedItems();
+        });
+
+        // Add drag end listener
+        dragSource.addGridDragEndListener(event -> {
+            // If drop was successful, remove dragged items from source Grid
+            if (event.getDropEffect() == DropEffect.MOVE) {
+                //((ListDataProvider<SearchResult>) grid.getDataProvider()).getItems().removeAll(draggedItems);
+                //grid.getDataProvider().refreshAll();
+
+                // Remove reference to dragged items
+                //draggedItems = null;
+            }
+        });
+
+        return dragSource;
     }
 
     public void addResults(Collection<SearchResult> results) {

@@ -14,8 +14,30 @@
 
 package qube.qoan.util;
 
+import com.google.common.reflect.TypeToken;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import qube.qai.services.implementation.SearchResult;
+
+import java.lang.reflect.Type;
+import java.util.Set;
+
 /**
  * Created by rainbird on 6/29/17.
  */
 public class GsonSerializer {
+
+    public static String serializeSet(Set<SearchResult> resultSet) {
+
+        Gson gson = new GsonBuilder().create();
+        return gson.toJson(resultSet);
+    }
+
+    public static Set<SearchResult> deserializeSet(String gsonSet) {
+
+        Gson gson = new GsonBuilder().create();
+        Type setType = new TypeToken<Set<SearchResult>>() {
+        }.getType();
+        return gson.fromJson(gsonSet, setType);
+    }
 }
