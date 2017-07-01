@@ -24,6 +24,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion;
 import com.vaadin.ui.*;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
+import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.search.SearchMenu;
 import qube.qoan.services.ProcedureCache;
 
@@ -82,9 +83,8 @@ public class WorkSpace extends Panel {
         workspaceTabs = new TabSheet();
 
         WorkspacePanel panel = new WorkspacePanel("Workspace 1");
+        ((QoanUI) QoanUI.getCurrent()).getInjector().injectMembers(panel);
         workspaceTabs.addTab(panel).setCaption("Workspace 1");
-        DropHandler dropHandler = createDropHandler(panel.getBaseLayout());
-        panel.setDropHandler(dropHandler);
 
         layout.addComponent(workspaceTabs);
 
@@ -98,8 +98,7 @@ public class WorkSpace extends Panel {
         int count = workspaceTabs.getComponentCount() + 1;
         String title = "Workspace " + count;
         WorkspacePanel panel = new WorkspacePanel(title);
-        DropHandler dropHandler = createDropHandler(panel.getBaseLayout());
-        panel.setDropHandler(dropHandler);
+        ((QoanUI) QoanUI.getCurrent()).getInjector().injectMembers(panel);
         workspaceTabs.addTab(panel).setCaption(title);
     }
 

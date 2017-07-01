@@ -33,11 +33,16 @@ public class GsonSerializer {
         return gson.toJson(resultSet);
     }
 
-    public static Set<SearchResult> deserializeSet(String gsonSet) {
+    public static SearchResult deserialize(String json) {
+        Gson gson = new GsonBuilder().create();
+        return gson.fromJson(json, SearchResult.class);
+    }
+
+    public static Set<SearchResult> deserializeSet(String jsonSet) {
 
         Gson gson = new GsonBuilder().create();
         Type setType = new TypeToken<Set<SearchResult>>() {
         }.getType();
-        return gson.fromJson(gsonSet, setType);
+        return gson.fromJson(jsonSet, setType);
     }
 }

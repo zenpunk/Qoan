@@ -15,6 +15,7 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.ui.*;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
@@ -62,9 +63,15 @@ public class LoginView extends QoanView {
         layout.addComponent(passwordField);
 
         Button loginButton = new Button("Login");
+        loginButton.setStyleName("link");
         loginButton.addClickListener(new Button.ClickListener() {
             public void buttonClick(Button.ClickEvent event) {
-                User user = new User("sa", "");
+                User user;
+                if (StringUtils.isNoneBlank(userField.getValue())) {
+                    user = new User(userField.getValue(), passwordField.getValue());
+                } else {
+                    user = new User("sa", "");
+                }
 //                try {
 //                    user = userManager.authenticateUser(userField.getValue(), passwordField.getValue());
 //                } catch (UserNotAuthenticatedException e) {

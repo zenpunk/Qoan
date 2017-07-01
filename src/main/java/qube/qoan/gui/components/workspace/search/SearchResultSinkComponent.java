@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.workspace.search;
 
+import com.thoughtworks.xstream.XStream;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.ui.dnd.DropEffect;
@@ -23,7 +24,6 @@ import com.vaadin.ui.components.grid.GridDragSource;
 import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.util.GsonSerializer;
 
 import java.util.*;
 
@@ -105,9 +105,10 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         dragSource.addDragStartListener(event -> {
 
             Set<SearchResult> selectedItems = grid.getSelectedItems();
-            String gsonSet = GsonSerializer.serializeSet(selectedItems);
-            dragSource.setDataTransferText(gsonSet);
-            Notification.show("Transferring: " + gsonSet);
+            XStream xStream = new XStream();
+            String xmlSet = xStream.toXML(selectedItems);
+            dragSource.setDataTransferText(xmlSet);
+            Notification.show("Transferring: " + xmlSet);
         });
 
         dragSource.addDragEndListener(event -> {

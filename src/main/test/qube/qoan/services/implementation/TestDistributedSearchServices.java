@@ -18,6 +18,7 @@ import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -28,6 +29,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by rainbird on 1/6/16.
@@ -77,6 +79,15 @@ public class TestDistributedSearchServices extends QoanTestBase {
 
     }
 
+    public void testDistributedProcedureSearch() throws Exception {
+
+        String topicName = PROCEDURES;
+        Collection<String> searchTopics = new ArrayList<>();
+        searchTopics.add("*");
+
+        checkSearchService(topicName, "name", searchTopics);
+    }
+
     public void testDistributedWikipediaSearch() throws Exception {
 
         String topicName = WIKIPEDIA;
@@ -115,6 +126,13 @@ public class TestDistributedSearchServices extends QoanTestBase {
         for (SearchResult result : results) {
             StockGroup group = groupMap.get(result.getUuid());
             assertNotNull("found group must exist", group);
+            // obviously this doesn't work
+            Set<StockEntity> entities = group.getEntities();
+            assertNotNull("there has to be some entities", entities);
+            assertTrue("the set may not be empty", !entities.isEmpty());
+            for (StockEntity entity : entities) {
+                log("StockEntity: " + entity.getName());
+            }
         }
     }
 
@@ -163,4 +181,7 @@ public class TestDistributedSearchServices extends QoanTestBase {
         return null;
     }
 
+    private void log(String message) {
+        System.out.println(message);
+    }
 }

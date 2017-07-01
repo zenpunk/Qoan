@@ -17,6 +17,7 @@ package qube.qoan.util;
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.thoughtworks.xstream.XStream;
 import junit.framework.TestCase;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.main.QaiConstants;
@@ -86,6 +87,20 @@ public class TestGsonSerializer extends TestCase implements QaiConstants {
         }
     }
 
+    public void testMixedCases() throws Exception {
+
+        XStream xStream = new XStream();
+        Set<SearchResult> resultSet = createResultSet(1);
+        assertTrue("size has to be one", resultSet.size() == 1);
+
+        String serialSetString = xStream.toXML(resultSet);
+        assertNotNull(serialSetString);
+
+        Object deserialSet = xStream.fromXML(serialSetString);
+        assertNotNull(deserialSet);
+        assertTrue(deserialSet instanceof Set);
+    }
+
     public void testGsonSerializationWithUtilityClass() throws Exception {
 
         Set<SearchResult> resultSet = createResultSet(100);
@@ -107,7 +122,7 @@ public class TestGsonSerializer extends TestCase implements QaiConstants {
     private Set<SearchResult> createResultSet(int number) {
         Set<SearchResult> results = new HashSet<>();
 
-        for (int i = 0; i <= number; i++) {
+        for (int i = 0; i < number; i++) {
             SearchResult result = new SearchResult(WIKIPEDIA, "dummy result " + i, UUIDService.uuidString(), "result with number " + i, 1.0);
             results.add(result);
         }

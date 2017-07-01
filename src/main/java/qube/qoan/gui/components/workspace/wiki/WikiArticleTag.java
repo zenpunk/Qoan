@@ -16,7 +16,6 @@ package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
-import qube.qoan.gui.components.common.InnerWindow;
 
 /**
  * Created by rainbird on 11/13/15.
@@ -57,30 +56,30 @@ public class WikiArticleTag extends Panel {
 
         HorizontalLayout buttonsLayout = new HorizontalLayout();
         Button open = new Button("open");
-        open.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
-                contentPanel.setSizeFull();
-
-                //Window window = new Window(title);
-                final InnerWindow window = new InnerWindow(title, contentPanel);
-//                window.setWidth("600px");
-//                window.setHeight("400px");
-                // if toDecorate is an absolute layout, we need a position to add the thing as well
-                if (parentLayout instanceof AbsoluteLayout) {
-                    left = left + 5;
-                    top = top + 5;
-                    String positionString = "left: " + left + "px; top: " + top + "px;";
-                    DragAndDropWrapper dndWrapper = new DragAndDropWrapper(window);
-                    dndWrapper.setSizeUndefined();
-                    dndWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-                    ((AbsoluteLayout) parentLayout).addComponent(dndWrapper, positionString);
-                } else {
-                    parentLayout.addComponent(window);
-                }
-
-            }
-        });
+//        open.addClickListener(new Button.ClickListener() {
+//            public void buttonClick(Button.ClickEvent event) {
+//                WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
+//                contentPanel.setSizeFull();
+//
+//                //Window window = new Window(title);
+//                final InnerWindow window = new InnerWindow(title, contentPanel);
+////                window.setWidth("600px");
+////                window.setHeight("400px");
+//                // if toDecorate is an absolute layout, we need a position to add the thing as well
+//                if (parentLayout instanceof AbsoluteLayout) {
+//                    left = left + 5;
+//                    top = top + 5;
+//                    String positionString = "left: " + left + "px; top: " + top + "px;";
+//                    DragAndDropWrapper dndWrapper = new DragAndDropWrapper(window);
+//                    dndWrapper.setSizeUndefined();
+//                    dndWrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
+//                    ((AbsoluteLayout) parentLayout).addComponent(dndWrapper, positionString);
+//                } else {
+//                    parentLayout.addComponent(window);
+//                }
+//
+//            }
+//        });
         open.setStyleName("link");
         buttonsLayout.addComponent(open);
 

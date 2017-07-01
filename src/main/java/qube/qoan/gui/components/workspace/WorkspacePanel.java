@@ -14,19 +14,33 @@
 
 package qube.qoan.gui.components.workspace;
 
-import com.vaadin.event.dd.DropHandler;
+import com.thoughtworks.xstream.XStream;
+import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
+import com.vaadin.ui.dnd.DropTargetExtension;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import qube.qai.persistence.DataProvider;
+import qube.qai.persistence.WikiArticle;
+import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
+
+import javax.inject.Inject;
+import java.util.Collection;
+import java.util.Optional;
 
 /**
  * Created by rainbird on 11/14/15.
  */
 public class WorkspacePanel extends Panel {
 
+    private static Logger logger = LoggerFactory.getLogger("WorkspacePanel");
+
+    @Inject
+    private DataProvider<WikiArticle> wikiProvider;
+
     private String title;
-
-    private AbsoluteLayout layout;
-
-    public DragAndDropWrapper layoutWrapper;
 
     public WorkspacePanel(String title) {
         this.title = title;
@@ -36,31 +50,63 @@ public class WorkspacePanel extends Panel {
 
     private void initialize() {
 
-        layout = new AbsoluteLayout();
-        int width = UI.getCurrent().getPage().getBrowserWindowWidth();
-        int height = UI.getCurrent().getPage().getBrowserWindowHeight();
-
-        layout.setWidth(width + "px");
-        layout.setHeight(height + "px");
+        AbsoluteLayout layout = new AbsoluteLayout();
 
         Label titleLabel = new Label(title);
-        DragAndDropWrapper wrapper = new DragAndDropWrapper(titleLabel);
-        wrapper.setSizeUndefined();
-        wrapper.setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER);
-        layout.addComponent(wrapper, "right: 50px; top: 50px;");
+        layout.addComponent(titleLabel, "right: 50px; top: 50px;");
+        layout.setWidth("1000px");
+        layout.setHeight("800px");
+        setContent(layout);
 
-        layoutWrapper = new DragAndDropWrapper(layout);
-        //layoutWrapper.setDropHandler(new MoveHandler());
-        // and finally set the
-        setContent(layoutWrapper);
-    }
+        // now we deal with drop events and all...
+        DropTargetExtension<AbsoluteLayout> dropExtension = new DropTargetExtension<>(layout);
+        dropExtension.setDropEffect(DropEffect.MOVE);
+        dropExtension.addDropListener(event -> {
+            Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
+            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
+                String jsonSet = event.getDataTransferText();
+                if (StringUtils.isNotBlank(jsonSet)) {
+                    XStream xStream = new XStream();
+                    Object resultObject = null;
+                    try {
+                        resultObject = xStream.fromXML(jsonSet);
+                    } catch (Exception e) {
+                        logger.info("trouble converting the data-string: " + e.getMessage());
+                        return;
+                    }
+                    int offset = 0;
+                    if (resultObject instanceof Collection) {
+                        Collection<SearchResult> results = (Collection<SearchResult>) resultObject;
+                        for (SearchResult result : results) {
+                            //wikiProvider.setContext(result.getContext());
+                            WikiArticle article = null; // wikiProvider.getData(result.getUuid());
+                            if (article == null) {
+                                String message = "WikiArticle context:'" + result.getContext() + "' uuid: '" + result.getUuid() + "' could not be found!";
+                                //throw new RuntimeException();
+                                Label display = new Label("Context: " + result.getContext() + " uuid: " + result.getContext());
+                                int clientX = event.getMouseEventDetails().getClientX();
+                                int clientY = event.getMouseEventDetails().getClientY();
+                                String coords = String.format("leftt: %d px; top: %d px;", clientY + offset, clientX + offset);
+                                //layout.addComponent(tag, coords);
+                                offset += 5;
+                                layout.addComponent(display, coords);
+                            } else {
+                                // create and add the thing on screen somewhere.
+                                WikiArticleTag tag = new WikiArticleTag(result.getContext(), article, layout);
+                                //Label display = new Label("Context: " + result.getContext() + " uuid: " + result.getContext());
+                                int clientX = event.getMouseEventDetails().getClientX();
+                                int clientY = event.getMouseEventDetails().getClientY();
+                                String coords = String.format("leftt: %d px; top: %d px;", clientY + offset, clientX + offset);
+                                //layout.addComponent(tag, coords);
+                                offset += 5;
+                                layout.addComponent(tag, coords);
+                            }
 
-    public void setDropHandler(DropHandler dropHandler) {
-        layoutWrapper.setDropHandler(dropHandler);
-    }
-
-    public AbsoluteLayout getBaseLayout() {
-        return layout;
+                        }
+                    }
+                }
+            }
+        });
     }
 
     public String getTitle() {
