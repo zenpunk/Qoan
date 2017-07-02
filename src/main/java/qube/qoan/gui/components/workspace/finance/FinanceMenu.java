@@ -14,23 +14,21 @@
 
 package qube.qoan.gui.components.workspace.finance;
 
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.VerticalLayout;
+import qube.qoan.gui.components.common.QoanMenu;
 
 /**
  * Created by rainbird on 11/18/15.
  */
-public class FinanceMenu extends Panel {
+public class FinanceMenu extends QoanMenu {
 
     private FinanceListing financeListing;
     private FinanceRepository financeRepository;
 
     public FinanceMenu() {
 
-        initialize();
+        initialize(STOCK_GROUPS);
     }
-
+/*
     private void initialize() {
 
         VerticalLayout layout = new VerticalLayout();
@@ -55,4 +53,5 @@ public class FinanceMenu extends Panel {
 
         setContent(layout);
     }
+    */
 }

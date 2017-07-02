@@ -14,21 +14,15 @@
 
 package qube.qoan.gui.components.workspace;
 
-import com.thoughtworks.xstream.XStream;
-import com.vaadin.shared.ui.dnd.DropEffect;
-import com.vaadin.ui.*;
-import com.vaadin.ui.dnd.DropTargetExtension;
-import org.apache.commons.lang.StringUtils;
+import com.vaadin.ui.AbsoluteLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.persistence.DataProvider;
 import qube.qai.persistence.WikiArticle;
-import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.workspace.wiki.WikiArticleTag;
 
 import javax.inject.Inject;
-import java.util.Collection;
-import java.util.Optional;
 
 /**
  * Created by rainbird on 11/14/15.
@@ -59,7 +53,7 @@ public class WorkspacePanel extends Panel {
         setContent(layout);
 
         // now we deal with drop events and all...
-        DropTargetExtension<AbsoluteLayout> dropExtension = new DropTargetExtension<>(layout);
+        /*DropTargetExtension<AbsoluteLayout> dropExtension = new DropTargetExtension<>(layout);
         dropExtension.setDropEffect(DropEffect.MOVE);
         dropExtension.addDropListener(event -> {
             Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
@@ -106,7 +100,7 @@ public class WorkspacePanel extends Panel {
                     }
                 }
             }
-        });
+        });*/
     }
 
     public String getTitle() {

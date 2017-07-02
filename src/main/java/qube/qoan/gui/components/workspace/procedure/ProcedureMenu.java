@@ -15,14 +15,9 @@
 package qube.qoan.gui.components.workspace.procedure;
 
 import com.google.inject.Injector;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
-import com.vaadin.v7.ui.VerticalLayout;
-import org.apache.commons.lang3.StringUtils;
-import qube.qai.procedure.Procedure;
-import qube.qai.procedure.analysis.NeuralNetworkAnalysis;
 import qube.qoan.QoanUI;
+import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
@@ -30,7 +25,7 @@ import javax.inject.Inject;
 /**
  * Created by rainbird on 12/2/15.
  */
-public class ProcedureMenu extends Panel {
+public class ProcedureMenu extends QoanMenu {
 
     @Inject
     private ProcedureCache procedureCache;
@@ -49,8 +44,9 @@ public class ProcedureMenu extends Panel {
         Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
-        initialize();
+        initialize(PROCEDURES);
     }
+/*
 
     private void initialize() {
 
@@ -86,5 +82,6 @@ public class ProcedureMenu extends Panel {
         setContent(layout);
 
     }
+*/
 
 }

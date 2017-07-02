@@ -12,33 +12,20 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.search;
+package qube.qoan.gui.components.management;
 
-import com.vaadin.ui.UI;
-import qube.qoan.QoanUI;
-import qube.qoan.gui.components.common.QoanMenu;
-
-import java.util.ArrayList;
+import qube.qoan.services.QoanTestBase;
 
 /**
- * Created by rainbird on 10/31/15.
+ * Created by rainbird on 7/2/17.
  */
-public class SearchMenu extends QoanMenu {
+public class TestManagementPanel extends QoanTestBase {
 
+    public void testManagementPanel() throws Exception {
 
+        ManagementPanel managementPanel = new ManagementPanel();
+        injector.injectMembers(managementPanel);
 
-    public SearchMenu() {
-        super();
-
-        searchSources = new ArrayList<>();
-        // start with self-inoculation
-        injector = ((QoanUI) UI.getCurrent()).getInjector();
-        // this can only happen in case of tests, obviously
-        if (injector != null) {
-            injector.injectMembers(this);
-        }
-
-        initialize(WIKIPEDIA, WIKTIONARY);
+        fail("implement the test first");
     }
-
 }

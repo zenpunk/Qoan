@@ -20,6 +20,8 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
+import qube.qoan.gui.components.common.TestQoanMenu;
+import qube.qoan.gui.components.management.TestManagementPanel;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
 import qube.qoan.services.implementation.TestDistributedSearchServices;
 import qube.qoan.util.TestGsonSerializer;
@@ -34,13 +36,19 @@ public class AllQoanTests extends TestCase {
      */
     public static Test suite() {
 
-        TestSuite suite = new TestSuite("All tests");
+        TestSuite suite = new TestSuite("All Qoan tests");
 
         // user manager tests
         suite.addTestSuite(TestUserManager.class);
 
         // this one tests search menu drag-n-drop things
         suite.addTestSuite(TestSearchMenu.class);
+
+        // the menu components are all the same now
+        suite.addTestSuite(TestQoanMenu.class);
+
+        // management panel tests
+        suite.addTestSuite(TestManagementPanel.class);
 
         // this one is for parsing wiki-tables
         suite.addTestSuite(TestWikiArticleIntegration.class);
