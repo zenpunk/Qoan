@@ -12,7 +12,7 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.search;
+package qube.qoan.gui.components.common.search;
 
 import com.thoughtworks.xstream.XStream;
 import com.vaadin.data.provider.DataProvider;
@@ -72,7 +72,7 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         layout.addComponent(clearButton);
     }
 
-    private Grid createGrid(Collection<SearchResult> results) {
+    protected Grid createGrid(Collection<SearchResult> results) {
 
         Grid<SearchResult> grid = new Grid<>("Search Results");
         grid.addColumn(SearchResult::getContext).setCaption("Context");

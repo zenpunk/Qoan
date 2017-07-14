@@ -15,43 +15,29 @@
 package qube.qoan.gui.components.workspace.finance;
 
 import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.workspace.search.SearchSource;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by rainbird on 11/18/15.
  */
 public class FinanceMenu extends QoanMenu {
 
-    private FinanceListing financeListing;
-    private FinanceRepository financeRepository;
+    @Inject
+    @Named("Procedures")
+    private SearchResultSinkComponent resultSink;
 
     public FinanceMenu() {
 
         initialize(STOCK_GROUPS);
+
+        SearchSource searchSource = searchSources.get(0);
+        searchSource.doSearch("*");
+
+        resultSink.initialize();
     }
-/*
-    private void initialize() {
 
-        VerticalLayout layout = new VerticalLayout();
-        //layout.setWidth("300px");
-
-        financeRepository = new FinanceRepository();
-        layout.addComponent(financeRepository);
-
-        Button showSelectedListingButton = new Button("Show selected listing");
-        showSelectedListingButton.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                // @TODO how is this supposed to be the right way?
-//                String listingName = financeRepository.getSelectedListingName();
-//                financeListing.displayListing(listingName);
-            }
-        });
-        showSelectedListingButton.setStyleName("link");
-        layout.addComponent(showSelectedListingButton);
-
-        financeListing = new FinanceListing();
-        layout.addComponent(financeListing);
-
-        setContent(layout);
-    }
-    */
 }

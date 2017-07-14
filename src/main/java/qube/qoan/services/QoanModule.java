@@ -33,7 +33,9 @@ import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qoan.authentication.UserManager;
-import qube.qoan.gui.components.workspace.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.FinanceSearchResultSink;
+import qube.qoan.gui.components.common.search.ProcedureSearchResultSink;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -62,6 +64,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     private UserManager userManager;
 
     private SearchResultSinkComponent searchResultSink;
+
+    private FinanceSearchResultSink financeResultSink;
+
+    private ProcedureSearchResultSink procedureResultSink;
 
     private SearchServiceInterface userSearchService;
     private SearchServiceInterface wikipediaSearchService;
@@ -92,11 +98,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
 
-        // make injection of SearchResultSinkComponent possible
-        // i don't think it really matters which version is used
-        // or where the thing gets instantiated
-        searchResultSink = new SearchResultSinkComponent();
-        bind(SearchResultSink.class).toInstance(searchResultSink);
     }
 
     @Provides
@@ -108,6 +109,30 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Singleton
     ProcedureCache provideProcedureSource() {
         return new ProcedureCache();
+    }
+
+    @Provides
+    @Singleton
+    @Named("SearchResults")
+    SearchResultSink provideSearchResultSink() {
+        searchResultSink = new SearchResultSinkComponent();
+        return searchResultSink;
+    }
+
+    @Provides
+    @Singleton
+    @Named("ProcedureResults")
+    SearchResultSink provideProcedureResultSink() {
+        procedureResultSink = new ProcedureSearchResultSink();
+        return procedureResultSink;
+    }
+
+    @Provides
+    @Singleton
+    @Named("FinanceResults")
+    SearchResultSink provideFinanceResultSink() {
+        financeResultSink = new FinanceSearchResultSink();
+        return financeResultSink;
     }
 
     @Provides

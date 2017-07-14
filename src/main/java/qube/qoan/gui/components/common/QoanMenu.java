@@ -19,10 +19,11 @@ import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.workspace.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 import qube.qoan.gui.components.workspace.search.SearchSource;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.List;
 
 /**
@@ -35,7 +36,8 @@ public class QoanMenu extends Panel implements QaiConstants {
     protected VerticalLayout layout;
 
     @Inject
-    protected SearchResultSinkComponent resultSink;
+    @Named("SearchResults")
+    private SearchResultSinkComponent resultSink;
 
     protected List<SearchSource> searchSources;
 

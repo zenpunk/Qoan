@@ -12,8 +12,9 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.procedure;
+package qube.qoan.gui.components.common.tags;
 
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -28,6 +29,7 @@ import qube.qai.data.SelectionOperator;
 import qube.qai.data.TimeSequence;
 import qube.qai.data.analysis.Statistics;
 import qube.qai.procedure.Procedure;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.InnerWindow;
 
 import java.lang.reflect.Method;
@@ -38,7 +40,7 @@ import java.util.Map;
 /**
  * Created by rainbird on 12/5/15.
  */
-public class ProcedureTag extends Panel {
+public class ProcedureTag extends BaseTag {
 
     private Procedure procedure;
     private Layout parentLayout;
@@ -46,11 +48,18 @@ public class ProcedureTag extends Panel {
     private int top = 100;
     private int left = 100;
 
-    public ProcedureTag(Procedure procedure, Layout parentLayout) {
-        this.procedure = procedure;
-        this.parentLayout = parentLayout;
+//    public ProcedureTag(Procedure procedure, Layout parentLayout) {
+//        this.procedure = procedure;
+//        this.parentLayout = parentLayout;
+//
+//        initialize(procedure);
+//    }
 
-        initialize(procedure);
+
+    public ProcedureTag(SearchResult searchResult) {
+        super(searchResult);
+        iconImage = new Image("Procedures",
+                new ClassResource("qube/qoan/images/proc.png"));
     }
 
     private void initialize(Procedure procedure) {

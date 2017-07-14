@@ -34,6 +34,8 @@ public class WorkspacePanel extends Panel {
     @Inject
     private DataProvider<WikiArticle> wikiProvider;
 
+    private WorkspaceDropTargetExtension dropExtension;
+
     private String title;
 
     public WorkspacePanel(String title) {
@@ -45,6 +47,8 @@ public class WorkspacePanel extends Panel {
     private void initialize() {
 
         AbsoluteLayout layout = new AbsoluteLayout();
+        dropExtension = new WorkspaceDropTargetExtension(layout);
+        dropExtension.addListener();
 
         Label titleLabel = new Label(title);
         layout.addComponent(titleLabel, "right: 50px; top: 50px;");
@@ -52,55 +56,6 @@ public class WorkspacePanel extends Panel {
         layout.setHeight("800px");
         setContent(layout);
 
-        // now we deal with drop events and all...
-        /*DropTargetExtension<AbsoluteLayout> dropExtension = new DropTargetExtension<>(layout);
-        dropExtension.setDropEffect(DropEffect.MOVE);
-        dropExtension.addDropListener(event -> {
-            Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
-            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
-                String jsonSet = event.getDataTransferText();
-                if (StringUtils.isNotBlank(jsonSet)) {
-                    XStream xStream = new XStream();
-                    Object resultObject = null;
-                    try {
-                        resultObject = xStream.fromXML(jsonSet);
-                    } catch (Exception e) {
-                        logger.info("trouble converting the data-string: " + e.getMessage());
-                        return;
-                    }
-                    int offset = 0;
-                    if (resultObject instanceof Collection) {
-                        Collection<SearchResult> results = (Collection<SearchResult>) resultObject;
-                        for (SearchResult result : results) {
-                            //wikiProvider.setContext(result.getContext());
-                            WikiArticle article = null; // wikiProvider.getData(result.getUuid());
-                            if (article == null) {
-                                String message = "WikiArticle context:'" + result.getContext() + "' uuid: '" + result.getUuid() + "' could not be found!";
-                                //throw new RuntimeException();
-                                Label display = new Label("Context: " + result.getContext() + " uuid: " + result.getContext());
-                                int clientX = event.getMouseEventDetails().getClientX();
-                                int clientY = event.getMouseEventDetails().getClientY();
-                                String coords = String.format("leftt: %d px; top: %d px;", clientY + offset, clientX + offset);
-                                //layout.addComponent(tag, coords);
-                                offset += 5;
-                                layout.addComponent(display, coords);
-                            } else {
-                                // create and add the thing on screen somewhere.
-                                WikiArticleTag tag = new WikiArticleTag(result.getContext(), article, layout);
-                                //Label display = new Label("Context: " + result.getContext() + " uuid: " + result.getContext());
-                                int clientX = event.getMouseEventDetails().getClientX();
-                                int clientY = event.getMouseEventDetails().getClientY();
-                                String coords = String.format("leftt: %d px; top: %d px;", clientY + offset, clientX + offset);
-                                //layout.addComponent(tag, coords);
-                                offset += 5;
-                                layout.addComponent(tag, coords);
-                            }
-
-                        }
-                    }
-                }
-            }
-        });*/
     }
 
     public String getTitle() {

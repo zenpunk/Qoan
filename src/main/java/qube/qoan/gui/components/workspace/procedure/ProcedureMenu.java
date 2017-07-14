@@ -18,9 +18,11 @@ import com.google.inject.Injector;
 import com.vaadin.ui.UI;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by rainbird on 12/2/15.
@@ -29,6 +31,10 @@ public class ProcedureMenu extends QoanMenu {
 
     @Inject
     private ProcedureCache procedureCache;
+
+    @Inject
+    @Named("Procedures")
+    private SearchResultSinkComponent resultSink;
 
     /**
      * this is the container for elements which will be

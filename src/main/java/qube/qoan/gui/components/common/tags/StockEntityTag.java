@@ -12,30 +12,48 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.finance;
+package qube.qoan.gui.components.common.tags;
 
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import qube.qai.persistence.StockEntity;
+import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.HistogramDecorator;
+import qube.qoan.gui.components.common.decorators.TimeSeriesDecorator;
+import qube.qoan.gui.components.common.decorators.WikiDecorator;
 
 /**
  * Created by rainbird on 12/28/15.
  */
-public class StockEntityTag extends Panel {
+public class StockEntityTag extends BaseTag {
 
     private StockEntity stockEntity;
 
     private Layout parentLayout;
 
-    public StockEntityTag(StockEntity stockEntity, Layout parentLayout) {
-        super();
-
-        this.stockEntity = stockEntity;
-        this.parentLayout = parentLayout;
-
-        initialize();
+    public StockEntityTag(SearchResult searchResult) {
+        super(searchResult);
+        iconImage = new Image("Yes, logo:",
+                new ClassResource("qube/qoan/images/stocks-index.png"));
+        decorators.put("Wiki Article", new WikiDecorator());
+        decorators.put("Stock Quotes", new TimeSeriesDecorator());
+        decorators.put("Stock Quote Statistics", new HistogramDecorator());
     }
 
-    private void initialize() {
+    //    public StockEntityTag(StockEntity stockEntity, Layout parentLayout) {
+//        super();
+//
+//        this.stockEntity = stockEntity;
+//        this.parentLayout = parentLayout;
+//
+//        initialize();
+//    }
+
+    /**
+     * initialize the whole thing here
+     */
+    @Override
+    public void initialize() {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 

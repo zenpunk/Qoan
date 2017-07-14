@@ -12,15 +12,19 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.wiki;
+package qube.qoan.gui.components.common.tags;
 
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import qube.qai.persistence.WikiArticle;
+import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.NetworkDecorator;
+import qube.qoan.gui.components.common.decorators.WikiDecorator;
 
 /**
  * Created by rainbird on 11/13/15.
  */
-public class WikiArticleTag extends Panel {
+public class WikiArticleTag extends BaseTag {
 
     private String source;
 
@@ -32,17 +36,26 @@ public class WikiArticleTag extends Panel {
 
     private Layout parentLayout;
 
-    public WikiArticleTag(String source, WikiArticle wikiArticle, Layout parentLayout) {
-        super();
-
-        this.source = source;
-        this.wikiArticle = wikiArticle;
-        this.parentLayout = parentLayout;
-
-        initialize();
+    public WikiArticleTag(SearchResult searchResult) {
+        super(searchResult);
+        iconImage = new Image("Wiki",
+                new ClassResource("qube/qoan/images/wiki.png"));
+        decorators.put("Wiki-article", new WikiDecorator());
+        decorators.put("Semantic network", new NetworkDecorator());
     }
 
-    private void initialize() {
+    //    public WikiArticleTag(String source, WikiArticle wikiArticle, Layout parentLayout) {
+//        super();
+//
+//        this.source = source;
+//        this.wikiArticle = wikiArticle;
+//        this.parentLayout = parentLayout;
+//
+//        initialize();
+//    }
+
+    @Override
+    public void initialize() {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 

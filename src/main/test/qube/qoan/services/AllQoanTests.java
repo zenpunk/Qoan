@@ -21,6 +21,7 @@ import junit.textui.TestRunner;
 import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
 import qube.qoan.gui.components.common.TestQoanMenu;
+import qube.qoan.gui.components.common.decorators.TestDecorators;
 import qube.qoan.gui.components.management.TestManagementPanel;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
 import qube.qoan.services.implementation.TestDistributedSearchServices;
@@ -53,8 +54,11 @@ public class AllQoanTests extends TestCase {
         // this one is for parsing wiki-tables
         suite.addTestSuite(TestWikiArticleIntegration.class);
 
-        // this is the most imortant of all, really, to see if you have live-data
+        // this is the most important of all, really, to see if you have live-data
         suite.addTestSuite(TestDistributedSearchServices.class);
+
+        // test for the decorators
+        suite.addTestSuite(TestDecorators.class);
 
         // Gson serialization experiments
         suite.addTestSuite(TestGsonSerializer.class);

@@ -20,6 +20,7 @@ import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 
 import java.util.Collection;
 
