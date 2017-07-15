@@ -15,6 +15,8 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import qube.qai.services.implementation.SearchResult;
@@ -36,9 +38,13 @@ public class BaseDecorator extends Panel implements Decorator {
 
     private TabSheet tabSheet;
 
+    private Image iconImage;
+
     public BaseDecorator() {
         decoratorMap = new HashMap<>();
         tabSheet = new TabSheet();
+        iconImage = new Image("Wiki article",
+                new ClassResource("qube/qoan/images/chart.png"));
     }
 
     @Override
@@ -59,5 +65,10 @@ public class BaseDecorator extends Panel implements Decorator {
             tabSheet.addTab(decorator).setCaption(decoratorName);
         }
         decorate(searchResult);
+    }
+
+    @Override
+    public Image getIconImage() {
+        return iconImage;
     }
 }

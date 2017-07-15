@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common.decorators;
 
+import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
@@ -34,6 +35,8 @@ import qube.qai.services.implementation.SearchResult;
 public class HistogramDecorator extends Panel implements Decorator {
 
     private Image iconImage;
+
+    private ResizableCssLayout imageWrapper;
 
     public HistogramDecorator() {
         iconImage = new Image("Wiki article",
