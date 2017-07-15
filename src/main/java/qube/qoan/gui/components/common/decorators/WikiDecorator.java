@@ -28,7 +28,7 @@ public class WikiDecorator extends Panel implements Decorator {
 
     public WikiDecorator() {
         iconImage = new Image("Wiki article",
-                new ClassResource("qube/qoan/images/wiki.png"));
+                new ClassResource("qube/qoan/gui/images/wiki.png"));
     }
 
     @Override

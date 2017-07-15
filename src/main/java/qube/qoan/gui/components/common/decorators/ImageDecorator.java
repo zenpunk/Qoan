@@ -28,7 +28,7 @@ public class ImageDecorator extends Panel implements Decorator {
 
     public ImageDecorator() {
         iconImage = new Image("NGL-Viewer",
-                new ClassResource("qube/qoan/images/helix.jog"));
+                new ClassResource("qube/qoan/gui/images/helix.jog"));
     }
 
     @Override

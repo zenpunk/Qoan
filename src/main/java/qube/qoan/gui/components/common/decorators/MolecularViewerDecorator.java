@@ -33,7 +33,7 @@ public class MolecularViewerDecorator extends Panel implements Decorator {
 
     public MolecularViewerDecorator() {
         iconImage = new Image("NGL-Viewer",
-                new ClassResource("qube/qoan/images/helix.jog"));
+                new ClassResource("qube/qoan/gui/images/helix.jog"));
     }
 
     @Override

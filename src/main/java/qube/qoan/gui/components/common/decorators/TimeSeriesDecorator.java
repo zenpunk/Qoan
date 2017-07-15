@@ -44,7 +44,7 @@ public class TimeSeriesDecorator extends Panel implements Decorator, QaiConstant
 
     public TimeSeriesDecorator() {
         iconImage = new Image("Stock Quotes",
-                new ClassResource("qube/qoan/images/stocks-index.png"));
+                new ClassResource("qube/qoan/gui/images/stocks-index.png"));
     }
 
     @Override
