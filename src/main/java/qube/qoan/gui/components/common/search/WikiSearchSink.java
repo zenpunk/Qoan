@@ -68,4 +68,33 @@ public class WikiSearchSink extends SearchResultSinkComponent {
         grid.setHeight("100%");
         return grid;
     }
+
+    @Override
+    public void addResults(Collection<SearchResult> results) {
+
+        // if there are no results, don't bother add them
+        if (results == null || results.isEmpty()) {
+            return;
+        }
+        searchResultProvider = DataProvider.ofCollection(searchResults);
+        searchResultProvider.refreshAll();
+//
+//        // @TODO i hope i can change this soon back to what it should be
+//        Window window = new Window("Search results: " + results.size() + " of them...");
+//        Grid<SearchResult> grid = createGrid(results);
+//        window.setContent(grid);
+//        window.setWidth("800px");
+//        window.setHeight("600px");
+//
+//        UI.getCurrent().addWindow(window);
+
+//        if (clearResults.getValue()) {
+//            searchResults.clear();
+//        }
+//        // updating the grid has a problem...
+//        Notification.show("Adding " + results.size() + " rows for display");
+//        searchResults.addAll(results);
+//        resultGrid.getDataProvider().refreshAll();
+//        //initialize();
+    }
 }

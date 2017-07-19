@@ -14,7 +14,9 @@
 
 package qube.qoan.gui.views;
 
+import com.google.inject.Injector;
 import com.vaadin.ui.*;
+import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.WorkSpace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
@@ -38,11 +40,15 @@ public class WorkspaceView extends QoanView {
     public static String NAME = "workspace";
 
     private SearchMenu searchMenu;
+
     private FinanceMenu financeMenu;
+
     private ProcedureMenu procedureMenu;
+
     private WorkSpace workspace;
 
     private HorizontalSplitPanel splitPanel;
+
     private Component currentComponent;
 
     //@Override
@@ -70,20 +76,32 @@ public class WorkspaceView extends QoanView {
      */
     protected void initialize() {
 
+        // see if we have already done this... whatever for. is there really need for this?
+        if (initialized) {
+            return;
+        }
+
+        // so that we can inject the members of the class already now for their correct initialization
+        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+
         splitPanel = new HorizontalSplitPanel();
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
+        injector.injectMembers(searchMenu);
         searchMenu.setSizeUndefined();
 
         financeMenu = new FinanceMenu();
+        injector.injectMembers(financeMenu);
         financeMenu.setSizeUndefined();
 
         procedureMenu = new ProcedureMenu();
+        injector.injectMembers(procedureMenu);
         procedureMenu.setSizeUndefined();
 
         workspace = new WorkSpace(searchMenu);
+        injector.injectMembers(workspace);
         splitPanel.setSecondComponent(workspace);
 
         currentComponent = searchMenu;
@@ -129,6 +147,8 @@ public class WorkspaceView extends QoanView {
         }
 
         addComponent(lowerLayout);
+
+        initialized = true;
     }
 
     public void onShowProcedure(Button.ClickEvent event) {

@@ -12,31 +12,30 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.search;
+package qube.qoan.services;
 
-import qube.qoan.gui.components.common.QoanMenu;
+import com.google.inject.Provides;
+import org.apache.shiro.config.Ini;
+import org.apache.shiro.guice.web.ShiroWebModule;
 
-import java.util.ArrayList;
+import javax.servlet.ServletContext;
 
 /**
- * Created by rainbird on 10/31/15.
+ * Created by rainbird on 7/19/17.
  */
-public class SearchMenu extends QoanMenu {
+public class QoanSecurityModule extends ShiroWebModule {
 
-
-
-    public SearchMenu() {
-        super();
-
-        searchSources = new ArrayList<>();
-        // start with self-inoculation
-//        injector = ((QoanUI) UI.getCurrent()).getInjector();
-//        // this can only happen in case of tests, obviously
-//        if (injector != null) {
-//            injector.injectMembers(this);
-//        }
-
-        initialize(WIKIPEDIA, WIKTIONARY);
+    public QoanSecurityModule(ServletContext sc) {
+        super(sc);
     }
 
+    @Override
+    protected void configureShiroWeb() {
+
+    }
+
+    @Provides
+    Ini loadShiroIni() {
+        return Ini.fromResourcePath("classpath:shiro.ini");
+    }
 }

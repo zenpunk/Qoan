@@ -27,7 +27,9 @@ import qube.qai.user.User;
 import qube.qoan.authentication.SecureViewChangeListener;
 import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanModule;
+import qube.qoan.services.QoanSecurityModule;
 
+import javax.servlet.ServletContext;
 import java.util.Set;
 
 /**
@@ -51,6 +53,8 @@ public class QoanUI extends UI {
 
     protected QoanModule qoanModule;
 
+    protected QoanSecurityModule qoanSecurityModule;
+
     protected HazelcastInstance hazelcastInstance;
 
     protected SearchServiceInterface wikipediaSearchService;
@@ -66,6 +70,8 @@ public class QoanUI extends UI {
 
         // this way we have a different injector for each thread
         qoanModule = new QoanModule();
+        ServletContext context = null;
+        qoanSecurityModule = new QoanSecurityModule(context);
         injector = Guice.createInjector(qoanModule); // , new QaiModule() do i really need this here???
 
         hazelcastInstance = injector.getInstance(HazelcastInstance.class);

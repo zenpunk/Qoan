@@ -17,6 +17,7 @@ package qube.qoan.gui.components.common;
 import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
+import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
@@ -37,13 +38,16 @@ public class QoanMenu extends Panel implements QaiConstants {
 
     @Inject
     @Named("WikiResults")
-    private SearchResultSinkComponent resultSink;
+    private SearchResultSink resultSink;
 
     protected List<SearchSource> searchSources;
 
     protected Accordion searchSettings;
 
     protected void initialize(String... serviceNames) {
+
+        SearchResultSinkComponent component = (SearchResultSinkComponent) resultSink;
+        component.initialize();
 
         layout = new VerticalLayout();
         //resultSink.initialize();
@@ -71,7 +75,7 @@ public class QoanMenu extends Panel implements QaiConstants {
 
         Button toggleResultsButton = new Button("Toggle search results visibility");
         toggleResultsButton.setStyleName("link");
-        toggleResultsButton.addClickListener(clickEvent -> resultSink.setVisible(!resultSink.isVisible()));
+        toggleResultsButton.addClickListener(clickEvent -> component.setVisible(!component.isVisible()));
         toggleLine.addComponent(toggleResultsButton);
 
         layout.addComponent(toggleLine);
@@ -87,7 +91,7 @@ public class QoanMenu extends Panel implements QaiConstants {
         layout.addComponent(searchSettings);
 
         // and finally below all else put the result sink
-        layout.addComponent(resultSink);
+        layout.addComponent(component);
         setContent(layout);
     }
 

@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common.search;
 
+import com.google.inject.Injector;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -27,6 +28,7 @@ import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,7 +40,6 @@ import java.util.Collection;
  */
 public class FinanceSearchResultSink extends SearchResultSinkComponent {
 
-
     @Inject
     @Named("Stock_Groups")
     private SearchServiceInterface searchService;
@@ -47,17 +48,11 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
     private QaiDataProvider<StockGroup> dataProvider;
 
     @Override
-    public void initialize() {
-        super.initialize();
-    }
-
-    @Override
-    public void addResults(Collection<SearchResult> results) {
-
-    }
-
-    @Override
     protected void initializeSearchResults() {
+
+        // self-inoculation
+        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        injector.injectMembers(this);
 
         Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
         for (SearchResult result : results) {
@@ -96,5 +91,15 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
         grid.setWidth("100%");
         grid.setHeight("100%");
         return grid;
+    }
+
+    @Override
+    public void initialize() {
+        super.initialize();
+    }
+
+    @Override
+    public void addResults(Collection<SearchResult> results) {
+        // do nothing- the initialization at start should be sufficient
     }
 }

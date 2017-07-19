@@ -40,12 +40,14 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
     protected CheckBox clearResults;
 
     public SearchResultSinkComponent() {
-        initialize();
+        //initialize();
     }
 
     protected abstract void initializeSearchResults();
 
     protected abstract Grid createGrid(Collection<SearchResult> results);
+
+    public abstract void addResults(Collection<SearchResult> results);
 
     /**
      * initialize the thing only when you actually will need it
@@ -119,7 +121,7 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
         return dragSource;
     }
 
-    public void addResults(Collection<SearchResult> results) {
+    /*public void addResults(Collection<SearchResult> results) {
 
         // if there are no results, don't bother add them
         if (results == null || results.isEmpty()) {
@@ -143,5 +145,5 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
 //        searchResults.addAll(results);
 //        resultGrid.getDataProvider().refreshAll();
 //        //initialize();
-    }
+    }*/
 }

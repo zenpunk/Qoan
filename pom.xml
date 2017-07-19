@@ -47,6 +47,7 @@
         <jsoup.version>1.9.2</jsoup.version>
         <apache-commons-lang3.version>3.4</apache-commons-lang3.version>
         <apache-commons-compress.version>1.11</apache-commons-compress.version>
+        <apache-shiro.version>1.4.0</apache-shiro.version>
     </properties>
 
     <dependencies>
@@ -264,6 +265,27 @@
         <!--<artifactId>guice.conf</artifactId>-->
         <!--<version>${guice-conf.version}</version>-->
         <!--</dependency>-->
+
+        <!-- security and all related -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-core</artifactId>
+            <version>${apache-shiro.version}</version>
+        </dependency>
+
+        <!-- shiro-guice support -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-guice</artifactId>
+            <version>${apache-shiro.version}</version>
+        </dependency>
+
+        <!-- shiro-web -->
+        <dependency>
+            <groupId>org.apache.shiro</groupId>
+            <artifactId>shiro-web</artifactId>
+            <version>1.4.0</version>
+        </dependency>
 
         <!-- Tika does parsing and lucene does search and indexing -->
         <dependency>

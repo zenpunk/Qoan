@@ -50,6 +50,8 @@ public class ProcedureMenu extends QoanMenu {
         Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
+        resultSink.initialize();
+
         initialize(PROCEDURES);
     }
 /*

@@ -199,6 +199,19 @@
     <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:19.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-servlet:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-lang:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-cache:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-hash:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-crypto-cipher:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-config-core:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-config-ogdl:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.3" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-event:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-guice:1.4.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.shiro:shiro-web:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-parsers:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.gagravarr:vorbis-java-tika:0.6" level="project" />

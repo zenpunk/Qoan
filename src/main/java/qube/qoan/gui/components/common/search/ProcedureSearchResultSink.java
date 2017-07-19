@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common.search;
 
+import com.google.inject.Injector;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
@@ -28,6 +29,7 @@ import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -46,12 +48,11 @@ public class ProcedureSearchResultSink extends SearchResultSinkComponent {
     private QaiDataProvider<Procedure> dataProvider;
 
     @Override
-    public void initialize() {
-        super.initialize();
-    }
-
-    @Override
     protected void initializeSearchResults() {
+
+        // self-inoculation
+        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        injector.injectMembers(this);
 
         for (ProcedureTemplate template : ProcedureLibrary.allTemplates) {
             Procedure proc = template.createProcedure();
@@ -89,7 +90,13 @@ public class ProcedureSearchResultSink extends SearchResultSinkComponent {
     }
 
     @Override
+    public void initialize() {
+        super.initialize();
+    }
+
+    @Override
     public void addResults(Collection<SearchResult> results) {
-        super.addResults(results);
+        // do nothing- the initialization at start should be sufficient
+        //super.addResults(results);
     }
 }
