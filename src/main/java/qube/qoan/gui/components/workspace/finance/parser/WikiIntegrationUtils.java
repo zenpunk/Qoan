@@ -17,8 +17,6 @@ package qube.qoan.gui.components.workspace.finance.parser;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.vaadin.ui.Layout;
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.ui.Table;
 import org.apache.commons.lang3.StringUtils;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -56,48 +54,48 @@ public class WikiIntegrationUtils {
     public WikiIntegrationUtils(HazelcastInstance hazelcastInstance) {
         this.hazelcastInstance = hazelcastInstance;
     }
-
-    public Table convertHtmlTable(WikiArticle wikiArticle) {
-        String html = WikiIntegration.wikiToHtml(wikiArticle);
-        return convertHtmlTable(wikiArticle.getTitle(), html);
-    }
-
-    public Table convertHtmlTable(String title, String html) {
-
-        String[] header = WikiIntegration.stripHeader(html);
-        String[][] data = WikiIntegration.stripTableData(html);
-
-        Table table = new Table();
-        table.setVisible(true);
-        table.setSelectable(true);
-        table.setImmediate(true);
-        table.setDragMode(Table.TableDragMode.ROW);
-        table.setColumnReorderingAllowed(true);
-        table.setColumnCollapsingAllowed(true);
-        table.setFooterVisible(true);
-        table.setSortAscending(true);
-        table.setPageLength(9);
-        //table.setSizeUndefined();
-        // begin with adding the headers
-        for (int i = 0; i < header.length; i++) {
-            table.addContainerProperty(header[i], String.class, null);
-        }
-
-        // now add the data
-        for (int i = 0; i < data.length; i++) {
-            Object itemId = table.addItem();
-            Item row = table.getItem(itemId);
-            for (int j = 0; j < data[i].length; j++) {
-                row.getItemProperty(header[j]).setValue(data[i][j]);
-            }
-        }
-
-        if (hazelcastInstance != null) {
-            insertEntitiesToMap(header, data);
-        }
-
-        return table;
-    }
+//
+//    public Table convertHtmlTable(WikiArticle wikiArticle) {
+//        String html = WikiIntegration.wikiToHtml(wikiArticle);
+//        return convertHtmlTable(wikiArticle.getTitle(), html);
+//    }
+//
+//    public Table convertHtmlTable(String title, String html) {
+//
+//        String[] header = WikiIntegration.stripHeader(html);
+//        String[][] data = WikiIntegration.stripTableData(html);
+//
+//        Table table = new Table();
+//        table.setVisible(true);
+//        table.setSelectable(true);
+//        table.setImmediate(true);
+//        table.setDragMode(Table.TableDragMode.ROW);
+//        table.setColumnReorderingAllowed(true);
+//        table.setColumnCollapsingAllowed(true);
+//        table.setFooterVisible(true);
+//        table.setSortAscending(true);
+//        table.setPageLength(9);
+//        //table.setSizeUndefined();
+//        // begin with adding the headers
+//        for (int i = 0; i < header.length; i++) {
+//            table.addContainerProperty(header[i], String.class, null);
+//        }
+//
+//        // now add the data
+//        for (int i = 0; i < data.length; i++) {
+//            Object itemId = table.addItem();
+//            Item row = table.getItem(itemId);
+//            for (int j = 0; j < data[i].length; j++) {
+//                row.getItemProperty(header[j]).setValue(data[i][j]);
+//            }
+//        }
+//
+//        if (hazelcastInstance != null) {
+//            insertEntitiesToMap(header, data);
+//        }
+//
+//        return table;
+//    }
 
     /**
      * @param header

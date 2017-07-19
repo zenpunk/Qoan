@@ -22,8 +22,9 @@ import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
-import qube.qai.persistence.DataProvider;
 import qube.qai.persistence.MapDataProvider;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.StockGroup;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.ProcedureSourceInterface;
@@ -36,6 +37,7 @@ import qube.qoan.authentication.UserManager;
 import qube.qoan.gui.components.common.search.FinanceSearchResultSink;
 import qube.qoan.gui.components.common.search.ProcedureSearchResultSink;
 import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.WikiSearchSink;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -113,9 +115,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     @Singleton
-    @Named("SearchResults")
+    @Named("WikiResults")
     SearchResultSink provideSearchResultSink() {
-        searchResultSink = new SearchResultSinkComponent();
+        searchResultSink = new WikiSearchSink();
         return searchResultSink;
     }
 
@@ -148,8 +150,14 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
-    DataProvider<WikiArticle> provideWikiArticleData() {
-        DataProvider<WikiArticle> provider = new MapDataProvider(WIKIPEDIA, hazelcastInstance);
+    QaiDataProvider<StockGroup> provideStockGroupProvider() {
+        QaiDataProvider<StockGroup> provider = new MapDataProvider(STOCK_GROUPS, hazelcastInstance);
+        return provider;
+    }
+
+    @Provides
+    QaiDataProvider<WikiArticle> provideWikiArticleData() {
+        QaiDataProvider<WikiArticle> provider = new MapDataProvider(WIKIPEDIA, hazelcastInstance);
         return provider;
     }
 

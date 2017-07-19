@@ -14,72 +14,43 @@
 
 package qube.qoan.gui.components.common.search;
 
-import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
-import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.TreeGrid;
 import com.vaadin.ui.dnd.DragSourceExtension;
-import qube.qai.main.QaiConstants;
-import qube.qai.persistence.QaiDataProvider;
-import qube.qai.persistence.StockEntity;
-import qube.qai.persistence.StockGroup;
-import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
- * Created by rainbird on 7/4/17.
+ * Created by rainbird on 7/16/17.
  */
-public class FinanceSearchResultSink extends SearchResultSinkComponent {
+public class WikiSearchSink extends SearchResultSinkComponent {
 
+    protected Grid<SearchResult> resultGrid;
 
-    @Inject
-    @Named("Stock_Groups")
-    private SearchServiceInterface searchService;
+    private List<SearchResult> searchResults;
 
-    @Inject
-    private QaiDataProvider<StockGroup> dataProvider;
+    protected ListDataProvider<SearchResult> searchResultProvider;
 
-    @Override
-    public void initialize() {
-        super.initialize();
-    }
-
-    @Override
-    public void addResults(Collection<SearchResult> results) {
-
+    public WikiSearchSink() {
+        super();
     }
 
     @Override
     protected void initializeSearchResults() {
-
-        Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
-        for (SearchResult result : results) {
-            StockGroup stockGroup = dataProvider.brokerSearchResult(result);
-            Collection<StockEntity> entities = stockGroup.getEntities();
-            Collection<SearchResult> entitiesAsResult = new ArrayList<>();
-            for (StockEntity entity : entities) {
-                SearchResult r = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
-                entitiesAsResult.add(r);
-            }
-
-            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
-            TreeData<SearchResult> data = gridDataProvider.getTreeData();
-            data.addItems(result, entitiesAsResult);
-            gridDataProvider.refreshAll();
-        }
+        searchResults = new ArrayList<>();
+        SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
+        searchResults.add(result);
+        searchResultProvider = DataProvider.ofCollection(searchResults);
     }
 
     @Override
     protected Grid createGrid(Collection<SearchResult> results) {
 
-        TreeGrid<SearchResult> grid = new TreeGrid<>();
+        Grid<SearchResult> grid = new Grid<>("Search Results");
         grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getTitle).setCaption("Title");
         grid.addColumn(SearchResult::getDescription).setCaption("Description");

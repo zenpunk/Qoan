@@ -16,9 +16,6 @@ package qube.qoan.gui.views;
 
 import com.hazelcast.core.DistributedObjectEvent;
 import com.hazelcast.core.DistributedObjectListener;
-import com.vaadin.v7.data.Item;
-import com.vaadin.v7.ui.Label;
-import com.vaadin.v7.ui.Table;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.services.ProcedureRunnerInterface;
@@ -83,37 +80,37 @@ public class ManagementView extends QoanView {
 //        loginForm.clear(); // should work even if not displayed
 //        layout.addComponent(loginForm);
 
-        Label something = new Label("Welcome to the management page");
-        something.setStyleName("bold");
-        addComponent(something);
-
-        // well, i guess this is now time
-        procedureUuids = procedureRunner.getStartedProcedures();
-        Table procedureTable = new Table("All procedures:");
-        procedureTable.addContainerProperty("Procedure", String.class, null);
-        procedureTable.addContainerProperty("State", String.class, null);
-        procedureTable.addContainerProperty("User", String.class, null);
-        procedureTable.addContainerProperty("Remote object created", Boolean.class, Boolean.FALSE);
-        procedureTable.setColumnReorderingAllowed(true);
-        procedureTable.setColumnCollapsingAllowed(true);
-
-        for (String uuid : procedureUuids) {
-            ProcedureRunnerInterface.STATE state = procedureRunner.queryState(uuid);
-
-            Object itemId = procedureTable.addItem();
-            Item row = procedureTable.getItem(itemId);
-            row.getItemProperty("Procedure").setValue(uuid);
-            row.getItemProperty("State").setValue(state);
-            // @TODO procedure table should have user as well
-            row.getItemProperty("User").setValue("username");
-            if (remotelyCreatedUuids.contains(uuid)) {
-                row.getItemProperty("Remote object created").setValue(true);
-            } else {
-                row.getItemProperty("Remote object created").setValue(false);
-            }
-
-        }
-        addComponent(procedureTable);
+//        Label something = new Label("Welcome to the management page");
+//        something.setStyleName("bold");
+//        addComponent(something);
+//
+//        // well, i guess this is now time
+//        procedureUuids = procedureRunner.getStartedProcedures();
+//        Table procedureTable = new Table("All procedures:");
+//        procedureTable.addContainerProperty("Procedure", String.class, null);
+//        procedureTable.addContainerProperty("State", String.class, null);
+//        procedureTable.addContainerProperty("User", String.class, null);
+//        procedureTable.addContainerProperty("Remote object created", Boolean.class, Boolean.FALSE);
+//        procedureTable.setColumnReorderingAllowed(true);
+//        procedureTable.setColumnCollapsingAllowed(true);
+//
+//        for (String uuid : procedureUuids) {
+//            ProcedureRunnerInterface.STATE state = procedureRunner.queryState(uuid);
+//
+//            Object itemId = procedureTable.addItem();
+//            Item row = procedureTable.getItem(itemId);
+//            row.getItemProperty("Procedure").setValue(uuid);
+//            row.getItemProperty("State").setValue(state);
+//            // @TODO procedure table should have user as well
+//            row.getItemProperty("User").setValue("username");
+//            if (remotelyCreatedUuids.contains(uuid)) {
+//                row.getItemProperty("Remote object created").setValue(true);
+//            } else {
+//                row.getItemProperty("Remote object created").setValue(false);
+//            }
+//
+//        }
+//        addComponent(procedureTable);
 
 
         //addComponent(layout);

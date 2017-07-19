@@ -22,7 +22,6 @@ import com.vaadin.ui.Accordion;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.v7.ui.Table;
 import qube.qai.persistence.WikiArticle;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.finance.parser.WikiIntegrationUtils;
@@ -65,7 +64,7 @@ public class FinanceListing extends Panel {
         WikiArticle article = wikiMap.get(listingName);
 
         WikiIntegrationUtils wikiIntegration = new WikiIntegrationUtils(hazelcastInstance);
-        Table entitiesTable = wikiIntegration.convertHtmlTable(article);
+        //Table entitiesTable = wikiIntegration.convertHtmlTable(article);
 
         // check whether the stock-entities which are in the listing
         // have been added to hazelcast and if that is not the
@@ -73,7 +72,7 @@ public class FinanceListing extends Panel {
         //entitiesTable.
 
         // create and add the panel to on screen
-        Panel content = new Panel(entitiesTable);
-        listingsAccordion.addTab(content).setCaption(listingName);
+        //Panel content = new Panel(entitiesTable);
+        //listingsAccordion.addTab(content).setCaption(listingName);
     }
 }

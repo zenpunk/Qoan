@@ -36,7 +36,7 @@ public class QoanMenu extends Panel implements QaiConstants {
     protected VerticalLayout layout;
 
     @Inject
-    @Named("SearchResults")
+    @Named("WikiResults")
     private SearchResultSinkComponent resultSink;
 
     protected List<SearchSource> searchSources;

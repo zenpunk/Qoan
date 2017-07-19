@@ -19,7 +19,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qube.qai.persistence.DataProvider;
+import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
 
 import javax.inject.Inject;
@@ -32,7 +32,7 @@ public class WorkspacePanel extends Panel {
     private static Logger logger = LoggerFactory.getLogger("WorkspacePanel");
 
     @Inject
-    private DataProvider<WikiArticle> wikiProvider;
+    private QaiDataProvider<WikiArticle> wikiProvider;
 
     private WorkspaceDropTargetExtension dropExtension;
 

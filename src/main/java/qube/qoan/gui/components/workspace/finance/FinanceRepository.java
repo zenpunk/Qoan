@@ -17,7 +17,7 @@ package qube.qoan.gui.components.workspace.finance;
 import com.google.inject.Injector;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.UI;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 import qube.qoan.QoanUI;
 
 /**

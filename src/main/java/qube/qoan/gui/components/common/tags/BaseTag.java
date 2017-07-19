@@ -14,10 +14,11 @@
 
 package qube.qoan.gui.components.common.tags;
 
+import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.InnerWindow;
+import qube.qoan.gui.components.common.WorkspacePanel;
 import qube.qoan.gui.components.common.decorators.BaseDecorator;
 import qube.qoan.gui.components.common.decorators.Decorator;
 
@@ -37,6 +38,8 @@ public class BaseTag extends Panel implements QoanTag {
 
     protected Image iconImage;
 
+    //private ResizableCssLayout panelWrapper;
+
     protected Map<String, Decorator> decorators;
 
     private BaseTag() {
@@ -53,10 +56,10 @@ public class BaseTag extends Panel implements QoanTag {
      */
     public void initialize() {
 
-        // i fthis has not already been initialized, put something there.
+        // if icon-image has not already been initialized, put something there.
         if (iconImage == null) {
             iconImage = new Image("Resources",
-                    new ClassResource("qube/qoan/images/readings.png"));
+                    new ClassResource("qube/qoan/gui/images/readings.png"));
         }
         layout = new VerticalLayout();
 
@@ -103,8 +106,16 @@ public class BaseTag extends Panel implements QoanTag {
         }
 
         baseDecorator.decorateAll(searchResult);
-        InnerWindow window = new InnerWindow("", baseDecorator);
-        parentLayout.addComponent(window);
+        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), baseDecorator);
+
+        ResizableCssLayout panelWrapper = new ResizableCssLayout();
+        panelWrapper.setResizable(true);
+        panelWrapper.setHeight("400px");
+        panelWrapper.setWidth("400px");
+        panelWrapper.addComponent(panel);
+        panelWrapper.setCaption("Resize from panel's edges");
+
+        parentLayout.addComponent(panelWrapper);
 
     }
 

@@ -40,7 +40,7 @@ public class QoanHeader extends Panel {
         space.setContentMode(ContentMode.HTML);
         layout.addComponent(space);
         // Image as a file resource
-        ClassResource resource = new ClassResource("images/kokoline.gif");
+        ClassResource resource = new ClassResource("qube/qoan/gui/images/kokoline.gif");
         Image image = new Image(null, resource);
         image.setWidth("20px");
         image.setHeight("30px");

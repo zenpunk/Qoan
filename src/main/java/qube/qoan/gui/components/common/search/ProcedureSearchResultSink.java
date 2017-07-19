@@ -14,8 +14,23 @@
 
 package qube.qoan.gui.components.common.search;
 
+import com.vaadin.data.TreeData;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.data.provider.TreeDataProvider;
+import com.vaadin.ui.Grid;
+import com.vaadin.ui.TreeGrid;
+import com.vaadin.ui.dnd.DragSourceExtension;
+import qube.qai.main.QaiConstants;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.procedure.Procedure;
+import qube.qai.procedure.ProcedureLibrary;
+import qube.qai.procedure.ProcedureTemplate;
+import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 
+import javax.inject.Inject;
+import javax.inject.Named;
 import java.util.Collection;
 
 /**
@@ -23,9 +38,54 @@ import java.util.Collection;
  */
 public class ProcedureSearchResultSink extends SearchResultSinkComponent {
 
+    @Inject
+    @Named("Procedures")
+    private SearchServiceInterface searchService;
+
+    @Inject
+    private QaiDataProvider<Procedure> dataProvider;
+
     @Override
     public void initialize() {
         super.initialize();
+    }
+
+    @Override
+    protected void initializeSearchResults() {
+
+        for (ProcedureTemplate template : ProcedureLibrary.allTemplates) {
+            Procedure proc = template.createProcedure();
+            Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
+            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), "", proc.getDescriptionText(), 1.0);
+
+            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
+            TreeData<SearchResult> data = gridDataProvider.getTreeData();
+            data.addItems(procResult, results);
+            gridDataProvider.refreshAll();
+        }
+
+    }
+
+    @Override
+    protected Grid createGrid(Collection<SearchResult> results) {
+
+        TreeGrid<SearchResult> grid = new TreeGrid<>();
+        grid.addColumn(SearchResult::getContext).setCaption("Context");
+        grid.addColumn(SearchResult::getTitle).setCaption("Title");
+        grid.addColumn(SearchResult::getDescription).setCaption("Description");
+        grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
+        grid.addColumn(SearchResult::getUuid).setCaption("UUID");
+
+        if (results != null) {
+            ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
+            grid.setDataProvider(provider);
+        }
+
+        DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
+
+        grid.setWidth("100%");
+        grid.setHeight("100%");
+        return grid;
     }
 
     @Override

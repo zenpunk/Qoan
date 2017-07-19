@@ -30,7 +30,7 @@ import qube.qai.data.TimeSequence;
 import qube.qai.data.analysis.Statistics;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.InnerWindow;
+import qube.qoan.gui.components.common.WorkspacePanel;
 
 import java.lang.reflect.Method;
 import java.util.Date;
@@ -59,7 +59,7 @@ public class ProcedureTag extends BaseTag {
     public ProcedureTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Procedures",
-                new ClassResource("qube/qoan/images/proc.png"));
+                new ClassResource("qube/qoan/gui/images/proc.png"));
     }
 
     private void initialize(Procedure procedure) {
@@ -153,7 +153,7 @@ public class ProcedureTag extends BaseTag {
         }
 
         windowContent.setContent(layout);
-        InnerWindow window = new InnerWindow(title, windowContent);
+        WorkspacePanel window = new WorkspacePanel(title, windowContent);
         // if toDecorate is an absolute layout, we need a position to add the thing as well
         if (parentLayout instanceof AbsoluteLayout) {
             left = left + 5;

@@ -39,7 +39,7 @@ public class WikiArticleTag extends BaseTag {
     public WikiArticleTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Wiki",
-                new ClassResource("qube/qoan/images/wiki.png"));
+                new ClassResource("qube/qoan/gui/images/wiki.png"));
         decorators.put("Wiki-article", new WikiDecorator());
         decorators.put("Semantic network", new NetworkDecorator());
     }
@@ -75,7 +75,7 @@ public class WikiArticleTag extends BaseTag {
 //                contentPanel.setSizeFull();
 //
 //                //Window window = new Window(title);
-//                final InnerWindow window = new InnerWindow(title, contentPanel);
+//                final WorkspacePanel window = new WorkspacePanel(title, contentPanel);
 ////                window.setWidth("600px");
 ////                window.setHeight("400px");
 //                // if toDecorate is an absolute layout, we need a position to add the thing as well

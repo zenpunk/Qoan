@@ -15,8 +15,6 @@
 package qube.qoan.gui.components.common.search;
 
 import com.thoughtworks.xstream.XStream;
-import com.vaadin.data.provider.DataProvider;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.*;
@@ -25,41 +23,40 @@ import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by rainbird on 6/27/17.
  */
-public class SearchResultSinkComponent extends Panel implements SearchResultSink {
+public abstract class SearchResultSinkComponent extends Panel implements SearchResultSink {
 
-    private Grid<SearchResult> resultGrid;
+    protected Grid<SearchResult> resultGrid;
 
-    private List<SearchResult> searchResults;
+    protected List<SearchResult> searchResults;
 
-    ListDataProvider<SearchResult> searchResultProvider;
-
-    private CheckBox clearResults;
+    protected CheckBox clearResults;
 
     public SearchResultSinkComponent() {
-
-        searchResults = new ArrayList<>();
-        SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
-        searchResults.add(result);
-        searchResultProvider = DataProvider.ofCollection(searchResults);
         initialize();
-
     }
+
+    protected abstract void initializeSearchResults();
+
+    protected abstract Grid createGrid(Collection<SearchResult> results);
 
     /**
      * initialize the thing only when you actually will need it
      */
     public void initialize() {
 
+        initializeSearchResults();
+        resultGrid = createGrid(searchResults);
+
         VerticalLayout layout = new VerticalLayout();
         setContent(layout);
-
-        resultGrid = createGrid(null);
-        resultGrid.setDataProvider(searchResultProvider);
 
         layout.addComponent(resultGrid);
 
@@ -72,28 +69,11 @@ public class SearchResultSinkComponent extends Panel implements SearchResultSink
         layout.addComponent(clearButton);
     }
 
-    protected Grid createGrid(Collection<SearchResult> results) {
-
-        Grid<SearchResult> grid = new Grid<>("Search Results");
-        grid.addColumn(SearchResult::getContext).setCaption("Context");
-        grid.addColumn(SearchResult::getTitle).setCaption("Title");
-        grid.addColumn(SearchResult::getDescription).setCaption("Description");
-        grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
-        grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-
-        if (results != null) {
-            ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
-            grid.setDataProvider(provider);
-        }
-
-        DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
-
-        grid.setWidth("100%");
-        grid.setHeight("100%");
-        return grid;
-    }
-
-    private DragSourceExtension<Grid<SearchResult>> createDragSource(Grid<SearchResult> grid) {
+    /**
+     * @param grid
+     * @return
+     */
+    protected DragSourceExtension<Grid<SearchResult>> createDragSource(Grid<SearchResult> grid) {
 
         grid.setSelectionMode(Grid.SelectionMode.MULTI);
         final Set<SearchResult> draggedItems = new HashSet<>();

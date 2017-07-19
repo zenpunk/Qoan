@@ -29,7 +29,7 @@ public class ResourceTag extends BaseTag {
     public ResourceTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Resources",
-                new ClassResource("qube/qoan/images/readings.png"));
+                new ClassResource("qube/qoan/gui/images/readings.png"));
         decorators.put("Image Resource", new ImageDecorator());
         decorators.put("Pdf-Resource", new PdfFileDecorator());
         decorators.put("Molecular Viewer", new MolecularViewerDecorator());

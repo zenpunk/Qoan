@@ -15,11 +15,11 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.ContentMode;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
-import com.vaadin.v7.shared.ui.label.ContentMode;
-import com.vaadin.v7.ui.HorizontalLayout;
-import com.vaadin.v7.ui.Label;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -45,7 +45,7 @@ public class StartView extends QoanView {
 
         HorizontalLayout firstRow = new HorizontalLayout();
         firstRow.setWidth("800px");
-        ClassResource resource = new ClassResource("images/kokoline.gif");
+        ClassResource resource = new ClassResource("qube/qoan/gui/images/kokoline.gif");
         Image image = new Image("Singularity is nigh!", resource);
         firstRow.addComponent(image);
 

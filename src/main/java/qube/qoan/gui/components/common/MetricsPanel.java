@@ -14,10 +14,10 @@
 
 package qube.qoan.gui.components.common;
 
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.v7.ui.HorizontalLayout;
-import com.vaadin.v7.ui.Label;
-import com.vaadin.v7.ui.VerticalLayout;
+import com.vaadin.ui.VerticalLayout;
 import qube.qai.data.MetricTyped;
 import qube.qai.data.Metrics;
 
