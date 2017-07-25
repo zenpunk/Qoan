@@ -59,7 +59,7 @@ public class BaseTag extends Panel implements QoanTag {
         // if icon-image has not already been initialized, put something there.
         if (iconImage == null) {
             iconImage = new Image("Resources",
-                    new ClassResource("qube/qoan/gui/images/readings.png"));
+                    new ClassResource("gui/images/readings.png"));
         }
         layout = new VerticalLayout();
 

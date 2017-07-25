@@ -18,6 +18,7 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
+import qube.qoan.authentication.TestQoanSecurity;
 import qube.qoan.authentication.TestUserManager;
 import qube.qoan.gui.components.TestSearchMenu;
 import qube.qoan.gui.components.common.TestQoanMenu;
@@ -41,6 +42,7 @@ public class AllQoanTests extends TestCase {
 
         // user manager tests
         suite.addTestSuite(TestUserManager.class);
+        suite.addTestSuite(TestQoanSecurity.class);
 
         // this one tests search menu drag-n-drop things
         suite.addTestSuite(TestSearchMenu.class);

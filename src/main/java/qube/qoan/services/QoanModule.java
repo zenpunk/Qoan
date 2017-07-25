@@ -26,13 +26,12 @@ import qube.qai.persistence.MapDataProvider;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockGroup;
 import qube.qai.persistence.WikiArticle;
-import qube.qai.services.ProcedureRunnerInterface;
-import qube.qai.services.ProcedureSourceInterface;
-import qube.qai.services.SearchResultSink;
-import qube.qai.services.SearchServiceInterface;
+import qube.qai.procedure.Procedure;
+import qube.qai.services.*;
 import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
+import qube.qai.services.implementation.UUIDService;
 import qube.qoan.authentication.UserManager;
 import qube.qoan.gui.components.common.search.FinanceSearchResultSink;
 import qube.qoan.gui.components.common.search.ProcedureSearchResultSink;
@@ -102,6 +101,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
+    @Singleton
+    UUIDServiceInterface provideUUIDService() {
+        return new UUIDService();
+    }
+
+    @Provides
     ProcedureSourceInterface provideProcedureSourceInterface() {
         return CachedProcedureSourceService.getInstance();
     }
@@ -146,6 +151,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         userManager = new UserManager();
         return userManager;
+    }
+
+    @Provides
+    QaiDataProvider<Procedure> provideProcedureProvier() {
+        QaiDataProvider<Procedure> provider = new MapDataProvider(PROCEDURES, hazelcastInstance);
+        return provider;
     }
 
     @Provides

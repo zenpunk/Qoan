@@ -48,7 +48,7 @@ public class WikiSearchSink extends SearchResultSinkComponent {
     }
 
     @Override
-    protected Grid createGrid(Collection<SearchResult> results) {
+    protected Grid createGrid() {
 
         Grid<SearchResult> grid = new Grid<>("Search Results");
         grid.addColumn(SearchResult::getContext).setCaption("Context");
@@ -56,11 +56,6 @@ public class WikiSearchSink extends SearchResultSinkComponent {
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-
-        if (results != null) {
-            ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
-            grid.setDataProvider(provider);
-        }
 
         DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
 

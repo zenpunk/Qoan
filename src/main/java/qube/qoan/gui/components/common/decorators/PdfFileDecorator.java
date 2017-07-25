@@ -31,7 +31,7 @@ public class PdfFileDecorator extends Panel implements Decorator {
 
     public PdfFileDecorator() {
         iconImage = new Image("NGL-Viewer",
-                new ClassResource("qube/qoan/gui/images/helix.jog"));
+                new ClassResource("gui/images/helix.jog"));
     }
 
     @Override

@@ -14,9 +14,7 @@
 
 package qube.qoan.gui.components.workspace.procedure;
 
-import com.google.inject.Injector;
-import com.vaadin.ui.UI;
-import qube.qoan.QoanUI;
+import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 import qube.qoan.services.ProcedureCache;
@@ -33,8 +31,8 @@ public class ProcedureMenu extends QoanMenu {
     private ProcedureCache procedureCache;
 
     @Inject
-    @Named("Procedures")
-    private SearchResultSinkComponent resultSink;
+    @Named("ProcedureResults")
+    private SearchResultSink resultSink;
 
     /**
      * this is the container for elements which will be
@@ -44,17 +42,20 @@ public class ProcedureMenu extends QoanMenu {
      * to display the procedure and its results
      */
     public ProcedureMenu() {
-
         super();
+    }
 
-        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-        injector.injectMembers(this);
-
-        resultSink.initialize();
-
+    @Override
+    public void initialize() {
         initialize(PROCEDURES);
     }
-/*
+
+    @Override
+    protected SearchResultSinkComponent getResultSink() {
+        return (SearchResultSinkComponent) resultSink;
+    }
+
+    /*
 
     private void initialize() {
 

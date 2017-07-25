@@ -14,9 +14,9 @@
 
 package qube.qoan.gui.components.workspace.finance;
 
+import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
-import qube.qoan.gui.components.workspace.search.SearchSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -27,17 +27,20 @@ import javax.inject.Named;
 public class FinanceMenu extends QoanMenu {
 
     @Inject
-    @Named("Procedures")
-    private SearchResultSinkComponent resultSink;
+    @Named("FinanceResults")
+    private SearchResultSink resultSink;
 
     public FinanceMenu() {
 
-        initialize(STOCK_GROUPS);
-
-        SearchSource searchSource = searchSources.get(0);
-        searchSource.doSearch("*");
-
-        resultSink.initialize();
     }
 
+    @Override
+    public void initialize() {
+        initialize(STOCK_GROUPS);
+    }
+
+    @Override
+    protected SearchResultSinkComponent getResultSink() {
+        return (SearchResultSinkComponent) resultSink;
+    }
 }

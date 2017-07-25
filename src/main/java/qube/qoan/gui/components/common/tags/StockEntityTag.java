@@ -34,7 +34,7 @@ public class StockEntityTag extends BaseTag {
     public StockEntityTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Yes, logo:",
-                new ClassResource("qube/qoan/gui/images/stocks-index.png"));
+                new ClassResource("gui/images/stocks-index.png"));
         decorators.put("Wiki Article", new WikiDecorator());
         decorators.put("Stock Quotes", new TimeSeriesDecorator());
         decorators.put("Stock Quote Statistics", new HistogramDecorator());

@@ -39,7 +39,7 @@ public class WikiArticleTag extends BaseTag {
     public WikiArticleTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Wiki",
-                new ClassResource("qube/qoan/gui/images/wiki.png"));
+                new ClassResource("gui/images/wiki.png"));
         decorators.put("Wiki-article", new WikiDecorator());
         decorators.put("Semantic network", new NetworkDecorator());
     }

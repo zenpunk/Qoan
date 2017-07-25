@@ -45,7 +45,7 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
 
     protected abstract void initializeSearchResults();
 
-    protected abstract Grid createGrid(Collection<SearchResult> results);
+    protected abstract Grid createGrid();
 
     public abstract void addResults(Collection<SearchResult> results);
 
@@ -54,8 +54,8 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
      */
     public void initialize() {
 
+        resultGrid = createGrid();
         initializeSearchResults();
-        resultGrid = createGrid(searchResults);
 
         VerticalLayout layout = new VerticalLayout();
         setContent(layout);

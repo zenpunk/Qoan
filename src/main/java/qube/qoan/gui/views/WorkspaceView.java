@@ -90,14 +90,17 @@ public class WorkspaceView extends QoanView {
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         searchMenu = new SearchMenu();
         injector.injectMembers(searchMenu);
+        searchMenu.initialize();
         searchMenu.setSizeUndefined();
 
         financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
+        financeMenu.initialize();
         financeMenu.setSizeUndefined();
 
         procedureMenu = new ProcedureMenu();
         injector.injectMembers(procedureMenu);
+        procedureMenu.initialize();
         procedureMenu.setSizeUndefined();
 
         workspace = new WorkSpace(searchMenu);
@@ -199,7 +202,7 @@ public class WorkspaceView extends QoanView {
     public void onAddTab(Button.ClickEvent event) {
         workspace.addNewTab();
         if (debug) {
-            Notification.show("Add-tab button was clicked");
+            Notification.show("Adding new tab");
         }
     }
 }

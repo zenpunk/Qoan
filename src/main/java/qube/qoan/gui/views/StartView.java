@@ -19,7 +19,6 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -29,7 +28,7 @@ public class StartView extends QoanView {
     public static String NAME = "";
 
     private static String loremIpsum =
-            "<p><b><i><u>Koan:</u></i></b> a paradox to be meditated upon that is used to train " +
+            "<p><b><u>Koan:&nbsp;</u></b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";// +
@@ -40,21 +39,23 @@ public class StartView extends QoanView {
 
     protected void initialize() {
 
-        VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.setWidth("800px");
+        //VerticalLayout contentLayout = new VerticalLayout();
+        //contentLayout.setWidth("80%");
 
         HorizontalLayout firstRow = new HorizontalLayout();
-        firstRow.setWidth("800px");
-        ClassResource resource = new ClassResource("qube/qoan/gui/images/kokoline.gif");
-        Image image = new Image("Singularity is nigh!", resource);
+        firstRow.setWidth("80%");
+        ClassResource resource = new ClassResource("gui/images/kokoline.gif");
+        Image image = new Image("", resource);
+        image.setWidth("30%");
         firstRow.addComponent(image);
 
         Label loremIpsum = new Label(StartView.loremIpsum, ContentMode.HTML);
-        loremIpsum.setStyleName("justified", true);
+        loremIpsum.setWidth("70%");
+        //loremIpsum.setStyleName("paragraph", true);
         firstRow.addComponent(loremIpsum);
-        contentLayout.addComponent(firstRow);
+        //contentLayout.addComponent(firstRow);
 
-        addComponent(contentLayout);
+        addComponent(firstRow);
         //addComponent(layout);
     }
 }

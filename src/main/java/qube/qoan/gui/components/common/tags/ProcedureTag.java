@@ -59,7 +59,7 @@ public class ProcedureTag extends BaseTag {
     public ProcedureTag(SearchResult searchResult) {
         super(searchResult);
         iconImage = new Image("Procedures",
-                new ClassResource("qube/qoan/gui/images/proc.png"));
+                new ClassResource("gui/images/proc.png"));
     }
 
     private void initialize(Procedure procedure) {

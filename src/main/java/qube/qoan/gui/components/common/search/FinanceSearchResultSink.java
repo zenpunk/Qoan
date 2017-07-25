@@ -16,8 +16,6 @@ package qube.qoan.gui.components.common.search;
 
 import com.google.inject.Injector;
 import com.vaadin.data.TreeData;
-import com.vaadin.data.provider.DataProvider;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
@@ -55,6 +53,11 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
         injector.injectMembers(this);
 
         Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
+
+        if (results == null) {
+            return;
+        }
+
         for (SearchResult result : results) {
             StockGroup stockGroup = dataProvider.brokerSearchResult(result);
             Collection<StockEntity> entities = stockGroup.getEntities();
@@ -66,13 +69,14 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
 
             TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
             TreeData<SearchResult> data = gridDataProvider.getTreeData();
+            data.addItem(null, result);
             data.addItems(result, entitiesAsResult);
             gridDataProvider.refreshAll();
         }
     }
 
     @Override
-    protected Grid createGrid(Collection<SearchResult> results) {
+    protected Grid createGrid() {
 
         TreeGrid<SearchResult> grid = new TreeGrid<>();
         grid.addColumn(SearchResult::getContext).setCaption("Context");
@@ -80,11 +84,6 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-
-        if (results != null) {
-            ListDataProvider<SearchResult> provider = DataProvider.ofCollection(results);
-            grid.setDataProvider(provider);
-        }
 
         DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
 

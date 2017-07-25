@@ -14,29 +14,33 @@
 
 package qube.qoan.gui.components.workspace.search;
 
+import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 
-import java.util.ArrayList;
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by rainbird on 10/31/15.
  */
 public class SearchMenu extends QoanMenu {
 
-
+    @Inject
+    @Named("WikiResults")
+    private SearchResultSink resultSink;
 
     public SearchMenu() {
         super();
+    }
 
-        searchSources = new ArrayList<>();
-        // start with self-inoculation
-//        injector = ((QoanUI) UI.getCurrent()).getInjector();
-//        // this can only happen in case of tests, obviously
-//        if (injector != null) {
-//            injector.injectMembers(this);
-//        }
-
+    @Override
+    public void initialize() {
         initialize(WIKIPEDIA, WIKTIONARY);
     }
 
+    @Override
+    protected SearchResultSinkComponent getResultSink() {
+        return (SearchResultSinkComponent) resultSink;
+    }
 }

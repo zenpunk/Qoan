@@ -17,37 +17,41 @@ package qube.qoan.gui.components.common;
 import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
-import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 import qube.qoan.gui.components.workspace.search.SearchSource;
 
-import javax.inject.Inject;
-import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by rainbird on 7/1/17.
  */
-public class QoanMenu extends Panel implements QaiConstants {
+public abstract class QoanMenu extends Panel implements QaiConstants {
 
     protected Injector injector;
 
     protected VerticalLayout layout;
 
-    @Inject
-    @Named("WikiResults")
-    private SearchResultSink resultSink;
+    //protected SearchResultSink resultSink;
 
     protected List<SearchSource> searchSources;
 
     protected Accordion searchSettings;
 
+    public QoanMenu() {
+        searchSources = new ArrayList<>();
+    }
+
+    public abstract void initialize();
+
+    protected abstract SearchResultSinkComponent getResultSink();
+
     protected void initialize(String... serviceNames) {
 
-        SearchResultSinkComponent component = (SearchResultSinkComponent) resultSink;
-        component.initialize();
+        SearchResultSinkComponent resultSink = getResultSink();
+        resultSink.initialize();
 
         layout = new VerticalLayout();
         //resultSink.initialize();
@@ -75,7 +79,7 @@ public class QoanMenu extends Panel implements QaiConstants {
 
         Button toggleResultsButton = new Button("Toggle search results visibility");
         toggleResultsButton.setStyleName("link");
-        toggleResultsButton.addClickListener(clickEvent -> component.setVisible(!component.isVisible()));
+        toggleResultsButton.addClickListener(clickEvent -> resultSink.setVisible(!resultSink.isVisible()));
         toggleLine.addComponent(toggleResultsButton);
 
         layout.addComponent(toggleLine);
@@ -91,7 +95,7 @@ public class QoanMenu extends Panel implements QaiConstants {
         layout.addComponent(searchSettings);
 
         // and finally below all else put the result sink
-        layout.addComponent(component);
+        layout.addComponent(resultSink);
         setContent(layout);
     }
 

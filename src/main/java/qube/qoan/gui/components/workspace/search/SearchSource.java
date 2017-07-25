@@ -20,7 +20,6 @@ import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
 
 import java.util.Collection;
 
@@ -29,12 +28,12 @@ import java.util.Collection;
  */
 public class SearchSource extends Panel {
 
-    // do not inject the thing, because the name will be determines only later!
+    // do not inject the thing, because the name will be determined only later!
     // @Inject
     private SearchServiceInterface searchService;
 
     //@Inject
-    private SearchResultSinkComponent resultSink;
+    //private SearchResultSink resultSink;
 
     private String searchContext;
 
@@ -50,14 +49,13 @@ public class SearchSource extends Panel {
         this.name = name;
         this.searchContext = searchContextntext;
         initialize();
-
     }
 
     private void initialize() {
 
         Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
 
-        resultSink = injector.getInstance(SearchResultSinkComponent.class);
+        //resultSink = injector.getInstance(SearchResultSink.class);
         searchService = ((QoanUI) UI.getCurrent()).getNamedService(searchContext);
 
         VerticalLayout layout = new VerticalLayout();
@@ -93,7 +91,7 @@ public class SearchSource extends Panel {
             results = searchService.searchInputString(searchString, searchContext, numResults);
         }
 
-        resultSink.addResults(results);
+        //resultSink.addResults(results);
     }
 
     public String getSearchContext() {

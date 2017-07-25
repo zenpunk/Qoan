@@ -44,7 +44,7 @@ public class BaseDecorator extends Panel implements Decorator {
         decoratorMap = new HashMap<>();
         tabSheet = new TabSheet();
         iconImage = new Image("Wiki article",
-                new ClassResource("qube/qoan/gui/images/chart.png"));
+                new ClassResource("gui/images/chart.png"));
     }
 
     @Override

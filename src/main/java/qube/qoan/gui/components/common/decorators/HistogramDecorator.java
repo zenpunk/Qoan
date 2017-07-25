@@ -40,7 +40,7 @@ public class HistogramDecorator extends Panel implements Decorator {
 
     public HistogramDecorator() {
         iconImage = new Image("Wiki article",
-                new ClassResource("qube/qoan/gui/images/chart.png"));
+                new ClassResource("gui/images/chart.png"));
     }
 
     @Override

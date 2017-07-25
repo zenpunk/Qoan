@@ -28,7 +28,7 @@ public class ImageDecorator extends Panel implements Decorator {
 
     public ImageDecorator() {
         iconImage = new Image("NGL-Viewer",
-                new ClassResource("qube/qoan/gui/images/helix.jog"));
+                new ClassResource("gui/images/helix.jog"));
     }
 
     @Override
@@ -39,7 +39,7 @@ public class ImageDecorator extends Panel implements Decorator {
     @Override
     public void decorate(SearchResult toDecorate) {
         Image image = new Image("NGL-Viewer",
-                new ClassResource("qube/qoan/gui/images/kokoline.jpg"));
+                new ClassResource("gui/images/kokoline.jpg"));
         setContent(image);
     }
 

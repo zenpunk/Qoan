@@ -33,7 +33,7 @@ public class NetworkDecorator extends Panel implements Decorator {
     @Override
     public void decorate(SearchResult toDecorate) {
         iconImage = new Image("Semantic network",
-                new ClassResource("qube/qoan/gui/images/network.jpeg"));
+                new ClassResource("gui/images/network.jpeg"));
     }
 
     @Override
