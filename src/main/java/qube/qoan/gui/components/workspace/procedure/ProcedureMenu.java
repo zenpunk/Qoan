@@ -47,6 +47,7 @@ public class ProcedureMenu extends QoanMenu {
 
     @Override
     public void initialize() {
+        setCaption("Procedure Templates & Instances");
         initialize(PROCEDURES);
     }
 

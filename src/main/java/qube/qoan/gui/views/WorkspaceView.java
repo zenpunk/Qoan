@@ -51,22 +51,6 @@ public class WorkspaceView extends QoanView {
 
     private Component currentComponent;
 
-    //@Override
-//    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        UI.getCurrent().getPage().setContext("Qoan Workspace");
-//
-//        QoanHeader header = new QoanHeader();
-//        header.setWidth("100%");
-//        addComponent(header);
-//
-//        if (!initialized) {
-//            initialize();
-//            initialized = true;
-//        }
-//    }
-
-
     public WorkspaceView() {
         this.viewTitle = "Qoan Workspace";
     }
@@ -95,12 +79,12 @@ public class WorkspaceView extends QoanView {
 
         financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
-        financeMenu.initialize();
+        //financeMenu.initialize();
         financeMenu.setSizeUndefined();
 
         procedureMenu = new ProcedureMenu();
         injector.injectMembers(procedureMenu);
-        procedureMenu.initialize();
+        //procedureMenu.initialize();
         procedureMenu.setSizeUndefined();
 
         workspace = new WorkSpace(searchMenu);
@@ -156,6 +140,7 @@ public class WorkspaceView extends QoanView {
 
     public void onShowProcedure(Button.ClickEvent event) {
         splitPanel.removeComponent(currentComponent);
+        procedureMenu.initialize();
         currentComponent = procedureMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(procedureMenu);
@@ -171,6 +156,7 @@ public class WorkspaceView extends QoanView {
      */
     public void onShowFinance(Button.ClickEvent event) {
         splitPanel.removeComponent(currentComponent);
+        financeMenu.initialize();
         currentComponent = financeMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(financeMenu);
@@ -186,6 +172,7 @@ public class WorkspaceView extends QoanView {
      */
     public void onShowSearch(Button.ClickEvent event) {
         splitPanel.removeComponent(currentComponent);
+        searchMenu.initialize();
         currentComponent = searchMenu;
         currentComponent.setSizeFull();
         splitPanel.setFirstComponent(searchMenu);

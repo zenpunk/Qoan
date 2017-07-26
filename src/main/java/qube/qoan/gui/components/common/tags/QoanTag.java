@@ -31,4 +31,6 @@ public interface QoanTag extends Component {
     void setSearchResult(SearchResult searchResult);
 
     void setParentLayout(Layout parentLayout);
+
+    void initialize();
 }

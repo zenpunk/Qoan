@@ -36,6 +36,7 @@ public class SearchMenu extends QoanMenu {
 
     @Override
     public void initialize() {
+        setCaption("Wikipedia & Wiktionary Entries");
         initialize(WIKIPEDIA, WIKTIONARY);
     }
 

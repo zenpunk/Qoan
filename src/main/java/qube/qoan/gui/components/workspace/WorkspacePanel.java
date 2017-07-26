@@ -51,7 +51,7 @@ public class WorkspacePanel extends Panel {
         dropExtension.addListener();
 
         Label titleLabel = new Label(title);
-        layout.addComponent(titleLabel, "right: 50px; top: 50px;");
+        layout.addComponent(titleLabel, "left: 50px; top: 50px;");
         layout.setWidth("1000px");
         layout.setHeight("800px");
         setContent(layout);

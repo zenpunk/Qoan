@@ -39,6 +39,8 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
 
     protected CheckBox clearResults;
 
+    protected DragSourceExtension<Grid<SearchResult>> dragExtension;
+
     public SearchResultSinkComponent() {
         //initialize();
     }
@@ -55,6 +57,7 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
     public void initialize() {
 
         resultGrid = createGrid();
+        dragExtension = createDragSource(resultGrid);
         initializeSearchResults();
 
         VerticalLayout layout = new VerticalLayout();
@@ -104,6 +107,7 @@ public abstract class SearchResultSinkComponent extends Panel implements SearchR
         dragSource.addGridDragStartListener(event -> {
             // Keep reference to the dragged items
             Set<SearchResult> resultSet = event.getDraggedItems();
+
         });
 
         // Add drag end listener

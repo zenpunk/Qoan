@@ -38,8 +38,8 @@ public class ResourceTag extends BaseTag {
     /**
      *
      */
-    @Override
-    public void initialize() {
-
-    }
+//    @Override
+//    public void initialize() {
+//
+//    }
 }

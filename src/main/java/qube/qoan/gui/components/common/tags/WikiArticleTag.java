@@ -15,7 +15,8 @@
 package qube.qoan.gui.components.common.tags;
 
 import com.vaadin.server.ClassResource;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.Layout;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.decorators.NetworkDecorator;
@@ -53,7 +54,7 @@ public class WikiArticleTag extends BaseTag {
 //
 //        initialize();
 //    }
-
+/*
     @Override
     public void initialize() {
         VerticalLayout layout = new VerticalLayout();
@@ -112,5 +113,5 @@ public class WikiArticleTag extends BaseTag {
         layout.addComponent(buttonsLayout);
 
         setContent(layout);
-    }
+    }*/
 }

@@ -14,7 +14,6 @@
 
 package qube.qoan.gui.components.common;
 
-import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
@@ -30,11 +29,9 @@ import java.util.List;
  */
 public abstract class QoanMenu extends Panel implements QaiConstants {
 
-    protected Injector injector;
+    protected boolean initialized = false;
 
     protected VerticalLayout layout;
-
-    //protected SearchResultSink resultSink;
 
     protected List<SearchSource> searchSources;
 
@@ -50,13 +47,18 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
 
     protected void initialize(String... serviceNames) {
 
+        if (initialized) {
+            return;
+        }
+
         SearchResultSinkComponent resultSink = getResultSink();
         resultSink.initialize();
 
         layout = new VerticalLayout();
-        //resultSink.initialize();
+        // make the search-settings initially invisible for the sake of clarity
         searchSettings = new Accordion();
         searchSettings.setCaption("Search settings");
+        searchSettings.setVisible(false);
 
         // put the text-field and the search buton on the same row
         HorizontalLayout searchRow = new HorizontalLayout();
@@ -97,11 +99,17 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         // and finally below all else put the result sink
         layout.addComponent(resultSink);
         setContent(layout);
+
+        initialized = true;
     }
 
     public void doSearch(String searchString) {
         for (SearchSource source : searchSources) {
             source.doSearch(searchString);
         }
+    }
+
+    public boolean isInitialized() {
+        return initialized;
     }
 }

@@ -32,7 +32,6 @@ import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.WorkspacePanel;
 
-import java.lang.reflect.Method;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Map;
@@ -61,7 +60,7 @@ public class ProcedureTag extends BaseTag {
         iconImage = new Image("Procedures",
                 new ClassResource("gui/images/proc.png"));
     }
-
+/*
     private void initialize(Procedure procedure) {
 
         VerticalLayout layout = new VerticalLayout();
@@ -104,7 +103,7 @@ public class ProcedureTag extends BaseTag {
 
         setContent(layout);
     }
-
+*/
     /**
      * event handler for removing the tag from desktop
      *

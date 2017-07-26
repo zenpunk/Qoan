@@ -36,6 +36,7 @@ public class FinanceMenu extends QoanMenu {
 
     @Override
     public void initialize() {
+        setCaption("Stock Groups & Entities");
         initialize(STOCK_GROUPS);
     }
 

@@ -17,7 +17,6 @@ package qube.qoan.gui.components.common.search;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.implementation.SearchResult;
 
 import java.util.ArrayList;
@@ -56,9 +55,6 @@ public class WikiSearchSink extends SearchResultSinkComponent {
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-
-        DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
-
         grid.setWidth("100%");
         grid.setHeight("100%");
         return grid;

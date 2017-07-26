@@ -19,7 +19,6 @@ import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
-import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockEntity;
@@ -84,9 +83,6 @@ public class FinanceSearchResultSink extends SearchResultSinkComponent {
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-
-        DragSourceExtension<Grid<SearchResult>> dragSource = createDragSource(grid);
-
         grid.setWidth("100%");
         grid.setHeight("100%");
         return grid;
