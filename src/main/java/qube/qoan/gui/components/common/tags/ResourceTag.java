@@ -16,6 +16,7 @@ package qube.qoan.gui.components.common.tags;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Layout;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.decorators.ImageDecorator;
 import qube.qoan.gui.components.common.decorators.MolecularViewerDecorator;
@@ -26,9 +27,9 @@ import qube.qoan.gui.components.common.decorators.PdfFileDecorator;
  */
 public class ResourceTag extends BaseTag {
 
-    public ResourceTag(SearchResult searchResult) {
-        super(searchResult);
-        iconImage = new Image("Resources",
+    public ResourceTag(Layout parentLayout, SearchResult searchResult) {
+        super(parentLayout, searchResult);
+        iconImage = new Image(WIKIPEDIA_RESOURCES,
                 new ClassResource("gui/images/readings.png"));
         decorators.put("Image Resource", new ImageDecorator());
         decorators.put("Pdf-Resource", new PdfFileDecorator());

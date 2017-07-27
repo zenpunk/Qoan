@@ -21,28 +21,28 @@ import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.QaiDataProvider;
-import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureLibrary;
-import qube.qai.procedure.ProcedureTemplate;
+import qube.qai.persistence.StockEntity;
+import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.util.ArrayList;
 import java.util.Collection;
 
 /**
  * Created by rainbird on 7/4/17.
  */
-public class ProcedureSearchResultSink extends SearchResultSinkComponent {
+public class FinanceSearchSink extends SearchSinkComponent {
 
     @Inject
-    @Named("Procedures")
+    @Named("Stock_Groups")
     private SearchServiceInterface searchService;
 
     @Inject
-    private QaiDataProvider<Procedure> dataProvider;
+    private QaiDataProvider<StockGroup> dataProvider;
 
     @Override
     protected void initializeSearchResults() {
@@ -51,22 +51,27 @@ public class ProcedureSearchResultSink extends SearchResultSinkComponent {
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
-        for (ProcedureTemplate template : ProcedureLibrary.allTemplates) {
-            Procedure proc = template.createProcedure();
-            Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
-            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), "", proc.getDescriptionText(), 1.0);
-            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
-            TreeData<SearchResult> data = gridDataProvider.getTreeData();
-            data.addItem(null, procResult);
-            // if the results have returned nothing just go on tot eh next procedure.
-            if (results == null || results.isEmpty()) {
-                continue;
-            } else {
-                data.addItems(procResult, results);
-                gridDataProvider.refreshAll();
-            }
+        Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
+
+        if (results == null) {
+            return;
         }
 
+        for (SearchResult result : results) {
+            StockGroup stockGroup = dataProvider.brokerSearchResult(result);
+            Collection<StockEntity> entities = stockGroup.getEntities();
+            Collection<SearchResult> entitiesAsResult = new ArrayList<>();
+            for (StockEntity entity : entities) {
+                SearchResult r = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
+                entitiesAsResult.add(r);
+            }
+
+            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
+            TreeData<SearchResult> data = gridDataProvider.getTreeData();
+            data.addItem(null, result);
+            data.addItems(result, entitiesAsResult);
+            gridDataProvider.refreshAll();
+        }
     }
 
     @Override
@@ -91,6 +96,5 @@ public class ProcedureSearchResultSink extends SearchResultSinkComponent {
     @Override
     public void addResults(Collection<SearchResult> results) {
         // do nothing- the initialization at start should be sufficient
-        //super.addResults(results);
     }
 }

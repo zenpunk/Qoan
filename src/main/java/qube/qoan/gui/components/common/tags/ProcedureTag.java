@@ -55,9 +55,9 @@ public class ProcedureTag extends BaseTag {
 //    }
 
 
-    public ProcedureTag(SearchResult searchResult) {
-        super(searchResult);
-        iconImage = new Image("Procedures",
+    public ProcedureTag(Layout parentLayout, SearchResult searchResult) {
+        super(parentLayout, searchResult);
+        iconImage = new Image(PROCEDURES,
                 new ClassResource("gui/images/proc.png"));
     }
 /*

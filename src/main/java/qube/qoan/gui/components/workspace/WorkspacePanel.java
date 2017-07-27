@@ -34,7 +34,7 @@ public class WorkspacePanel extends Panel {
     @Inject
     private QaiDataProvider<WikiArticle> wikiProvider;
 
-    private WorkspaceDropTargetExtension dropExtension;
+    private WorkspaceDropExtension dropExtension;
 
     private String title;
 
@@ -47,7 +47,7 @@ public class WorkspacePanel extends Panel {
     private void initialize() {
 
         AbsoluteLayout layout = new AbsoluteLayout();
-        dropExtension = new WorkspaceDropTargetExtension(layout);
+        dropExtension = new WorkspaceDropExtension(layout);
         dropExtension.addListener();
 
         Label titleLabel = new Label(title);

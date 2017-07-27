@@ -43,8 +43,8 @@ public class BaseDecorator extends Panel implements Decorator {
     public BaseDecorator() {
         decoratorMap = new HashMap<>();
         tabSheet = new TabSheet();
-        iconImage = new Image("Wiki article",
-                new ClassResource("gui/images/chart.png"));
+        iconImage = new Image("Generic-Resource",
+                new ClassResource("gui/images/cabinet.png"));
     }
 
     @Override

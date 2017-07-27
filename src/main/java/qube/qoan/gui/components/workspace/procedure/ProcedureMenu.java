@@ -16,7 +16,7 @@ package qube.qoan.gui.components.workspace.procedure;
 
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
-import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
@@ -52,8 +52,8 @@ public class ProcedureMenu extends QoanMenu {
     }
 
     @Override
-    protected SearchResultSinkComponent getResultSink() {
-        return (SearchResultSinkComponent) resultSink;
+    protected SearchSinkComponent getResultSink() {
+        return (SearchSinkComponent) resultSink;
     }
 
     /*

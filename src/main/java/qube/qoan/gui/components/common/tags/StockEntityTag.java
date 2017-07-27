@@ -32,9 +32,9 @@ public class StockEntityTag extends BaseTag {
 
     private Layout parentLayout;
 
-    public StockEntityTag(SearchResult searchResult) {
-        super(searchResult);
-        iconImage = new Image("Yes, logo:",
+    public StockEntityTag(Layout parentLayout, SearchResult searchResult) {
+        super(parentLayout, searchResult);
+        iconImage = new Image(STOCK_ENTITIES,
                 new ClassResource("gui/images/stocks-index.png"));
         decorators.put("Wiki Article", new WikiDecorator());
         decorators.put("Stock Quotes", new TimeSeriesDecorator());

@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * Created by rainbird on 7/16/17.
  */
-public class WikiSearchSink extends SearchResultSinkComponent {
+public class WikiSearchSink extends SearchSinkComponent {
 
     protected Grid<SearchResult> resultGrid;
 
@@ -40,10 +40,10 @@ public class WikiSearchSink extends SearchResultSinkComponent {
 
     @Override
     protected void initializeSearchResults() {
+
         searchResults = new ArrayList<>();
-        SearchResult result = new SearchResult("Wikipedia_en", "S&P 500 Listing", "List of S&P 500 companies.xml", "S&P 500 Companies", 1.0);
-        searchResults.add(result);
         searchResultProvider = DataProvider.ofCollection(searchResults);
+
     }
 
     @Override
@@ -57,6 +57,7 @@ public class WikiSearchSink extends SearchResultSinkComponent {
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");
         grid.setHeight("100%");
+
         return grid;
     }
 
@@ -67,25 +68,13 @@ public class WikiSearchSink extends SearchResultSinkComponent {
         if (results == null || results.isEmpty()) {
             return;
         }
-        searchResultProvider = DataProvider.ofCollection(searchResults);
-        searchResultProvider.refreshAll();
-//
-//        // @TODO i hope i can change this soon back to what it should be
-//        Window window = new Window("Search results: " + results.size() + " of them...");
-//        Grid<SearchResult> grid = createGrid(results);
-//        window.setContent(grid);
-//        window.setWidth("800px");
-//        window.setHeight("600px");
-//
-//        UI.getCurrent().addWindow(window);
 
-//        if (clearResults.getValue()) {
-//            searchResults.clear();
-//        }
-//        // updating the grid has a problem...
-//        Notification.show("Adding " + results.size() + " rows for display");
-//        searchResults.addAll(results);
-//        resultGrid.getDataProvider().refreshAll();
-//        //initialize();
+        if (clearResults.getValue()) {
+            searchResults.clear();
+        }
+
+        searchResults.addAll(results);
+        searchResultProvider.refreshAll();
+
     }
 }

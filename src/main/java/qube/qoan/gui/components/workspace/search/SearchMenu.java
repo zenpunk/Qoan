@@ -16,7 +16,7 @@ package qube.qoan.gui.components.workspace.search;
 
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
-import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -41,7 +41,7 @@ public class SearchMenu extends QoanMenu {
     }
 
     @Override
-    protected SearchResultSinkComponent getResultSink() {
-        return (SearchResultSinkComponent) resultSink;
+    protected SearchSinkComponent getResultSink() {
+        return (SearchSinkComponent) resultSink;
     }
 }

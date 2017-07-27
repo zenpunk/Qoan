@@ -12,18 +12,26 @@
  *
  */
 
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.common.decorators;
 
-import qube.qoan.services.QoanTestBase;
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 
-/**
- * Created by rainbird on 11/19/15.
- */
-public class TestSearchMenu extends QoanTestBase {
+public class SelectionProcedureDecorator extends BaseDecorator {
 
+    private Image iconImage;
 
-    public void testSearchMenuDropAction() throws Exception {
+    /**
+     * this procedure decorators will accepting drops from search results
+     * to use those as input-parameters for the procedure templates.
+     */
+    public SelectionProcedureDecorator() {
+        iconImage = new Image("Selection Procedure",
+                new ClassResource("gui/images/proc.png"));
+    }
 
-        fail("i don't know what to test here");
+    @Override
+    public Image getIconImage() {
+        return iconImage;
     }
 }

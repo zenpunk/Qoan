@@ -18,7 +18,7 @@ import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.common.search.SearchResultSinkComponent;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 import qube.qoan.gui.components.workspace.search.SearchSource;
 
 import java.util.ArrayList;
@@ -43,7 +43,7 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
 
     public abstract void initialize();
 
-    protected abstract SearchResultSinkComponent getResultSink();
+    protected abstract SearchSinkComponent getResultSink();
 
     protected void initialize(String... serviceNames) {
 
@@ -51,7 +51,7 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
             return;
         }
 
-        SearchResultSinkComponent resultSink = getResultSink();
+        SearchSinkComponent resultSink = getResultSink();
         resultSink.initialize();
 
         layout = new VerticalLayout();

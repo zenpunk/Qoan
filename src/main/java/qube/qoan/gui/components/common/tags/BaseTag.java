@@ -17,6 +17,7 @@ package qube.qoan.gui.components.common.tags;
 import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
+import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.WorkspacePanel;
 import qube.qoan.gui.components.common.decorators.BaseDecorator;
@@ -28,7 +29,7 @@ import java.util.Map;
 /**
  * Created by rainbird on 7/6/17.
  */
-public class BaseTag extends Panel implements QoanTag {
+public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
     protected Layout parentLayout;
 
@@ -38,7 +39,7 @@ public class BaseTag extends Panel implements QoanTag {
 
     protected Image iconImage;
 
-    //private ResizableCssLayout panelWrapper;
+    private ResizableCssLayout panelWrapper;
 
     protected Map<String, Decorator> decorators;
 
@@ -46,8 +47,9 @@ public class BaseTag extends Panel implements QoanTag {
         decorators = new HashMap<>();
     }
 
-    public BaseTag(SearchResult searchResult) {
+    public BaseTag(Layout parentLayout, SearchResult searchResult) {
         this();
+        this.parentLayout = parentLayout;
         this.searchResult = searchResult;
     }
 
@@ -58,40 +60,35 @@ public class BaseTag extends Panel implements QoanTag {
 
         // if icon-image has not already been initialized, put something there.
         if (iconImage == null) {
-            iconImage = new Image("Resources",
+            iconImage = new Image(WIKIPEDIA_RESOURCES,
                     new ClassResource("gui/images/readings.png"));
         }
+
+        iconImage.setWidth("60px");
+        iconImage.setHeight("60px");
+
         layout = new VerticalLayout();
+        layout.addComponent(iconImage);
 
-        HorizontalLayout imageRow = new HorizontalLayout();
-        imageRow.addComponent(iconImage);
-
-        VerticalLayout labelsPart = new VerticalLayout();
-
-        Label context = new Label("Context: " + searchResult.getContext() + "'");
-        labelsPart.addComponent(context);
-
-        Label title = new Label("Title: " + searchResult.getTitle() + "'");
-        labelsPart.addComponent(title);
-
-        Label uuid = new Label("UUID: " + searchResult.getUuid() + "'");
-        labelsPart.addComponent(uuid);
-
-        imageRow.addComponent(labelsPart);
-        layout.addComponent(imageRow);
+        Label title = new Label("Title: '" + searchResult.getTitle() + "'");
+        layout.addComponent(title);
 
         HorizontalLayout buttonsRow = new HorizontalLayout();
 
         Button openButton = new Button("Open");
         openButton.addClickListener(clickEvent -> onOpenClicked());
+        openButton.setStyleName("link");
         buttonsRow.addComponent(openButton);
 
         Button removeButton = new Button("Remove");
         removeButton.addClickListener(clickEvent -> onRemoveClicked());
+        removeButton.setStyleName("link");
         buttonsRow.addComponent(removeButton);
         layout.addComponent(buttonsRow);
 
         setContent(layout);
+        setWidth("200px");
+        setHeight("200px");
     }
 
     /**

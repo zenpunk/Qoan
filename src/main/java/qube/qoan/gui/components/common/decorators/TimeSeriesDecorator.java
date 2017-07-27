@@ -17,13 +17,15 @@ package qube.qoan.gui.components.common.decorators;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
+import org.jfree.data.time.Day;
+import org.jfree.data.time.TimeSeries;
 import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.vaadin.addon.JFreeChartWrapper;
-import qube.qai.main.QaiConstants;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.StockQuote;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 
@@ -31,14 +33,19 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
 
+import static qube.qai.main.QaiConstants.STOCK_QUOTES;
+
 /**
  * Created by rainbird on 7/4/17.
  */
-public class TimeSeriesDecorator extends Panel implements Decorator, QaiConstants {
+public class TimeSeriesDecorator extends BaseDecorator {
 
     @Inject
     @Named("Stock_Quotes")
     private SearchServiceInterface stocksSearch;
+
+    @Inject
+    private QaiDataProvider<StockQuote> stockQuoteProvider;
 
     private Image iconImage;
 
@@ -55,13 +62,13 @@ public class TimeSeriesDecorator extends Panel implements Decorator, QaiConstant
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        Collection<SearchResult> results = stocksSearch.searchInputString(STOCK_QUOTES, toDecorate.getTitle(), 1000);
+        Collection<SearchResult> results = stocksSearch.searchInputString(STOCK_QUOTES, toDecorate.getTitle(), 0);
 
-        XYDataset dataset = createDataSet(results);
+        XYDataset dataset = createDataSet(toDecorate.getTitle(), results);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                "Computing Test",
+                toDecorate.getTitle() + " Quotes",
                 "Days",
-                "Value",
+                "Adjusted Close",
                 dataset,
                 true,
                 false,
@@ -78,33 +85,21 @@ public class TimeSeriesDecorator extends Panel implements Decorator, QaiConstant
         setContent(wrapper);
     }
 
-    private XYDataset createDataSet(Collection<SearchResult> results) {
+    private XYDataset createDataSet(String title, Collection<SearchResult> results) {
+
         TimeSeriesCollection dataset = new TimeSeriesCollection();
 
-        // @TODO fill in the data here
+        TimeSeries series = new TimeSeries(title);
+        for (SearchResult result : results) {
+            StockQuote quote = stockQuoteProvider.getData(result.getUuid());
+            Day date = new Day(quote.getQuoteDate());
+            series.add(date, quote.getAdjustedClose());
+        }
 
+        dataset.addSeries(series);
         return dataset;
     }
 
-    //    private XYDataset createDataset(String... names) {
-//        int size = 50;
-//        RandomNumber generator = new Normal(0.5, 10.0);
-//        TimeSeriesCollection dataset = new TimeSeriesCollection();
-//        int day = 01;
-//        int month = 01;
-//        int year = 2000;
-//        for (String name : names) {
-//            TimeSeries firefox = new TimeSeries(name);
-//            Day current = new Day(day, month, year);
-//            for (int i = 0; i < size; i++) {
-//                firefox.add(current, generator.doubleValue());
-//                current = (Day) current.next();
-//            }
-//            dataset.addSeries(firefox);
-//        }
-//
-//        return dataset;
-//    }
     @Override
     public void decorateAll(SearchResult searchResult) {
         // do nothing...

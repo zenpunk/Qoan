@@ -14,14 +14,36 @@
 
 package qube.qoan.gui.components.workspace.document;
 
-import com.vaadin.ui.Panel;
+import qube.qai.services.SearchResultSink;
+import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
+
+import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by rainbird on 1/16/16.
  */
-public class DocumentMenu extends Panel {
+public class DocumentMenu extends QoanMenu {
+
+    @Inject
+    @Named("DocumentResults")
+    private SearchResultSink searchSink;
 
     /**
      * this is for adding and managing pdf-directories in the whole
      */
+    public DocumentMenu() {
+    }
+
+    @Override
+    public void initialize() {
+        setCaption("Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources");
+        initialize(WIKIPEDIA_RESOURCES);
+    }
+
+    @Override
+    protected SearchSinkComponent getResultSink() {
+        return (SearchSinkComponent) searchSink;
+    }
 }

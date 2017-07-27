@@ -12,18 +12,30 @@
  *
  */
 
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.common.search;
 
-import qube.qoan.services.QoanTestBase;
+import com.vaadin.ui.Grid;
+import qube.qai.services.implementation.SearchResult;
 
-/**
- * Created by rainbird on 11/19/15.
- */
-public class TestSearchMenu extends QoanTestBase {
+import java.util.Collection;
 
+public class DocumentSearchSink extends SearchSinkComponent {
 
-    public void testSearchMenuDropAction() throws Exception {
+    public DocumentSearchSink() {
+    }
 
-        fail("i don't know what to test here");
+    @Override
+    protected void initializeSearchResults() {
+
+    }
+
+    @Override
+    protected Grid createGrid() {
+        return null;
+    }
+
+    @Override
+    public void addResults(Collection<SearchResult> results) {
+
     }
 }

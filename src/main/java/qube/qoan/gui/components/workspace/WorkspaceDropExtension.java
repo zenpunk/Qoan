@@ -28,12 +28,12 @@ import java.util.Set;
 /**
  * Created by rainbird on 7/6/17.
  */
-public class WorkspaceDropTargetExtension extends DropTargetExtension<AbsoluteLayout>
+public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
         implements QaiConstants {
 
     private AbsoluteLayout targetLayout;
 
-    public WorkspaceDropTargetExtension(AbsoluteLayout target) {
+    public WorkspaceDropExtension(AbsoluteLayout target) {
         super(target);
         targetLayout = target;
     }
@@ -65,17 +65,17 @@ public class WorkspaceDropTargetExtension extends DropTargetExtension<AbsoluteLa
         QoanTag tag;
 
         if (WIKIPEDIA.equals(result.getContext())) {
-            tag = new WikiArticleTag(result);
+            tag = new WikiArticleTag(targetLayout, result);
         } else if (WIKTIONARY.equals(result.getContext())) {
-            tag = new WikiArticleTag(result);
+            tag = new WikiArticleTag(targetLayout, result);
         } else if (STOCK_ENTITIES.equals(result.getContext())) {
-            tag = new StockEntityTag(result);
+            tag = new StockEntityTag(targetLayout, result);
         } else if (PROCEDURES.equals(result.getContext())) {
-            tag = new ProcedureTag(result);
+            tag = new ProcedureTag(targetLayout, result);
         } else if (WIKIPEDIA_RESOURCES.equals(result.getContext())) {
-            tag = new ResourceTag(result);
+            tag = new ResourceTag(targetLayout, result);
         } else {
-            tag = new BaseTag(result);
+            tag = new BaseTag(targetLayout, result);
         }
 
         tag.initialize();

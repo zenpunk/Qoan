@@ -33,8 +33,9 @@ import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
 import qube.qoan.authentication.UserManager;
-import qube.qoan.gui.components.common.search.FinanceSearchResultSink;
-import qube.qoan.gui.components.common.search.ProcedureSearchResultSink;
+import qube.qoan.gui.components.common.search.DocumentSearchSink;
+import qube.qoan.gui.components.common.search.FinanceSearchSink;
+import qube.qoan.gui.components.common.search.ProcedureSearchSink;
 import qube.qoan.gui.components.common.search.WikiSearchSink;
 
 import javax.inject.Named;
@@ -65,15 +66,22 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private WikiSearchSink wikiSearchSink;
 
-    private FinanceSearchResultSink financeResultSink;
+    private FinanceSearchSink financeResultSink;
 
-    private ProcedureSearchResultSink procedureResultSink;
+    private ProcedureSearchSink procedureResultSink;
+
+    private DocumentSearchSink documentSearchSink;
 
     private SearchServiceInterface userSearchService;
+
     private SearchServiceInterface wikipediaSearchService;
+
     private SearchServiceInterface wiktionarySearchService;
+
     private SearchServiceInterface wikiResourcesSearchService;
+
     private SearchServiceInterface stockEntitiesSearchService;
+
     private SearchServiceInterface proceduresSearchService;
 
     private Map<String, SearchServiceInterface> namedSearchServices;
@@ -129,7 +137,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Singleton
     @Named("ProcedureResults")
     SearchResultSink provideProcedureResultSink() {
-        procedureResultSink = new ProcedureSearchResultSink();
+        procedureResultSink = new ProcedureSearchSink();
         return procedureResultSink;
     }
 
@@ -137,8 +145,16 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Singleton
     @Named("FinanceResults")
     SearchResultSink provideFinanceResultSink() {
-        financeResultSink = new FinanceSearchResultSink();
+        financeResultSink = new FinanceSearchSink();
         return financeResultSink;
+    }
+
+    @Provides
+    @Singleton
+    @Named("DocumentResults")
+    SearchResultSink provideDocumentSearchSink() {
+        documentSearchSink = new DocumentSearchSink();
+        return documentSearchSink;
     }
 
     @Provides

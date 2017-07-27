@@ -17,12 +17,11 @@ package qube.qoan.gui.views;
 import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.workspace.WorkSpace;
+import qube.qoan.gui.components.workspace.Workspace;
+import qube.qoan.gui.components.workspace.document.DocumentMenu;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 import qube.qoan.gui.components.workspace.search.SearchMenu;
-
-import java.lang.reflect.Method;
 
 //import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 
@@ -45,7 +44,9 @@ public class WorkspaceView extends QoanView {
 
     private ProcedureMenu procedureMenu;
 
-    private WorkSpace workspace;
+    private DocumentMenu documentMenu;
+
+    private Workspace workspace;
 
     private HorizontalSplitPanel splitPanel;
 
@@ -79,15 +80,17 @@ public class WorkspaceView extends QoanView {
 
         financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
-        //financeMenu.initialize();
         financeMenu.setSizeUndefined();
 
         procedureMenu = new ProcedureMenu();
         injector.injectMembers(procedureMenu);
-        //procedureMenu.initialize();
         procedureMenu.setSizeUndefined();
 
-        workspace = new WorkSpace(searchMenu);
+        documentMenu = new DocumentMenu();
+        injector.injectMembers(documentMenu);
+        documentMenu.setSizeUndefined();
+
+        workspace = new Workspace();
         injector.injectMembers(workspace);
         splitPanel.setSecondComponent(workspace);
 
@@ -100,45 +103,59 @@ public class WorkspaceView extends QoanView {
 
         HorizontalLayout lowerLayout = new HorizontalLayout();
 
-        try {
-            // add a new tab to workspace
-            Button addTabButton = new Button("Add New Tab");
-            addTabButton.setStyleName("link");
-            Method onAddTab = this.getClass().getMethod("onAddTab", Button.ClickEvent.class);
-            addTabButton.addListener(Button.ClickEvent.class, this, onAddTab);
-            lowerLayout.addComponent(addTabButton);
+        // add a new tab to workspace
+        Button addTabButton = new Button("Add New Tab");
+        addTabButton.setStyleName("link");
+        addTabButton.addClickListener(clickEvent -> onAddTab());
+        lowerLayout.addComponent(addTabButton);
 
-            // open the search menu
-            Button showSearchMenuButton = new Button("Show Search Menu");
-            showSearchMenuButton.setStyleName("link");
-            Method onShowSearch = this.getClass().getMethod("onShowSearch", Button.ClickEvent.class);
-            showSearchMenuButton.addListener(Button.ClickEvent.class, this, onShowSearch);
-            lowerLayout.addComponent(showSearchMenuButton);
+        // open the search menu
+        Button showSearchMenuButton = new Button("Show Search Menu");
+        showSearchMenuButton.setStyleName("link");
+        showSearchMenuButton.addClickListener(clickEvent -> onShowSearch());
+        lowerLayout.addComponent(showSearchMenuButton);
 
-            // open the procedure menu
-            Button showProcedureMenuButton = new Button("Show Procedure Menu");
-            showProcedureMenuButton.setStyleName("link");
-            Method onShowProcedure = this.getClass().getMethod("onShowProcedure", Button.ClickEvent.class);
-            showProcedureMenuButton.addListener(Button.ClickEvent.class, this, onShowProcedure);
-            lowerLayout.addComponent(showProcedureMenuButton);
+        // open the procedure menu
+        Button showProcedureMenuButton = new Button("Show Procedure Menu");
+        showProcedureMenuButton.setStyleName("link");
+        showProcedureMenuButton.addClickListener(clickEvent -> onShowProcedure());
+        lowerLayout.addComponent(showProcedureMenuButton);
 
-            // open the finance-menu
-            Button showFinanceMenuButton = new Button("Show Finance Menu");
-            showFinanceMenuButton.setStyleName("link");
-            Method onShowFinance = this.getClass().getMethod("onShowFinance", Button.ClickEvent.class);
-            showFinanceMenuButton.addListener(Button.ClickEvent.class, this, onShowFinance);
-            lowerLayout.addComponent(showFinanceMenuButton);
+        // open the finance-menu
+        Button showFinanceMenuButton = new Button("Show Finance Menu");
+        showFinanceMenuButton.setStyleName("link");
+        showFinanceMenuButton.addClickListener(clickEvent -> onShowFinance());
+        lowerLayout.addComponent(showFinanceMenuButton);
 
-        } catch (NoSuchMethodException e) {
-            Notification.show("NoSuchMethodException: " + e.getMessage());
-        }
+        Button showResourceMenuButton = new Button("Show Finance Menu");
+        showResourceMenuButton.setStyleName("link");
+        showFinanceMenuButton.addListener(event -> onShowResource());
+        lowerLayout.addComponent(showFinanceMenuButton);
+
 
         addComponent(lowerLayout);
 
         initialized = true;
     }
 
-    public void onShowProcedure(Button.ClickEvent event) {
+    /**
+     * listener method for showing resource-menu
+     */
+    public void onShowResource() {
+        splitPanel.removeComponent(currentComponent);
+        documentMenu.initialize();
+        currentComponent = documentMenu;
+        currentComponent.setSizeFull();
+        splitPanel.setFirstComponent(documentMenu);
+        if (debug) {
+            Notification.show("Show process-menu");
+        }
+    }
+
+    /**
+     * listener method for showing procedure-menu
+     */
+    public void onShowProcedure() {
         splitPanel.removeComponent(currentComponent);
         procedureMenu.initialize();
         currentComponent = procedureMenu;
@@ -151,10 +168,8 @@ public class WorkspaceView extends QoanView {
 
     /**
      * listener method for showing market-menu
-     *
-     * @param event
      */
-    public void onShowFinance(Button.ClickEvent event) {
+    public void onShowFinance() {
         splitPanel.removeComponent(currentComponent);
         financeMenu.initialize();
         currentComponent = financeMenu;
@@ -167,10 +182,8 @@ public class WorkspaceView extends QoanView {
 
     /**
      * listener method for showing search-menu
-     *
-     * @param event
      */
-    public void onShowSearch(Button.ClickEvent event) {
+    public void onShowSearch() {
         splitPanel.removeComponent(currentComponent);
         searchMenu.initialize();
         currentComponent = searchMenu;
@@ -183,10 +196,8 @@ public class WorkspaceView extends QoanView {
 
     /**
      * listener method for adding a new tab to workspace
-     *
-     * @param event
      */
-    public void onAddTab(Button.ClickEvent event) {
+    public void onAddTab() {
         workspace.addNewTab();
         if (debug) {
             Notification.show("Adding new tab");
