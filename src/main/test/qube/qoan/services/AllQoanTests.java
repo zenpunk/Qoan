@@ -20,7 +20,7 @@ import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 import qube.qoan.authentication.TestQoanSecurity;
 import qube.qoan.authentication.TestUserManager;
-import qube.qoan.gui.components.TestSearchMenu;
+import qube.qoan.gui.components.TestWikiSearchMenu;
 import qube.qoan.gui.components.common.TestQoanMenu;
 import qube.qoan.gui.components.common.decorators.TestDecorators;
 import qube.qoan.gui.components.management.TestManagementPanel;
@@ -45,7 +45,7 @@ public class AllQoanTests extends TestCase {
         suite.addTestSuite(TestQoanSecurity.class);
 
         // this one tests search menu drag-n-drop things
-        suite.addTestSuite(TestSearchMenu.class);
+        suite.addTestSuite(TestWikiSearchMenu.class);
 
         // the menu components are all the same now
         suite.addTestSuite(TestQoanMenu.class);

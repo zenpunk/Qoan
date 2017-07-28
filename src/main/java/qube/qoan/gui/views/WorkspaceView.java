@@ -21,7 +21,7 @@ import qube.qoan.gui.components.workspace.Workspace;
 import qube.qoan.gui.components.workspace.document.DocumentMenu;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
-import qube.qoan.gui.components.workspace.search.SearchMenu;
+import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
 
 //import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 
@@ -38,7 +38,7 @@ public class WorkspaceView extends QoanView {
 
     public static String NAME = "workspace";
 
-    private SearchMenu searchMenu;
+    private WikiSearchMenu wikiSearchMenu;
 
     private FinanceMenu financeMenu;
 
@@ -73,10 +73,10 @@ public class WorkspaceView extends QoanView {
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
-        searchMenu = new SearchMenu();
-        injector.injectMembers(searchMenu);
-        searchMenu.initialize();
-        searchMenu.setSizeUndefined();
+        wikiSearchMenu = new WikiSearchMenu();
+        injector.injectMembers(wikiSearchMenu);
+        wikiSearchMenu.initialize();
+        wikiSearchMenu.setSizeUndefined();
 
         financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
@@ -94,7 +94,7 @@ public class WorkspaceView extends QoanView {
         injector.injectMembers(workspace);
         splitPanel.setSecondComponent(workspace);
 
-        currentComponent = searchMenu;
+        currentComponent = wikiSearchMenu;
         currentComponent.setWidth("100%");
         splitPanel.setFirstComponent(currentComponent);
         splitPanel.getFirstComponent().setVisible(true);
@@ -110,26 +110,26 @@ public class WorkspaceView extends QoanView {
         lowerLayout.addComponent(addTabButton);
 
         // open the search menu
-        Button showSearchMenuButton = new Button("Show Search Menu");
+        Button showSearchMenuButton = new Button("Show Wikies Search");
         showSearchMenuButton.setStyleName("link");
         showSearchMenuButton.addClickListener(clickEvent -> onShowSearch());
         lowerLayout.addComponent(showSearchMenuButton);
 
         // open the procedure menu
-        Button showProcedureMenuButton = new Button("Show Procedure Menu");
+        Button showProcedureMenuButton = new Button("Show Procedure Search");
         showProcedureMenuButton.setStyleName("link");
         showProcedureMenuButton.addClickListener(clickEvent -> onShowProcedure());
         lowerLayout.addComponent(showProcedureMenuButton);
 
         // open the finance-menu
-        Button showFinanceMenuButton = new Button("Show Finance Menu");
+        Button showFinanceMenuButton = new Button("Show Finance Search");
         showFinanceMenuButton.setStyleName("link");
         showFinanceMenuButton.addClickListener(clickEvent -> onShowFinance());
         lowerLayout.addComponent(showFinanceMenuButton);
 
-        Button showResourceMenuButton = new Button("Show Finance Menu");
+        Button showResourceMenuButton = new Button("Show Document Search");
         showResourceMenuButton.setStyleName("link");
-        showFinanceMenuButton.addListener(event -> onShowResource());
+        showFinanceMenuButton.addListener(event -> onShowDocument());
         lowerLayout.addComponent(showFinanceMenuButton);
 
 
@@ -141,7 +141,7 @@ public class WorkspaceView extends QoanView {
     /**
      * listener method for showing resource-menu
      */
-    public void onShowResource() {
+    public void onShowDocument() {
         splitPanel.removeComponent(currentComponent);
         documentMenu.initialize();
         currentComponent = documentMenu;
@@ -185,10 +185,10 @@ public class WorkspaceView extends QoanView {
      */
     public void onShowSearch() {
         splitPanel.removeComponent(currentComponent);
-        searchMenu.initialize();
-        currentComponent = searchMenu;
+        wikiSearchMenu.initialize();
+        currentComponent = wikiSearchMenu;
         currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(searchMenu);
+        splitPanel.setFirstComponent(wikiSearchMenu);
         if (debug) {
             Notification.show("Show search menu");
         }

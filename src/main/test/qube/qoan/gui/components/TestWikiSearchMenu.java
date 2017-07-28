@@ -19,7 +19,7 @@ import qube.qoan.services.QoanTestBase;
 /**
  * Created by rainbird on 11/19/15.
  */
-public class TestSearchMenu extends QoanTestBase {
+public class TestWikiSearchMenu extends QoanTestBase {
 
 
     public void testSearchMenuDropAction() throws Exception {

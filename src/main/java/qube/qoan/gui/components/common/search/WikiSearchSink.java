@@ -14,8 +14,6 @@
 
 package qube.qoan.gui.components.common.search;
 
-import com.vaadin.data.provider.DataProvider;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.ui.Grid;
 import qube.qai.services.implementation.SearchResult;
 
@@ -28,11 +26,7 @@ import java.util.List;
  */
 public class WikiSearchSink extends SearchSinkComponent {
 
-    protected Grid<SearchResult> resultGrid;
-
     private List<SearchResult> searchResults;
-
-    protected ListDataProvider<SearchResult> searchResultProvider;
 
     public WikiSearchSink() {
         super();
@@ -42,7 +36,6 @@ public class WikiSearchSink extends SearchSinkComponent {
     protected void initializeSearchResults() {
 
         searchResults = new ArrayList<>();
-        searchResultProvider = DataProvider.ofCollection(searchResults);
 
     }
 
@@ -74,7 +67,8 @@ public class WikiSearchSink extends SearchSinkComponent {
         }
 
         searchResults.addAll(results);
-        searchResultProvider.refreshAll();
+        resultGrid.setItems(searchResults);
+        resultGrid.getDataProvider().refreshAll();
 
     }
 }

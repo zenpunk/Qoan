@@ -90,6 +90,7 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         for (String name : serviceNames) {
             SearchServiceInterface service = ((QoanUI) UI.getCurrent()).getNamedService(name);
             SearchSource source = new SearchSource(name, name);
+            source.setResultSink(resultSink);
             searchSettings.addTab(source, source.getName());
             searchSources.add(source);
         }

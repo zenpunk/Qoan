@@ -24,13 +24,13 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 10/31/15.
  */
-public class SearchMenu extends QoanMenu {
+public class WikiSearchMenu extends QoanMenu {
 
     @Inject
     @Named("WikiResults")
     private SearchResultSink resultSink;
 
-    public SearchMenu() {
+    public WikiSearchMenu() {
         super();
     }
 

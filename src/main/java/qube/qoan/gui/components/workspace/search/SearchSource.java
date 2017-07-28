@@ -17,6 +17,7 @@ package qube.qoan.gui.components.workspace.search;
 import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
+import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
@@ -33,7 +34,7 @@ public class SearchSource extends Panel {
     private SearchServiceInterface searchService;
 
     //@Inject
-    //private SearchResultSink resultSink;
+    private SearchResultSink resultSink;
 
     private String searchContext;
 
@@ -91,7 +92,19 @@ public class SearchSource extends Panel {
             results = searchService.searchInputString(searchString, searchContext, numResults);
         }
 
-        //resultSink.addResults(results);
+        if (resultSink != null) {
+            resultSink.addResults(results);
+        } else {
+            Notification.show("Search dropped as there is no result sink to supply: '" + searchString + "'");
+        }
+    }
+
+    public SearchResultSink getResultSink() {
+        return resultSink;
+    }
+
+    public void setResultSink(SearchResultSink resultSink) {
+        this.resultSink = resultSink;
     }
 
     public String getSearchContext() {

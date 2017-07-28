@@ -42,7 +42,7 @@ public class FinanceSearchSink extends SearchSinkComponent {
     private SearchServiceInterface searchService;
 
     @Inject
-    private QaiDataProvider<StockGroup> dataProvider;
+    private QaiDataProvider<StockGroup> qaiDataProvider;
 
     @Override
     protected void initializeSearchResults() {
@@ -58,7 +58,7 @@ public class FinanceSearchSink extends SearchSinkComponent {
         }
 
         for (SearchResult result : results) {
-            StockGroup stockGroup = dataProvider.brokerSearchResult(result);
+            StockGroup stockGroup = qaiDataProvider.brokerSearchResult(result);
             Collection<StockEntity> entities = stockGroup.getEntities();
             Collection<SearchResult> entitiesAsResult = new ArrayList<>();
             for (StockEntity entity : entities) {
