@@ -73,13 +73,4 @@ public class MolecularViewerDecorator extends Panel implements Decorator {
         setContent(layout);
     }
 
-    @Override
-    public void addDecorator(String name, Decorator decorator) {
-
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-
-    }
 }

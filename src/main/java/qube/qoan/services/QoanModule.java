@@ -22,10 +22,7 @@ import com.hazelcast.core.HazelcastInstance;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
-import qube.qai.persistence.MapDataProvider;
-import qube.qai.persistence.QaiDataProvider;
-import qube.qai.persistence.StockGroup;
-import qube.qai.persistence.WikiArticle;
+import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.*;
 import qube.qai.services.implementation.CachedProcedureSourceService;
@@ -184,6 +181,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     QaiDataProvider<WikiArticle> provideWikiArticleData() {
         QaiDataProvider<WikiArticle> provider = new MapDataProvider(WIKIPEDIA, hazelcastInstance);
+        return provider;
+    }
+
+    @Provides
+    QaiDataProvider<ResourceData> provideWikiResourceProvider() {
+        QaiDataProvider<ResourceData> provider = new MapDataProvider(WIKIPEDIA_RESOURCES, hazelcastInstance);
         return provider;
     }
 

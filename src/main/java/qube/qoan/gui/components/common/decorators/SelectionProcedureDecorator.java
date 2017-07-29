@@ -16,8 +16,16 @@ package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.procedure.Procedure;
+import qube.qai.services.implementation.SearchResult;
+
+import javax.inject.Inject;
 
 public class SelectionProcedureDecorator extends BaseDecorator {
+
+    @Inject
+    private QaiDataProvider<Procedure> qaiDataProvider;
 
     private Image iconImage;
 
@@ -33,5 +41,12 @@ public class SelectionProcedureDecorator extends BaseDecorator {
     @Override
     public Image getIconImage() {
         return iconImage;
+    }
+
+    @Override
+    public void decorate(SearchResult toDecorate) {
+
+        Procedure procedure = qaiDataProvider.getData(toDecorate.getUuid());
+
     }
 }

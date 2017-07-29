@@ -16,13 +16,22 @@ package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.WikiArticle;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.workspace.wiki.WikiContentPanel;
+
+import javax.inject.Inject;
 
 /**
  * Created by rainbird on 7/7/17.
  */
-public class WikiDecorator extends Panel implements Decorator {
+public class WikiDecorator extends BaseDecorator {
+
+    @Inject
+    private QaiDataProvider<WikiArticle> qaiDataProvider;
 
     private Image iconImage;
 
@@ -37,17 +46,25 @@ public class WikiDecorator extends Panel implements Decorator {
     }
 
     @Override
-    public void decorate(SearchResult toDecorate) {
+    public void decorate(SearchResult searchResult) {
 
-    }
+        VerticalLayout layout = new VerticalLayout();
+        layout.setMargin(true);
 
-    @Override
-    public void addDecorator(String name, Decorator decorator) {
+        WikiArticle wikiArticle = qaiDataProvider.getData(searchResult.getUuid());
+        final String title = wikiArticle.getTitle();
+        Label titleLabel = new Label(title);
+        titleLabel.setStyleName("bold");
+        layout.addComponent(titleLabel);
 
-    }
+        Label contextLabel = new Label("Context: " + searchResult.getContext());
+        layout.addComponent(contextLabel);
 
-    @Override
-    public void decorateAll(SearchResult searchResult) {
+        WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
+        contentPanel.setSizeUndefined();
+        layout.addComponent(contentPanel);
+
+        setContent(layout);
 
     }
 }

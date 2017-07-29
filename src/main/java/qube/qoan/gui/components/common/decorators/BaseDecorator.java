@@ -14,61 +14,52 @@
 
 package qube.qoan.gui.components.common.decorators;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.TabSheet;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.search.SearchResultPanel;
-
-import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Created by rainbird on 7/4/17.
  */
-public class BaseDecorator extends Panel implements Decorator {
+public abstract class BaseDecorator extends Panel implements Decorator {
 
-    @Inject
-    protected HazelcastInstance hazelcastInstance;
-
-    protected Map<String, Decorator> decoratorMap;
-
-    private TabSheet tabSheet;
-
-    private Image iconImage;
+    protected static Logger logger = LoggerFactory.getLogger("BaseDecorator");
 
     public BaseDecorator() {
-        decoratorMap = new HashMap<>();
-        tabSheet = new TabSheet();
-        iconImage = new Image("Generic-Resource",
-                new ClassResource("gui/images/cabinet.png"));
     }
 
     @Override
-    public void decorate(SearchResult toDecorate) {
-        SearchResultPanel resultPanel = new SearchResultPanel(toDecorate);
-        tabSheet.addTab(resultPanel, "Search result");
-    }
+    public abstract void decorate(SearchResult toDecorate);
 
-    public void addDecorator(String name, Decorator decorator) {
-        decoratorMap.put(name, decorator);
-    }
+//    public void addDecorator(String name, Decorator decorator) {
+//        decoratorMap.put(name, decorator);
+//    }
 
-    @Override
+    /*@Override
     public void decorateAll(SearchResult searchResult) {
+
+        Injector injector = null;
+        try {
+            injector = ((QoanUI)QoanUI.getCurrent()).getInjector();
+        } catch (Exception e) {
+            logger.error("Error while getting hold of injector- ", e);
+        }
+
         for (String decoratorName : decoratorMap.keySet()) {
             Decorator decorator = decoratorMap.get(decoratorName);
+            if (injector != null) {
+                injector.injectMembers(decorator);
+            }
             decorator.decorate(searchResult);
             tabSheet.addTab(decorator).setCaption(decoratorName);
         }
         decorate(searchResult);
-    }
+    }*/
 
     @Override
-    public Image getIconImage() {
+    public abstract Image getIconImage();/* {
         return iconImage;
-    }
+    }*/
 }

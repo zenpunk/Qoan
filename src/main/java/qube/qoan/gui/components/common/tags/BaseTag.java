@@ -20,7 +20,6 @@ import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.WorkspacePanel;
-import qube.qoan.gui.components.common.decorators.BaseDecorator;
 import qube.qoan.gui.components.common.decorators.Decorator;
 
 import java.util.HashMap;
@@ -96,14 +95,16 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
      */
     public void onOpenClicked() {
 
-        BaseDecorator baseDecorator = new BaseDecorator();
+        TabSheet tabSheet = new TabSheet();
 
         for (String name : decorators.keySet()) {
-            baseDecorator.addDecorator(name, decorators.get(name));
+            Decorator decorator = decorators.get(name);
+
+
+            tabSheet.addTab(decorator, decorator.getCaption(), decorator.getIcon());
         }
 
-        baseDecorator.decorateAll(searchResult);
-        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), baseDecorator);
+        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), tabSheet);
 
         ResizableCssLayout panelWrapper = new ResizableCssLayout();
         panelWrapper.setResizable(true);

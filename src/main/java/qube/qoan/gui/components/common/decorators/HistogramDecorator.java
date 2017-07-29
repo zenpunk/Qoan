@@ -84,13 +84,4 @@ public class HistogramDecorator extends Panel implements Decorator {
         setContent(component);
     }
 
-    @Override
-    public void addDecorator(String name, Decorator decorator) {
-
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-
-    }
 }

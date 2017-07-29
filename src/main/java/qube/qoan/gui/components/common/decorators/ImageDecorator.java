@@ -43,13 +43,4 @@ public class ImageDecorator extends Panel implements Decorator {
         setContent(image);
     }
 
-    @Override
-    public void addDecorator(String name, Decorator decorator) {
-
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-
-    }
 }

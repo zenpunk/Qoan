@@ -129,7 +129,7 @@ public class WorkspaceView extends QoanView {
 
         Button showResourceMenuButton = new Button("Show Document Search");
         showResourceMenuButton.setStyleName("link");
-        showFinanceMenuButton.addListener(event -> onShowDocument());
+        showResourceMenuButton.addListener(event -> onShowDocument());
         lowerLayout.addComponent(showFinanceMenuButton);
 
 

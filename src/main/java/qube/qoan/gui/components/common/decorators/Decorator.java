@@ -27,7 +27,7 @@ public interface Decorator extends Component {
 
     void decorate(SearchResult toDecorate);
 
-    void addDecorator(String name, Decorator decorator);
+    //void addDecorator(String name, Decorator decorator);
 
-    void decorateAll(SearchResult searchResult);
+    //void decorateAll(SearchResult searchResult);
 }

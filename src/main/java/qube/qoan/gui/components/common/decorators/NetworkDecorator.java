@@ -16,7 +16,6 @@ package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
 import org.vaadin.visjs.networkDiagram.Edge;
 import org.vaadin.visjs.networkDiagram.NetworkDiagram;
 import org.vaadin.visjs.networkDiagram.Node;
@@ -26,18 +25,17 @@ import qube.qai.services.implementation.SearchResult;
 /**
  * Created by rainbird on 7/7/17.
  */
-public class NetworkDecorator extends Panel implements Decorator {
+public class NetworkDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    @Override
-    public void decorate(SearchResult toDecorate) {
+    public NetworkDecorator() {
         iconImage = new Image("Semantic network",
                 new ClassResource("gui/images/network.jpeg"));
     }
 
     @Override
-    public void addDecorator(String name, Decorator decorator) {
+    public void decorate(SearchResult toDecorate) {
         Options options = new Options();
         NetworkDiagram networkDiagram = new NetworkDiagram(options);
         //networkDiagram.setSizeFull();
@@ -61,11 +59,6 @@ public class NetworkDecorator extends Panel implements Decorator {
         networkDiagram.addNode(node2, node3, node4, node5, node6);
         networkDiagram.addEdge(edge1, edge2, edge3, edge4, edge5, edge6);
         setContent(networkDiagram);
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-
     }
 
     @Override

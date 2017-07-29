@@ -55,11 +55,6 @@ public class TimeSeriesDecorator extends BaseDecorator {
     }
 
     @Override
-    public void addDecorator(String name, Decorator decorator) {
-
-    }
-
-    @Override
     public void decorate(SearchResult toDecorate) {
 
         Collection<SearchResult> results = stocksSearch.searchInputString(STOCK_QUOTES, toDecorate.getTitle(), 0);
@@ -98,11 +93,6 @@ public class TimeSeriesDecorator extends BaseDecorator {
 
         dataset.addSeries(series);
         return dataset;
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-        // do nothing...
     }
 
     @Override

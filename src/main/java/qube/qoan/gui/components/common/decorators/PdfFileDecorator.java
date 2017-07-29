@@ -18,14 +18,20 @@ import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Panel;
 import pl.pdfviewer.PdfViewer;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.ResourceData;
 import qube.qai.services.implementation.SearchResult;
 
+import javax.inject.Inject;
 import java.io.File;
 
 /**
  * Created by rainbird on 7/7/17.
  */
 public class PdfFileDecorator extends Panel implements Decorator {
+
+    @Inject
+    private QaiDataProvider<ResourceData> qaiDataProvider;
 
     private Image iconImage;
 
@@ -47,16 +53,6 @@ public class PdfFileDecorator extends Panel implements Decorator {
 //                pdfViewer.setPreviousPageCaption(VaadinIcons.ANGLE_LEFT.getHtml()+" Back");
 //                pdfViewer.setNextPageCaption("Next "+VaadinIcons.ANGLE_RIGHT.getHtml());
         pdfViewer.setWidth("800px");
-    }
-
-    @Override
-    public void addDecorator(String name, Decorator decorator) {
-
-    }
-
-    @Override
-    public void decorateAll(SearchResult searchResult) {
-
     }
 
     @Override
