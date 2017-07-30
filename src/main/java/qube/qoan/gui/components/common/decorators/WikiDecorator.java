@@ -51,7 +51,7 @@ public class WikiDecorator extends BaseDecorator {
         VerticalLayout layout = new VerticalLayout();
         layout.setMargin(true);
 
-        WikiArticle wikiArticle = qaiDataProvider.getData(searchResult.getUuid());
+        WikiArticle wikiArticle = qaiDataProvider.brokerSearchResult(searchResult);
         final String title = wikiArticle.getTitle();
         Label titleLabel = new Label(title);
         titleLabel.setStyleName("bold");

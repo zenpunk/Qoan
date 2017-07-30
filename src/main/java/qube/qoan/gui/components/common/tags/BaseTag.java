@@ -14,11 +14,13 @@
 
 package qube.qoan.gui.components.common.tags;
 
+import com.google.inject.Injector;
 import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.WorkspacePanel;
 import qube.qoan.gui.components.common.decorators.Decorator;
 
@@ -96,11 +98,12 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
     public void onOpenClicked() {
 
         TabSheet tabSheet = new TabSheet();
+        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
 
         for (String name : decorators.keySet()) {
             Decorator decorator = decorators.get(name);
-
-
+            injector.injectMembers(decorator);
+            decorator.decorate(searchResult);
             tabSheet.addTab(decorator, decorator.getCaption(), decorator.getIcon());
         }
 

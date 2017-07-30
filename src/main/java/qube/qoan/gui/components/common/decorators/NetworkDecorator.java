@@ -36,6 +36,7 @@ public class NetworkDecorator extends BaseDecorator {
 
     @Override
     public void decorate(SearchResult toDecorate) {
+
         Options options = new Options();
         NetworkDiagram networkDiagram = new NetworkDiagram(options);
         //networkDiagram.setSizeFull();
