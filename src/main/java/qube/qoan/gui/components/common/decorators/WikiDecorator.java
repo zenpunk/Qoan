@@ -15,11 +15,13 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
+import info.bliki.wiki.model.WikiModel;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.workspace.wiki.WikiContentPanel;
 
 import javax.inject.Inject;
 
@@ -47,9 +49,11 @@ public class WikiDecorator extends BaseDecorator {
     public void decorate(SearchResult searchResult) {
 
         WikiArticle wikiArticle = qaiDataProvider.brokerSearchResult(searchResult);
-
-        WikiContentPanel wikiPanel = new WikiContentPanel(wikiArticle);
-        setContent(wikiPanel);
-
+        String content = WikiModel.toHtml(wikiArticle.getContent());
+        Label contentText = new Label(content, ContentMode.HTML);
+        contentText.setWidth("780px");
+        contentText.setStyleName("justify");
+        //setWidth("795px");
+        setContent(contentText);
     }
 }

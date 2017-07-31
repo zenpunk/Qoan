@@ -17,11 +17,13 @@ package qube.qoan.gui.components.common.tags;
 import com.google.inject.Injector;
 import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
+import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.QoanUI;
-import qube.qoan.gui.components.common.WorkspacePanel;
+import qube.qoan.gui.components.common.DisplayPanel;
 import qube.qoan.gui.components.common.decorators.Decorator;
 
 import java.util.HashMap;
@@ -116,17 +118,10 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
             content = new Panel("No decorators for this");
         }
 
-        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), parentLayout, content);
+        DisplayPanel panel = new DisplayPanel(searchResult.getTitle(), parentLayout, content);
         panel.setWidth("800px");
         panel.setHeight("400px");
-
-//        ResizableCssLayout panelWrapper = new ResizableCssLayout();
-//        panelWrapper.setResizable(true);
-//        panelWrapper.setHeight("800px");
-//        panelWrapper.setWidth("400px");
-//        panelWrapper.addComponent(panel);
-//        panelWrapper.setCaption("Resize from panel's edges");
-
+        DragSourceExtension<DisplayPanel> dragSourceExtension = panel.getDragExtension();
         parentLayout.addComponent(panel);
 
     }
@@ -138,6 +133,24 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
         if (parentLayout != null) {
             parentLayout.removeComponent(this);
         }
+    }
+
+    public DragSourceExtension<BaseTag> getDragExtension() {
+        DragSourceExtension<BaseTag> dragExtension = new DragSourceExtension<BaseTag>(this);
+
+        dragExtension.addDragStartListener(event -> {
+            Notification.show("Drag started");
+        });
+
+        dragExtension.addDragEndListener(event -> {
+            if (event.getDropEffect() == DropEffect.MOVE) {
+                Notification.show("Drag MOVE finished");
+            } else if (event.getDropEffect() == DropEffect.NONE) {
+                Notification.show("Drag NONE finished");
+            }
+        });
+
+        return dragExtension;
     }
 
     @Override

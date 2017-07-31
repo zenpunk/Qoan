@@ -22,8 +22,8 @@ import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
 
+import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by rainbird on 6/27/17.
@@ -32,7 +32,7 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     protected Grid<SearchResult> resultGrid;
 
-    protected List<SearchResult> searchResults;
+    //protected List<SearchResult> searchResults;
 
     protected CheckBox clearResults;
 
@@ -65,9 +65,15 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
         layout.addComponent(clearResults);
 
         Button clearButton = new Button("Clear results");
-        clearButton.addClickListener(clickEvent -> searchResults.clear());
+        clearButton.addClickListener(clickEvent -> onClearResults());
         clearButton.setStyleName("link");
         layout.addComponent(clearButton);
+    }
+
+    public void onClearResults() {
+        ArrayList<SearchResult> empty = new ArrayList<>();
+        resultGrid.setItems(empty);
+        resultGrid.getDataProvider().refreshAll();
     }
 
     /**

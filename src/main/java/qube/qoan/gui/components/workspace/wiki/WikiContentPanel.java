@@ -17,7 +17,6 @@ package qube.qoan.gui.components.workspace.wiki;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
 import info.bliki.wiki.model.WikiModel;
 import qube.qai.persistence.WikiArticle;
 
@@ -39,16 +38,20 @@ public class WikiContentPanel extends Panel {
 
     private void initialize(WikiArticle wikiArticle) {
 
-        VerticalLayout layout = new VerticalLayout();
+        //VerticalLayout layout = new VerticalLayout();
+        //layout.setHeight("100%");
+        //layout.setWidth("100%");
 
         //final TabSheet tabbedContent = new TabSheet();
         //tabbedContent.setSizeFull();
         String content = WikiModel.toHtml(wikiArticle.getContent());
         Label contentText = new Label(content, ContentMode.HTML);
         contentText.setStyleName("text-align: justify");
-        layout.addComponent(contentText);
+        //layout.addComponent(contentText);
 
-        setContent(layout);
+        //setWidth("100%");
+        //setHeight("90%");
+        setContent(contentText);
 
     }
 }

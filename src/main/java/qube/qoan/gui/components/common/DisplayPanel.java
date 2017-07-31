@@ -14,12 +14,14 @@
 
 package qube.qoan.gui.components.common;
 
+import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
+import com.vaadin.ui.dnd.DragSourceExtension;
 
 /**
  * Created by rainbird on 12/3/15.
  */
-public class WorkspacePanel extends Panel {
+public class DisplayPanel extends Panel {
 
     private String title;
 
@@ -31,7 +33,7 @@ public class WorkspacePanel extends Panel {
      * InnerPanels can be opened, closed and dragged around
      * on the Workspace
      */
-    public WorkspacePanel(String title, Layout parentLayout, Component content) {
+    public DisplayPanel(String title, Layout parentLayout, Component content) {
 
         super();
         this.parentLayout = parentLayout;
@@ -41,14 +43,9 @@ public class WorkspacePanel extends Panel {
 
     private void initialize(Component content) {
 
-        VerticalLayout innerLayout = new VerticalLayout();
-        //innerLayout.setHeight("100%");
-        //innerLayout.setWidth("100%");
+        VerticalLayout contentLayout = new VerticalLayout();
 
         HorizontalLayout titleRow = new HorizontalLayout();
-        //titleRow.setWidth("100%");
-        //titleRow.setHeight("50px");
-
         Label titleLabel = new Label(title);
         titleLabel.setStyleName("bold");
         titleRow.addComponent(titleLabel);
@@ -57,22 +54,38 @@ public class WorkspacePanel extends Panel {
         closeButton.addClickListener(clickEvent -> onCLoseClicked());
         closeButton.setStyleName("link");
         titleRow.addComponent(closeButton);
-        innerLayout.addComponent(titleRow);
 
-        //VerticalLayout contentLayout = new VerticalLayout();
-        //contentLayout.setWidth("100%");
-        //contentLayout.setHeight("100%");
-        //contentLayout.addComponent(content);
-        //innerLayout.addComponent(contentLayout);
-        content.setWidth("100%");
-        content.setHeight("100%");
-        innerLayout.addComponent(content);
+        Panel titleRowPanel = new Panel();
+        titleRowPanel.setContent(titleRow);
+        titleRowPanel.setHeight("50px");
+        titleRowPanel.setStyleName("float");
+        contentLayout.addComponent(titleRowPanel);
 
-        setContent(innerLayout);
+        // set the sizes for the content and add
+        contentLayout.addComponent(content);
+        setContent(contentLayout);
     }
 
     public void onCLoseClicked() {
         parentLayout.removeComponent(this);
+    }
+
+    public DragSourceExtension<DisplayPanel> getDragExtension() {
+        DragSourceExtension<DisplayPanel> dragExtension = new DragSourceExtension<DisplayPanel>(this);
+
+        dragExtension.addDragStartListener(event -> {
+            //Notification.show("Drag started");
+        });
+
+        dragExtension.addDragEndListener(event -> {
+            if (event.getDropEffect() == DropEffect.MOVE) {
+                //    Notification.show("Drag MOVE finished");
+            } else if (event.getDropEffect() == DropEffect.NONE) {
+                //    Notification.show("Drag NONE finished");
+            }
+        });
+
+        return dragExtension;
     }
 
 }

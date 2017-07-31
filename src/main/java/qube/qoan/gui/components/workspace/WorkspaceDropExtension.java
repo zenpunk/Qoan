@@ -17,9 +17,11 @@ package qube.qoan.gui.components.workspace;
 import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.dnd.DragSourceExtension;
 import com.vaadin.ui.dnd.DropTargetExtension;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.DisplayPanel;
 import qube.qoan.gui.components.common.tags.*;
 
 import java.util.Optional;
@@ -42,27 +44,36 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
         addDropListener(event -> {
             // if the drag source is in the same UI as the target
             Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
-            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
+            String dropCoords = "left: %d px; top: %d px;";
+            int dropX = event.getMouseEventDetails().getRelativeX();
+            int dropY = event.getMouseEventDetails().getRelativeY();
 
-                String dropCoords = "left: %d px; top: %d px;";
-                int dropX = event.getMouseEventDetails().getRelativeX();
-                int dropY = event.getMouseEventDetails().getRelativeY();
+            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
 
                 Grid grid = (Grid) dragSource.get();
                 Set<SearchResult> results = grid.getSelectedItems();
-                QoanTag tag;
+
                 for (SearchResult result : results) {
-                    tag = createQoanTag(result);
+                    BaseTag tag = createQoanTag(result);
+                    DragSourceExtension<BaseTag> dragExtension = tag.getDragExtension();
                     String coords = String.format(dropCoords, dropX, dropY);
                     targetLayout.addComponent(tag, coords);
                 }
+            } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
+                BaseTag tag = (BaseTag) dragSource.get();
+                String coords = String.format(dropCoords, dropX, dropY);
+                targetLayout.addComponent(tag, coords);
+            } else if (dragSource.isPresent() && dragSource.get() instanceof DisplayPanel) {
+                DisplayPanel tag = (DisplayPanel) dragSource.get();
+                String coords = String.format(dropCoords, dropX, dropY);
+                targetLayout.addComponent(tag, coords);
             }
         });
     }
 
-    protected QoanTag createQoanTag(SearchResult result) {
+    protected BaseTag createQoanTag(SearchResult result) {
 
-        QoanTag tag;
+        BaseTag tag;
 
         if (WIKIPEDIA.equals(result.getContext())) {
             tag = new WikiArticleTag(targetLayout, result);

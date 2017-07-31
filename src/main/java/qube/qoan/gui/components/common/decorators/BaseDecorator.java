@@ -33,33 +33,6 @@ public abstract class BaseDecorator extends Panel implements Decorator {
     @Override
     public abstract void decorate(SearchResult toDecorate);
 
-//    public void addDecorator(String name, Decorator decorator) {
-//        decoratorMap.put(name, decorator);
-//    }
+    public abstract Image getIconImage();
 
-    /*@Override
-    public void decorateAll(SearchResult searchResult) {
-
-        Injector injector = null;
-        try {
-            injector = ((QoanUI)QoanUI.getCurrent()).getInjector();
-        } catch (Exception e) {
-            logger.error("Error while getting hold of injector- ", e);
-        }
-
-        for (String decoratorName : decoratorMap.keySet()) {
-            Decorator decorator = decoratorMap.get(decoratorName);
-            if (injector != null) {
-                injector.injectMembers(decorator);
-            }
-            decorator.decorate(searchResult);
-            tabSheet.addTab(decorator).setCaption(decoratorName);
-        }
-        decorate(searchResult);
-    }*/
-
-    @Override
-    public abstract Image getIconImage();/* {
-        return iconImage;
-    }*/
 }

@@ -30,7 +30,7 @@ import qube.qai.data.TimeSequence;
 import qube.qai.data.analysis.Statistics;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.WorkspacePanel;
+import qube.qoan.gui.components.common.DisplayPanel;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -152,7 +152,7 @@ public class ProcedureTag extends BaseTag {
         }
 
         windowContent.setContent(layout);
-        WorkspacePanel window = new WorkspacePanel(title, parentLayout, windowContent);
+        DisplayPanel window = new DisplayPanel(title, parentLayout, windowContent);
         // if toDecorate is an absolute layout, we need a position to add the thing as well
         if (parentLayout instanceof AbsoluteLayout) {
             left = left + 5;

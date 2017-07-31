@@ -19,7 +19,6 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.decorators.NetworkDecorator;
 import qube.qoan.gui.components.common.decorators.WikiDecorator;
 
 /**
@@ -42,7 +41,7 @@ public class WikiArticleTag extends BaseTag {
         iconImage = new Image(WIKIPEDIA,
                 new ClassResource("gui/images/wiki.png"));
         decorators.put("Wiki-article", new WikiDecorator());
-        decorators.put("Semantic network", new NetworkDecorator());
+        //decorators.put("Semantic network", new NetworkDecorator());
     }
 
 }

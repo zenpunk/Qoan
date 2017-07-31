@@ -29,7 +29,7 @@ import javax.inject.Inject;
  */
 public class WorkspacePanel extends Panel {
 
-    private static Logger logger = LoggerFactory.getLogger("WorkspacePanel");
+    private static Logger logger = LoggerFactory.getLogger("DisplayPanel");
 
     @Inject
     private QaiDataProvider<WikiArticle> wikiProvider;
