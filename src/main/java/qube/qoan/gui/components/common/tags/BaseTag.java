@@ -97,26 +97,37 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
      */
     public void onOpenClicked() {
 
-        TabSheet tabSheet = new TabSheet();
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
-
-        for (String name : decorators.keySet()) {
-            Decorator decorator = decorators.get(name);
+        Component content;
+        if (decorators.size() > 1) {
+            content = new TabSheet();
+            for (String name : decorators.keySet()) {
+                Decorator decorator = decorators.get(name);
+                injector.injectMembers(decorator);
+                decorator.decorate(searchResult);
+                ((TabSheet) content).addTab(decorator, decorator.getCaption(), decorator.getIcon());
+            }
+        } else if (decorators.size() == 1) {
+            Decorator decorator = decorators.values().iterator().next();
             injector.injectMembers(decorator);
             decorator.decorate(searchResult);
-            tabSheet.addTab(decorator, decorator.getCaption(), decorator.getIcon());
+            content = decorator;
+        } else {
+            content = new Panel("No decorators for this");
         }
 
-        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), tabSheet);
+        WorkspacePanel panel = new WorkspacePanel(searchResult.getTitle(), parentLayout, content);
+        panel.setWidth("800px");
+        panel.setHeight("400px");
 
-        ResizableCssLayout panelWrapper = new ResizableCssLayout();
-        panelWrapper.setResizable(true);
-        panelWrapper.setHeight("400px");
-        panelWrapper.setWidth("400px");
-        panelWrapper.addComponent(panel);
-        panelWrapper.setCaption("Resize from panel's edges");
+//        ResizableCssLayout panelWrapper = new ResizableCssLayout();
+//        panelWrapper.setResizable(true);
+//        panelWrapper.setHeight("800px");
+//        panelWrapper.setWidth("400px");
+//        panelWrapper.addComponent(panel);
+//        panelWrapper.setCaption("Resize from panel's edges");
 
-        parentLayout.addComponent(panelWrapper);
+        parentLayout.addComponent(panel);
 
     }
 

@@ -16,8 +16,6 @@ package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.implementation.SearchResult;
@@ -48,23 +46,10 @@ public class WikiDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult searchResult) {
 
-        VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-
         WikiArticle wikiArticle = qaiDataProvider.brokerSearchResult(searchResult);
-        final String title = wikiArticle.getTitle();
-        Label titleLabel = new Label(title);
-        titleLabel.setStyleName("bold");
-        layout.addComponent(titleLabel);
 
-        Label contextLabel = new Label("Context: " + searchResult.getContext());
-        layout.addComponent(contextLabel);
-
-        WikiContentPanel contentPanel = new WikiContentPanel(wikiArticle);
-        contentPanel.setSizeUndefined();
-        layout.addComponent(contentPanel);
-
-        setContent(layout);
+        WikiContentPanel wikiPanel = new WikiContentPanel(wikiArticle);
+        setContent(wikiPanel);
 
     }
 }

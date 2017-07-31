@@ -152,7 +152,7 @@ public class ProcedureTag extends BaseTag {
         }
 
         windowContent.setContent(layout);
-        WorkspacePanel window = new WorkspacePanel(title, windowContent);
+        WorkspacePanel window = new WorkspacePanel(title, parentLayout, windowContent);
         // if toDecorate is an absolute layout, we need a position to add the thing as well
         if (parentLayout instanceof AbsoluteLayout) {
             left = left + 5;
