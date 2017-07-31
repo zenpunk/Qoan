@@ -19,8 +19,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import qube.qai.persistence.StockEntity;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.decorators.HistogramDecorator;
-import qube.qoan.gui.components.common.decorators.TimeSeriesDecorator;
+import qube.qoan.gui.components.common.decorators.StockQuotesDecorator;
 
 /**
  * Created by rainbird on 12/28/15.
@@ -36,8 +35,8 @@ public class StockEntityTag extends BaseTag {
         iconImage = new Image(STOCK_ENTITIES,
                 new ClassResource("gui/images/stocks-index.png"));
         //decorators.put("Wiki Article", new WikiDecorator());
-        decorators.put("Stock Quotes", new TimeSeriesDecorator());
-        decorators.put("Stock Quote Statistics", new HistogramDecorator());
+        decorators.put("Stock Quotes", new StockQuotesDecorator());
+        //decorators.put("Stock Quote Statistics", new HistogramDecorator());
     }
 
     //    public StockEntityTag(StockEntity stockEntity, Layout parentLayout) {

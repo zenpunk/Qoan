@@ -12,13 +12,14 @@
  *
  */
 
-package qube.qoan.gui.components.common.decorators;
+package qube.qoan.gui.components.workspace.procedure.decorators;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.BaseDecorator;
 
 import javax.inject.Inject;
 

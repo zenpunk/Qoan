@@ -38,7 +38,7 @@ import static qube.qai.main.QaiConstants.STOCK_QUOTES;
 /**
  * Created by rainbird on 7/4/17.
  */
-public class TimeSeriesDecorator extends BaseDecorator {
+public class StockQuotesDecorator extends BaseDecorator {
 
     @Inject
     @Named("Stock_Quotes")
@@ -49,7 +49,7 @@ public class TimeSeriesDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    public TimeSeriesDecorator() {
+    public StockQuotesDecorator() {
         iconImage = new Image("Stock Quotes",
                 new ClassResource("gui/images/stocks-index.png"));
     }
@@ -57,7 +57,12 @@ public class TimeSeriesDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        Collection<SearchResult> results = stocksSearch.searchInputString(STOCK_QUOTES, toDecorate.getTitle(), 0);
+        Collection<SearchResult> results = stocksSearch.searchInputString(toDecorate.getDescription(), STOCK_QUOTES, 0);
+
+        // don't bother if there are no results
+        if (results == null || results.isEmpty()) {
+            return;
+        }
 
         XYDataset dataset = createDataSet(toDecorate.getTitle(), results);
         JFreeChart chart = ChartFactory.createTimeSeriesChart(
@@ -86,7 +91,7 @@ public class TimeSeriesDecorator extends BaseDecorator {
 
         TimeSeries series = new TimeSeries(title);
         for (SearchResult result : results) {
-            StockQuote quote = stockQuoteProvider.getData(result.getUuid());
+            StockQuote quote = stockQuoteProvider.brokerSearchResult(result);
             Day date = new Day(quote.getQuoteDate());
             series.add(date, quote.getAdjustedClose());
         }

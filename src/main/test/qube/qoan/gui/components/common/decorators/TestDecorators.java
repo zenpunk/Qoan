@@ -74,7 +74,7 @@ public class TestDecorators extends QoanTestBase {
 
     public void testTimeSeriesDecorator() throws Exception {
 
-        Decorator decorator = new TimeSeriesDecorator();
+        Decorator decorator = new StockQuotesDecorator();
 
         SearchResult result = new SearchResult("context", "title", "uuid", "test search", 1.0);
         decorator.decorate(result);
