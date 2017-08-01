@@ -38,7 +38,7 @@ public class WikiArticleTag extends BaseTag {
 
     public WikiArticleTag(Layout parentLayout, SearchResult searchResult) {
         super(parentLayout, searchResult);
-        iconImage = new Image(WIKIPEDIA,
+        iconImage = new Image(searchResult.getContext(),
                 new ClassResource("gui/images/wiki.png"));
         decorators.put("Wiki-article", new WikiDecorator());
         //decorators.put("Semantic network", new NetworkDecorator());
