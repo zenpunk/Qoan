@@ -18,9 +18,9 @@ import com.google.inject.Injector;
 import com.vaadin.ui.*;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.Workspace;
-import qube.qoan.gui.components.workspace.document.DocumentMenu;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
+import qube.qoan.gui.components.workspace.resource.ResourceMenu;
 import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
 
 //import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
@@ -44,7 +44,7 @@ public class WorkspaceView extends QoanView {
 
     private ProcedureMenu procedureMenu;
 
-    private DocumentMenu documentMenu;
+    private ResourceMenu resourceMenu;
 
     private Workspace workspace;
 
@@ -86,9 +86,9 @@ public class WorkspaceView extends QoanView {
         injector.injectMembers(procedureMenu);
         procedureMenu.setSizeUndefined();
 
-        documentMenu = new DocumentMenu();
-        injector.injectMembers(documentMenu);
-        documentMenu.setSizeUndefined();
+        resourceMenu = new ResourceMenu();
+        injector.injectMembers(resourceMenu);
+        resourceMenu.setSizeUndefined();
 
         workspace = new Workspace();
         injector.injectMembers(workspace);
@@ -127,11 +127,10 @@ public class WorkspaceView extends QoanView {
         showFinanceMenuButton.addClickListener(clickEvent -> onShowFinance());
         lowerLayout.addComponent(showFinanceMenuButton);
 
-        Button showResourceMenuButton = new Button("Show Document Search");
+        Button showResourceMenuButton = new Button("Show Resource Search");
         showResourceMenuButton.setStyleName("link");
-        showResourceMenuButton.addListener(event -> onShowDocument());
-        lowerLayout.addComponent(showFinanceMenuButton);
-
+        showResourceMenuButton.addListener(event -> onShowResource());
+        lowerLayout.addComponent(showResourceMenuButton);
 
         addComponent(lowerLayout);
 
@@ -141,12 +140,12 @@ public class WorkspaceView extends QoanView {
     /**
      * listener method for showing resource-menu
      */
-    public void onShowDocument() {
+    public void onShowResource() {
         splitPanel.removeComponent(currentComponent);
-        documentMenu.initialize();
-        currentComponent = documentMenu;
+        resourceMenu.initialize();
+        currentComponent = resourceMenu;
         currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(documentMenu);
+        splitPanel.setFirstComponent(resourceMenu);
         if (debug) {
             Notification.show("Show process-menu");
         }

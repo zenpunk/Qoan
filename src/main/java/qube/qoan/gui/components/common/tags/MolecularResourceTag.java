@@ -18,19 +18,14 @@ import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.decorators.WikiDecorator;
+import qube.qoan.gui.components.common.decorators.MolecularViewerDecorator;
 
-/**
- * Created by rainbird on 11/13/15.
- */
-public class WikiArticleTag extends BaseTag {
+public class MolecularResourceTag extends BaseTag {
 
-    public WikiArticleTag(Layout parentLayout, SearchResult searchResult) {
+    public MolecularResourceTag(Layout parentLayout, SearchResult searchResult) {
         super(parentLayout, searchResult);
         iconImage = new Image(searchResult.getContext(),
-                new ClassResource("gui/images/wiki.png"));
-        decorators.put("Wiki-article", new WikiDecorator());
-        //decorators.put("Semantic network", new NetworkDecorator());
+                new ClassResource("gui/images/helix.jpg"));
+        decorators.put("Molecular-Viewer", new MolecularViewerDecorator());
     }
-
 }

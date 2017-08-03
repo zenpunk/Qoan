@@ -12,7 +12,7 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.document;
+package qube.qoan.gui.components.workspace.resource;
 
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
@@ -24,22 +24,23 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 1/16/16.
  */
-public class DocumentMenu extends QoanMenu {
+public class ResourceMenu extends QoanMenu {
 
     @Inject
-    @Named("DocumentResults")
+    @Named("ResourceResults")
     private SearchResultSink searchSink;
 
     /**
      * this is for adding and managing pdf-directories in the whole
      */
-    public DocumentMenu() {
+    public ResourceMenu() {
     }
 
     @Override
     public void initialize() {
         setCaption("Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources");
-        initialize(WIKIPEDIA_RESOURCES);
+        // WIKIPEDIA_RESOURCES, MOLECULAR_RESOURCES, PDF_FILE_RESOURCES
+        initialize(WIKIPEDIA_RESOURCES, MOLECULAR_RESOURCES);
     }
 
     @Override

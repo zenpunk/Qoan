@@ -85,6 +85,10 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
             tag = new ProcedureTag(targetLayout, result);
         } else if (WIKIPEDIA_RESOURCES.equals(result.getContext())) {
             tag = new ResourceTag(targetLayout, result);
+        } else if (MOLECULAR_RESOURCES.equals(result.getContext())) {
+            tag = new MolecularResourceTag(targetLayout, result);
+        } else if (PDF_FILE_RESOURCES.equals(result.getContext())) {
+            tag = new PdfResourceTag(targetLayout, result);
         } else {
             tag = new BaseTag(targetLayout, result);
         }

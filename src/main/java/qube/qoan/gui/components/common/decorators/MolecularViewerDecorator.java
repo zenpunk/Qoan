@@ -15,8 +15,10 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
-import com.vaadin.ui.*;
-import org.apache.commons.lang3.StringUtils;
+import com.vaadin.ui.Image;
+import com.vaadin.ui.JavaScript;
+import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.NglAdapter;
 
@@ -44,32 +46,15 @@ public class MolecularViewerDecorator extends Panel implements Decorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
+        String moleculeName = toDecorate.getUuid();
+
         VerticalLayout layout = new VerticalLayout();
 
         NglAdapter nglViewer = new NglAdapter();
         layout.addComponent(nglViewer);
+        String toExecute = jsExecParam + moleculeName + "' ))";
+        JavaScript.getCurrent().execute(toExecute);
 
-        HorizontalLayout selectLine = new HorizontalLayout();
-        TextField nameField = new TextField("Molecule name");
-        nameField.setValue("1crm");
-        selectLine.addComponent(nameField);
-
-        Button showNgl = new Button("Show molecule");
-        showNgl.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                String moleculeName = nameField.getValue();
-                if (StringUtils.isEmpty(moleculeName)) {
-                    JavaScript.getCurrent().execute(jsExec);
-                } else {
-                    String toExecute = jsExecParam + moleculeName + "' ))";
-                    JavaScript.getCurrent().execute("alert('" + toExecute + "')");
-                    JavaScript.getCurrent().execute(toExecute);
-                }
-            }
-        });
-        selectLine.addComponent(showNgl);
-        layout.addComponent(selectLine);
         setContent(layout);
     }
 

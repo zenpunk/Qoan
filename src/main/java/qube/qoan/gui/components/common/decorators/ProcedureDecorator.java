@@ -44,7 +44,6 @@ public class ProcedureDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-
         if (StringUtils.isNotBlank(toDecorate.getUuid())) {
             procedure = dataProvider.brokerSearchResult(toDecorate);
         } else {

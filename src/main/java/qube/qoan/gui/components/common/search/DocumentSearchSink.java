@@ -17,11 +17,16 @@ package qube.qoan.gui.components.common.search;
 import com.vaadin.ui.Grid;
 import qube.qai.services.implementation.SearchResult;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class DocumentSearchSink extends SearchSinkComponent {
 
+    private List<SearchResult> searchResults;
+
     public DocumentSearchSink() {
+        searchResults = new ArrayList<>();
     }
 
     @Override
@@ -31,11 +36,33 @@ public class DocumentSearchSink extends SearchSinkComponent {
 
     @Override
     protected Grid createGrid() {
-        return null;
+
+        Grid<SearchResult> grid = new Grid<>("Search Results");
+        grid.addColumn(SearchResult::getContext).setCaption("Context");
+        grid.addColumn(SearchResult::getTitle).setCaption("Title");
+        grid.addColumn(SearchResult::getDescription).setCaption("Description");
+        grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
+        grid.addColumn(SearchResult::getUuid).setCaption("UUID");
+        grid.setWidth("100%");
+        grid.setHeight("100%");
+
+        return grid;
     }
 
     @Override
     public void addResults(Collection<SearchResult> results) {
 
+        // if there are no results, don't bother add them
+        if (results == null || results.isEmpty()) {
+            return;
+        }
+
+        if (clearResults.getValue()) {
+            searchResults.clear();
+        }
+
+        searchResults.addAll(results);
+        resultGrid.setItems(searchResults);
+        resultGrid.getDataProvider().refreshAll();
     }
 }

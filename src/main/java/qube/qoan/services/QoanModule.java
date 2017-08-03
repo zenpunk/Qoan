@@ -34,6 +34,7 @@ import qube.qoan.gui.components.common.search.DocumentSearchSink;
 import qube.qoan.gui.components.common.search.FinanceSearchSink;
 import qube.qoan.gui.components.common.search.ProcedureSearchSink;
 import qube.qoan.gui.components.common.search.WikiSearchSink;
+import qube.qoan.gui.components.workspace.resource.ResourceSearchSink;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -67,6 +68,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private ProcedureSearchSink procedureResultSink;
 
+    private ResourceSearchSink resourceSearchSink;
+
     private DocumentSearchSink documentSearchSink;
 
     private SearchServiceInterface userSearchService;
@@ -74,6 +77,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     private SearchServiceInterface wikipediaSearchService;
 
     private SearchServiceInterface wiktionarySearchService;
+
+    private SearchServiceInterface molecularResourcesService;
+
+    private SearchServiceInterface pdfFileRsourcesService;
 
     private SearchServiceInterface wikiResourcesSearchService;
 
@@ -89,6 +96,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
     public String QAI_NODE_TO_CONNECT = "127.0.0.1:5701";
+
 
 
     @Override
@@ -153,7 +161,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     @Singleton
-    @Named("DocumentResults")
+    @Named("ResourceResults")
     SearchResultSink provideDocumentSearchSink() {
         documentSearchSink = new DocumentSearchSink();
         return documentSearchSink;
@@ -266,20 +274,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
-    @Named("WikiResources_en")
-    @Singleton
-    SearchServiceInterface provideWikiResourcesSearchService() {
-
-        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES);
-
-        ((DistributedSearchService) wikiResourcesSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) wikiResourcesSearchService).setResultSink(wikiSearchSink);
-        ((DistributedSearchService) wikiResourcesSearchService).initialize();
-
-        return wikiResourcesSearchService;
-    }
-
-    @Provides
     @Named("Stock_Groups")
     @Singleton
     SearchServiceInterface provideStockGroupssSearchService() {
@@ -335,6 +329,48 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         return proceduresSearchService;
     }
 
+    @Provides
+    @Named("WikiResources_en")
+    @Singleton
+    SearchServiceInterface provideWikiResourcesSearchService() {
+
+        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES);
+
+        ((DistributedSearchService) wikiResourcesSearchService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) wikiResourcesSearchService).setResultSink(resourceSearchSink);
+        ((DistributedSearchService) wikiResourcesSearchService).initialize();
+
+        return wikiResourcesSearchService;
+    }
+
+    @Provides
+    @Named("MolecularResources")
+    @Singleton
+    SearchServiceInterface provideMolecularSearchService() {
+
+        molecularResourcesService = new DistributedSearchService(MOLECULAR_RESOURCES);
+
+        ((DistributedSearchService) molecularResourcesService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) molecularResourcesService).setResultSink(resourceSearchSink);
+        ((DistributedSearchService) molecularResourcesService).initialize();
+
+        return molecularResourcesService;
+    }
+
+    @Provides
+    @Named("PdfFileResources")
+    @Singleton
+    SearchServiceInterface providePdfFileSearchService() {
+
+        pdfFileRsourcesService = new DistributedSearchService(PDF_FILE_RESOURCES);
+
+        ((DistributedSearchService) pdfFileRsourcesService).setHazelcastInstance(getHazelcastInstance());
+        ((DistributedSearchService) pdfFileRsourcesService).setResultSink(resourceSearchSink);
+        ((DistributedSearchService) pdfFileRsourcesService).initialize();
+
+        return pdfFileRsourcesService;
+    }
+
     public SearchServiceInterface getNamedService(String name) {
 
         initKnownNamedServers();
@@ -364,17 +400,62 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private void initKnownNamedServers() {
 
+        logger.info("QoanModule: initializing services");
+
         if (namedSearchServices == null) {
 
             namedSearchServices = new HashMap<>();
 
+            if (wikipediaSearchService == null) {
+                wikipediaSearchService = provideWikipediaSearchService();
+            }
+            logger.info("Started service: " + WIKIPEDIA);
             namedSearchServices.put(WIKIPEDIA, wikipediaSearchService);
+
+            if (wiktionarySearchService == null) {
+                wiktionarySearchService = provideWiktionarySearchService();
+            }
+            logger.info("Started service: " + WIKTIONARY);
             namedSearchServices.put(WIKTIONARY, wiktionarySearchService);
-//            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
-//            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
-//            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
-//            namedSearchServices.put(PROCEDURES, proceduresSearchService);
+
+            if (wikiResourcesSearchService == null) {
+                wikiResourcesSearchService = provideWikiResourcesSearchService();
+            }
+            logger.info("Started service: " + WIKIPEDIA_RESOURCES);
+            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+
+            if (stockEntitiesSearchService == null) {
+                stockEntitiesSearchService = provideStockEntitiesSearchService();
+            }
+            logger.info("Started service: " + STOCK_ENTITIES);
+            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+
+            if (stockGroupsSearchService == null) {
+                stockGroupsSearchService = provideStockGroupssSearchService();
+            }
+            logger.info("Started service: " + STOCK_GROUPS);
+            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+
+            if (proceduresSearchService == null) {
+                proceduresSearchService = provideProceduresSearchService();
+            }
+            logger.info("Started service: " + PROCEDURES);
+            namedSearchServices.put(PROCEDURES, proceduresSearchService);
+
+            if (molecularResourcesService == null) {
+                molecularResourcesService = provideMolecularSearchService();
+            }
+            logger.info("Started service: " + MOLECULAR_RESOURCES);
+            namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
+
+            if (pdfFileRsourcesService == null) {
+                pdfFileRsourcesService = providePdfFileSearchService();
+            }
+            logger.info("Started service: " + PDF_FILE_RESOURCES);
+            namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
         }
+
+        logger.info("QoanModule: all known services started");
     }
 
     private HazelcastInstance getHazelcastInstance() {

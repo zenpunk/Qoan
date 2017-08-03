@@ -12,25 +12,28 @@
  *
  */
 
-package qube.qoan.gui.components.common.tags;
+package qube.qoan.gui.components.workspace.resource;
 
-import com.vaadin.server.ClassResource;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Layout;
+import com.vaadin.ui.Grid;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.decorators.WikiDecorator;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
-/**
- * Created by rainbird on 11/13/15.
- */
-public class WikiArticleTag extends BaseTag {
+import java.util.Collection;
 
-    public WikiArticleTag(Layout parentLayout, SearchResult searchResult) {
-        super(parentLayout, searchResult);
-        iconImage = new Image(searchResult.getContext(),
-                new ClassResource("gui/images/wiki.png"));
-        decorators.put("Wiki-article", new WikiDecorator());
-        //decorators.put("Semantic network", new NetworkDecorator());
+public class ResourceSearchSink extends SearchSinkComponent {
+
+    @Override
+    protected void initializeSearchResults() {
+
     }
 
+    @Override
+    protected Grid createGrid() {
+        return null;
+    }
+
+    @Override
+    public void addResults(Collection<SearchResult> results) {
+
+    }
 }
