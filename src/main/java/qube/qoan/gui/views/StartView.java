@@ -31,7 +31,12 @@ public class StartView extends QoanView {
             "<p><b><u>Koan:&nbsp;</u></b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
                     "force them into gaining sudden intuitive enlightenment" +
-                    "<br><b><i>Merriam-Webster Online Dictionary</i></b></p>";// +
+                    "<br>" +
+                    "<b><i>Merriam-Webster Online Dictionary</i></b></p>" +
+                    //"<br>" +
+                    "<p>... networks, networks everywhere <br>" +
+                    "not a single software to quench curiousity...<br>" + "" +
+                    "<b><i>Mugat Gurkowsky</i></b></p>";
 
     public StartView() {
         this.viewTitle = "Welcome to Qoan";

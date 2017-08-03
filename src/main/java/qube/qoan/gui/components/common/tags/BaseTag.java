@@ -120,7 +120,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
         DisplayPanel panel = new DisplayPanel(searchResult.getTitle(), parentLayout, content);
         panel.setWidth("800px");
-        panel.setHeight("400px");
+        panel.setHeight("600px");
         DragSourceExtension<DisplayPanel> dragSourceExtension = panel.getDragExtension();
         parentLayout.addComponent(panel);
 

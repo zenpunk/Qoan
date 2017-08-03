@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common;
 
+import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
@@ -26,6 +27,8 @@ public class DisplayPanel extends Panel {
     private String title;
 
     private Layout parentLayout;
+
+    private ResizableCssLayout resizeWrapper;
 
     /**
      * this class is a substitute to Vaadin's native
@@ -64,6 +67,8 @@ public class DisplayPanel extends Panel {
         // set the sizes for the content and add
         contentLayout.addComponent(content);
         setContent(contentLayout);
+
+        resizeWrapper = new ResizableCssLayout(this);
     }
 
     public void onCLoseClicked() {

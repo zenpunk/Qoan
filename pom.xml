@@ -110,14 +110,14 @@
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-server</artifactId>
-            <version>8.0.6</version>
+            <version>${vaadin.version}</version>
         </dependency>
 
         <!-- this library is to be removed later- i suppose -->
         <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-client</artifactId>
-            <version>8.0.6</version>
+            <version>${vaadin.version}</version>
             <scope>provided</scope>
         </dependency>
 
