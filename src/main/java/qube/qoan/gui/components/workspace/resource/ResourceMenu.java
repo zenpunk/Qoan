@@ -40,7 +40,7 @@ public class ResourceMenu extends QoanMenu {
     public void initialize() {
         setCaption("Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources");
         // WIKIPEDIA_RESOURCES, MOLECULAR_RESOURCES, PDF_FILE_RESOURCES
-        initialize(WIKIPEDIA_RESOURCES, MOLECULAR_RESOURCES);
+        initialize(WIKIPEDIA_RESOURCES, PDF_FILE_RESOURCES, MOLECULAR_RESOURCES);
     }
 
     @Override

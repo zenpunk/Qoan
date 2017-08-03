@@ -15,15 +15,17 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
 import pl.pdfviewer.PdfViewer;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.ResourceData;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.workspace.resource.DataStreamSource;
 
 import javax.inject.Inject;
-import java.io.File;
 
 /**
  * Created by rainbird on 7/7/17.
@@ -31,19 +33,26 @@ import java.io.File;
 public class PdfFileDecorator extends Panel implements Decorator {
 
     @Inject
-    private QaiDataProvider<ResourceData> qaiDataProvider;
+    private QaiDataProvider<ResourceData> dataProvider;
 
     private Image iconImage;
 
     public PdfFileDecorator() {
-        iconImage = new Image("NGL-Viewer",
-                new ClassResource("gui/images/helix.jog"));
+        iconImage = new Image("Pdf-Viewer",
+                new ClassResource("gui/images/file.png"));
     }
 
     @Override
     public void decorate(SearchResult toDecorate) {
-        File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
-        PdfViewer pdfViewer = new PdfViewer(pdfFile);
+
+        //File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+        ResourceData data = dataProvider.brokerSearchResult(toDecorate);
+        if (data == null) {
+            Notification.show("No related data to '" + toDecorate.getTitle() + "' found, returning");
+            return;
+        }
+
+        PdfViewer pdfViewer = new DummyPdfViewer(data, toDecorate.getTitle());
 //                pdfViewer.setHeight(400	,Unit.PIXELS);
 //                pdfViewer.setWidth(800,Unit.PIXELS);
 //                pdfViewer.setBackAngleButtonCaption(VaadinIcons.ROTATE_LEFT.getHtml());
@@ -52,7 +61,17 @@ public class PdfFileDecorator extends Panel implements Decorator {
 //                pdfViewer.setDecreaseButtonCaption(VaadinIcons.SEARCH_MINUS.getHtml());
 //                pdfViewer.setPreviousPageCaption(VaadinIcons.ANGLE_LEFT.getHtml()+" Back");
 //                pdfViewer.setNextPageCaption("Next "+VaadinIcons.ANGLE_RIGHT.getHtml());
-        pdfViewer.setWidth("800px");
+//                pdfViewer.setWidth("800px");
+        setContent(pdfViewer);
+    }
+
+    class DummyPdfViewer extends PdfViewer {
+
+        public DummyPdfViewer(ResourceData data, String title) {
+            super();
+            StreamResource resource = new StreamResource(new DataStreamSource(data), title);
+            setResource("resourceFile", resource);
+        }
     }
 
     @Override
