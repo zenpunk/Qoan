@@ -68,11 +68,16 @@ public class DisplayPanel extends Panel {
         contentLayout.addComponent(content);
         setContent(contentLayout);
 
-        resizeWrapper = new ResizableCssLayout(this);
+        //resizeWrapper = new ResizableCssLayout(this);
     }
 
     public void onCLoseClicked() {
-        parentLayout.removeComponent(this);
+        if (resizeWrapper != null) {
+            parentLayout.removeComponent(resizeWrapper);
+        } else {
+            parentLayout.removeComponent(this);
+        }
+
     }
 
     public DragSourceExtension<DisplayPanel> getDragExtension() {
@@ -93,4 +98,11 @@ public class DisplayPanel extends Panel {
         return dragExtension;
     }
 
+    public ResizableCssLayout getResizeWrapper() {
+        return resizeWrapper;
+    }
+
+    public void setResizeWrapper(ResizableCssLayout resizeWrapper) {
+        this.resizeWrapper = resizeWrapper;
+    }
 }

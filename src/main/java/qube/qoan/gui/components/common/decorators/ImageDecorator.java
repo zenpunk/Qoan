@@ -15,9 +15,18 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.ResourceData;
 import qube.qai.services.implementation.SearchResult;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 
 /**
  * Created by rainbird on 7/8/17.
@@ -26,9 +35,13 @@ public class ImageDecorator extends Panel implements Decorator {
 
     private Image iconImage;
 
+    @Inject
+    @Named("WikiResources_en")
+    private QaiDataProvider<ResourceData> dataProvider;
+
     public ImageDecorator() {
-        iconImage = new Image("NGL-Viewer",
-                new ClassResource("gui/images/helix.jog"));
+        iconImage = new Image("Image Viewer",
+                new ClassResource("gui/images/image.png"));
     }
 
     @Override
@@ -38,8 +51,24 @@ public class ImageDecorator extends Panel implements Decorator {
 
     @Override
     public void decorate(SearchResult toDecorate) {
-        Image image = new Image("NGL-Viewer",
-                new ClassResource("gui/images/kokoline.jpg"));
+
+        ResourceData data = dataProvider.brokerSearchResult(toDecorate);
+        if (data == null) {
+            Notification.show("No corresponding data to: " + toDecorate.getUuid() + " could be found");
+            return;
+        }
+
+        StreamResource.StreamSource streamSource = new StreamResource.StreamSource() {
+            @Override
+            public InputStream getStream() {
+                InputStream stream = new ByteArrayInputStream(data.getBinaryData());
+                return stream;
+            }
+        };
+
+        StreamResource source = new StreamResource(streamSource, toDecorate.getTitle());
+        Image image = new Image(toDecorate.getTitle(), source);
+
         setContent(image);
     }
 

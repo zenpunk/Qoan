@@ -210,8 +210,16 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
+    @Named("WikiResources_en")
     QaiDataProvider<ResourceData> provideWikiResourceProvider() {
         QaiDataProvider<ResourceData> provider = new MapDataProvider(WIKIPEDIA_RESOURCES, hazelcastInstance);
+        return provider;
+    }
+
+    @Provides
+    @Named("PdfFileResources")
+    QaiDataProvider<ResourceData> providePdfResourceProvider() {
+        QaiDataProvider<ResourceData> provider = new MapDataProvider(PDF_FILE_RESOURCES, hazelcastInstance);
         return provider;
     }
 

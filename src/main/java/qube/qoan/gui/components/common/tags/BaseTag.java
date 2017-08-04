@@ -122,7 +122,11 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
         panel.setWidth("800px");
         panel.setHeight("600px");
         DragSourceExtension<DisplayPanel> dragSourceExtension = panel.getDragExtension();
-        parentLayout.addComponent(panel);
+
+        panelWrapper = new ResizableCssLayout(panel);
+        panel.setResizeWrapper(panelWrapper);
+
+        parentLayout.addComponent(panelWrapper);
 
     }
 
