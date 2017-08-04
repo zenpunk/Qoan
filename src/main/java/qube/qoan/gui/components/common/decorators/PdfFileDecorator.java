@@ -46,38 +46,36 @@ public class PdfFileDecorator extends Panel implements Decorator {
     private String scriptToTemplate = "" +
             "// URL of PDF document\n" +
             "var url = '/VAADIN/tmp/%s';" +
-            //"var url = 'file:/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf'" +
             "// Asynchronous download PDF\n" +
             "PDFJS.getDocument(url)\n" +
             "  .then(function(pdf) {\n" +
             "    return pdf.getPage(1);\n" +
             "  })\n" +
-            "  .then(function(page) {\n" +
-            "    // Set scale (zoom) level\n" +
-            "    var scale = 1.5;\n" +
+            ".then(function(page) {\n" +
             "\n" +
-            "    // Get viewport (dimensions)\n" +
-            "    var viewport = page.getViewport(scale);\n" +
+            "  // Set scale (zoom) level\n" +
+            "  var scale = 1.5;\n" +
             "\n" +
-            "    // Get canvas#the-canvas\n" +
-            "    var canvas = document.getElementById('the-canvas');\n" +
+            "  // Get viewport (dimensions)\n" +
+            "  var viewport = page.getViewport(scale);\n" +
             "\n" +
-            "    // Fetch canvas' 2d context\n" +
-            "    var context = canvas.getContext('2d');\n" +
+            "  // Get div#the-svg\n" +
+            "  var container = document.getElementById('the-svg');\n" +
             "\n" +
-            "    // Set dimensions to Canvas\n" +
-//            "    canvas.height = viewport.height;\n" +
-//            "    canvas.width = viewport.width;\n" +
+            "  // Set dimensions\n" +
+            "  container.style.width = viewport.width + 'px';\n" +
+            "  container.style.height = viewport.height + 'px';\n" +
             "\n" +
-            "    // Prepare object needed by render method\n" +
-            "    var renderContext = {\n" +
-            "      canvasContext: context,\n" +
-            "      viewport: viewport\n" +
-            "    };\n" +
-            "\n" +
-            "    // Render PDF page\n" +
-            "    page.render(renderContext);\n" +
-            "  });";
+            "  // SVG rendering by PDF.js\n" +
+            "  page.getOperatorList()\n" +
+            "    .then(function (opList) {\n" +
+            "      var svgGfx = new PDFJS.SVGGraphics(page.commonObjs, page.objs);\n" +
+            "      return svgGfx.getSVG(opList, viewport);\n" +
+            "    })\n" +
+            "    .then(function (svg) {\n" +
+            "      container.appendChild(svg);\n" +
+            "    });\n" +
+            "});\n";
 
     public PdfFileDecorator() {
         iconImage = new Image("Pdf-Viewer",
@@ -87,7 +85,6 @@ public class PdfFileDecorator extends Panel implements Decorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        //File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
         ResourceData data = dataProvider.brokerSearchResult(toDecorate);
         if (data == null) {
             Notification.show("No related data to '" + toDecorate.getTitle() + "' not found, returning");
@@ -104,11 +101,10 @@ public class PdfFileDecorator extends Panel implements Decorator {
             return;
         }
 
-        String iframe = "<canvas id=\"the-canvas\" width='800px' height='600px'></canvas>\n";
+        String iframe = "<div id='the-svg' width='800px' height='600px'></div>";
         Label iframeLabel = new Label(String.format(iframe, toDecorate.getTitle()));
         iframeLabel.setContentMode(ContentMode.HTML);
         setContent(iframeLabel);
-        //String toExecute = "";
         String toRun = String.format(scriptToTemplate, data.getName());
         com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
