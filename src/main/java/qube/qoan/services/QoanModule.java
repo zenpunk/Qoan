@@ -408,7 +408,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private void initKnownNamedServers() {
 
-        logger.info("QoanModule: initializing services");
+        //logger.info("QoanModule: initializing services");
 
         if (namedSearchServices == null) {
 
@@ -463,7 +463,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
         }
 
-        logger.info("QoanModule: all known services started");
+        //logger.info("QoanModule: all known services started");
     }
 
     private HazelcastInstance getHazelcastInstance() {

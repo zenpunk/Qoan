@@ -54,7 +54,7 @@ public class ImageDecorator extends Panel implements Decorator {
 
         ResourceData data = dataProvider.brokerSearchResult(toDecorate);
         if (data == null) {
-            Notification.show("No corresponding data to: " + toDecorate.getUuid() + " could be found");
+            Notification.show("Corresponding data to: '" + toDecorate.getUuid() + "' could not be found");
             return;
         }
 
@@ -66,8 +66,8 @@ public class ImageDecorator extends Panel implements Decorator {
             }
         };
 
-        StreamResource source = new StreamResource(streamSource, toDecorate.getTitle());
-        Image image = new Image(toDecorate.getTitle(), source);
+        StreamResource resource = new StreamResource(streamSource, toDecorate.getTitle());
+        Image image = new Image(toDecorate.getTitle(), resource);
 
         setContent(image);
     }

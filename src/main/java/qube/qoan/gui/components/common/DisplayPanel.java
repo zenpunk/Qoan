@@ -49,14 +49,15 @@ public class DisplayPanel extends Panel {
         VerticalLayout contentLayout = new VerticalLayout();
 
         HorizontalLayout titleRow = new HorizontalLayout();
-        Label titleLabel = new Label(title);
-        titleLabel.setStyleName("bold");
-        titleRow.addComponent(titleLabel);
 
         Button closeButton = new Button("X");
         closeButton.addClickListener(clickEvent -> onCLoseClicked());
         closeButton.setStyleName("link");
         titleRow.addComponent(closeButton);
+
+        Label titleLabel = new Label(title);
+        titleLabel.setStyleName("bold");
+        titleRow.addComponent(titleLabel);
 
         Panel titleRowPanel = new Panel();
         titleRowPanel.setContent(titleRow);

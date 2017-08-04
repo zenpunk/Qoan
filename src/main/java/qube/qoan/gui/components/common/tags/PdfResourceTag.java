@@ -25,7 +25,7 @@ public class PdfResourceTag extends BaseTag {
     public PdfResourceTag(Layout parentLayout, SearchResult searchResult) {
         super(parentLayout, searchResult);
         iconImage = new Image(searchResult.getContext(),
-                new ClassResource("gui/images/file.png"));
+                new ClassResource("gui/images/pdf-file.png"));
         decorators.put("Pdf-Viewer", new PdfFileDecorator());
     }
 }

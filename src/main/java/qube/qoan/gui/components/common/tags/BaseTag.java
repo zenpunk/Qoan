@@ -61,6 +61,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
      */
     public void initialize() {
 
+
         // if icon-image has not already been initialized, put something there.
         if (iconImage == null) {
             iconImage = new Image(WIKIPEDIA_RESOURCES,
@@ -73,6 +74,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
         layout = new VerticalLayout();
         layout.addComponent(iconImage);
 
+        // create and add the close-button first
         Label title = new Label("Title: '" + searchResult.getTitle() + "'");
         layout.addComponent(title);
 
