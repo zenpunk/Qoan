@@ -37,12 +37,15 @@
     <!-- <set-configuration-property name="devModeRedirectEnabled" value="true" /> -->
 
 
-    <inherits name="pl.pdfviewer.widgetset.PdfViewerWidgetset"/>
-
     <inherits name="qube.qoan.MyAppWidgetset"/>
 
 
     <inherits name="com.vaadin.pekka.resizablecsslayout.WidgetSet"/>
 
     <inherits name="com.vaadin.DefaultWidgetSet"/>
+
+    <inherits name="com.vaadin.v7.Vaadin7WidgetSet"/>
+
+
+    <inherits name="pl.pdfviewer.PdfViewerWidgetSet"/>
 </module>

@@ -77,7 +77,7 @@ public class ComponentsView extends QoanView {
                     JavaScript.getCurrent().execute(jsExec);
                 } else {
                     String toExecute = jsExecParam + moleculeName + "' ))";
-                    JavaScript.getCurrent().execute("alert('" + toExecute + "')");
+                    //JavaScript.getCurrent().execute("alert('" + toExecute + "')");
                     JavaScript.getCurrent().execute(toExecute);
                 }
             }
@@ -117,25 +117,14 @@ public class ComponentsView extends QoanView {
             @Override
             public void buttonClick(Button.ClickEvent clickEvent) {
                 Window window = new Window("A Window");
-                VerticalLayout content = new VerticalLayout();
-                content.setMargin(true);
 
-                Label pdfLabel = new Label("example of pdf-file display");
-                content.addComponent(pdfLabel);
-                File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
-                PdfViewer pdfViewer = new PdfViewer(pdfFile);
-//                pdfViewer.setHeight(400	,Unit.PIXELS);
-//                pdfViewer.setWidth(800,Unit.PIXELS);
-//                pdfViewer.setBackAngleButtonCaption(VaadinIcons.ROTATE_LEFT.getHtml());
-//                pdfViewer.setNextAngleButtonCaption(VaadinIcons.ROTATE_RIGHT.getHtml());
-//                pdfViewer.setIncreaseButtonCaption(VaadinIcons.SEARCH_PLUS.getHtml());
-//                pdfViewer.setDecreaseButtonCaption(VaadinIcons.SEARCH_MINUS.getHtml());
-//                pdfViewer.setPreviousPageCaption(VaadinIcons.ANGLE_LEFT.getHtml()+" Back");
-//                pdfViewer.setNextPageCaption("Next "+VaadinIcons.ANGLE_RIGHT.getHtml());
-                pdfViewer.setWidth("800px");
-                content.addComponent(pdfViewer);
+                File file = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+                PdfViewer pdfViewer = new PdfViewer(file);
+                pdfViewer.setSizeFull();
+                pdfViewer.setVisible(true);
+                pdfViewer.setPage(1);
 
-                window.setContent(content);
+                window.setContent(pdfViewer);
                 window.setWidth("800px");
                 UI.getCurrent().addWindow(window);
             }

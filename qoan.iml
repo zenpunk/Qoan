@@ -173,7 +173,7 @@
     <orderEntry type="library" name="Maven: jfree:jcommon:1.0.15" level="project" />
     <orderEntry type="library" name="Maven: javax.servlet:servlet-api:2.5" level="project" />
     <orderEntry type="library" name="Maven: org.vaadin.addon:visjs-addon:1.0.1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.vaadin.addons:pdfviewer:1.1.0" level="project" />
+    <orderEntry type="library" name="Maven: pl.pdfviewer:pdfviewer:1.3.5" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin.pekka:resizablecsslayout:1.1.0" level="project" />
     <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.4.01" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.1" level="project" />

@@ -14,18 +14,17 @@
 
 package qube.qoan.gui.components.common.decorators;
 
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.server.ClassResource;
-import com.vaadin.server.FileResource;
-import com.vaadin.server.StreamResource;
 import com.vaadin.server.VaadinService;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
-import pl.pdfviewer.PdfViewer;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.ResourceData;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.workspace.resource.DataStreamSource;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -35,6 +34,7 @@ import java.io.IOException;
 /**
  * Created by rainbird on 7/7/17.
  */
+@JavaScript({"pdf.js", "pdf.worker.js"})
 public class PdfFileDecorator extends Panel implements Decorator {
 
     @Inject
@@ -42,6 +42,42 @@ public class PdfFileDecorator extends Panel implements Decorator {
     private QaiDataProvider<ResourceData> dataProvider;
 
     private Image iconImage;
+
+    private String scriptToTemplate = "" +
+            "// URL of PDF document\n" +
+            //"var url = \"/WEB-INF/tmp/$s\";" +
+            "var url = 'file:/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf'" +
+            "// Asynchronous download PDF\n" +
+            "PDFJS.getDocument(url)\n" +
+            "  .then(function(pdf) {\n" +
+            "    return pdf.getPage(1);\n" +
+            "  })\n" +
+            "  .then(function(page) {\n" +
+            "    // Set scale (zoom) level\n" +
+            "    var scale = 1.5;\n" +
+            "\n" +
+            "    // Get viewport (dimensions)\n" +
+            "    var viewport = page.getViewport(scale);\n" +
+            "\n" +
+            "    // Get canvas#the-canvas\n" +
+            "    var canvas = document.getElementById('the-canvas');\n" +
+            "\n" +
+            "    // Fetch canvas' 2d context\n" +
+            "    var context = canvas.getContext('2d');\n" +
+            "\n" +
+            "    // Set dimensions to Canvas\n" +
+            "    canvas.height = viewport.height;\n" +
+            "    canvas.width = viewport.width;\n" +
+            "\n" +
+            "    // Prepare object needed by render method\n" +
+            "    var renderContext = {\n" +
+            "      canvasContext: context,\n" +
+            "      viewport: viewport\n" +
+            "    };\n" +
+            "\n" +
+            "    // Render PDF page\n" +
+            "    page.render(renderContext);\n" +
+            "  });";
 
     public PdfFileDecorator() {
         iconImage = new Image("Pdf-Viewer",
@@ -58,37 +94,24 @@ public class PdfFileDecorator extends Panel implements Decorator {
             return;
         }
 
-        PdfViewer pdfViewer = null;
+        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+        String filename = basepath + "/WEB-INF/tmp/" + data.getName();
+        File file = new File(filename);
         try {
-            String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-            File file = new File(basepath + "/WEB-INF/tmp/" + data.getName());
             data.writeDataToFile(file);
-            FileResource resource = new FileResource(file);
-            pdfViewer = new PdfViewer(resource);
-            pdfViewer.setHeight(400, Unit.PIXELS);
-            pdfViewer.setWidth(800, Unit.PIXELS);
-//                pdfViewer.setBackAngleButtonCaption(VaadinIcons.ROTATE_LEFT.getHtml());
-//                pdfViewer.setNextAngleButtonCaption(VaadinIcons.ROTATE_RIGHT.getHtml());
-//                pdfViewer.setIncreaseButtonCaption(VaadinIcons.SEARCH_PLUS.getHtml());
-//                pdfViewer.setDecreaseButtonCaption(VaadinIcons.SEARCH_MINUS.getHtml());
-//                pdfViewer.setPreviousPageCaption(VaadinIcons.ANGLE_LEFT.getHtml()+" Back");
-//                pdfViewer.setNextPageCaption("Next "+VaadinIcons.ANGLE_RIGHT.getHtml());
-//                pdfViewer.setWidth("800px");
         } catch (IOException e) {
-            Notification.show("Error while reading file-data" + e.getMessage());
+            Notification.show("Error while writing file: '" + file.getName() + "'");
             return;
         }
 
-        setContent(pdfViewer);
-    }
+        String iframe = "<canvas id=\"the-canvas\" width='800px' height='600px'></canvas>\n";
+        Label iframeLabel = new Label(String.format(iframe, toDecorate.getTitle()));
+        iframeLabel.setContentMode(ContentMode.HTML);
+        setContent(iframeLabel);
+        //String toExecute = "";
+        String toRun = String.format(scriptToTemplate, filename);
+        com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
-    class DummyPdfViewer extends PdfViewer {
-
-        public DummyPdfViewer(ResourceData data, String title) {
-            super();
-            StreamResource resource = new StreamResource(new DataStreamSource(data), title);
-            setResource("resourceFile", resource);
-        }
     }
 
     @Override

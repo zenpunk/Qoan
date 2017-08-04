@@ -72,4 +72,5 @@ public class ImageDecorator extends Panel implements Decorator {
         setContent(image);
     }
 
+
 }
