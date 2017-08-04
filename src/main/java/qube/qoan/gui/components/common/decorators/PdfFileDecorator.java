@@ -45,8 +45,8 @@ public class PdfFileDecorator extends Panel implements Decorator {
 
     private String scriptToTemplate = "" +
             "// URL of PDF document\n" +
-            //"var url = \"/WEB-INF/tmp/$s\";" +
-            "var url = 'file:/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf'" +
+            "var url = '/VAADIN/tmp/%s';" +
+            //"var url = 'file:/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf'" +
             "// Asynchronous download PDF\n" +
             "PDFJS.getDocument(url)\n" +
             "  .then(function(pdf) {\n" +
@@ -66,8 +66,8 @@ public class PdfFileDecorator extends Panel implements Decorator {
             "    var context = canvas.getContext('2d');\n" +
             "\n" +
             "    // Set dimensions to Canvas\n" +
-            "    canvas.height = viewport.height;\n" +
-            "    canvas.width = viewport.width;\n" +
+//            "    canvas.height = viewport.height;\n" +
+//            "    canvas.width = viewport.width;\n" +
             "\n" +
             "    // Prepare object needed by render method\n" +
             "    var renderContext = {\n" +
@@ -90,12 +90,12 @@ public class PdfFileDecorator extends Panel implements Decorator {
         //File pdfFile = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
         ResourceData data = dataProvider.brokerSearchResult(toDecorate);
         if (data == null) {
-            Notification.show("No related data to '" + toDecorate.getTitle() + "' found, returning");
+            Notification.show("No related data to '" + toDecorate.getTitle() + "' not found, returning");
             return;
         }
 
         String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
-        String filename = basepath + "/WEB-INF/tmp/" + data.getName();
+        String filename = basepath + "/VAADIN/tmp/" + data.getName();
         File file = new File(filename);
         try {
             data.writeDataToFile(file);
@@ -109,7 +109,7 @@ public class PdfFileDecorator extends Panel implements Decorator {
         iframeLabel.setContentMode(ContentMode.HTML);
         setContent(iframeLabel);
         //String toExecute = "";
-        String toRun = String.format(scriptToTemplate, filename);
+        String toRun = String.format(scriptToTemplate, data.getName());
         com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
     }
