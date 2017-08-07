@@ -29,4 +29,9 @@ public class InputDecorator extends BaseDecorator {
     public Image getIconImage() {
         return null;
     }
+
+    @Override
+    public String getName() {
+        return "input Decorator";
+    }
 }

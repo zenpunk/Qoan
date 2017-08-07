@@ -104,4 +104,9 @@ public class StockQuotesDecorator extends BaseDecorator {
     public Image getIconImage() {
         return iconImage;
     }
+
+    @Override
+    public String getName() {
+        return "Stock Quotes";
+    }
 }

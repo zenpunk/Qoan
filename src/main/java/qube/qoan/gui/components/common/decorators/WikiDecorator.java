@@ -56,4 +56,9 @@ public class WikiDecorator extends BaseDecorator {
         //setWidth("795px");
         setContent(contentText);
     }
+
+    @Override
+    public String getName() {
+        return "Wiki-Decorator";
+    }
 }

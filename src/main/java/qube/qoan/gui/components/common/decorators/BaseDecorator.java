@@ -35,4 +35,5 @@ public abstract class BaseDecorator extends Panel implements Decorator {
 
     public abstract Image getIconImage();
 
+    public abstract String getName();
 }

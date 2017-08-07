@@ -171,11 +171,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Singleton
     UserManager provideUserManager() {
 
-        if (userManager != null) {
-            return userManager;
+        if (userManager == null) {
+            userManager = new UserManager();
         }
 
-        userManager = new UserManager();
         return userManager;
     }
 
@@ -381,7 +380,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     public SearchServiceInterface getNamedService(String name) {
 
-        initKnownNamedServers();
+        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+            initKnownNamedServers();
+        }
 
         return namedSearchServices.get(name);
     }
@@ -394,7 +395,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
      */
     public void addNamedSearchService(String name, SearchServiceInterface service) {
 
-        initKnownNamedServers();
+        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+            initKnownNamedServers();
+        }
 
         namedSearchServices.put(name, service);
     }
@@ -408,62 +411,58 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private void initKnownNamedServers() {
 
-        //logger.info("QoanModule: initializing services");
-
         if (namedSearchServices == null) {
-
             namedSearchServices = new HashMap<>();
+        }
 
-            if (wikipediaSearchService == null) {
-                wikipediaSearchService = provideWikipediaSearchService();
-            }
+        if (wikipediaSearchService == null) {
+            wikipediaSearchService = provideWikipediaSearchService();
             logger.info("Started service: " + WIKIPEDIA);
             namedSearchServices.put(WIKIPEDIA, wikipediaSearchService);
+        }
 
-            if (wiktionarySearchService == null) {
-                wiktionarySearchService = provideWiktionarySearchService();
-            }
+        if (wiktionarySearchService == null) {
+            wiktionarySearchService = provideWiktionarySearchService();
             logger.info("Started service: " + WIKTIONARY);
             namedSearchServices.put(WIKTIONARY, wiktionarySearchService);
+        }
 
-            if (wikiResourcesSearchService == null) {
-                wikiResourcesSearchService = provideWikiResourcesSearchService();
-            }
+        if (wikiResourcesSearchService == null) {
+            wikiResourcesSearchService = provideWikiResourcesSearchService();
             logger.info("Started service: " + WIKIPEDIA_RESOURCES);
             namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+        }
 
-            if (stockEntitiesSearchService == null) {
-                stockEntitiesSearchService = provideStockEntitiesSearchService();
-            }
+        if (stockEntitiesSearchService == null) {
+            stockEntitiesSearchService = provideStockEntitiesSearchService();
             logger.info("Started service: " + STOCK_ENTITIES);
             namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+        }
 
-            if (stockGroupsSearchService == null) {
-                stockGroupsSearchService = provideStockGroupssSearchService();
-            }
+        if (stockGroupsSearchService == null) {
+            stockGroupsSearchService = provideStockGroupssSearchService();
             logger.info("Started service: " + STOCK_GROUPS);
             namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+        }
 
-            if (proceduresSearchService == null) {
-                proceduresSearchService = provideProceduresSearchService();
-            }
+        if (proceduresSearchService == null) {
+            proceduresSearchService = provideProceduresSearchService();
             logger.info("Started service: " + PROCEDURES);
             namedSearchServices.put(PROCEDURES, proceduresSearchService);
+        }
 
-            if (molecularResourcesService == null) {
-                molecularResourcesService = provideMolecularSearchService();
-            }
+        if (molecularResourcesService == null) {
+            molecularResourcesService = provideMolecularSearchService();
             logger.info("Started service: " + MOLECULAR_RESOURCES);
             namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
+        }
 
-            if (pdfFileRsourcesService == null) {
-                pdfFileRsourcesService = providePdfFileSearchService();
-            }
+        if (pdfFileRsourcesService == null) {
+            pdfFileRsourcesService = providePdfFileSearchService();
             logger.info("Started service: " + PDF_FILE_RESOURCES);
             namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
         }
 
-        //logger.info("QoanModule: all known services started");
     }
 
     private HazelcastInstance getHazelcastInstance() {

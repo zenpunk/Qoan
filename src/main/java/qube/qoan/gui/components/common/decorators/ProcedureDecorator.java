@@ -21,11 +21,16 @@ import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
+import qube.qai.procedure.nodes.ProcedureInputs;
+import qube.qai.procedure.nodes.ValueNode;
+import qube.qai.procedure.utils.SelectionProcedure;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class ProcedureDecorator extends BaseDecorator {
 
@@ -35,6 +40,8 @@ public class ProcedureDecorator extends BaseDecorator {
     private Procedure procedure;
 
     private Image iconImage;
+
+    private boolean isTemplate = false;
 
     public ProcedureDecorator() {
         iconImage = new Image("Procedure",
@@ -53,10 +60,50 @@ public class ProcedureDecorator extends BaseDecorator {
                 return;
             }
             procedure = template.createProcedure();
+            isTemplate = true;
         }
 
+        Panel description = createProcedureDescription(procedure);
+        Component content = description;
+
+        if (isTemplate) {
+
+            Collection<SelectionProcedure> children = attachSelectionProcedures(procedure);
+            if (children.size() > 0) {
+                TabSheet tabSheet = new TabSheet();
+                tabSheet.addTab(description, "Description");
+                for (SelectionProcedure child : children) {
+                    SelectionDecorator decorator = new SelectionDecorator(child);
+                    tabSheet.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
+                }
+                content = tabSheet;
+            }
+        }
+
+        setContent(content);
+
+    }
+
+    Collection<SelectionProcedure> attachSelectionProcedures(Procedure template) {
+
+        Collection<SelectionProcedure> procedures = new ArrayList<>();
+
+        ProcedureInputs inputs = template.getProcedureInputs();
+        for (String name : inputs.getInputNames()) {
+            ValueNode targetValue = inputs.getNamedInput(name);
+            SelectionProcedure selection = new SelectionProcedure(targetValue);
+            template.addChild(selection);
+            procedures.add(selection);
+        }
+
+        return procedures;
+    }
+
+    private Panel createProcedureDescription(Procedure procedure) {
+
+        Panel panel = new Panel(procedure.getProcedureName());
+
         VerticalLayout contentLayout = new VerticalLayout();
-        contentLayout.setCaption(toDecorate.getTitle());
 
         Label descriptionLabel = new Label("Description: " + procedure.getDescriptionText());
         contentLayout.addComponent(descriptionLabel);
@@ -90,8 +137,9 @@ public class ProcedureDecorator extends BaseDecorator {
         saveButton.setStyleName("link");
         contentLayout.addComponent(saveButton);
 
-        setContent(contentLayout);
+        panel.setContent(contentLayout);
 
+        return panel;
     }
 
     public void onSaveProcedure() {
@@ -103,5 +151,10 @@ public class ProcedureDecorator extends BaseDecorator {
     @Override
     public Image getIconImage() {
         return iconImage;
+    }
+
+    @Override
+    public String getName() {
+        return "Procedure Decorator";
     }
 }

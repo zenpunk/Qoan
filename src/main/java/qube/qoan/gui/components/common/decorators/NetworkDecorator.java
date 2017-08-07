@@ -66,4 +66,9 @@ public class NetworkDecorator extends BaseDecorator {
     public Image getIconImage() {
         return iconImage;
     }
+
+    @Override
+    public String getName() {
+        return "Semantic network";
+    }
 }

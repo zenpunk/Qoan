@@ -12,13 +12,24 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.procedure.decorators;
+package qube.qoan.gui.components.common.decorators;
 
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import qube.qai.procedure.utils.SelectionProcedure;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.decorators.BaseDecorator;
 
 public class SelectionDecorator extends BaseDecorator {
+
+    private Image iconImage;
+
+    private SelectionProcedure selection;
+
+    public SelectionDecorator(SelectionProcedure selection) {
+        this.selection = selection;
+        iconImage = new Image("Selection",
+                new ClassResource("gui/images/selection.png"));
+    }
 
     @Override
     public void decorate(SearchResult toDecorate) {
@@ -27,11 +38,11 @@ public class SelectionDecorator extends BaseDecorator {
 
     @Override
     public Image getIconImage() {
-        return null;
+        return iconImage;
     }
 
     @Override
     public String getName() {
-        return "Selection Decorator";
+        return null;
     }
 }

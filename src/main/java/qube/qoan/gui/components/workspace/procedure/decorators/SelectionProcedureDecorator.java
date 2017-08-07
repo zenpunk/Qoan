@@ -50,4 +50,9 @@ public class SelectionProcedureDecorator extends BaseDecorator {
         Procedure procedure = qaiDataProvider.brokerSearchResult(toDecorate);
         //MetricsPanel metrics = new MetricsPanel(toDecorate.getTitle(), procedure);
     }
+
+    @Override
+    public String getName() {
+        return "Selection Procedure";
+    }
 }
