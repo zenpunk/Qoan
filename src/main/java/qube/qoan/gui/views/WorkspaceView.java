@@ -23,7 +23,6 @@ import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 import qube.qoan.gui.components.workspace.resource.ResourceMenu;
 import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
 
-//import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 
 /**
  * Created by rainbird on 10/30/15.
@@ -50,8 +49,6 @@ public class WorkspaceView extends QoanView {
 
     private HorizontalSplitPanel splitPanel;
 
-    private Component currentComponent;
-
     public WorkspaceView() {
         this.viewTitle = "Qoan Workspace";
     }
@@ -71,126 +68,54 @@ public class WorkspaceView extends QoanView {
 
         splitPanel = new HorizontalSplitPanel();
 
+        VerticalLayout innerLayout = new VerticalLayout();
+        Accordion accordion = new Accordion();
+        //accordion.addSelectedTabChangeListener(event -> { getViewComponent(); });
+
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
         wikiSearchMenu = new WikiSearchMenu();
         injector.injectMembers(wikiSearchMenu);
         wikiSearchMenu.initialize();
-        wikiSearchMenu.setSizeUndefined();
+        accordion.addTab(wikiSearchMenu, wikiSearchMenu.getCaptionTitle(), wikiSearchMenu.getMenuIcon().getSource());
 
         financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
-        financeMenu.setSizeUndefined();
+        financeMenu.initialize();
+        //financeMenu.setSizeUndefined();
+        accordion.addTab(financeMenu, financeMenu.getCaptionTitle(), financeMenu.getMenuIcon().getSource());
 
         procedureMenu = new ProcedureMenu();
         injector.injectMembers(procedureMenu);
-        procedureMenu.setSizeUndefined();
+        procedureMenu.initialize();
+        //procedureMenu.setSizeUndefined();
+        accordion.addTab(procedureMenu, procedureMenu.getCaptionTitle(), procedureMenu.getMenuIcon().getSource());
 
         resourceMenu = new ResourceMenu();
         injector.injectMembers(resourceMenu);
-        resourceMenu.setSizeUndefined();
+        resourceMenu.initialize();
+        //resourceMenu.setSizeUndefined();
+        accordion.addTab(resourceMenu, resourceMenu.getCaptionTitle(), resourceMenu.getMenuIcon().getSource());
 
-        workspace = new Workspace();
-        injector.injectMembers(workspace);
-        splitPanel.setSecondComponent(workspace);
-
-        currentComponent = wikiSearchMenu;
-        currentComponent.setWidth("100%");
-        splitPanel.setFirstComponent(currentComponent);
-        splitPanel.getFirstComponent().setVisible(true);
-
-        addComponent(splitPanel);
-
-        HorizontalLayout lowerLayout = new HorizontalLayout();
+        innerLayout.addComponent(accordion);
 
         // add a new tab to workspace
         Button addTabButton = new Button("Add New Tab");
         addTabButton.setStyleName("link");
         addTabButton.addClickListener(clickEvent -> onAddTab());
-        lowerLayout.addComponent(addTabButton);
+        innerLayout.addComponent(addTabButton);
 
-        // open the search menu
-        Button showSearchMenuButton = new Button("Show Wikies Search");
-        showSearchMenuButton.setStyleName("link");
-        showSearchMenuButton.addClickListener(clickEvent -> onShowSearch());
-        lowerLayout.addComponent(showSearchMenuButton);
+        workspace = new Workspace();
+        injector.injectMembers(workspace);
+        splitPanel.setSecondComponent(workspace);
 
-        // open the procedure menu
-        Button showProcedureMenuButton = new Button("Show Procedure Search");
-        showProcedureMenuButton.setStyleName("link");
-        showProcedureMenuButton.addClickListener(clickEvent -> onShowProcedure());
-        lowerLayout.addComponent(showProcedureMenuButton);
+        innerLayout.setWidth("100%");
+        splitPanel.setFirstComponent(innerLayout);
+        splitPanel.getFirstComponent().setVisible(true);
 
-        // open the finance-menu
-        Button showFinanceMenuButton = new Button("Show Finance Search");
-        showFinanceMenuButton.setStyleName("link");
-        showFinanceMenuButton.addClickListener(clickEvent -> onShowFinance());
-        lowerLayout.addComponent(showFinanceMenuButton);
-
-        Button showResourceMenuButton = new Button("Show Resource Search");
-        showResourceMenuButton.setStyleName("link");
-        showResourceMenuButton.addListener(event -> onShowResource());
-        lowerLayout.addComponent(showResourceMenuButton);
-
-        addComponent(lowerLayout);
+        addComponent(splitPanel);
 
         initialized = true;
-    }
-
-    /**
-     * listener method for showing resource-menu
-     */
-    public void onShowResource() {
-        splitPanel.removeComponent(currentComponent);
-        resourceMenu.initialize();
-        currentComponent = resourceMenu;
-        currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(resourceMenu);
-        if (debug) {
-            Notification.show("Show process-menu");
-        }
-    }
-
-    /**
-     * listener method for showing procedure-menu
-     */
-    public void onShowProcedure() {
-        splitPanel.removeComponent(currentComponent);
-        procedureMenu.initialize();
-        currentComponent = procedureMenu;
-        currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(procedureMenu);
-        if (debug) {
-            Notification.show("Show process-menu");
-        }
-    }
-
-    /**
-     * listener method for showing market-menu
-     */
-    public void onShowFinance() {
-        splitPanel.removeComponent(currentComponent);
-        financeMenu.initialize();
-        currentComponent = financeMenu;
-        currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(financeMenu);
-        if (debug) {
-            Notification.show("Show finance-menu");
-        }
-    }
-
-    /**
-     * listener method for showing search-menu
-     */
-    public void onShowSearch() {
-        splitPanel.removeComponent(currentComponent);
-        wikiSearchMenu.initialize();
-        currentComponent = wikiSearchMenu;
-        currentComponent.setSizeFull();
-        splitPanel.setFirstComponent(wikiSearchMenu);
-        if (debug) {
-            Notification.show("Show search menu");
-        }
     }
 
     /**

@@ -45,6 +45,14 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
 
     protected abstract SearchSinkComponent getResultSink();
 
+    public abstract Image getMenuIcon();
+
+    public abstract String getCaptionTitle();
+
+    public boolean isInitialized() {
+        return initialized;
+    }
+
     protected void initialize(String... serviceNames) {
 
         if (initialized) {
@@ -108,9 +116,5 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         for (SearchSource source : searchSources) {
             source.doSearch(searchString);
         }
-    }
-
-    public boolean isInitialized() {
-        return initialized;
     }
 }

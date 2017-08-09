@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.workspace.resource;
 
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
@@ -30,6 +32,8 @@ public class ResourceMenu extends QoanMenu {
     @Named("ResourceResults")
     private SearchResultSink searchSink;
 
+    private Image iconImage;
+
     /**
      * this is for adding and managing pdf-directories in the whole
      */
@@ -38,13 +42,23 @@ public class ResourceMenu extends QoanMenu {
 
     @Override
     public void initialize() {
-        setCaption("Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources");
-        // WIKIPEDIA_RESOURCES, MOLECULAR_RESOURCES, PDF_FILE_RESOURCES
+        iconImage = new Image("",
+                new ClassResource("gui/images/readings-icon.png"));
         initialize(WIKIPEDIA_RESOURCES, PDF_FILE_RESOURCES, MOLECULAR_RESOURCES);
     }
 
     @Override
     protected SearchSinkComponent getResultSink() {
         return (SearchSinkComponent) searchSink;
+    }
+
+    @Override
+    public Image getMenuIcon() {
+        return iconImage;
+    }
+
+    @Override
+    public String getCaptionTitle() {
+        return "Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources";
     }
 }

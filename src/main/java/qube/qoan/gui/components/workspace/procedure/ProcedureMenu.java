@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.workspace.procedure;
 
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
@@ -34,6 +36,8 @@ public class ProcedureMenu extends QoanMenu {
     @Named("ProcedureResults")
     private SearchResultSink resultSink;
 
+    private Image iconImage;
+
     /**
      * this is the container for elements which will be
      * needed to design, run and gain access to results
@@ -47,13 +51,24 @@ public class ProcedureMenu extends QoanMenu {
 
     @Override
     public void initialize() {
-        setCaption("Procedure Templates & Instances");
+        iconImage = new Image("",
+                new ClassResource("gui/images/proc-icon.png"));
         initialize(PROCEDURES);
     }
 
     @Override
     protected SearchSinkComponent getResultSink() {
         return (SearchSinkComponent) resultSink;
+    }
+
+    @Override
+    public Image getMenuIcon() {
+        return iconImage;
+    }
+
+    @Override
+    public String getCaptionTitle() {
+        return "Procedure Templates & Instances";
     }
 
     /*

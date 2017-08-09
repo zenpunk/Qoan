@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.workspace.finance;
 
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
@@ -30,18 +32,31 @@ public class FinanceMenu extends QoanMenu {
     @Named("FinanceResults")
     private SearchResultSink resultSink;
 
+    private Image iconImage;
+
     public FinanceMenu() {
 
     }
 
     @Override
     public void initialize() {
-        setCaption("Stock Groups & Entities");
+        iconImage = new Image("Selection",
+                new ClassResource("gui/images/stocks-index-icon.png"));
         initialize(STOCK_GROUPS);
     }
 
     @Override
     protected SearchSinkComponent getResultSink() {
         return (SearchSinkComponent) resultSink;
+    }
+
+    @Override
+    public Image getMenuIcon() {
+        return iconImage;
+    }
+
+    @Override
+    public String getCaptionTitle() {
+        return "Stock Groups & Entities";
     }
 }

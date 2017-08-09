@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.workspace.search;
 
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
@@ -30,14 +32,27 @@ public class WikiSearchMenu extends QoanMenu {
     @Named("WikiResults")
     private SearchResultSink resultSink;
 
+    private Image iconImage;
+
     public WikiSearchMenu() {
         super();
     }
 
     @Override
     public void initialize() {
-        setCaption("Wikipedia & Wiktionary Entries");
+        iconImage = new Image("",
+                new ClassResource("gui/images/wiki-icon.png"));
         initialize(WIKIPEDIA, WIKTIONARY);
+    }
+
+    @Override
+    public Image getMenuIcon() {
+        return iconImage;
+    }
+
+    @Override
+    public String getCaptionTitle() {
+        return "Wikipedia & Wiktionary Entries";
     }
 
     @Override

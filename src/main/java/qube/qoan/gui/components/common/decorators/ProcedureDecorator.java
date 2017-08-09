@@ -84,7 +84,14 @@ public class ProcedureDecorator extends BaseDecorator {
 
     }
 
-    Collection<SelectionProcedure> attachSelectionProcedures(Procedure template) {
+    /**
+     * adds the selection procedures to the given procedure-parameters
+     * so that they can be assigned.
+     *
+     * @param template
+     * @return
+     */
+    protected Collection<SelectionProcedure> attachSelectionProcedures(Procedure template) {
 
         Collection<SelectionProcedure> procedures = new ArrayList<>();
 
@@ -99,6 +106,11 @@ public class ProcedureDecorator extends BaseDecorator {
         return procedures;
     }
 
+    /**
+     * create the panel with the procedure metrics
+     * @param procedure
+     * @return
+     */
     private Panel createProcedureDescription(Procedure procedure) {
 
         Panel panel = new Panel(procedure.getProcedureName());
@@ -142,6 +154,9 @@ public class ProcedureDecorator extends BaseDecorator {
         return panel;
     }
 
+    /**
+     * button action for saving procedures
+     */
     public void onSaveProcedure() {
         if (procedure != null) {
             dataProvider.putData(procedure.getUuid(), procedure);
