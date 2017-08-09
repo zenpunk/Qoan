@@ -37,17 +37,7 @@ public class WorkspaceView extends QoanView {
 
     public static String NAME = "workspace";
 
-    private WikiSearchMenu wikiSearchMenu;
-
-    private FinanceMenu financeMenu;
-
-    private ProcedureMenu procedureMenu;
-
-    private ResourceMenu resourceMenu;
-
     private Workspace workspace;
-
-    private HorizontalSplitPanel splitPanel;
 
     public WorkspaceView() {
         this.viewTitle = "Qoan Workspace";
@@ -66,35 +56,30 @@ public class WorkspaceView extends QoanView {
         // so that we can inject the members of the class already now for their correct initialization
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
 
-        splitPanel = new HorizontalSplitPanel();
-
+        HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
         VerticalLayout innerLayout = new VerticalLayout();
         Accordion accordion = new Accordion();
-        //accordion.addSelectedTabChangeListener(event -> { getViewComponent(); });
 
         // begin adding the first component
         // search-menu has to have a reference to the workspace in order to be able to add components to it
-        wikiSearchMenu = new WikiSearchMenu();
+        WikiSearchMenu wikiSearchMenu = new WikiSearchMenu();
         injector.injectMembers(wikiSearchMenu);
         wikiSearchMenu.initialize();
         accordion.addTab(wikiSearchMenu, wikiSearchMenu.getCaptionTitle(), wikiSearchMenu.getMenuIcon().getSource());
 
-        financeMenu = new FinanceMenu();
+        FinanceMenu financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);
         financeMenu.initialize();
-        //financeMenu.setSizeUndefined();
         accordion.addTab(financeMenu, financeMenu.getCaptionTitle(), financeMenu.getMenuIcon().getSource());
 
-        procedureMenu = new ProcedureMenu();
+        ProcedureMenu procedureMenu = new ProcedureMenu();
         injector.injectMembers(procedureMenu);
         procedureMenu.initialize();
-        //procedureMenu.setSizeUndefined();
         accordion.addTab(procedureMenu, procedureMenu.getCaptionTitle(), procedureMenu.getMenuIcon().getSource());
 
-        resourceMenu = new ResourceMenu();
+        ResourceMenu resourceMenu = new ResourceMenu();
         injector.injectMembers(resourceMenu);
         resourceMenu.initialize();
-        //resourceMenu.setSizeUndefined();
         accordion.addTab(resourceMenu, resourceMenu.getCaptionTitle(), resourceMenu.getMenuIcon().getSource());
 
         innerLayout.addComponent(accordion);
@@ -111,7 +96,6 @@ public class WorkspaceView extends QoanView {
 
         innerLayout.setWidth("100%");
         splitPanel.setFirstComponent(innerLayout);
-        splitPanel.getFirstComponent().setVisible(true);
 
         addComponent(splitPanel);
 

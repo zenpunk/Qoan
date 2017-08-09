@@ -34,6 +34,8 @@ public class FinanceMenu extends QoanMenu {
 
     private Image iconImage;
 
+    private String captionTitle = "Stock Groups & Entities";
+
     public FinanceMenu() {
 
     }
@@ -57,6 +59,6 @@ public class FinanceMenu extends QoanMenu {
 
     @Override
     public String getCaptionTitle() {
-        return "Stock Groups & Entities";
+        return captionTitle;
     }
 }

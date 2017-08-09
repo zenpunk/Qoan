@@ -38,6 +38,8 @@ public class ProcedureMenu extends QoanMenu {
 
     private Image iconImage;
 
+    private String captionTitle = "Procedure Templates & Instances";
+
     /**
      * this is the container for elements which will be
      * needed to design, run and gain access to results
@@ -68,7 +70,7 @@ public class ProcedureMenu extends QoanMenu {
 
     @Override
     public String getCaptionTitle() {
-        return "Procedure Templates & Instances";
+        return captionTitle;
     }
 
     /*

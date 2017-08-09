@@ -34,6 +34,8 @@ public class ResourceMenu extends QoanMenu {
 
     private Image iconImage;
 
+    private String captionTitle = "Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources";
+
     /**
      * this is for adding and managing pdf-directories in the whole
      */
@@ -59,6 +61,6 @@ public class ResourceMenu extends QoanMenu {
 
     @Override
     public String getCaptionTitle() {
-        return "Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources";
+        return captionTitle;
     }
 }

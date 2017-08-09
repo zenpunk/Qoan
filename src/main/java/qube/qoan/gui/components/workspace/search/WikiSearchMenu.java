@@ -34,6 +34,8 @@ public class WikiSearchMenu extends QoanMenu {
 
     private Image iconImage;
 
+    private String captionTitle = "Wikipedia & Wiktionary Entries";
+
     public WikiSearchMenu() {
         super();
     }
@@ -52,7 +54,7 @@ public class WikiSearchMenu extends QoanMenu {
 
     @Override
     public String getCaptionTitle() {
-        return "Wikipedia & Wiktionary Entries";
+        return captionTitle;
     }
 
     @Override
