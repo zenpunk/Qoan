@@ -35,18 +35,25 @@ public class ImageDecorator extends Panel implements Decorator {
 
     private Image iconImage;
 
+    private String name = "Image Viewer";
+
     @Inject
     @Named("WikiResources_en")
     private QaiDataProvider<ResourceData> dataProvider;
 
     public ImageDecorator() {
-        iconImage = new Image("Image Viewer",
-                new ClassResource("gui/images/image.png"));
+        iconImage = new Image(name,
+                new ClassResource("gui/images/image-icon.png"));
     }
 
     @Override
     public Image getIconImage() {
         return iconImage;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override

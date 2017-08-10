@@ -15,29 +15,27 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.JavaScript;
-import com.vaadin.ui.Panel;
-import com.vaadin.ui.VerticalLayout;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.gui.components.common.NglAdapter;
 
-/**
- * Created by rainbird on 7/8/17.
- */
-public class MolecularViewerDecorator extends Panel implements Decorator {
+public class ResourceAttachingDecorator extends BaseDecorator {
+
+    private String name = "Resource Attcahing Procedure Decorator";
 
     private Image iconImage;
 
-    private String name = "NGL-Viewer";
-
-    private String jsExec = "NGL.init( onInit );";
-
-    private String jsExecParam = "NGL.init( onInitLoad('";
-
-    public MolecularViewerDecorator() {
+    public ResourceAttachingDecorator() {
         iconImage = new Image(name,
-                new ClassResource("gui/images/helix-icon.png"));
+                new ClassResource("gui/images/proc-icon.png"));
+    }
+
+    @Override
+    public void decorate(SearchResult toDecorate) {
+
+        Grid<SearchResult> resourcesToAttach = new Grid<>();
+
+        setContent(resourcesToAttach);
     }
 
     @Override
@@ -49,20 +47,4 @@ public class MolecularViewerDecorator extends Panel implements Decorator {
     public String getName() {
         return name;
     }
-
-    @Override
-    public void decorate(SearchResult toDecorate) {
-
-        String moleculeName = toDecorate.getUuid();
-
-        VerticalLayout layout = new VerticalLayout();
-
-        NglAdapter nglViewer = new NglAdapter();
-        layout.addComponent(nglViewer);
-        String toExecute = jsExecParam + moleculeName + "' ))";
-        JavaScript.getCurrent().execute(toExecute);
-
-        setContent(layout);
-    }
-
 }

@@ -75,7 +75,8 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
         layout.addComponent(iconImage);
 
         // create and add the close-button first
-        Label title = new Label("Title: '" + searchResult.getTitle() + "'");
+        Label title = new Label(searchResult.getTitle());
+        title.setStyleName("bold");
         layout.addComponent(title);
 
         HorizontalLayout buttonsRow = new HorizontalLayout();
@@ -102,22 +103,16 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
     public void onOpenClicked() {
 
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
-        Component content;
+        TabSheet content = new TabSheet();
         if (decorators.size() > 1) {
-            content = new TabSheet();
             for (String name : decorators.keySet()) {
                 Decorator decorator = decorators.get(name);
                 injector.injectMembers(decorator);
                 decorator.decorate(searchResult);
-                ((TabSheet) content).addTab(decorator, decorator.getCaption(), decorator.getIcon());
+                content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
             }
-        } else if (decorators.size() == 1) {
-            Decorator decorator = decorators.values().iterator().next();
-            injector.injectMembers(decorator);
-            decorator.decorate(searchResult);
-            content = decorator;
         } else {
-            content = new Panel("No decorators for this");
+            content.addTab(new Panel("No decorators for this"));
         }
 
         DisplayPanel panel = new DisplayPanel(searchResult.getTitle(), parentLayout, content);

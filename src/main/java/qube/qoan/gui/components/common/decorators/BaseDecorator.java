@@ -33,7 +33,9 @@ public abstract class BaseDecorator extends Panel implements Decorator {
     @Override
     public abstract void decorate(SearchResult toDecorate);
 
+    @Override
     public abstract Image getIconImage();
 
+    @Override
     public abstract String getName();
 }

@@ -43,6 +43,8 @@ public class PdfFileDecorator extends Panel implements Decorator {
 
     private Image iconImage;
 
+    private String name = "Pdf-Viewer";
+
     private String scriptToTemplate = "" +
             "// URL of PDF document\n" +
             "var url = '/VAADIN/tmp/%s';" +
@@ -78,8 +80,8 @@ public class PdfFileDecorator extends Panel implements Decorator {
             "});\n";
 
     public PdfFileDecorator() {
-        iconImage = new Image("Pdf-Viewer",
-                new ClassResource("gui/images/file.png"));
+        iconImage = new Image(name,
+                new ClassResource("gui/images/pdf-file-icon.png"));
     }
 
     @Override
@@ -108,6 +110,11 @@ public class PdfFileDecorator extends Panel implements Decorator {
         String toRun = String.format(scriptToTemplate, data.getName());
         com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
+    }
+
+    @Override
+    public String getName() {
+        return null;
     }
 
     @Override

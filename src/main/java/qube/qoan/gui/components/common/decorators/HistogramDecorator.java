@@ -18,7 +18,6 @@ import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Panel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -32,20 +31,27 @@ import qube.qai.services.implementation.SearchResult;
 /**
  * Created by rainbird on 7/8/17.
  */
-public class HistogramDecorator extends Panel implements Decorator {
+public class HistogramDecorator extends BaseDecorator {
 
     private Image iconImage;
+
+    private String name = "Wiki article";
 
     private ResizableCssLayout imageWrapper;
 
     public HistogramDecorator() {
-        iconImage = new Image("Wiki article",
-                new ClassResource("gui/images/chart.png"));
+        iconImage = new Image(name,
+                new ClassResource("gui/images/chart-icon.png"));
     }
 
     @Override
     public Image getIconImage() {
         return iconImage;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 
     @Override
