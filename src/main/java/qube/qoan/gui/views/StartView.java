@@ -50,7 +50,7 @@ public class StartView extends QoanView {
         HorizontalLayout firstRow = new HorizontalLayout();
         firstRow.setWidth("80%");
         ClassResource resource = new ClassResource("gui/images/kokoline.gif");
-        Image image = new Image("", resource);
+        Image image = new Image("Singularity is nigh!", resource);
         image.setWidth("30%");
         firstRow.addComponent(image);
 

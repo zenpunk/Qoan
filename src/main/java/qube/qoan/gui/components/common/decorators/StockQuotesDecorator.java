@@ -73,7 +73,7 @@ public class StockQuotesDecorator extends BaseDecorator {
 
                 XYDataset dataset = createDataSet(toDecorate.getTitle(), quotes);
                 JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                        toDecorate.getTitle() + " Quotes",
+                        toDecorate.getTitle(),
                         "Days",
                         "Close",
                         dataset,
