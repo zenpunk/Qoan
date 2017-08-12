@@ -21,7 +21,7 @@ import qube.qai.services.implementation.SearchResult;
 
 public class ResourceAttachingDecorator extends BaseDecorator {
 
-    private String name = "Resource Attcahing Procedure Decorator";
+    private String name = "Resource Attaching Procedure Decorator";
 
     private Image iconImage;
 
@@ -33,9 +33,10 @@ public class ResourceAttachingDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        Grid<SearchResult> resourcesToAttach = new Grid<>();
+        Grid<SearchResult> toAttachGrid = new Grid<>();
 
-        setContent(resourcesToAttach);
+
+        setContent(toAttachGrid);
     }
 
     @Override

@@ -73,42 +73,4 @@ public class ProcedureMenu extends QoanMenu {
         return captionTitle;
     }
 
-    /*
-
-    private void initialize() {
-
-        VerticalLayout layout = new VerticalLayout();
-        //layout.setWidth("300px");
-
-        final ProcedureRepositoryPanel repositoryPanel = new ProcedureRepositoryPanel();
-        layout.addComponent(repositoryPanel);
-
-        final ProcedureListPanel procedureListPanel = new ProcedureListPanel();
-        // create the button which does the work
-        Button showSelectedProcedureButton = new Button("Show selected procedure");
-        showSelectedProcedureButton.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                String name = repositoryPanel.getSelectedProcedure();
-                Procedure procedure = null;
-                // @TODO this is perhaps really only temporary
-                // this is what we do when we need to create a dummy procedure
-                if (StringUtils.containsIgnoreCase(name, "dummy")) {
-                    procedure = new NeuralNetworkAnalysis();
-                    procedureCache.cacheProcedure(procedure);
-                } else {
-                    procedure = procedureCache.getProcedureWithName(name);
-                }
-
-                procedureListPanel.displayProcedure(procedure);
-            }
-        });
-        showSelectedProcedureButton.setStyleName("link");
-        layout.addComponent(showSelectedProcedureButton);
-        layout.addComponent(procedureListPanel);
-        setContent(layout);
-
-    }
-*/
-
 }

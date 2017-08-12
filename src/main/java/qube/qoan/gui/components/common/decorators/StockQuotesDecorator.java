@@ -17,6 +17,7 @@ package qube.qoan.gui.components.common.decorators;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Panel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.data.time.Day;
@@ -25,6 +26,7 @@ import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.vaadin.addon.JFreeChartWrapper;
 import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockQuote;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -32,6 +34,7 @@ import qube.qai.services.implementation.SearchResult;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.Collection;
+import java.util.Set;
 
 import static qube.qai.main.QaiConstants.STOCK_QUOTES;
 
@@ -45,55 +48,59 @@ public class StockQuotesDecorator extends BaseDecorator {
     private SearchServiceInterface stocksSearch;
 
     @Inject
-    private QaiDataProvider<StockQuote> stockQuoteProvider;
+    private QaiDataProvider<StockEntity> dataProvider;
 
     private Image iconImage;
 
+    private String name = "Stock Quotes";
+
     public StockQuotesDecorator() {
-        iconImage = new Image("Stock Quotes",
-                new ClassResource("gui/images/stocks-index.png"));
+        iconImage = new Image(name,
+                new ClassResource("gui/images/chart-icon.png"));
     }
 
     @Override
     public void decorate(SearchResult toDecorate) {
 
         Collection<SearchResult> results = stocksSearch.searchInputString(toDecorate.getDescription(), STOCK_QUOTES, 0);
+        Component wrapper = new Panel();
 
-        // don't bother if there are no results
-        if (results == null || results.isEmpty()) {
-            return;
-        }
+        if (results != null && !results.isEmpty()) {
+            SearchResult result = results.iterator().next();
+            StockEntity entity = dataProvider.brokerSearchResult(result);
+            Set<StockQuote> quotes = entity.getQuotes();
+            if (quotes != null && !quotes.isEmpty()) {
 
-        XYDataset dataset = createDataSet(toDecorate.getTitle(), results);
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                toDecorate.getTitle() + " Quotes",
-                "Days",
-                "Adjusted Close",
-                dataset,
-                true,
-                false,
-                false);
-        Component wrapper = new JFreeChartWrapper(chart) {
+                XYDataset dataset = createDataSet(toDecorate.getTitle(), quotes);
+                JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                        toDecorate.getTitle() + " Quotes",
+                        "Days",
+                        "Close",
+                        dataset,
+                        true,
+                        false,
+                        false);
+                wrapper = new JFreeChartWrapper(chart) {
 
-            @Override
-            public void attach() {
-                super.attach();
-                setResource("src", getSource());
+                    @Override
+                    public void attach() {
+                        super.attach();
+                        setResource("src", getSource());
+                    }
+                };
             }
-        };
-
+        }
         setContent(wrapper);
     }
 
-    private XYDataset createDataSet(String title, Collection<SearchResult> results) {
+    private XYDataset createDataSet(String title, Set<StockQuote> quotes) {
 
         TimeSeriesCollection dataset = new TimeSeriesCollection();
 
         TimeSeries series = new TimeSeries(title);
-        for (SearchResult result : results) {
-            StockQuote quote = stockQuoteProvider.brokerSearchResult(result);
+        for (StockQuote quote : quotes) {
             Day date = new Day(quote.getQuoteDate());
-            series.add(date, quote.getAdjustedClose());
+            series.add(date, quote.getClose());
         }
 
         dataset.addSeries(series);
@@ -107,6 +114,6 @@ public class StockQuotesDecorator extends BaseDecorator {
 
     @Override
     public String getName() {
-        return "Stock Quotes";
+        return name;
     }
 }
