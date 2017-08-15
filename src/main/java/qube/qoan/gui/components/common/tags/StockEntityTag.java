@@ -19,6 +19,7 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import qube.qai.persistence.StockEntity;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.HistogramDecorator;
 import qube.qoan.gui.components.common.decorators.StockQuotesDecorator;
 import qube.qoan.gui.components.workspace.finance.StockEntityPanel;
 
@@ -35,62 +36,9 @@ public class StockEntityTag extends BaseTag {
         super(parentLayout, searchResult);
         iconImage = new Image(STOCK_ENTITIES,
                 new ClassResource("gui/images/stocks-index.png"));
-        decorators.put("Stock Entity", new StockEntityPanel());
+        decorators.put("Stock Quote Statistics", new HistogramDecorator());
         decorators.put("Stock Quotes", new StockQuotesDecorator());
-        //decorators.put("Stock Quote Statistics", new HistogramDecorator());
+        decorators.put("Stock Entity", new StockEntityPanel());
     }
 
-    //    public StockEntityTag(StockEntity stockEntity, Layout parentLayout) {
-//        super();
-//
-//        this.stockEntity = stockEntity;
-//        this.parentLayout = parentLayout;
-//
-//        initialize();
-//    }
-
-    /**
-     * initialize the whole thing here
-     */
-    /*@Override
-    public void initialize() {
-        VerticalLayout layout = new VerticalLayout();
-        layout.setMargin(true);
-
-        final String title = stockEntity.getUuid().toString();
-        Label titleLabel = new Label(title);
-        titleLabel.setStyleName("bold");
-        layout.addComponent(titleLabel);
-
-        Label sourceLabel = new Label("name: " + stockEntity.getSecurity());
-        layout.addComponent(sourceLabel);
-
-        HorizontalLayout buttonsLayout = new HorizontalLayout();
-        Button open = new Button("open");
-        open.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                // @TODO
-
-            }
-        });
-        open.setStyleName("link");
-        buttonsLayout.addComponent(open);
-
-        // add a button to remove this tag from workspace
-        Button remove = new Button("remove");
-        remove.addClickListener(new Button.ClickListener() {
-
-            public void buttonClick(Button.ClickEvent event) {
-                // we are removing the toDecorate- which is the dnd-wrapper
-                Component parent = getParent();
-                parentLayout.removeComponent(parent);
-            }
-        });
-        remove.setStyleName("link");
-        buttonsLayout.addComponent(remove);
-
-        layout.addComponent(buttonsLayout);
-
-        setContent(layout);
-    }*/
 }

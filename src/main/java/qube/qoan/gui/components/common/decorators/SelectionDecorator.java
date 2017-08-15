@@ -25,14 +25,21 @@ public class SelectionDecorator extends BaseDecorator {
 
     private SelectionProcedure selection;
 
-    public SelectionDecorator(SelectionProcedure selection) {
+    private String name;
+
+    public SelectionDecorator(String name, SelectionProcedure selection) {
+        this.name = "Selection for " + name;
         this.selection = selection;
-        iconImage = new Image("Selection",
-                new ClassResource("gui/images/selection.png"));
+        this.iconImage = new Image(name,
+                new ClassResource("gui/images/selection-icon.png"));
     }
 
     @Override
     public void decorate(SearchResult toDecorate) {
+
+        String mimeType = selection.getValueTo().getMimeType();
+
+
 
     }
 
@@ -43,6 +50,6 @@ public class SelectionDecorator extends BaseDecorator {
 
     @Override
     public String getName() {
-        return null;
+        return name;
     }
 }

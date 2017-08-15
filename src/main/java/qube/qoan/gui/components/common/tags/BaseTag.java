@@ -104,7 +104,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         TabSheet content = new TabSheet();
-        if (decorators.size() > 1) {
+        if (decorators.size() > 0) {
             for (String name : decorators.keySet()) {
                 Decorator decorator = decorators.get(name);
                 injector.injectMembers(decorator);

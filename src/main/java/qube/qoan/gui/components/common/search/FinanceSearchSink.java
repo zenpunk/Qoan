@@ -68,9 +68,11 @@ public class FinanceSearchSink extends SearchSinkComponent {
 
             TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
             TreeData<SearchResult> data = gridDataProvider.getTreeData();
-            data.addItem(null, result);
-            data.addItems(result, entitiesAsResult);
-            gridDataProvider.refreshAll();
+            if (!data.contains(result)) {
+                data.addItem(null, result);
+                data.addItems(result, entitiesAsResult);
+                gridDataProvider.refreshAll();
+            }
         }
     }
 

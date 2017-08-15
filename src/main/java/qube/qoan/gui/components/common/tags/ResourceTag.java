@@ -36,11 +36,4 @@ public class ResourceTag extends BaseTag {
         decorators.put("Molecular Viewer", new MolecularViewerDecorator());
     }
 
-    /**
-     *
-     */
-//    @Override
-//    public void initialize() {
-//
-//    }
 }

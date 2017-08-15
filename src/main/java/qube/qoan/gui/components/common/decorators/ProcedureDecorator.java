@@ -29,8 +29,8 @@ import qube.qai.user.User;
 import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ProcedureDecorator extends BaseDecorator {
 
@@ -45,7 +45,7 @@ public class ProcedureDecorator extends BaseDecorator {
 
     public ProcedureDecorator() {
         iconImage = new Image("Procedure",
-                new ClassResource("gui/images/proc.png"));
+                new ClassResource("gui/images/proc-icon.png"));
     }
 
     @Override
@@ -68,12 +68,13 @@ public class ProcedureDecorator extends BaseDecorator {
 
         if (isTemplate) {
 
-            Collection<SelectionProcedure> children = attachSelectionProcedures(procedure);
+            Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
             if (children.size() > 0) {
                 TabSheet tabSheet = new TabSheet();
                 tabSheet.addTab(description, "Description");
-                for (SelectionProcedure child : children) {
-                    SelectionDecorator decorator = new SelectionDecorator(child);
+                for (String name : children.keySet()) {
+                    SelectionProcedure child = children.get(name);
+                    SelectionDecorator decorator = new SelectionDecorator(name, child);
                     tabSheet.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
                 }
                 content = tabSheet;
@@ -91,16 +92,16 @@ public class ProcedureDecorator extends BaseDecorator {
      * @param template
      * @return
      */
-    protected Collection<SelectionProcedure> attachSelectionProcedures(Procedure template) {
+    protected Map<String, SelectionProcedure> attachSelectionProcedures(Procedure template) {
 
-        Collection<SelectionProcedure> procedures = new ArrayList<>();
+        Map<String, SelectionProcedure> procedures = new HashMap<>();
 
         ProcedureInputs inputs = template.getProcedureInputs();
         for (String name : inputs.getInputNames()) {
             ValueNode targetValue = inputs.getNamedInput(name);
             SelectionProcedure selection = new SelectionProcedure(targetValue);
             template.addChild(selection);
-            procedures.add(selection);
+            procedures.put(name, selection);
         }
 
         return procedures;

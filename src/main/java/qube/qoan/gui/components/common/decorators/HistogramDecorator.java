@@ -23,10 +23,14 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
-import org.ojalgo.random.Normal;
-import org.ojalgo.random.RandomNumber;
 import org.vaadin.addon.JFreeChartWrapper;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.StockEntity;
+import qube.qai.persistence.StockQuote;
 import qube.qai.services.implementation.SearchResult;
+
+import javax.inject.Inject;
+import java.util.Set;
 
 /**
  * Created by rainbird on 7/8/17.
@@ -35,7 +39,10 @@ public class HistogramDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    private String name = "Wiki article";
+    private String name = "Daily Volumes";
+
+    @Inject
+    private QaiDataProvider<StockEntity> dataProvider;
 
     private ResizableCssLayout imageWrapper;
 
@@ -56,14 +63,19 @@ public class HistogramDecorator extends BaseDecorator {
 
     @Override
     public void decorate(SearchResult toDecorate) {
-        int number = 10000;
+
+        StockEntity entity = dataProvider.brokerSearchResult(toDecorate);
+        if (entity == null || entity.getQuotes() == null || entity.getQuotes().isEmpty()) {
+            return;
+        }
+
+        Set<StockQuote> quotes = entity.getQuotes();
+        int number = quotes.size();
         double[] value = new double[number];
-        //Random generator = new Random();
-        RandomNumber generator = new Normal(0.5, 10.0);
-        //RandomNumber generator = new Weibull(1.0, 1.5);
-        //RandomNumber generator = new Poisson(15);
-        for (int i = 1; i < number; i++) {
-            value[i] = generator.doubleValue();
+        int index = 0;
+        for (StockQuote quote : quotes) {
+            value[index] = quote.getVolume();
+            index++;
         }
         HistogramDataset dataset = new HistogramDataset();
         dataset.setType(HistogramType.RELATIVE_FREQUENCY);
