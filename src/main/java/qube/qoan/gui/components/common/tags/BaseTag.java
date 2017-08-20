@@ -26,8 +26,8 @@ import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.DisplayPanel;
 import qube.qoan.gui.components.common.decorators.Decorator;
 
-import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 /**
  * Created by rainbird on 7/6/17.
@@ -47,7 +47,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
     protected Map<String, Decorator> decorators;
 
     private BaseTag() {
-        decorators = new HashMap<>();
+        decorators = new TreeMap<>();
     }
 
     public BaseTag(Layout parentLayout, SearchResult searchResult) {

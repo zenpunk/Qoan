@@ -39,7 +39,7 @@ public class HistogramDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    private String name = "Daily Volumes";
+    private String name = "Adj.Close Dist.";
 
     @Inject
     private QaiDataProvider<StockEntity> dataProvider;
@@ -74,7 +74,7 @@ public class HistogramDecorator extends BaseDecorator {
         double[] value = new double[number];
         int index = 0;
         for (StockQuote quote : quotes) {
-            value[index] = quote.getVolume();
+            value[index] = quote.getAdjustedClose();
             index++;
         }
         HistogramDataset dataset = new HistogramDataset();

@@ -36,9 +36,9 @@ public class StockEntityTag extends BaseTag {
         super(parentLayout, searchResult);
         iconImage = new Image(STOCK_ENTITIES,
                 new ClassResource("gui/images/stocks-index.png"));
-        decorators.put("Stock Quote Statistics", new HistogramDecorator());
-        decorators.put("Stock Quotes", new StockQuotesDecorator());
         decorators.put("Stock Entity", new StockEntityPanel());
+        decorators.put("Stock Quotes", new StockQuotesDecorator());
+        decorators.put("Stock Quote Statistics", new HistogramDecorator());
     }
 
 }
