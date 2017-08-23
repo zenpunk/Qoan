@@ -12,10 +12,15 @@
  *
  */
 
-package qube.qoan.services;
+package qube.qoan.services.implementation;
 
-/**
- * Created by rainbird on 10/31/15.
- */
-public interface SearchService {
+import qube.qoan.services.QoanTestBase;
+
+public class TestQoanProcedureSubmitter extends QoanTestBase {
+
+    public void testProcedureExceution() throws Exception {
+
+        fail("write this test immediately...");
+
+    }
 }

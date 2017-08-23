@@ -15,6 +15,7 @@
 package qube.qoan.gui.components.common.decorators;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import qube.qai.persistence.QaiDataProvider;
@@ -41,11 +42,17 @@ public class ProcedureDecorator extends BaseDecorator {
 
     private Image iconImage;
 
+    private Image descIconImage;
+
+    private boolean isSaved = false;
+
     private boolean isTemplate = false;
 
     public ProcedureDecorator() {
         iconImage = new Image("Procedure",
                 new ClassResource("gui/images/proc-icon.png"));
+        descIconImage = new Image("",
+                new ClassResource("gui/images/readings-icon.png"));
     }
 
     @Override
@@ -71,10 +78,11 @@ public class ProcedureDecorator extends BaseDecorator {
             Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
             if (children.size() > 0) {
                 TabSheet tabSheet = new TabSheet();
-                tabSheet.addTab(description, "Description");
+                tabSheet.addTab(description, "Description", descIconImage.getSource());
                 for (String name : children.keySet()) {
                     SelectionProcedure child = children.get(name);
                     SelectionDecorator decorator = new SelectionDecorator(name, child);
+                    decorator.decorate(toDecorate);
                     tabSheet.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
                 }
                 content = tabSheet;
@@ -114,14 +122,18 @@ public class ProcedureDecorator extends BaseDecorator {
      */
     private Panel createProcedureDescription(Procedure procedure) {
 
+        String template = "<b> %s :</b><i> %s </i>";
+
         Panel panel = new Panel(procedure.getProcedureName());
 
         VerticalLayout contentLayout = new VerticalLayout();
 
-        Label descriptionLabel = new Label("Description: " + procedure.getDescriptionText());
+        Label descriptionLabel = new Label(String.format(template, "Description", procedure.getDescriptionText()));
+        descriptionLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(descriptionLabel);
 
-        Label uuidLabel = new Label("UUID: " + procedure.getUuid());
+        Label uuidLabel = new Label(String.format(template, "UUID", procedure.getUuid()));
+        uuidLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(uuidLabel);
 
         String userName = "User not assigned";
@@ -133,22 +145,34 @@ public class ProcedureDecorator extends BaseDecorator {
                 procedure.setUser(new User(userName, ""));
             }
         }
-        Label userLabel = new Label("Username: " + procedure.getUser().getUsername());
+        Label userLabel = new Label(String.format(template, "Username", procedure.getUser().getUsername()));
+        userLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(userLabel);
 
-        Label hasExecutedLabel = new Label("Has executed: " + procedure.hasExecuted());
+        Label hasExecutedLabel = new Label(String.format(template, "Has executed", procedure.hasExecuted()));
+        hasExecutedLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(hasExecutedLabel);
 
-        Label durationLabel = new Label("Duration: " + procedure.getDuration());
+        Label durationLabel = new Label(String.format(template, "Duration", procedure.getDuration()));
+        durationLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(durationLabel);
 
-        Label percentageLabel = new Label("Execution percentage: " + procedure.getProgressPercentage() + "%");
+        Label percentageLabel = new Label(String.format(template, "Execution percentage", procedure.getProgressPercentage() + "%"));
+        percentageLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(percentageLabel);
 
+        HorizontalLayout buttonRow = new HorizontalLayout();
         Button saveButton = new Button("Save Procedure");
         saveButton.addClickListener(event -> onSaveProcedure());
         saveButton.setStyleName("link");
-        contentLayout.addComponent(saveButton);
+        buttonRow.addComponent(saveButton);
+
+        Button startButton = new Button("Start Procedure");
+        startButton.addClickListener(clickEvent -> onStartProcedure());
+        startButton.setStyleName("link");
+        startButton.setVisible(isSaved);
+        buttonRow.addComponent(startButton);
+        contentLayout.addComponent(buttonRow);
 
         panel.setContent(contentLayout);
 
@@ -161,7 +185,12 @@ public class ProcedureDecorator extends BaseDecorator {
     public void onSaveProcedure() {
         if (procedure != null) {
             dataProvider.putData(procedure.getUuid(), procedure);
+            isSaved = true;
         }
+    }
+
+    public void onStartProcedure() {
+
     }
 
     @Override

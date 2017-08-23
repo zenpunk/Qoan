@@ -27,6 +27,7 @@ import qube.qoan.gui.components.management.TestManagementPanel;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
 import qube.qoan.gui.components.workspace.procedure.decorators.TestProcedureDecorators;
 import qube.qoan.services.implementation.TestDistributedSearchServices;
+import qube.qoan.services.implementation.TestQoanProcedureSubmitter;
 import qube.qoan.util.TestGsonSerializer;
 
 /**
@@ -59,6 +60,7 @@ public class AllQoanTests extends TestCase {
 
         // this is the most important of all, really, to see if you have live-data
         suite.addTestSuite(TestDistributedSearchServices.class);
+        suite.addTestSuite(TestQoanProcedureSubmitter.class);
 
         // test for the decorators
         suite.addTestSuite(TestDecorators.class);

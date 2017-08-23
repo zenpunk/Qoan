@@ -15,6 +15,7 @@
 package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -33,9 +34,11 @@ public class StockEntityPanel extends BaseDecorator {
     @Inject
     private QaiDataProvider<StockEntity> dataProvider;
 
+    private String template = "<b> %s :</b> <i> %s </i>";
+
     private Image iconImage;
 
-    private String name = "Financial Entity";
+    private String name = "Stock Entity";
 
     private StockEntity stockEntity;
 
@@ -58,34 +61,44 @@ public class StockEntityPanel extends BaseDecorator {
 
         VerticalLayout layout = new VerticalLayout();
 
-        Label name = new Label("Name: " + stockEntity.getName());
+        Label name = new Label(String.format(template, "Name", stockEntity.getName()));
+        name.setContentMode(ContentMode.HTML);
         layout.addComponent(name);
 
-        Label ticker = new Label("Ticker Symbol: " + stockEntity.getTickerSymbol());
+        Label ticker = new Label(String.format(template, "Ticker Symbol", stockEntity.getTickerSymbol()));
+        ticker.setContentMode(ContentMode.HTML);
         layout.addComponent(ticker);
 
-        Label security = new Label("Security: " + stockEntity.getSecurity());
+        Label security = new Label(String.format(template, "Security", stockEntity.getSecurity()));
+        security.setContentMode(ContentMode.HTML);
         layout.addComponent(security);
 
-        Label gicsSector = new Label("GICS Sector: " + stockEntity.getGicsSector());
+        Label gicsSector = new Label(String.format(template, "GICS Sector", stockEntity.getGicsSector()));
+        gicsSector.setContentMode(ContentMode.HTML);
         layout.addComponent(gicsSector);
 
-        Label price = new Label("Market Price: " + stockEntity.getMarketPrice());
+        Label price = new Label(String.format(template, "Market Price", stockEntity.getMarketPrice()));
+        price.setContentMode(ContentMode.HTML);
         layout.addComponent(price);
 
-        Label firstAdded = new Label("Date first added: " + stockEntity.getDateFirstAdded());
+        Label firstAdded = new Label(String.format(template, "Date first added", stockEntity.getDateFirstAdded()));
+        firstAdded.setContentMode(ContentMode.HTML);
         layout.addComponent(firstAdded);
 
-        Label yield = new Label("Yield: " + stockEntity.getYield());
+        Label yield = new Label(String.format(template, "Yield", stockEntity.getYield()));
+        yield.setContentMode(ContentMode.HTML);
         layout.addComponent(yield);
 
-        Label earnings = new Label("Earnings: " + stockEntity.getEarnings());
+        Label earnings = new Label(String.format(template, "Earnings", stockEntity.getEarnings()));
+        earnings.setContentMode(ContentMode.HTML);
         layout.addComponent(earnings);
 
-        Label share = new Label("Share: " + stockEntity.getShare());
+        Label share = new Label(String.format(template, "Share", stockEntity.getShare()));
+        share.setContentMode(ContentMode.HTML);
         layout.addComponent(share);
 
-        Label sales = new Label("Sales: " + stockEntity.getSales());
+        Label sales = new Label(String.format(template, "Sales", stockEntity.getSales()));
+        sales.setContentMode(ContentMode.HTML);
         layout.addComponent(sales);
 
         setContent(layout);
