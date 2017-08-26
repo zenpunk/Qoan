@@ -15,7 +15,9 @@
 package qube.qoan.gui.views;
 
 import com.google.inject.Injector;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Accordion;
+import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Notification;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.Workspace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
@@ -57,7 +59,7 @@ public class WorkspaceView extends QoanView {
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
 
         HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
-        VerticalLayout innerLayout = new VerticalLayout();
+        //VerticalLayout innerLayout = new VerticalLayout();
         Accordion accordion = new Accordion();
 
         // begin adding the first component
@@ -82,20 +84,20 @@ public class WorkspaceView extends QoanView {
         resourceMenu.initialize();
         accordion.addTab(resourceMenu, resourceMenu.getCaptionTitle(), resourceMenu.getMenuIcon().getSource());
 
-        innerLayout.addComponent(accordion);
+        //innerLayout.addComponent(accordion);
 
         // add a new tab to workspace
-        Button addTabButton = new Button("Add New Tab");
-        addTabButton.setStyleName("link");
-        addTabButton.addClickListener(clickEvent -> onAddTab());
-        innerLayout.addComponent(addTabButton);
+//        Button addTabButton = new Button("Add New Tab");
+//        addTabButton.setStyleName("link");
+//        addTabButton.addClickListener(clickEvent -> onAddTab());
+//        innerLayout.addComponent(addTabButton);
 
         workspace = new Workspace();
         injector.injectMembers(workspace);
         splitPanel.setSecondComponent(workspace);
 
-        innerLayout.setWidth("100%");
-        splitPanel.setFirstComponent(innerLayout);
+        //innerLayout.setWidth("100%");
+        splitPanel.setFirstComponent(accordion);
 
         addComponent(splitPanel);
 

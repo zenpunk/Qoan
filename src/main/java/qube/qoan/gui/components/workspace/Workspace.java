@@ -14,7 +14,6 @@
 
 package qube.qoan.gui.components.workspace;
 
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
 import qube.qoan.QoanUI;
@@ -34,7 +33,7 @@ public class Workspace extends Panel {
     private void initialize() {
 
         // as always begin with initializing the layout
-        HorizontalLayout layout = new HorizontalLayout();
+        //HorizontalLayout layout = new HorizontalLayout();
 
         workspaceTabs = new TabSheet();
 
@@ -42,9 +41,9 @@ public class Workspace extends Panel {
         ((QoanUI) QoanUI.getCurrent()).getInjector().injectMembers(panel);
         workspaceTabs.addTab(panel).setCaption("Workspace 1");
 
-        layout.addComponent(workspaceTabs);
+        //layout.addComponent(workspaceTabs);
 
-        setContent(layout);
+        setContent(workspaceTabs);
     }
 
     /**

@@ -20,10 +20,11 @@ import com.hazelcast.core.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.message.QaiMessageListener;
+import qube.qoan.services.ProcedureSubmitterInterface;
 
 import javax.inject.Inject;
 
-public class QoanProcedureSubmitter extends QaiMessageListener {
+public class QoanProcedureSubmitter extends QaiMessageListener implements ProcedureSubmitterInterface {
 
     private Logger logger = LoggerFactory.getLogger("QoanProcedureSubmitter");
 
@@ -32,6 +33,7 @@ public class QoanProcedureSubmitter extends QaiMessageListener {
     @Inject
     protected HazelcastInstance hazelcastInstance;
 
+    @Override
     public void initialize() {
 
         logger.info("Initializing QoanProcedureSubmitter: " + procedureTopicName);

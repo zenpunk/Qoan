@@ -14,13 +14,40 @@
 
 package qube.qoan.services.implementation;
 
+import qube.qai.procedure.ProcedureLibrary;
+import qube.qai.procedure.ProcedureTemplate;
+import qube.qai.procedure.analysis.SortingPercentilesProcedure;
+import qube.qai.procedure.finance.StockQuoteRetriever;
+import qube.qoan.services.ProcedureSubmitterInterface;
 import qube.qoan.services.QoanTestBase;
+
+import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.Collection;
 
 public class TestQoanProcedureSubmitter extends QoanTestBase {
 
+    @Inject
+    protected ProcedureSubmitterInterface procedureSubmitter;
+
     public void testProcedureExceution() throws Exception {
 
-        fail("write this test immediately...");
+        assertNotNull("there has to be an instance of QoanProcedureSubmitter", procedureSubmitter);
+
+        ProcedureTemplate[] templates = ProcedureLibrary.allTemplates;
+
+        String[] stockSymbols = {"GOOG", "ORCL"};
+
+        Collection<StockQuoteRetriever> retrievers = new ArrayList<>();
+        for (String symbol : stockSymbols) {
+
+            StockQuoteRetriever retriever = (StockQuoteRetriever) ProcedureLibrary.getNamedProcedureTemplate(StockQuoteRetriever.NAME).createProcedure();
+            retriever.setTickerSymbol(symbol);
+            retrievers.add(retriever);
+        }
+
+        SortingPercentilesProcedure sorter = (SortingPercentilesProcedure) ProcedureLibrary.getNamedProcedureTemplate(SortingPercentilesProcedure.NAME).createProcedure();
+        //sorter.
 
     }
 }
