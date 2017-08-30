@@ -20,9 +20,12 @@ import com.hazelcast.core.Message;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.message.QaiMessageListener;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.procedure.Procedure;
 import qube.qoan.services.ProcedureSubmitterInterface;
 
 import javax.inject.Inject;
+import java.util.Set;
 
 public class QoanProcedureSubmitter extends QaiMessageListener implements ProcedureSubmitterInterface {
 
@@ -32,6 +35,9 @@ public class QoanProcedureSubmitter extends QaiMessageListener implements Proced
 
     @Inject
     protected HazelcastInstance hazelcastInstance;
+
+    @Inject
+    protected QaiDataProvider<Procedure> dataProvider;
 
     @Override
     public void initialize() {
@@ -47,5 +53,22 @@ public class QoanProcedureSubmitter extends QaiMessageListener implements Proced
     @Override
     public void onMessage(Message message) {
 
+    }
+
+    @Override
+    public void submitProcedure(Procedure procedure) {
+
+        dataProvider.putData(procedure.getUuid(), procedure);
+
+    }
+
+    @Override
+    public STATE queryState(String uuid) {
+        return null;
+    }
+
+    @Override
+    public Set<String> getStartedProcedures() {
+        return null;
     }
 }

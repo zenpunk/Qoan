@@ -16,8 +16,11 @@ package qube.qoan.services.implementation;
 
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
+import qube.qai.procedure.analysis.ChangePointAnalysis;
+import qube.qai.procedure.analysis.MarketNetworkBuilder;
 import qube.qai.procedure.analysis.SortingPercentilesProcedure;
 import qube.qai.procedure.finance.StockQuoteRetriever;
+import qube.qai.services.ProcedureRunnerInterface;
 import qube.qoan.services.ProcedureSubmitterInterface;
 import qube.qoan.services.QoanTestBase;
 
@@ -36,8 +39,19 @@ public class TestQoanProcedureSubmitter extends QoanTestBase {
 
         ProcedureTemplate[] templates = ProcedureLibrary.allTemplates;
 
+        //-> pick out the data for the list of entities.
         String[] stockSymbols = {"GOOG", "ORCL"};
 
+        //-> divide the data into intervals and train neural-networks.
+        MarketNetworkBuilder marketNetwork = (MarketNetworkBuilder) ProcedureLibrary.getNamedProcedureTemplate(MarketNetworkBuilder.NAME).createProcedure();
+
+        //-> run the interval-analysis on the averages.
+        ChangePointAnalysis changePoint = (ChangePointAnalysis) ProcedureLibrary.getNamedProcedureTemplate(ChangePointAnalysis.NAME).createProcedure();
+
+        //-> create an average-time series based on them.
+        SortingPercentilesProcedure sorter = (SortingPercentilesProcedure) ProcedureLibrary.getNamedProcedureTemplate(SortingPercentilesProcedure.NAME).createProcedure();
+
+        // -> collect their data.
         Collection<StockQuoteRetriever> retrievers = new ArrayList<>();
         for (String symbol : stockSymbols) {
 
@@ -46,8 +60,10 @@ public class TestQoanProcedureSubmitter extends QoanTestBase {
             retrievers.add(retriever);
         }
 
-        SortingPercentilesProcedure sorter = (SortingPercentilesProcedure) ProcedureLibrary.getNamedProcedureTemplate(SortingPercentilesProcedure.NAME).createProcedure();
-        //sorter.
+        procedureSubmitter.submitProcedure(marketNetwork);
+
+        ProcedureRunnerInterface.STATE state = procedureSubmitter.queryState(marketNetwork.getUuid());
+        assertNotNull("there has to be a state for the procedure", state);
 
     }
 }

@@ -15,8 +15,9 @@
 package qube.qoan.services;
 
 import com.hazelcast.core.Message;
+import qube.qai.services.ProcedureRunnerInterface;
 
-public interface ProcedureSubmitterInterface {
+public interface ProcedureSubmitterInterface extends ProcedureRunnerInterface {
 
     void initialize();
 
