@@ -29,6 +29,7 @@
     <orderEntry type="module" module-name="qai" />
     <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:39.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-persist:4.1.0" level="project" />
+    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:4.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.hazelcast:hazelcast-all:3.8.2" level="project" />
     <orderEntry type="library" name="Maven: org.hsqldb:hsqldb:2.3.4" level="project" />
     <orderEntry type="library" name="Maven: mysql:mysql-connector-java:6.0.6" level="project" />
@@ -211,7 +212,6 @@
     <orderEntry type="library" name="Maven: commons-beanutils:commons-beanutils:1.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-event:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-guice:1.4.0" level="project" />
-    <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-multibindings:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.shiro:shiro-web:1.4.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-parsers:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.10" level="project" />
