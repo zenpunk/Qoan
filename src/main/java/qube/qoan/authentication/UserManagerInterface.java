@@ -14,19 +14,5 @@
 
 package qube.qoan.authentication;
 
-import qube.qoan.services.QoanSecurityModule;
-import qube.qoan.services.QoanTestBase;
-
-public class TestQoanSecurity extends QoanTestBase {
-
-    public void testQoanSecurity() throws Exception {
-
-        QoanSecurityModule securityModule = new QoanSecurityModule();
-        assertNotNull("nona", securityModule);
-
-        injector.injectMembers(securityModule);
-
-
-
-    }
+public interface UserManagerInterface {
 }

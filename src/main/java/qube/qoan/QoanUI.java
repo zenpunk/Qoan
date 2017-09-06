@@ -25,6 +25,7 @@ import com.vaadin.ui.UI;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.user.User;
 import qube.qoan.authentication.SecureViewChangeListener;
+import qube.qoan.authentication.UserManagerInterface;
 import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanModule;
 import qube.qoan.services.QoanSecurityModule;
@@ -61,6 +62,8 @@ public class QoanUI extends UI {
 
     protected SearchServiceInterface wiktionarySearchService;
 
+    protected UserManagerInterface userManager;
+
     protected User user;
 
     protected String targetViewName;
@@ -71,13 +74,17 @@ public class QoanUI extends UI {
         // this way we have a different injector for each thread
         qoanModule = new QoanModule();
         ServletContext context = null;
-        qoanSecurityModule = new QoanSecurityModule(context);
-        injector = Guice.createInjector(qoanModule); // , new QaiModule() do i really need this here???
+        qoanSecurityModule = new QoanSecurityModule();
+        injector = Guice.createInjector(qoanModule, qoanSecurityModule); // , new QaiModule() do i really need this here???
 
         hazelcastInstance = injector.getInstance(HazelcastInstance.class);
         //injector.injectMembers(this);
         wikipediaSearchService = qoanModule.provideWikipediaSearchService();
         wiktionarySearchService = qoanModule.provideWiktionarySearchService();
+
+        // fetch a copy of the userManager and initialize the thing right, so that it can be used all around
+        userManager = qoanModule.getUserManager();
+        injector.injectMembers(userManager);
 
         getPage().setTitle("Qoan");
 

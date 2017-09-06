@@ -14,20 +14,20 @@
 
 package qube.qoan.authentication;
 
-import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.mgt.SecurityManager;
+import org.apache.shiro.subject.Subject;
 import qube.qai.services.SearchServiceInterface;
-import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
 
 import javax.inject.Inject;
 import javax.inject.Named;
-import java.util.Collection;
 
 /**
  * Created by rainbird on 12/24/15.
  */
-public class UserManager {
+public class UserManager implements UserManagerInterface {
 
 
     @Inject
@@ -35,7 +35,7 @@ public class UserManager {
     private SearchServiceInterface userSearchService;
 
     @Inject
-    private HazelcastInstance hazelcastInstance;
+    private SecurityManager securityManager;
 
     /**
      * this is in order to authenticate the user with the
@@ -48,15 +48,16 @@ public class UserManager {
     public User authenticateUser(String username, String password) throws UserNotAuthenticatedException {
 
         User user = null;
+//        SecurityUtils.setSecurityManager(securityManager);
+        Subject subject = SecurityUtils.getSubject();
+        UsernamePasswordToken token = new UsernamePasswordToken(username, password);
+        //this is all you have to do to support 'remember me' (no config - built in!):
+        token.setRememberMe(true);
 
-        Collection<SearchResult> results = userSearchService.searchInputString(username, "Users", 1);
-        if (results == null || results.isEmpty()) {
-            return user;
+        subject.login(token);
+        if (!subject.isAuthenticated()) {
+            user = new User(username, password);
         }
-
-        String userUuid = results.iterator().next().getUuid();
-        IMap<String, User> userMap = hazelcastInstance.getMap("Users");
-        user = userMap.get(userUuid);
 
         return user;
     }

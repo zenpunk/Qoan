@@ -16,26 +16,39 @@ package qube.qoan.services;
 
 import com.google.inject.Provides;
 import org.apache.shiro.config.Ini;
-import org.apache.shiro.guice.web.ShiroWebModule;
-
-import javax.servlet.ServletContext;
+import org.apache.shiro.guice.ShiroModule;
+import org.apache.shiro.realm.jdbc.JdbcRealm;
+import org.apache.shiro.realm.text.IniRealm;
+import qube.qai.security.QaiRealm;
 
 /**
  * Created by rainbird on 7/19/17.
  */
-public class QoanSecurityModule extends ShiroWebModule {
+public class QoanSecurityModule extends ShiroModule {
 
-    public QoanSecurityModule(ServletContext sc) {
-        super(sc);
+    private QaiRealm realm;
+
+    public QoanSecurityModule() {
+        super();
     }
 
     @Override
-    protected void configureShiroWeb() {
+    protected void configureShiro() {
+        try {
+            bindRealm().toConstructor(IniRealm.class.getConstructor(Ini.class));
+        } catch (NoSuchMethodException e) {
+            addError(e);
+        }
 
+        realm = new QaiRealm();
     }
 
     @Provides
     Ini loadShiroIni() {
-        return Ini.fromResourcePath("classpath:shiro.ini");
+        return Ini.fromResourcePath("classpath:qube/qoan/services/shiro.ini");
+    }
+
+    public JdbcRealm getRealm() {
+        return realm;
     }
 }

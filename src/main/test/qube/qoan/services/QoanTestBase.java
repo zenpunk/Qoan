@@ -37,7 +37,7 @@ public class QoanTestBase extends TestCase implements QaiConstants {
         logger.info("injecting members for the test");
 
         if (injector == null) {
-            injector = Guice.createInjector(new QoanTestModule());
+            injector = Guice.createInjector(new QoanTestModule(), new QoanSecurityModule());
             injector.injectMembers(this);
         }
     }

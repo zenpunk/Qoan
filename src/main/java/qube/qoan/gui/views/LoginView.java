@@ -14,13 +14,15 @@
 
 package qube.qoan.gui.views;
 
+import com.vaadin.data.Binder;
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
-import qube.qoan.authentication.UserManager;
+import qube.qoan.authentication.UserManagerInterface;
 
 import javax.inject.Inject;
 
@@ -33,61 +35,102 @@ public class LoginView extends QoanView {
 
     public static String NAME = "LoginView";
 
+    private TextField userField;
+
+    private TextField emailField;
+
+    private PasswordField passwordField;
+
+    private PasswordField passwordCheckField;
+
+    private UserData userData;
+
     @Inject
-    private UserManager userManager;
+    private UserManagerInterface userManager;
 
     public LoginView() {
         this.viewTitle = "Qoan Login";
     }
 
-    //    public void enter(ViewChangeListener.ViewChangeEvent event) {
-//
-//        UI.getCurrent().getPage().setContext("Qoan Login");
-//
-//        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-//        injector.injectMembers(this);
-//
-//        QoanHeader header = new QoanHeader();
-//        addComponent(header);
-//
-//
-//    }
-
     @Override
     protected void initialize() {
-        FormLayout layout = new FormLayout();
-        TextField userField = new TextField("Username");
+
+        Binder<UserData> binder = new Binder<>();
+        userData = new UserData();
+
+        HorizontalLayout firstRow = new HorizontalLayout();
+        firstRow.setWidth("80%");
+        ClassResource resource = new ClassResource("gui/images/kokoline.gif");
+        Image image = new Image("Singularity is nigh!", resource);
+        image.setWidth("30%");
+        firstRow.addComponent(image);
+
+        VerticalLayout layout = new VerticalLayout();
+        userField = new TextField("Username");
         layout.addComponent(userField);
 
-        PasswordField passwordField = new PasswordField("Password");
+        emailField = new TextField("E-Mail");
+        //emailField.addValidator(new EmailValidator());
+        emailField.setVisible(false);
+        layout.addComponent(emailField);
+
+        passwordField = new PasswordField("Password");
         layout.addComponent(passwordField);
+
+        passwordCheckField = new PasswordField("Password check");
+        passwordCheckField.setVisible(false);
+        layout.addComponent(passwordCheckField);
+
+        HorizontalLayout buttonRow = new HorizontalLayout();
 
         Button loginButton = new Button("Login");
         loginButton.setStyleName("link");
-        loginButton.addClickListener(new Button.ClickListener() {
-            public void buttonClick(Button.ClickEvent event) {
-                User user;
-                if (StringUtils.isNoneBlank(userField.getValue())) {
-                    user = new User(userField.getValue(), passwordField.getValue());
-                } else {
-                    user = new User("sa", "");
-                }
-//                try {
-//                    user = userManager.authenticateUser(userField.getValue(), passwordField.getValue());
-//                } catch (UserNotAuthenticatedException e) {
-//                    logger.error("User: '" + userField.getValue() + "' with password: '" + passwordField.getValue() + "' cannot be authenticated", e);
-//                }
-                ((QoanUI) UI.getCurrent()).setUser(user);
-                String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
-                if (targetPage == null) {
-                    targetPage = StartView.NAME;
-                }
-                UI.getCurrent().getNavigator().navigateTo(targetPage);
-            }
-        });
-        layout.addComponent(loginButton);
+        loginButton.addClickListener(event -> onLoginClicked());
+        buttonRow.addComponent(loginButton);
 
-        addComponent(layout);
-        setComponentAlignment(layout, Alignment.MIDDLE_CENTER);
+        Button registerButton = new Button("Register");
+        registerButton.setStyleName("link");
+        registerButton.addClickListener(clickEvent -> onRegisterClicked());
+        buttonRow.addComponent(registerButton);
+
+        Button guestLoginButton = new Button("Login as Guest user");
+        guestLoginButton.setStyleName("link");
+        guestLoginButton.addClickListener(event -> onGuestLoginClicked());
+        buttonRow.addComponent(guestLoginButton);
+
+        layout.addComponent(buttonRow);
+        firstRow.addComponent(layout);
+        addComponent(firstRow);
+//        setComponentAlignment(firstRow, Alignment.MIDDLE_CENTER);
     }
+
+    public void onGuestLoginClicked() {
+
+    }
+
+    public void onLoginClicked() {
+
+        User user;
+        if (StringUtils.isNoneBlank(userField.getValue())) {
+            user = new User(userField.getValue(), passwordField.getValue());
+        } else {
+            user = new User("sa", "");
+        }
+
+        ((QoanUI) UI.getCurrent()).setUser(user);
+        String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
+
+        if (targetPage == null) {
+            targetPage = StartView.NAME;
+        }
+
+        UI.getCurrent().getNavigator().navigateTo(targetPage);
+
+    }
+
+    public void onRegisterClicked() {
+
+        //userManager.
+    }
+
 }

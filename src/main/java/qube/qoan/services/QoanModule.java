@@ -30,6 +30,7 @@ import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
 import qube.qoan.authentication.UserManager;
+import qube.qoan.authentication.UserManagerInterface;
 import qube.qoan.gui.components.common.search.DocumentSearchSink;
 import qube.qoan.gui.components.common.search.FinanceSearchSink;
 import qube.qoan.gui.components.common.search.ProcedureSearchSink;
@@ -60,7 +61,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private HazelcastInstance hazelcastInstance;
 
-    private UserManager userManager;
+    private UserManagerInterface userManager;
 
     private WikiSearchSink wikiSearchSink;
 
@@ -93,6 +94,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     private SearchServiceInterface proceduresSearchService;
 
     private Map<String, SearchServiceInterface> namedSearchServices;
+
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
     public String QAI_NODE_TO_CONNECT = "127.0.0.1:5701";
@@ -169,7 +171,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     @Singleton
-    UserManager provideUserManager() {
+    UserManagerInterface provideUserManager() {
 
         if (userManager == null) {
             userManager = new UserManager();
@@ -472,5 +474,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         }
 
         return hazelcastInstance;
+    }
+
+    public UserManagerInterface getUserManager() {
+        if (userManager == null) {
+            userManager = provideUserManager();
+        }
+
+        return userManager;
     }
 }
