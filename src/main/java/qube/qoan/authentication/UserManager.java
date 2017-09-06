@@ -48,7 +48,6 @@ public class UserManager implements UserManagerInterface {
     public User authenticateUser(String username, String password) throws UserNotAuthenticatedException {
 
         User user = null;
-//        SecurityUtils.setSecurityManager(securityManager);
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         //this is all you have to do to support 'remember me' (no config - built in!):
@@ -56,7 +55,7 @@ public class UserManager implements UserManagerInterface {
 
         subject.login(token);
         if (!subject.isAuthenticated()) {
-            user = new User(username, password);
+            user = (User) subject.getPrincipal();
         }
 
         return user;

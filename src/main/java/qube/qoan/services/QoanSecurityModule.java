@@ -17,7 +17,6 @@ package qube.qoan.services;
 import com.google.inject.Provides;
 import org.apache.shiro.config.Ini;
 import org.apache.shiro.guice.ShiroModule;
-import org.apache.shiro.realm.jdbc.JdbcRealm;
 import org.apache.shiro.realm.text.IniRealm;
 import qube.qai.security.QaiRealm;
 
@@ -26,7 +25,6 @@ import qube.qai.security.QaiRealm;
  */
 public class QoanSecurityModule extends ShiroModule {
 
-    private QaiRealm realm;
 
     public QoanSecurityModule() {
         super();
@@ -40,7 +38,7 @@ public class QoanSecurityModule extends ShiroModule {
             addError(e);
         }
 
-        realm = new QaiRealm();
+        this.bindRealm().to(QaiRealm.class);
     }
 
     @Provides
@@ -48,7 +46,4 @@ public class QoanSecurityModule extends ShiroModule {
         return Ini.fromResourcePath("classpath:qube/qoan/services/shiro.ini");
     }
 
-    public JdbcRealm getRealm() {
-        return realm;
-    }
 }

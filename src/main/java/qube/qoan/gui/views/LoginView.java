@@ -101,7 +101,7 @@ public class LoginView extends QoanView {
         layout.addComponent(buttonRow);
         firstRow.addComponent(layout);
         addComponent(firstRow);
-//        setComponentAlignment(firstRow, Alignment.MIDDLE_CENTER);
+
     }
 
     public void onGuestLoginClicked() {
