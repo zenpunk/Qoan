@@ -17,10 +17,10 @@ package qube.qoan.authentication;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.UI;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qube.qai.user.User;
-import qube.qoan.QoanUI;
 import qube.qoan.gui.views.LoginView;
 import qube.qoan.gui.views.ManagementView;
 import qube.qoan.gui.views.WorkspaceView;
@@ -46,9 +46,11 @@ public class SecureViewChangeListener implements ViewChangeListener {
         if (nextView instanceof WorkspaceView
                 || nextView instanceof ManagementView) {
 
-            User user = ((QoanUI) UI.getCurrent()).getUser();
-            if (user == null) {
+            //User user = ((QoanUI) UI.getCurrent()).getUser();
+            Subject subject = SecurityUtils.getSubject();
+            if (!subject.isAuthenticated()) {
                 UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
+                logger.info("Requested view: " + nextView.toString() + " redirected to LoginView");
                 return false;
             }
         }

@@ -15,8 +15,6 @@
 package qube.qoan.authentication;
 
 import com.hazelcast.core.HazelcastInstance;
-import com.hazelcast.core.IMap;
-import qube.qai.services.SearchServiceInterface;
 import qube.qai.user.User;
 import qube.qoan.services.QoanTestBase;
 
@@ -35,22 +33,23 @@ public class TestUserManager extends QoanTestBase {
         UserManager manager = new UserManager();
         injector.injectMembers(manager);
 
-        SearchServiceInterface modelStore = manager.getUserSearchService();
-
         // first create the user to check the positive case
         String userName = "test_user";
         String password = "password";
-        User user = new User(userName, password);
-        IMap<String, User> userMap = hazelcastInstance.getMap("USERS");
-        userMap.put(user.getUuid(), user);
+        String roleName = "do_all_test_role";
+        String permissionName = "do_all_test_permission";
+        User user = manager.createUser(userName, password, roleName, permissionName);
 
-        User authUser = manager.authenticateUser(user.getUsername(), user.getPassword());
-        assertNotNull("there has to be a user", authUser);
-        assertTrue("the users must be equal", user.equals(authUser));
+        assertNotNull("user has to be created", user);
+        assertTrue("there has to be roles", !user.getRoles().isEmpty());
+        assertTrue("there has to be permissions", !user.getPermissions().isEmpty());
 
-        userMap.remove(user.getUuid());
+        User authUser = manager.authenticateUser(userName, password);
+        assertNotNull("user must be able to log in", authUser);
 
-        authUser = manager.authenticateUser(user.getUsername(), user.getPassword());
-        assertTrue("the user is removed", authUser == null);
+        assertTrue("user has to have the role", manager.isUserRole(roleName));
+        assertTrue("user has to have the permission", manager.isUserPermission(permissionName));
+
+        manager.removeUser(userName);
     }
 }

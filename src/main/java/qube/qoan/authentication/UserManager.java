@@ -16,26 +16,22 @@ package qube.qoan.authentication;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
-import qube.qai.services.SearchServiceInterface;
+import qube.qai.security.QaiRealm;
 import qube.qai.user.User;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 
 /**
  * Created by rainbird on 12/24/15.
  */
 public class UserManager implements UserManagerInterface {
 
+    @Inject
+    private QaiRealm realm;
 
     @Inject
-    @Named("Users")
-    private SearchServiceInterface userSearchService;
-
-    @Inject
-    private SecurityManager securityManager;
+    private org.apache.shiro.mgt.SecurityManager securityManager;
 
     /**
      * this is in order to authenticate the user with the
@@ -45,6 +41,7 @@ public class UserManager implements UserManagerInterface {
      * @param password
      * @return
      */
+    @Override
     public User authenticateUser(String username, String password) throws UserNotAuthenticatedException {
 
         User user = null;
@@ -54,37 +51,39 @@ public class UserManager implements UserManagerInterface {
         token.setRememberMe(true);
 
         subject.login(token);
-        if (!subject.isAuthenticated()) {
+        if (subject.isAuthenticated()) {
             user = (User) subject.getPrincipal();
+        } else {
+            throw new UserNotAuthenticatedException();
         }
 
         return user;
     }
 
-    public boolean isUserAuthorized(String username, String password, String actionDescription)
-            throws UserNotAuthenticatedException, UserNotAuthorizedException {
+    @Override
+    public boolean isUserRole(String roleName) {
 
-        User user = authenticateUser(username, password);
-        if (user != null) {
-            return isUserAuthorized(user, actionDescription);
-        }
+        Subject subject = SecurityUtils.getSubject();
 
-        return false;
+        return subject.hasRole(roleName);
     }
 
-    public boolean isUserAuthorized(User user, String actionDescription) throws UserNotAuthorizedException {
+    @Override
+    public boolean isUserPermission(String permissionName) throws UserNotAuthorizedException {
 
-        // here action-descriptions will be converted tand be checked-
-        // no idea how that is supposed to work right now
+        Subject subject = SecurityUtils.getSubject();
 
-        return true;
+        return subject.isPermitted(permissionName);
     }
 
-    public SearchServiceInterface getUserSearchService() {
-        return userSearchService;
+    @Override
+    public User createUser(String username, String password, String rolename, String... permissions) {
+        return realm.createUser(username, password, rolename, permissions);
     }
 
-    public void setUserSearchService(SearchServiceInterface userSearchService) {
-        this.userSearchService = userSearchService;
+    @Override
+    public void removeUser(String username) {
+        realm.removeUser(username);
     }
+
 }

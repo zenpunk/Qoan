@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
+import qube.qai.security.QaiRealm;
+import qube.qai.security.QaiSecurity;
 import qube.qai.services.*;
 import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
@@ -118,6 +120,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
 
+        // QaiRealm
+        bind(QaiSecurity.class).to(QaiRealm.class);
     }
 
     @Provides

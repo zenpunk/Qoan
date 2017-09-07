@@ -15,6 +15,7 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.data.Binder;
+import com.vaadin.data.ValidationException;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
@@ -45,6 +46,8 @@ public class LoginView extends QoanView {
 
     private UserData userData;
 
+    Binder<UserData> binder;
+
     @Inject
     private UserManagerInterface userManager;
 
@@ -55,7 +58,7 @@ public class LoginView extends QoanView {
     @Override
     protected void initialize() {
 
-        Binder<UserData> binder = new Binder<>();
+        binder = new Binder<>();
         userData = new UserData();
 
         HorizontalLayout firstRow = new HorizontalLayout();
@@ -67,18 +70,25 @@ public class LoginView extends QoanView {
 
         VerticalLayout layout = new VerticalLayout();
         userField = new TextField("Username");
+        binder.forField(userField)
+                .bind(UserData::getUsername, UserData::setUsername);
         layout.addComponent(userField);
 
         emailField = new TextField("E-Mail");
-        //emailField.addValidator(new EmailValidator());
+        binder.forField(emailField)
+                .bind(UserData::getEmail, UserData::setEmail);
         emailField.setVisible(false);
         layout.addComponent(emailField);
 
         passwordField = new PasswordField("Password");
+        binder.forField(passwordField)
+                .bind(UserData::getPassword, UserData::setPassword);
         layout.addComponent(passwordField);
 
         passwordCheckField = new PasswordField("Password check");
         passwordCheckField.setVisible(false);
+        binder.forField(passwordCheckField)
+                .bind(UserData::getPasswordCheck, UserData::setPasswordCheck);
         layout.addComponent(passwordCheckField);
 
         HorizontalLayout buttonRow = new HorizontalLayout();
@@ -130,7 +140,17 @@ public class LoginView extends QoanView {
 
     public void onRegisterClicked() {
 
-        //userManager.
+        try {
+
+            binder.writeBean(userData);
+
+            User user = userManager.createUser(userData.getUsername(), userData.getPassword(), "User", "toExecuteProcedures");
+
+
+        } catch (ValidationException e) {
+            Notification.show("User could not be created, " +
+                    "please check error messages for each field.");
+        }
     }
 
 }

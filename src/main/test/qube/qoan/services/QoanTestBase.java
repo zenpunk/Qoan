@@ -26,7 +26,7 @@ import qube.qai.main.QaiConstants;
  */
 public class QoanTestBase extends TestCase implements QaiConstants {
 
-    private Logger logger = LoggerFactory.getLogger("QoanTestBase");
+    protected Logger logger = LoggerFactory.getLogger("QoanTestBase");
 
     protected Injector injector;
 

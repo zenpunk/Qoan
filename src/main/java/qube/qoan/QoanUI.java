@@ -22,6 +22,8 @@ import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.mgt.SecurityManager;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.user.User;
 import qube.qoan.authentication.SecureViewChangeListener;
@@ -75,7 +77,10 @@ public class QoanUI extends UI {
         qoanModule = new QoanModule();
         ServletContext context = null;
         qoanSecurityModule = new QoanSecurityModule();
-        injector = Guice.createInjector(qoanModule, qoanSecurityModule); // , new QaiModule() do i really need this here???
+        injector = Guice.createInjector(qoanModule, qoanSecurityModule);
+        // start the Shiro-securityManager and initialize the Shiro-securityUtils
+        SecurityManager securityManager = injector.getInstance(SecurityManager.class);
+        SecurityUtils.setSecurityManager(securityManager);
 
         hazelcastInstance = injector.getInstance(HazelcastInstance.class);
         //injector.injectMembers(this);

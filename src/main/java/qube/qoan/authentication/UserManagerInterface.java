@@ -14,5 +14,17 @@
 
 package qube.qoan.authentication;
 
+import qube.qai.user.User;
+
 public interface UserManagerInterface {
+
+    User authenticateUser(String username, String password) throws UserNotAuthenticatedException;
+
+    boolean isUserPermission(String permissionName) throws UserNotAuthorizedException;
+
+    boolean isUserRole(String roleName);
+
+    User createUser(String username, String password, String rolename, String... permissions);
+
+    void removeUser(String username);
 }
