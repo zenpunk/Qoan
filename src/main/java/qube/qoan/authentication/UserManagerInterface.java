@@ -24,6 +24,8 @@ public interface UserManagerInterface {
 
     boolean isUserRole(String roleName);
 
+    User findUser(String username);
+
     User createUser(String username, String password, String rolename, String... permissions);
 
     void removeUser(String username);

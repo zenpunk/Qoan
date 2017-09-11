@@ -61,6 +61,11 @@ public class UserManager implements UserManagerInterface {
     }
 
     @Override
+    public User findUser(String username) {
+        return realm.findUser(username);
+    }
+
+    @Override
     public boolean isUserRole(String roleName) {
 
         Subject subject = SecurityUtils.getSubject();

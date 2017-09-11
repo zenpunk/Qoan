@@ -47,13 +47,8 @@ public class QoanHeader extends Panel {
         layout.addComponent(image);
 
         // button for navigating to Welcome page
-        Button homeButton = new Button("Home", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(StartView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
-            }
-        });
+        Button homeButton = new Button("Home");
+        homeButton.addClickListener(clickEvent -> onHomeClicked());
         homeButton.setStyleName("link");
         layout.addComponent(homeButton);
 
@@ -69,44 +64,53 @@ public class QoanHeader extends Panel {
         layout.addComponent(workspaceButton);
 
         // button for navigating to the Components view
-        Button componentsButton = new Button("Components", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(ComponentsView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
-            }
-        });
+        Button componentsButton = new Button("Components");
+        componentsButton.addClickListener(clickEvent -> onComponenetsClicked());
         componentsButton.setStyleName("link");
         layout.addComponent(componentsButton);
 
         // button for navigating to the Components view
-        Button managementButton = new Button("Management", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
-            }
-        });
+        Button managementButton = new Button("Management");
+        managementButton.addClickListener(clickEvent -> onManagementClicked());
         managementButton.setStyleName("link");
         layout.addComponent(managementButton);
 
-        Button wikiButton = new Button("Wiki", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(WikiView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(WikiView.NAME);
-            }
-        });
+        Button wikiButton = new Button("Wiki");
+        wikiButton.addClickListener(clickEvent -> onWikiCLicked());
         wikiButton.setStyleName("link");
         layout.addComponent(wikiButton);
 
-//        ClassResource crowsResource = new ClassResource("gui/images/crows.jpg");
-//        Image crowsImage = new Image("", crowsResource);
-//        crowsImage.setHeight("30px");
-//        crowsImage.setWidth("300px");
-//        layout.addComponent(crowsImage);
+        Button registrationButton = new Button("Registration");
+        registrationButton.addClickListener(clickEvent -> onRegistrationClicked());
+        registrationButton.setStyleName("link");
+        layout.addComponent(registrationButton);
 
         setContent(layout);
+    }
+
+    public void onHomeClicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(StartView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
+    }
+
+    public void onComponenetsClicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(ComponentsView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
+    }
+
+    public void onManagementClicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
+    }
+
+    public void onWikiCLicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(WikiView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(WikiView.NAME);
+    }
+
+    public void onRegistrationClicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(RegistrationView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(RegistrationView.NAME);
     }
 
     private boolean isOnPage(String viewName) {

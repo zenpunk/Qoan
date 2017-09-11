@@ -14,11 +14,12 @@
 
 package qube.qoan.gui.views;
 
-import com.vaadin.data.Binder;
-import com.vaadin.data.ValidationException;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
-import org.apache.commons.lang3.StringUtils;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authc.AuthenticationException;
+import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
@@ -36,17 +37,13 @@ public class LoginView extends QoanView {
 
     public static String NAME = "LoginView";
 
+    public static String GUEST_USERNAME = "Guest";
+
+    public static String GUEST_PASSWORD = "password";
+
     private TextField userField;
 
-    private TextField emailField;
-
     private PasswordField passwordField;
-
-    private PasswordField passwordCheckField;
-
-    private UserData userData;
-
-    Binder<UserData> binder;
 
     @Inject
     private UserManagerInterface userManager;
@@ -58,9 +55,6 @@ public class LoginView extends QoanView {
     @Override
     protected void initialize() {
 
-        binder = new Binder<>();
-        userData = new UserData();
-
         HorizontalLayout firstRow = new HorizontalLayout();
         firstRow.setWidth("80%");
         ClassResource resource = new ClassResource("gui/images/kokoline.gif");
@@ -70,26 +64,10 @@ public class LoginView extends QoanView {
 
         VerticalLayout layout = new VerticalLayout();
         userField = new TextField("Username");
-        binder.forField(userField)
-                .bind(UserData::getUsername, UserData::setUsername);
         layout.addComponent(userField);
 
-        emailField = new TextField("E-Mail");
-        binder.forField(emailField)
-                .bind(UserData::getEmail, UserData::setEmail);
-        emailField.setVisible(false);
-        layout.addComponent(emailField);
-
         passwordField = new PasswordField("Password");
-        binder.forField(passwordField)
-                .bind(UserData::getPassword, UserData::setPassword);
         layout.addComponent(passwordField);
-
-        passwordCheckField = new PasswordField("Password check");
-        passwordCheckField.setVisible(false);
-        binder.forField(passwordCheckField)
-                .bind(UserData::getPasswordCheck, UserData::setPasswordCheck);
-        layout.addComponent(passwordCheckField);
 
         HorizontalLayout buttonRow = new HorizontalLayout();
 
@@ -116,41 +94,49 @@ public class LoginView extends QoanView {
 
     public void onGuestLoginClicked() {
 
+        User user = userManager.findUser(GUEST_USERNAME);
+        if (user == null) {
+            user = userManager.createUser(GUEST_USERNAME, GUEST_PASSWORD, "GuestRole", "View_only_permission");
+        }
+
+        try {
+            userManager.authenticateUser(user.getUsername(), user.getPassword());
+        } catch (Exception e) {
+            logger.error("There has to be a guest user!", e);
+            return;
+        }
     }
 
     public void onLoginClicked() {
 
-        User user;
-        if (StringUtils.isNoneBlank(userField.getValue())) {
-            user = new User(userField.getValue(), passwordField.getValue());
-        } else {
-            user = new User("sa", "");
+        Subject subject = SecurityUtils.getSubject();
+
+        if (!subject.isAuthenticated()) {
+
+            UsernamePasswordToken token = new UsernamePasswordToken(userField.getValue(), passwordField.getValue());
+
+            try {
+                subject.login(token);
+                User user = (User) subject.getPrincipal();
+                ((QoanUI) UI.getCurrent()).setUser(user);
+                String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
+
+                if (targetPage == null) {
+                    targetPage = StartView.NAME;
+                }
+
+                UI.getCurrent().getNavigator().navigateTo(targetPage);
+
+            } catch (AuthenticationException e) {
+                Notification.show("User cannot login with username and password supplied");
+            }
         }
-
-        ((QoanUI) UI.getCurrent()).setUser(user);
-        String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
-
-        if (targetPage == null) {
-            targetPage = StartView.NAME;
-        }
-
-        UI.getCurrent().getNavigator().navigateTo(targetPage);
 
     }
 
     public void onRegisterClicked() {
-
-        try {
-
-            binder.writeBean(userData);
-
-            User user = userManager.createUser(userData.getUsername(), userData.getPassword(), "User", "toExecuteProcedures");
-
-
-        } catch (ValidationException e) {
-            Notification.show("User could not be created, " +
-                    "please check error messages for each field.");
-        }
+        ((QoanUI) UI.getCurrent()).setTargetViewName(RegistrationView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(RegistrationView.NAME);
     }
 
 }

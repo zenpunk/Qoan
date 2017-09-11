@@ -52,6 +52,8 @@ public class QoanUI extends UI {
 
     protected ManagementView managementView;
 
+    protected RegistrationView registrationView;
+
     protected Injector injector;
 
     protected QoanModule qoanModule;
@@ -110,12 +112,19 @@ public class QoanUI extends UI {
             injector.injectMembers(managementView);
         }
 
+        // initialize the registration-view as well
+        if (registrationView == null) {
+            registrationView = new RegistrationView();
+            injector.injectMembers(registrationView);
+        }
+
         // Create and register the views
         navigator.addView("", StartView.class);
         navigator.addView(LoginView.NAME, LoginView.class);
         navigator.addView(ComponentsView.NAME, ComponentsView.class);
         navigator.addView(WorkspaceView.NAME, workspaceView);
         navigator.addView(ManagementView.NAME, managementView);
+        navigator.addView(RegistrationView.NAME, registrationView);
         navigator.addView(WikiView.NAME, WikiView.class);
     }
 
