@@ -53,13 +53,8 @@ public class QoanHeader extends Panel {
         layout.addComponent(homeButton);
 
         // button for navigating to the Workspace
-        Button workspaceButton = new Button("Workspace", new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                ((QoanUI) UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
-                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
-            }
-        });
+        Button workspaceButton = new Button("Workspace");
+        workspaceButton.addClickListener(clickEvent -> onWorkspaceClicked());
         workspaceButton.setStyleName("link");
         layout.addComponent(workspaceButton);
 
@@ -86,6 +81,11 @@ public class QoanHeader extends Panel {
         layout.addComponent(registrationButton);
 
         setContent(layout);
+    }
+
+    public void onWorkspaceClicked() {
+        ((QoanUI) UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
+        UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
     }
 
     public void onHomeClicked() {
