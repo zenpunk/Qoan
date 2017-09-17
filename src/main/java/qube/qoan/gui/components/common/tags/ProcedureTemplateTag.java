@@ -12,25 +12,29 @@
  *
  */
 
-package qube.qoan.gui.components.common.decorators;
+package qube.qoan.gui.components.common.tags;
 
+import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import com.vaadin.ui.Layout;
+import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.ProcedureTemplateDecorator;
 
-public class ProcedureDecorator extends BaseDecorator {
+/**
+ * Created by rainbird on 12/5/15.
+ */
+public class ProcedureTemplateTag extends BaseTag {
 
-    @Override
-    public void decorate(SearchResult toDecorate) {
+    private Procedure procedure;
 
+    private Layout parentLayout;
+
+    public ProcedureTemplateTag(Layout parentLayout, SearchResult searchResult) {
+        super(parentLayout, searchResult);
+        iconImage = new Image(PROCEDURES,
+                new ClassResource("gui/images/proc.png"));
+        decorators.put("Procedure", new ProcedureTemplateDecorator());
     }
 
-    @Override
-    public Image getIconImage() {
-        return null;
-    }
-
-    @Override
-    public String getName() {
-        return null;
-    }
 }

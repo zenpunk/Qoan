@@ -17,7 +17,7 @@ package qube.qoan.gui.components.workspace.procedure.decorators;
 import qube.qoan.gui.components.common.decorators.Decorator;
 import qube.qoan.services.QoanTestBase;
 
-public class TestProcedureDecorators extends QoanTestBase {
+public class TestProcedureTemplateDecorators extends QoanTestBase {
 
     public void testSelectionDecorator() throws Exception {
 

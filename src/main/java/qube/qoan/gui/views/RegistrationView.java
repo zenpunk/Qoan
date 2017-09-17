@@ -16,6 +16,8 @@ package qube.qoan.gui.views;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
+import com.vaadin.data.validator.EmailValidator;
+import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
@@ -68,13 +70,14 @@ public class RegistrationView extends QoanView {
         VerticalLayout layout = new VerticalLayout();
         userField = new TextField("Username");
         binder.forField(userField)
+                .withValidator(new StringLengthValidator("Username has to be longer than six characters", 0, 20))
                 .bind(UserData::getUsername, UserData::setUsername);
         layout.addComponent(userField);
 
         emailField = new TextField("E-Mail");
         binder.forField(emailField)
-//                .withValidator(new EmailValidator(
-//                        "This doesn't look like a valid email address"))
+                .withValidator(new EmailValidator(
+                        "This doesn't look like a valid email address"))
                 .bind(UserData::getEmail, UserData::setEmail);
         layout.addComponent(emailField);
 
@@ -93,13 +96,11 @@ public class RegistrationView extends QoanView {
         registerButton.addClickListener(clickEvent -> onRegisterClicked());
         layout.addComponent(registerButton);
 
-        // Store return date binding so we can revalidate it later
-        Binder.BindingBuilder<UserData, String> returnBindingBuilder = binder.forField(passwordField);
-//                .withValidator(password -> StringUtils.isNotBlank(password) && !password.equals(passwordCheckField.getValue()),
-//                        "You have to have a password which is the same in both fields");
+        // Store return date binding so we can re-validate it later
+        Binder.BindingBuilder<UserData, String> returnBindingBuilder = binder.forField(emailField);
         Binder.Binding<UserData, String> returnBinder = returnBindingBuilder.bind(UserData::getPassword, UserData::setPassword);
 
-        // Revalidate return date when departure date changes
+        // Re-validate value changes
         passwordField.addValueChangeListener(event -> returnBinder.validate());
 
         firstRow.addComponent(layout);
@@ -112,15 +113,20 @@ public class RegistrationView extends QoanView {
 
             binder.writeBean(userData);
 
+            if (!userData.getPassword().equals(userData.getPasswordCheck())) {
+                Notification.show("Passwords are not equal");
+                return;
+            }
+
             User user = userManager.createUser(userData.getUsername(), userData.getPassword(), "User", "toExecuteProcedures");
             ((QoanUI) UI.getCurrent()).setUser(user);
             userManager.authenticateUser(userData.getUsername(), userData.getPassword());
             UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
 
         } catch (ValidationException e) {
-            Notification.show("User could not be created, " + e.getMessage());
+            Notification.show("User could not be created: " + e.getMessage());
         } catch (UserNotAuthenticatedException e) {
-            Notification.show("User could not be created, " + e.getMessage());
+            Notification.show("User could not be created: " + e.getMessage());
         }
     }
 }

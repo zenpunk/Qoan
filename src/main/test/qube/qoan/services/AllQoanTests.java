@@ -26,7 +26,7 @@ import qube.qoan.gui.components.common.TestQoanMenu;
 import qube.qoan.gui.components.common.decorators.TestDecorators;
 import qube.qoan.gui.components.management.TestManagementPanel;
 import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
-import qube.qoan.gui.components.workspace.procedure.decorators.TestProcedureDecorators;
+import qube.qoan.gui.components.workspace.procedure.decorators.TestProcedureTemplateDecorators;
 import qube.qoan.services.implementation.TestDistributedSearchServices;
 import qube.qoan.services.implementation.TestQoanProcedureSubmitter;
 import qube.qoan.util.TestGsonSerializer;
@@ -66,7 +66,7 @@ public class AllQoanTests extends TestCase {
 
         // test for the decorators
         suite.addTestSuite(TestDecorators.class);
-        suite.addTestSuite(TestProcedureDecorators.class);
+        suite.addTestSuite(TestProcedureTemplateDecorators.class);
 
         // Gson serialization experiments
         suite.addTestSuite(TestGsonSerializer.class);

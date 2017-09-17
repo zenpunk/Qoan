@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
+import qube.qai.procedure.ProcedureManager;
+import qube.qai.procedure.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.*;
@@ -117,11 +119,14 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 //            logger.error("Error while loading configuration file: " + CONFIG_FILE_NAME, e);
 //        }
 
-        // executorService
+        // Procedure execution-service
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
 
         // QaiRealm
         bind(QaiSecurity.class).to(QaiSecurityManager.class);
+
+        // Procedure Manager
+        bind(ProcedureManagerInterface.class).to(ProcedureManager.class);
     }
 
     @Provides

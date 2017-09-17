@@ -21,9 +21,6 @@ import qube.qai.procedure.Procedure;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.decorators.ProcedureDecorator;
 
-/**
- * Created by rainbird on 12/5/15.
- */
 public class ProcedureTag extends BaseTag {
 
     private Procedure procedure;
@@ -36,5 +33,4 @@ public class ProcedureTag extends BaseTag {
                 new ClassResource("gui/images/proc.png"));
         decorators.put("Procedure", new ProcedureDecorator());
     }
-
 }
