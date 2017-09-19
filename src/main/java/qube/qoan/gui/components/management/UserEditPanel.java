@@ -12,13 +12,12 @@
  *
  */
 
-package qube.qoan.gui.views;
+package qube.qoan.gui.components.management;
 
 import com.vaadin.data.Binder;
 import com.vaadin.data.ValidationException;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.StringLengthValidator;
-import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,14 +25,14 @@ import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.authentication.UserManagerInterface;
 import qube.qoan.authentication.UserNotAuthenticatedException;
+import qube.qoan.gui.views.UserData;
+import qube.qoan.gui.views.WorkspaceView;
 
 import javax.inject.Inject;
 
-public class RegistrationView extends QoanView {
+public class UserEditPanel extends Panel {
 
-    private Logger logger = LoggerFactory.getLogger("RegistrationView");
-
-    public static String NAME = "RegistrationView";
+    private Logger logger = LoggerFactory.getLogger("UserEditPanel");
 
     private TextField userField;
 
@@ -45,27 +44,16 @@ public class RegistrationView extends QoanView {
 
     private UserData userData;
 
-    Binder<UserData> binder;
+    private Binder<UserData> binder;
 
     @Inject
     private UserManagerInterface userManager;
 
-    public RegistrationView() {
-        this.viewTitle = "Qoan Registration";
-    }
+    public UserEditPanel(UserData userData) {
 
-    @Override
-    protected void initialize() {
-
+        super();
+        this.userData = userData;
         binder = new Binder<>();
-        userData = new UserData();
-
-        HorizontalLayout firstRow = new HorizontalLayout();
-        firstRow.setWidth("80%");
-        ClassResource resource = new ClassResource("gui/images/kokoline.gif");
-        Image image = new Image("Singularity is nigh!", resource);
-        image.setWidth("30%");
-        firstRow.addComponent(image);
 
         VerticalLayout layout = new VerticalLayout();
         userField = new TextField("Username");
@@ -73,6 +61,13 @@ public class RegistrationView extends QoanView {
                 .withValidator(new StringLengthValidator("Username has to be longer than six characters", 0, 20))
                 .bind(UserData::getUsername, UserData::setUsername);
         layout.addComponent(userField);
+
+        emailField = new TextField("E-Mail");
+        binder.forField(emailField)
+                .withValidator(new EmailValidator(
+                        "This doesn't look like a valid email address"))
+                .bind(UserData::getEmail, UserData::setEmail);
+        layout.addComponent(emailField);
 
         passwordField = new PasswordField("Password");
         binder.forField(passwordField)
@@ -84,13 +79,6 @@ public class RegistrationView extends QoanView {
                 .bind(UserData::getPasswordCheck, UserData::setPasswordCheck);
         layout.addComponent(passwordCheckField);
 
-        emailField = new TextField("E-Mail");
-        binder.forField(emailField)
-                .withValidator(new EmailValidator(
-                        "This doesn't look like a valid email address"))
-                .bind(UserData::getEmail, UserData::setEmail);
-        layout.addComponent(emailField);
-
         Button registerButton = new Button("Register");
         registerButton.setStyleName("link");
         registerButton.addClickListener(clickEvent -> onRegisterClicked());
@@ -98,13 +86,10 @@ public class RegistrationView extends QoanView {
 
         // Store return date binding so we can re-validate it later
         Binder.BindingBuilder<UserData, String> returnBindingBuilder = binder.forField(emailField);
-        Binder.Binding<UserData, String> returnBinder = returnBindingBuilder.bind(UserData::getEmail, UserData::setEmail);
+        Binder.Binding<UserData, String> returnBinder = returnBindingBuilder.bind(UserData::getPassword, UserData::setPassword);
 
         // Re-validate value changes
         passwordField.addValueChangeListener(event -> returnBinder.validate());
-
-        firstRow.addComponent(layout);
-        addComponent(firstRow);
     }
 
     public void onRegisterClicked() {
@@ -125,10 +110,18 @@ public class RegistrationView extends QoanView {
 
         } catch (ValidationException e) {
             Notification.show("User could not be created: " + e.getMessage());
+            logger.error("User could not be created", e);
         } catch (UserNotAuthenticatedException e) {
             Notification.show("User could not be created: " + e.getMessage());
-        } finally {
-            userData = new UserData();
+            logger.error("User could not be created", e);
         }
+    }
+
+    public UserData getUserData() {
+        return userData;
+    }
+
+    public void setUserData(UserData userData) {
+        this.userData = userData;
     }
 }
