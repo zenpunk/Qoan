@@ -20,7 +20,6 @@ import com.vaadin.server.ClassResource;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.TreeGrid;
 import com.vaadin.ui.dnd.DropTargetExtension;
 import qube.qai.procedure.utils.SelectionProcedure;
 import qube.qai.services.implementation.SearchResult;
@@ -38,7 +37,9 @@ public class SelectionDecorator extends BaseDecorator {
 
     private String name;
 
-    private TreeGrid<SearchResult> grid;
+    private boolean isInitialized = false;
+
+    private Grid<SearchResult> grid;
 
     public SelectionDecorator(String name, SelectionProcedure selection) {
         this.name = "Selection for " + name;
@@ -52,41 +53,54 @@ public class SelectionDecorator extends BaseDecorator {
 
         String mimeType = selection.getValueTo().getMimeType();
 
-        ArrayList<SearchResult> results = new ArrayList<>();
-        selection.getValueTo().setValue(results);
-        ListDataProvider<SearchResult> dataProvider = DataProvider.ofCollection(results);
-
-        grid = new TreeGrid<SearchResult>();
-        grid.setCaption("Drop searches from Finance and Stock Searches");
-        grid.addColumn(SearchResult::getContext).setCaption("Context");
-        grid.addColumn(SearchResult::getTitle).setCaption("Title");
-        grid.addColumn(SearchResult::getDescription).setCaption("Description");
-        grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
-        grid.addColumn(SearchResult::getUuid).setCaption("UUID");
-        grid.setWidth("100%");
-        grid.setHeight("100%");
-
-        grid.setDataProvider(dataProvider);
-
-        setContent(grid);
-
-        SelectionDropListener listener = new SelectionDropListener(grid);
-        listener.addDropListener(event -> {
-            Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
-
-            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
-                Grid source = (Grid) dragSource.get();
-                Set<SearchResult> items = source.getSelectedItems();
-                results.addAll(items);
-                dataProvider.refreshAll();
-            } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
-                BaseTag tag = (BaseTag) dragSource.get();
-                SearchResult result = tag.getSearchResult();
-                grid.setItems(result);
-                grid.getDataProvider().refreshAll();
+        // initialize the whole only once, so that re-opening the
+        // desktop-tag doesn't remove all data
+        ArrayList<SearchResult> results;
+        if (!isInitialized) {
+            if (selection.getValueTo().getValue() != null) {
+                results = (ArrayList<SearchResult>) selection.getValueTo().getValue();
+            } else {
+                results = new ArrayList<>();
+                selection.getValueTo().setValue(results);
             }
 
-        });
+            ListDataProvider<SearchResult> dataProvider = DataProvider.ofCollection(results);
+
+            grid = new Grid<SearchResult>();
+            grid.setCaption("Drop searches from Finance and Stock Searches");
+            grid.addColumn(SearchResult::getContext).setCaption("Context");
+            grid.addColumn(SearchResult::getTitle).setCaption("Title");
+            grid.addColumn(SearchResult::getDescription).setCaption("Description");
+            grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
+            grid.addColumn(SearchResult::getUuid).setCaption("UUID");
+            grid.setWidth("100%");
+            grid.setHeight("100%");
+
+            grid.setDataProvider(dataProvider);
+
+            setContent(grid);
+
+            SelectionDropListener listener = new SelectionDropListener(grid);
+            listener.addDropListener(event -> {
+                Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
+
+                if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
+                    Grid source = (Grid) dragSource.get();
+                    Set<SearchResult> items = source.getSelectedItems();
+                    results.addAll(items);
+                    dataProvider.refreshAll();
+                } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
+                    BaseTag tag = (BaseTag) dragSource.get();
+                    SearchResult result = tag.getSearchResult();
+                    grid.setItems(result);
+                    grid.getDataProvider().refreshAll();
+                }
+
+            });
+
+            isInitialized = true;
+        }
+
     }
 
     public void addListener() {

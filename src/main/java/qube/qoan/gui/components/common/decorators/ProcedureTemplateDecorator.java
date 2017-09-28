@@ -49,6 +49,8 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
     private boolean isSaved = false;
 
+    private boolean isInitialized = false;
+
     public ProcedureTemplateDecorator() {
         iconImage = new Image("Procedure",
                 new ClassResource("gui/images/proc-icon.png"));
@@ -59,32 +61,37 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        ProcedureTemplate template = ProcedureLibrary.getNamedProcedureTemplate(toDecorate.getTitle());
+        if (!isInitialized) {
 
-        if (template == null) {
-            Notification.show("Template: '" + toDecorate.getTitle() + "' not found");
-            return;
-        }
+            ProcedureTemplate template = ProcedureLibrary.getNamedProcedureTemplate(toDecorate.getTitle());
 
-        procedure = template.createProcedure();
-
-        Panel description = createProcedureDescription(procedure);
-
-        TabSheet content = new TabSheet();
-        content.addTab(description, "Description", descIconImage.getSource());
-
-        Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
-        if (children.size() > 0) {
-            TabSheet tabSheet;
-            for (String name : children.keySet()) {
-                SelectionProcedure child = children.get(name);
-                SelectionDecorator decorator = new SelectionDecorator(name, child);
-                decorator.decorate(toDecorate);
-                content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
+            if (template == null) {
+                Notification.show("Template: '" + toDecorate.getTitle() + "' not found");
+                return;
             }
+
+            procedure = template.createProcedure();
+
+            Panel description = createProcedureDescription(procedure);
+
+            TabSheet content = new TabSheet();
+            content.addTab(description, "Description", descIconImage.getSource());
+
+            Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
+            if (children.size() > 0) {
+                TabSheet tabSheet;
+                for (String name : children.keySet()) {
+                    SelectionProcedure child = children.get(name);
+                    SelectionDecorator decorator = new SelectionDecorator(name, child);
+                    decorator.decorate(toDecorate);
+                    content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
+                }
+            }
+
+            setContent(content);
+            isInitialized = true;
         }
 
-        setContent(content);
 
     }
 
