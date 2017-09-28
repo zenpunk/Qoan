@@ -54,7 +54,7 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         for (ProcedureTemplate template : ProcedureLibrary.allTemplates) {
             Procedure proc = template.createProcedure();
             //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
-            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), "", proc.getDescriptionText(), 1.0);
+            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), null, proc.getDescriptionText(), 1.0);
             TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
             TreeData<SearchResult> data = gridDataProvider.getTreeData();
             data.addItem(null, procResult);

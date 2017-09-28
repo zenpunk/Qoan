@@ -19,6 +19,8 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.dnd.DragSourceExtension;
 import com.vaadin.ui.dnd.DropTargetExtension;
+import com.vaadin.ui.dnd.event.DropEvent;
+import org.apache.commons.lang3.StringUtils;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.DisplayPanel;
@@ -41,34 +43,36 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
     }
 
     public void addListener() {
-        addDropListener(event -> {
-            // if the drag source is in the same UI as the target
-            Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
-            String dropCoords = "left: %d px; top: %d px;";
-            int dropX = event.getMouseEventDetails().getRelativeX();
-            int dropY = event.getMouseEventDetails().getRelativeY();
+        addDropListener(event -> onClick(event));
+    }
 
-            if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
+    protected void onClick(DropEvent event) {
+        // if the drag source is in the same UI as the target
+        Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
+        String dropCoords = "left: %d px; top: %d px;";
+        int dropX = event.getMouseEventDetails().getRelativeX();
+        int dropY = event.getMouseEventDetails().getRelativeY();
 
-                Grid grid = (Grid) dragSource.get();
-                Set<SearchResult> results = grid.getSelectedItems();
+        if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
 
-                for (SearchResult result : results) {
-                    BaseTag tag = createQoanTag(result);
-                    DragSourceExtension<BaseTag> dragExtension = tag.getDragExtension();
-                    String coords = String.format(dropCoords, dropX, dropY);
-                    targetLayout.addComponent(tag, coords);
-                }
-            } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
-                BaseTag tag = (BaseTag) dragSource.get();
-                String coords = String.format(dropCoords, dropX, dropY);
-                targetLayout.addComponent(tag, coords);
-            } else if (dragSource.isPresent() && dragSource.get() instanceof DisplayPanel) {
-                DisplayPanel tag = (DisplayPanel) dragSource.get();
+            Grid grid = (Grid) dragSource.get();
+            Set<SearchResult> results = grid.getSelectedItems();
+
+            for (SearchResult result : results) {
+                BaseTag tag = createQoanTag(result);
+                DragSourceExtension<BaseTag> dragExtension = tag.getDragExtension();
                 String coords = String.format(dropCoords, dropX, dropY);
                 targetLayout.addComponent(tag, coords);
             }
-        });
+        } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
+            BaseTag tag = (BaseTag) dragSource.get();
+            String coords = String.format(dropCoords, dropX, dropY);
+            targetLayout.addComponent(tag, coords);
+        } else if (dragSource.isPresent() && dragSource.get() instanceof DisplayPanel) {
+            DisplayPanel tag = (DisplayPanel) dragSource.get();
+            String coords = String.format(dropCoords, dropX, dropY);
+            targetLayout.addComponent(tag, coords);
+        }
     }
 
     protected BaseTag createQoanTag(SearchResult result) {
@@ -81,9 +85,9 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
             tag = new WikiArticleTag(targetLayout, result);
         } else if (STOCK_ENTITIES.equals(result.getContext())) {
             tag = new StockEntityTag(targetLayout, result);
-        } else if (PROCEDURES.equals(result.getContext()) && result.getUuid() == null) {
+        } else if (PROCEDURES.equals(result.getContext()) && StringUtils.isBlank(result.getUuid())) {
             tag = new ProcedureTemplateTag(targetLayout, result);
-        } else if (PROCEDURES.equals(result.getContext()) && result.getUuid() != null) {
+        } else if (PROCEDURES.equals(result.getContext()) && StringUtils.isNotBlank(result.getUuid())) {
             tag = new ProcedureTag(targetLayout, result);
         } else if (WIKIPEDIA_RESOURCES.equals(result.getContext())) {
             tag = new ImageTag(targetLayout, result);

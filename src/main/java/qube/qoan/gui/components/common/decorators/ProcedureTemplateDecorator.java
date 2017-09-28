@@ -17,7 +17,6 @@ package qube.qoan.gui.components.common.decorators;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
-import org.apache.commons.lang3.StringUtils;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
@@ -50,8 +49,6 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
     private boolean isSaved = false;
 
-    private boolean isTemplate = false;
-
     public ProcedureTemplateDecorator() {
         iconImage = new Image("Procedure",
                 new ClassResource("gui/images/proc-icon.png"));
@@ -62,34 +59,28 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        if (StringUtils.isNotBlank(toDecorate.getUuid())) {
-            procedure = dataProvider.brokerSearchResult(toDecorate);
-        } else {
-            ProcedureTemplate template = ProcedureLibrary.getNamedProcedureTemplate(toDecorate.getTitle());
-            if (template == null) {
-                Notification.show("Template: '" + toDecorate.getTitle() + "' not found");
-                return;
-            }
-            procedure = template.createProcedure();
-            isTemplate = true;
+        ProcedureTemplate template = ProcedureLibrary.getNamedProcedureTemplate(toDecorate.getTitle());
+
+        if (template == null) {
+            Notification.show("Template: '" + toDecorate.getTitle() + "' not found");
+            return;
         }
 
+        procedure = template.createProcedure();
+
         Panel description = createProcedureDescription(procedure);
-        Component content = description;
 
-        if (isTemplate) {
+        TabSheet content = new TabSheet();
+        content.addTab(description, "Description", descIconImage.getSource());
 
-            Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
-            if (children.size() > 0) {
-                TabSheet tabSheet = new TabSheet();
-                tabSheet.addTab(description, "Description", descIconImage.getSource());
-                for (String name : children.keySet()) {
-                    SelectionProcedure child = children.get(name);
-                    SelectionDecorator decorator = new SelectionDecorator(name, child);
-                    decorator.decorate(toDecorate);
-                    tabSheet.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
-                }
-                content = tabSheet;
+        Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
+        if (children.size() > 0) {
+            TabSheet tabSheet;
+            for (String name : children.keySet()) {
+                SelectionProcedure child = children.get(name);
+                SelectionDecorator decorator = new SelectionDecorator(name, child);
+                decorator.decorate(toDecorate);
+                content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
             }
         }
 
@@ -125,7 +116,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
      * @param procedure
      * @return
      */
-    private Panel createProcedureDescription(Procedure procedure) {
+    public Panel createProcedureDescription(Procedure procedure) {
 
         String template = "<b> %s :</b><i> %s </i>";
 

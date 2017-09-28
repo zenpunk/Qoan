@@ -70,15 +70,15 @@ public class QoanHeader extends Panel {
         managementButton.setStyleName("link");
         layout.addComponent(managementButton);
 
-        Button wikiButton = new Button("Wiki");
-        wikiButton.addClickListener(clickEvent -> onWikiCLicked());
-        wikiButton.setStyleName("link");
-        layout.addComponent(wikiButton);
-
         Button registrationButton = new Button("Registration");
         registrationButton.addClickListener(clickEvent -> onRegistrationClicked());
         registrationButton.setStyleName("link");
         layout.addComponent(registrationButton);
+
+        Button wikiButton = new Button("Wiki");
+        wikiButton.addClickListener(clickEvent -> onWikiCLicked());
+        wikiButton.setStyleName("link");
+        layout.addComponent(wikiButton);
 
         setContent(layout);
     }

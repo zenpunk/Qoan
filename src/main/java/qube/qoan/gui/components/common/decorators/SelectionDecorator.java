@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.common.decorators;
 
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
@@ -24,6 +26,7 @@ import qube.qai.procedure.utils.SelectionProcedure;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.tags.BaseTag;
 
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.Set;
 
@@ -49,6 +52,10 @@ public class SelectionDecorator extends BaseDecorator {
 
         String mimeType = selection.getValueTo().getMimeType();
 
+        ArrayList<SearchResult> results = new ArrayList<>();
+        selection.getValueTo().setValue(results);
+        ListDataProvider<SearchResult> dataProvider = DataProvider.ofCollection(results);
+
         grid = new TreeGrid<SearchResult>();
         grid.setCaption("Drop searches from Finance and Stock Searches");
         grid.addColumn(SearchResult::getContext).setCaption("Context");
@@ -59,6 +66,8 @@ public class SelectionDecorator extends BaseDecorator {
         grid.setWidth("100%");
         grid.setHeight("100%");
 
+        grid.setDataProvider(dataProvider);
+
         setContent(grid);
 
         SelectionDropListener listener = new SelectionDropListener(grid);
@@ -67,9 +76,9 @@ public class SelectionDecorator extends BaseDecorator {
 
             if (dragSource.isPresent() && dragSource.get() instanceof Grid) {
                 Grid source = (Grid) dragSource.get();
-                Set<SearchResult> results = source.getSelectedItems();
-                grid.setItems(results);
-                grid.getDataProvider().refreshAll();
+                Set<SearchResult> items = source.getSelectedItems();
+                results.addAll(items);
+                dataProvider.refreshAll();
             } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
                 BaseTag tag = (BaseTag) dragSource.get();
                 SearchResult result = tag.getSearchResult();
