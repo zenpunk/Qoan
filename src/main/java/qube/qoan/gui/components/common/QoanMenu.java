@@ -80,7 +80,6 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         searchRow.addComponent(doSearch);
         layout.addComponent(searchRow);
 
-
         HorizontalLayout toggleLine = new HorizontalLayout();
         Button toggleSettingsButton = new Button("Toggle search-setting visibility");
         toggleSettingsButton.setStyleName("link");

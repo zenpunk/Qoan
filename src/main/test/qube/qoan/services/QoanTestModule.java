@@ -24,6 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.message.MessageQueue;
 import qube.qai.message.MessageQueueInterface;
+import qube.qai.security.QaiSecurity;
+import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.*;
 import qube.qai.services.implementation.*;
 
@@ -67,6 +69,8 @@ public class QoanTestModule extends AbstractModule {
 
         // messageQueue
         bind(MessageQueueInterface.class).to(MessageQueue.class);
+
+        bind(QaiSecurity.class).to(QaiSecurityManager.class);
     }
 
 //    @Provides

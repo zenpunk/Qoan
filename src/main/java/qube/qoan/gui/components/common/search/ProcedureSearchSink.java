@@ -51,20 +51,21 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         injector.injectMembers(this);
 
+        TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
+        TreeData<SearchResult> data = gridDataProvider.getTreeData();
+
         for (ProcedureTemplate template : ProcedureLibrary.allTemplates) {
             Procedure proc = template.createProcedure();
-            //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
+            Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
             SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), null, proc.getDescriptionText(), 1.0);
-            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
-            TreeData<SearchResult> data = gridDataProvider.getTreeData();
             data.addItem(null, procResult);
             // if the results have returned nothing just go on tot eh next procedure.
-//            if (results == null || results.isEmpty()) {
-//                continue;
-//            } else {
-//                data.addItems(procResult, results);
-//                gridDataProvider.refreshAll();
-//            }
+            if (results == null || results.isEmpty()) {
+                continue;
+            } else {
+                data.addItems(procResult, results);
+                gridDataProvider.refreshAll();
+            }
         }
 
     }

@@ -46,9 +46,9 @@ public class SearchSource extends Panel {
 
     private int numResults = 100;
 
-    public SearchSource(String name, String searchContextntext) {
+    public SearchSource(String name, String searchContextName) {
         this.name = name;
-        this.searchContext = searchContextntext;
+        this.searchContext = searchContextName;
         initialize();
     }
 

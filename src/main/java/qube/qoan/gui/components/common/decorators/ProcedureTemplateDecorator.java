@@ -47,6 +47,10 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
     private Image descIconImage;
 
+    private Button saveButton;
+
+    private Button startButton;
+
     private boolean isSaved = false;
 
     private boolean isInitialized = false;
@@ -165,12 +169,12 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         contentLayout.addComponent(percentageLabel);
 
         HorizontalLayout buttonRow = new HorizontalLayout();
-        Button saveButton = new Button("Save Procedure");
+        saveButton = new Button("Save Procedure");
         saveButton.addClickListener(event -> onSaveProcedure());
         saveButton.setStyleName("link");
         buttonRow.addComponent(saveButton);
 
-        Button startButton = new Button("Start Procedure");
+        startButton = new Button("Start Procedure");
         startButton.addClickListener(clickEvent -> onStartProcedure());
         startButton.setStyleName("link");
         startButton.setVisible(isSaved);
@@ -189,6 +193,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         if (procedure != null) {
             dataProvider.putData(procedure.getUuid(), procedure);
             isSaved = true;
+            startButton.setVisible(true);
         }
     }
 
