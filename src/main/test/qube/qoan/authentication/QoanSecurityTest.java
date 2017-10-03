@@ -12,20 +12,21 @@
  *
  */
 
-package qube.qoan.gui.components.management;
+package qube.qoan.authentication;
 
+import qube.qoan.services.QoanSecurityModule;
 import qube.qoan.services.QoanTestBase;
 
-/**
- * Created by rainbird on 7/2/17.
- */
-public class TestManagementPanel extends QoanTestBase {
+public class QoanSecurityTest extends QoanTestBase {
 
-    public void testManagementPanel() throws Exception {
+    public void testQoanSecurity() throws Exception {
 
-        ManagementPanel managementPanel = new ManagementPanel();
-        injector.injectMembers(managementPanel);
+        QoanSecurityModule securityModule = new QoanSecurityModule();
+        assertNotNull("nona", securityModule);
 
-        fail("implement the test first");
+        injector.injectMembers(securityModule);
+
+
+
     }
 }

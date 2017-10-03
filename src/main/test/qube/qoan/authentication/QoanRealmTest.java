@@ -27,7 +27,7 @@ import qube.qai.user.Role;
 import qube.qai.user.User;
 import qube.qoan.services.QoanTestBase;
 
-public class TestQoanRealm extends QoanTestBase {
+public class QoanRealmTest extends QoanTestBase {
 
     public void testQoanRealm() throws Exception {
 

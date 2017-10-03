@@ -23,7 +23,7 @@ import javax.inject.Inject;
 /**
  * Created by rainbird on 4/21/17.
  */
-public class TestUserManager extends QoanTestBase {
+public class UserManagerTest extends QoanTestBase {
 
     @Inject
     private HazelcastInstance hazelcastInstance;

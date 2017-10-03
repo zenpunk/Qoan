@@ -12,18 +12,20 @@
  *
  */
 
-package qube.qoan.gui.components;
+package qube.qoan.gui.components.workspace.procedure.decorators;
 
+import qube.qoan.gui.components.common.decorators.Decorator;
 import qube.qoan.services.QoanTestBase;
 
-/**
- * Created by rainbird on 11/19/15.
- */
-public class TestWikiSearchMenu extends QoanTestBase {
+public class ProcedureTemplateDecoratorsTest extends QoanTestBase {
 
+    public void testSelectionDecorator() throws Exception {
 
-    public void testSearchMenuDropAction() throws Exception {
+        Decorator decorator = new SelectionDecorator();
+    }
 
-        fail("i don't know what to test here");
+    public void testInputDecorator() throws Exception {
+
+        Decorator decorator = new InputDecorator();
     }
 }

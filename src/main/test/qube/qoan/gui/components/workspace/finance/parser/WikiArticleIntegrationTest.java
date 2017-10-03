@@ -35,9 +35,9 @@ import java.util.Set;
 /**
  * Created by rainbird on 12/23/15.
  */
-public class TestWikiArticleIntegration extends QoanTestBase {
+public class WikiArticleIntegrationTest extends QoanTestBase {
 
-    private static Logger logger = LoggerFactory.getLogger("TestWikiArticleIntegration");
+    private static Logger logger = LoggerFactory.getLogger("WikiArticleIntegrationTest");
 
     private String stockListingPage = "Lists of companies by stock exchange listing.xml";
 

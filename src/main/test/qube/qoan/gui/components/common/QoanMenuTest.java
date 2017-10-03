@@ -22,7 +22,7 @@ import qube.qoan.services.QoanTestBase;
 /**
  * Created by rainbird on 7/2/17.
  */
-public class TestQoanMenu extends QoanTestBase {
+public class QoanMenuTest extends QoanTestBase {
 
     private WikiSearchMenu wikiSearchMenu;
 

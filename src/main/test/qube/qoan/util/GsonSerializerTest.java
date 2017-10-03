@@ -32,7 +32,7 @@ import java.util.Vector;
 /**
  * Created by rainbird on 6/29/17.
  */
-public class TestGsonSerializer extends TestCase implements QaiConstants {
+public class GsonSerializerTest extends TestCase implements QaiConstants {
 
     public void testGsonSearchResult() {
 

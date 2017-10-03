@@ -18,18 +18,18 @@ import junit.framework.Test;
 import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
-import qube.qoan.authentication.TestQoanRealm;
-import qube.qoan.authentication.TestQoanSecurity;
-import qube.qoan.authentication.TestUserManager;
-import qube.qoan.gui.components.TestWikiSearchMenu;
-import qube.qoan.gui.components.common.TestQoanMenu;
-import qube.qoan.gui.components.common.decorators.TestDecorators;
-import qube.qoan.gui.components.management.TestManagementPanel;
-import qube.qoan.gui.components.workspace.finance.parser.TestWikiArticleIntegration;
-import qube.qoan.gui.components.workspace.procedure.decorators.TestProcedureTemplateDecorators;
-import qube.qoan.services.implementation.TestDistributedSearchServices;
-import qube.qoan.services.implementation.TestQoanProcedureSubmitter;
-import qube.qoan.util.TestGsonSerializer;
+import qube.qoan.authentication.QoanRealmTest;
+import qube.qoan.authentication.QoanSecurityTest;
+import qube.qoan.authentication.UserManagerTest;
+import qube.qoan.gui.components.WikiSearchMenuTest;
+import qube.qoan.gui.components.common.QoanMenuTest;
+import qube.qoan.gui.components.common.decorators.DecoratorsTest;
+import qube.qoan.gui.components.management.ManagementPanelTest;
+import qube.qoan.gui.components.workspace.finance.parser.WikiArticleIntegrationTest;
+import qube.qoan.gui.components.workspace.procedure.decorators.ProcedureTemplateDecoratorsTest;
+import qube.qoan.services.implementation.DistributedSearchServicesTest;
+import qube.qoan.services.implementation.QoanProcedureSubmitterTest;
+import qube.qoan.util.GsonSerializerTest;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -44,32 +44,32 @@ public class AllQoanTests extends TestCase {
         TestSuite suite = new TestSuite("All Qoan tests");
 
         // user manager tests
-        suite.addTestSuite(TestUserManager.class);
-        suite.addTestSuite(TestQoanSecurity.class);
-        suite.addTestSuite(TestQoanRealm.class);
+        suite.addTestSuite(UserManagerTest.class);
+        suite.addTestSuite(QoanSecurityTest.class);
+        suite.addTestSuite(QoanRealmTest.class);
 
         // this one tests search menu drag-n-drop things
-        suite.addTestSuite(TestWikiSearchMenu.class);
+        suite.addTestSuite(WikiSearchMenuTest.class);
 
         // the menu components are all the same now
-        suite.addTestSuite(TestQoanMenu.class);
+        suite.addTestSuite(QoanMenuTest.class);
 
         // management panel tests
-        suite.addTestSuite(TestManagementPanel.class);
+        suite.addTestSuite(ManagementPanelTest.class);
 
         // this one is for parsing wiki-tables
-        suite.addTestSuite(TestWikiArticleIntegration.class);
+        suite.addTestSuite(WikiArticleIntegrationTest.class);
 
         // this is the most important of all, really, to see if you have live-data
-        suite.addTestSuite(TestDistributedSearchServices.class);
-        suite.addTestSuite(TestQoanProcedureSubmitter.class);
+        suite.addTestSuite(DistributedSearchServicesTest.class);
+        suite.addTestSuite(QoanProcedureSubmitterTest.class);
 
         // test for the decorators
-        suite.addTestSuite(TestDecorators.class);
-        suite.addTestSuite(TestProcedureTemplateDecorators.class);
+        suite.addTestSuite(DecoratorsTest.class);
+        suite.addTestSuite(ProcedureTemplateDecoratorsTest.class);
 
         // Gson serialization experiments
-        suite.addTestSuite(TestGsonSerializer.class);
+        suite.addTestSuite(GsonSerializerTest.class);
 
         return suite;
     }

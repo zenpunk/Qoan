@@ -34,7 +34,7 @@ import java.util.Set;
 /**
  * Created by rainbird on 1/6/16.
  */
-public class TestDistributedSearchServices extends QoanTestBase {
+public class DistributedSearchServicesTest extends QoanTestBase {
 
     private Logger logger = LoggerFactory.getLogger("QaiTestModule");
 

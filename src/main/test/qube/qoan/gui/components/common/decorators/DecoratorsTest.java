@@ -20,7 +20,7 @@ import qube.qoan.services.QoanTestBase;
 /**
  * Created by rainbird on 7/8/17.
  */
-public class TestDecorators extends QoanTestBase {
+public class DecoratorsTest extends QoanTestBase {
 
     public void testHistogramDeocrator() throws Exception {
 

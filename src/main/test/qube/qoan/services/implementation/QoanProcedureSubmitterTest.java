@@ -28,7 +28,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Collection;
 
-public class TestQoanProcedureSubmitter extends QoanTestBase {
+public class QoanProcedureSubmitterTest extends QoanTestBase {
 
     @Inject
     protected ProcedureSubmitterInterface procedureSubmitter;
