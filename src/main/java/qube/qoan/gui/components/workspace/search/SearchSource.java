@@ -14,8 +14,9 @@
 
 package qube.qoan.gui.components.workspace.search;
 
-import com.google.inject.Injector;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
@@ -28,6 +29,8 @@ import java.util.Collection;
  * Created by rainbird on 6/27/17.
  */
 public class SearchSource extends Panel {
+
+    private static Logger logger = LoggerFactory.getLogger("SearchSource");
 
     // do not inject the thing, because the name will be determined only later!
     // @Inject
@@ -54,10 +57,13 @@ public class SearchSource extends Panel {
 
     private void initialize() {
 
-        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-
-        //resultSink = injector.getInstance(SearchResultSink.class);
         searchService = ((QoanUI) UI.getCurrent()).getNamedService(searchContext);
+        if (searchService == null) {
+            String message = "No search-service with the name: '" + searchContext + "' has been found- this service will not be available!";
+            logger.error(message);
+            Notification.show(message);
+        }
+
 
         VerticalLayout layout = new VerticalLayout();
         setContent(layout);

@@ -430,11 +430,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             wikipediaSearchService = provideWikipediaSearchService();
             logger.info("Started service: " + WIKIPEDIA);
             namedSearchServices.put(WIKIPEDIA, wikipediaSearchService);
+        } else if (!namedSearchServices.containsKey(WIKIPEDIA)) {
+            namedSearchServices.put(WIKIPEDIA, wikipediaSearchService);
         }
 
         if (wiktionarySearchService == null) {
             wiktionarySearchService = provideWiktionarySearchService();
             logger.info("Started service: " + WIKTIONARY);
+            namedSearchServices.put(WIKTIONARY, wiktionarySearchService);
+        } else if (!namedSearchServices.containsKey(WIKTIONARY)) {
             namedSearchServices.put(WIKTIONARY, wiktionarySearchService);
         }
 
@@ -442,11 +446,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             wikiResourcesSearchService = provideWikiResourcesSearchService();
             logger.info("Started service: " + WIKIPEDIA_RESOURCES);
             namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+        } else if (!namedSearchServices.containsKey(WIKIPEDIA_RESOURCES)) {
+            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
         }
 
         if (stockEntitiesSearchService == null) {
             stockEntitiesSearchService = provideStockEntitiesSearchService();
             logger.info("Started service: " + STOCK_ENTITIES);
+            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+        } else if (!namedSearchServices.containsKey(STOCK_ENTITIES)) {
             namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
         }
 
@@ -454,11 +462,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             stockGroupsSearchService = provideStockGroupssSearchService();
             logger.info("Started service: " + STOCK_GROUPS);
             namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+        } else if (!namedSearchServices.containsKey(STOCK_GROUPS)) {
+            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
         }
 
         if (proceduresSearchService == null) {
             proceduresSearchService = provideProceduresSearchService();
             logger.info("Started service: " + PROCEDURES);
+            namedSearchServices.put(PROCEDURES, proceduresSearchService);
+        } else if (!namedSearchServices.containsKey(PROCEDURES)) {
             namedSearchServices.put(PROCEDURES, proceduresSearchService);
         }
 
@@ -466,11 +478,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             molecularResourcesService = provideMolecularSearchService();
             logger.info("Started service: " + MOLECULAR_RESOURCES);
             namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
+        } else if (!namedSearchServices.containsKey(MOLECULAR_RESOURCES)) {
+            namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
         }
 
         if (pdfFileRsourcesService == null) {
             pdfFileRsourcesService = providePdfFileSearchService();
             logger.info("Started service: " + PDF_FILE_RESOURCES);
+            namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
+        } else if (!namedSearchServices.containsKey(PDF_FILE_RESOURCES)) {
             namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
         }
 
