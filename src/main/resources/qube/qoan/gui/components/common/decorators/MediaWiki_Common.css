@@ -1,0 +1,695 @@
+/* <nowiki> */
+/* {{user language}} */
+@import "//meta.wikimedia.org/w/index.php?title=MediaWiki:User_language.css&action=raw&ctype=text/css&r=2";
+
+/* {{mbox}}, {{ambox}}, {{ombox}}, {{fmbox}}, etc... */
+@import "//www.mediawiki.org/w/index.php?title=MediaWiki:Gadget-enwp-boxes.css&action=raw&ctype=text/css";
+
+/* Redirects in categories, on [[Special:Allpages]], and [[Special:Prefixindex]] */
+.redirect-in-category, .allpagesredirect a {
+ color: gray;
+}
+
+/* Hide some code on the Main Page */
+body.page-Main_Page.action-view #siteSub,
+body.page-Main_Page.action-view #contentSub,
+body.page-Main_Page.action-view .firstHeading,
+body.page-Main_Page.action-view #jump-to-nav {
+    display: none !important;
+}
+
+/**
+** Printing
+**/
+/* hide unneeded content when printing */
+@media print {
+ #privacy, #about, #disclaimer {
+	display: none;
+ }
+}
+
+/**
+** Hide selected content (should rarely be used, backwards compatibility)
+**/
+.hiddenStructure, .if {
+ display: none;
+}
+
+/**
+** Infoboxes
+**/
+.infobox {
+ float: right;
+ clear: right;
+ margin-bottom: 0.5em;
+ margin-left: 1em;
+ padding: 0.2em;
+ border: 1px solid #a2a9b1;
+ background: #f8f9fa;
+ color: black;
+}
+
+.infobox td,
+.infobox th {
+ vertical-align: top;
+}
+
+.infobox caption {
+ margin-left: inherit;
+ font-size: larger;
+}
+
+.infobox.bordered {
+ border-collapse: collapse;
+}
+
+.infobox.bordered td,
+.infobox.bordered th {
+ border: 1px solid #a2a9b1;
+}
+
+.infobox.bordered .borderless td,
+.infobox.bordered .borderless th {
+ border: 0;
+}
+
+/**
+** Sister project templates
+**/
+.infobox.sisterproject {
+ width: 20em;
+ font-size: 90%;
+}
+
+.sister-project {
+ clear: right;
+ float: right;
+ width: 250px;
+ margin: 0 0 1em 3em;
+ padding: 4px;
+ border: 1px solid #a2a9b1;
+ background: #f8f9fa;
+ font-size: 0.8em;
+ text-align: left;
+}
+
+/**
+** {{other languages}}
+**/
+#otherlangs {
+ margin: 0.5em;
+ padding: 2px;
+ border: 1px solid #CCC;
+ background: #FAFAFA;
+ font-size: 0.9em;
+}
+#otherlangs span {
+ margin: 0 2px;
+ padding-left: 2px;
+ border-left: 1px solid gray;
+}
+#otherlangs span.firstlang {
+ border: none;
+}
+
+/* Spam blacklist/log */
+.logtable pre {
+ margin: 0;
+ padding: 0;
+ border: 0;
+}
+
+/* Fundraising email feedback */
+.page-Talk_Fundraising_2010_Feedback #firstHeading {display: none; }
+
+/* in {{PDFlink}}, for browsers that don't support the above (IE) */
+span.PDFlink a {
+ padding-right: 17px !important;
+ background: url('//upload.wikimedia.org/wikipedia/commons/thumb/2/23/Icons-mini-file_acrobat.gif/15px-Icons-mini-file_acrobat.gif') center right no-repeat !important;
+}
+
+/**
+** Collapsible navigation boxes (see [[en: Wikipedia: NavFrame]])
+**/
+div.Boxmerge,
+div.NavFrame {
+ margin: 0px;
+ padding: 4px;
+ border: 1px solid #a2a9b1;
+ border-collapse: collapse;
+ text-align: center;
+ font-size: 95%;
+}
+div.Boxmerge div.NavFrame {
+ border-style: none;
+ border-style: hidden;
+}
+div.NavFrame + div.NavFrame {
+ border-top-style: none;
+ border-top-style: hidden;
+}
+div.NavPic {
+ float: left;
+ margin: 0px;
+ padding: 2px;
+ background: #FFF;
+}
+div.NavFrame div.NavHead {
+ position: relative;
+ height: 1.6em;
+ background: #CCF;
+ font-weight: bold;
+}
+div.NavFrame p {
+ font-size: 100%;
+}
+div.NavFrame div.NavContent {
+ font-size: 100%;
+}
+div.NavFrame div.NavContent p {
+ font-size: 100%;
+}
+div.NavEnd {
+ clear: both;
+ margin: 0px;
+ padding: 0px;
+ line-height: 1px;
+}
+a.NavToggle {
+ position: absolute;
+ top: 0px;
+ right: 3px;
+ font-size: smaller;
+ font-weight: normal;
+}
+
+/* To color the mention "updated since my last visit" in the history */
+span.updatedmarker {
+ color: black;
+ background-color: #0f0;
+}
+
+
+/**
+** Template documentation
+**/
+.template-documentation {
+ clear: both;
+ margin: 1em 0 0 0;
+ padding: 5px;
+ border: 1px solid #a2a9b1;
+ background: #ECFCF4;
+}
+
+.hidden-redlink a.new { display: none; }
+
+/* Temporary(!) fix for horizontal TOC in Blink (Chrome/Opera) */
+.hlist .tocnumber,
+.hlist .toctext {
+    display: inline;
+}
+/* When <div class="nonumtoc"> is used on the table of contents,
+   the ToC will display without numbers */
+.nonumtoc .tocnumber {
+    display: none;
+}
+.nonumtoc #toc ul,
+.nonumtoc .toc ul {
+    line-height: 1.5em;
+    list-style: none none;
+    margin: .3em 0 0;
+    padding: 0;
+}
+.hlist.nonumtoc #toc ul ul,
+.hlist.nonumtoc .toc ul ul {
+    /* @noflip */
+    margin: 0;
+}
+
+/* Allow limiting of which header levels are shown in a TOC;
+   <div class="toclimit-3">, for instance, will limit to
+   showing ==headings== and ===headings=== but no further
+   (as long as there are no =headings= on the page, which
+   there shouldn't be according to the MoS). */
+.toclimit-2 .toclevel-1 ul,
+.toclimit-3 .toclevel-2 ul,
+.toclimit-4 .toclevel-3 ul,
+.toclimit-5 .toclevel-4 ul,
+.toclimit-6 .toclevel-5 ul,
+.toclimit-7 .toclevel-6 ul {
+    display: none;
+}
+
+/**
+** Default style for PrettyTextBox and InformationBox class of templates
+** ie, {{warning}}, {{info}}, etc
+**/
+.InformationBox {
+ width: 80%;
+ clear: both;
+ margin: 0.5em auto;
+ padding: 3px;
+ border: 1px solid #999;
+ background: #f8f9fa;
+ color: #000;
+}
+
+.PrettyTextBox {
+ padding: .2em;
+ border: 1px solid #a2a9b1;
+ background: #f8f9fa;
+ color: #000;
+}
+
+/**
+** Highlight clicked reference in blue to help navigation
+**/
+ol.references > li:target {
+ background: #DEF;
+}
+
+sup.reference:target {
+ background: #DEF;
+}
+
+/* Have redlinks show up as grey on [[Toolserver/watcher]] */
+body.page-Toolserver_watcher a.new:link,
+body.page-Toolserver_watcher a.new:visited {
+ color: grey;
+}
+
+/**
+**  Styling for box showing source page next to translation when you translate, used by the [[Fundraising 2011/Translation]].
+**/
+
+div.translationcompare {
+  max-height:500px;
+  overflow:auto;
+}
+
+/**
+** Hiding the check box for "I am highly knowledgeable about this topic" in AFT used for translations; hiding AFT for English source.
+**/
+
+div.articleFeedback-expertise {
+  display:none;
+}
+
+body.page-Fundraising_2011_Banners_and_LPs_en .articleFeedback, body.page-Fundraising_2011_Jimmy_Letter_002_en .articleFeedback, body.page-Fundraising_2011_Brandon_Letter_en .articleFeedback, body.page-Fundraising_2011_Alan_Letter_en .articleFeedback, body.page-Fundraising_2011_Kaldari_Letter_en .articleFeedback, body.page-Fundraising_2011_Susan_Letter_en .articleFeedback, body.page-Fundraising_2011_Thank_You_Mail_en .articleFeedback, body.page-Fundraising_2011_Thank_You_Page_en .articleFeedback, body.page-Fundraising_2011_FAQ_en .articleFeedback {
+  display:none;
+}
+
+/**
+** Adding icon to messages in the translate extension that have explanations.
+**/
+
+fieldset.mw-sp-translate-edit-info div {
+  min-height:40px;
+  background:url(//upload.wikimedia.org/wikipedia/commons/thumb/e/e4/Infobox_info_icon.svg/40px-Infobox_info_icon.svg.png) no-repeat;
+}
+ 
+fieldset.mw-sp-translate-edit-info div.mw-content-ltr {
+  background-position:left center;
+  padding-left:45px;
+}
+fieldset.mw-sp-translate-edit-info div.mw-centent-rtl {
+  background-position:right center;
+  padding-right:45px;
+}
+
+/**
+** Permits the use of div tags to suppress auto-numbering in TOC, for instance on [[Terms of use]] where sections are manually numbered.
+**/
+
+#hideTOCnumbers .tocnumber { display: none; }
+
+:lang(fa) {
+    font-family: Tahoma, 'Iranian Sans', 'DejaVu Sans', 'Noto Sans', 'Droid Arabic Kufi', sans-serif;
+}
+
+/**
+ * Style for horizontal lists (separator following item).
+ * @source mediawiki.org/wiki/Snippets/Horizontal_lists
+ * @revision 4 (2013-11-17)
+ * @author [[User:Edokter]]
+ */
+.skin-monobook .hlist dl,
+.skin-modern .hlist dl,
+.skin-vector .hlist dl {
+    line-height: 1.5em;
+}
+.hlist dl,
+.hlist ol,
+.hlist ul {
+    margin: 0;
+    padding: 0;
+}
+/* Display list items inline */
+.hlist dd,
+.hlist dt,
+.hlist li {
+    margin: 0;
+    display: inline;
+}
+/* Display nested lists inline */
+.hlist dl dl, .hlist dl ol, .hlist dl ul,
+.hlist ol dl, .hlist ol ol, .hlist ol ul,
+.hlist ul dl, .hlist ul ol, .hlist ul ul {
+    display: inline;
+}
+/* Generate interpuncts */
+.hlist dt:after {
+    content: ":";
+}
+.hlist dd:after,
+.hlist li:after {
+    content: " ·";
+    font-weight: bold;
+}
+.hlist dd:last-child:after,
+.hlist dt:last-child:after,
+.hlist li:last-child:after {
+    content: none;
+}
+/* For IE8 */
+.hlist dd.hlist-last-child:after,
+.hlist dt.hlist-last-child:after,
+.hlist li.hlist-last-child:after {
+    content: none;
+}
+/* Add parentheses around nested lists */
+.hlist dd dd:first-child:before, .hlist dd dt:first-child:before, .hlist dd li:first-child:before,
+.hlist dt dd:first-child:before, .hlist dt dt:first-child:before, .hlist dt li:first-child:before,
+.hlist li dd:first-child:before, .hlist li dt:first-child:before, .hlist li li:first-child:before {
+    content: "(";
+    font-weight: normal;
+}
+.hlist dd dd:last-child:after, .hlist dd dt:last-child:after, .hlist dd li:last-child:after,
+.hlist dt dd:last-child:after, .hlist dt dt:last-child:after, .hlist dt li:last-child:after,
+.hlist li dd:last-child:after, .hlist li dt:last-child:after, .hlist li li:last-child:after {
+    content: ")";
+    font-weight: normal;
+}
+/* For IE8 */
+.hlist dd dd.hlist-last-child:after, .hlist dd dt.hlist-last-child:after, .hlist dd li.hlist-last-child:after,
+.hlist dt dd.hlist-last-child:after, .hlist dt dt.hlist-last-child:after, .hlist dt li.hlist-last-child:after,
+.hlist li dd.hlist-last-child:after, .hlist li dt.hlist-last-child:after, .hlist li li.hlist-last-child:after {
+    content: ")";
+    font-weight: normal;
+}
+/* Put ordinals in front of ordered list items */
+.hlist ol {
+    counter-reset: list-item;
+}
+.hlist ol > li {
+    counter-increment: list-item;
+}
+.hlist ol > li:before {
+    content: counter(list-item) " ";
+}
+.hlist dd ol > li:first-child:before,
+.hlist dt ol > li:first-child:before,
+.hlist li ol > li:first-child:before {
+    content: "(" counter(list-item) " ";
+}
+/* end hlist */
+
+
+/**
+** Unbulleted lists
+**/
+.plainlist ul {
+    line-height: inherit;
+    list-style: none none;
+    margin: 0;
+}
+.plainlist ul li {
+    margin-bottom: 0;
+}
+
+
+/* Default style for navigation boxes */
+.navbox {                     /* Navbox container style */
+    border: 1px solid #a2a9b1;
+    width: 100%;
+    margin: auto;
+    clear: both;
+    font-size: 88%;
+    text-align: center;
+    padding: 1px;
+}
+.navbox-inner,
+.navbox-subgroup {
+    width: 100%;
+}
+.navbox-group,
+.navbox-title,
+.navbox-abovebelow {
+    padding: 0.25em 1em;      /* Title, group and above/below styles */
+    line-height: 1.5em;
+    text-align: center;
+}
+th.navbox-group {             /* Group style */
+    white-space: nowrap;
+    /* @noflip */
+    text-align: right;
+}
+.navbox,
+.navbox-subgroup {
+    background: #fdfdfd;      /* Background color */
+}
+.navbox-list {
+    line-height: 1.8em;
+    border-color: #fdfdfd;    /* Must match background color */
+}
+.navbox th,
+.navbox-title {
+    background: #ccccff;      /* Level 1 color */
+}
+.navbox-abovebelow,
+th.navbox-group,
+.navbox-subgroup .navbox-title {
+    background: #ddddff;      /* Level 2 color */
+}
+.navbox-subgroup .navbox-group,
+.navbox-subgroup .navbox-abovebelow {
+    background: #e6e6ff;      /* Level 3 color */
+}
+.navbox-even {
+    background: #f7f7f7;      /* Even row striping */
+}
+.navbox-odd {
+    background: transparent;  /* Odd row striping */
+}
+table.navbox + table.navbox {  /* Single pixel border between adjacent navboxes */
+    margin-top: -1px;          /* (doesn't work for IE6, but that's okay)       */
+}
+.navbox .hlist td dl,
+.navbox .hlist td ol,
+.navbox .hlist td ul,
+.navbox td.hlist dl,
+.navbox td.hlist ol,
+.navbox td.hlist ul {
+    padding: 0.125em 0;       /* Adjust hlist padding in navboxes */
+}
+ol + table.navbox,
+ul + table.navbox {
+    margin-top: 0.5em;        /* Prevent lists from clinging to navboxes */
+}
+ 
+/* Default styling for Navbar template */
+.navbar {
+    display: inline;
+    font-size: 88%;
+    font-weight: normal;
+}
+.navbar ul {
+    display: inline;
+    white-space: nowrap;
+}
+.navbar li {
+    word-spacing: -0.125em;
+}
+.navbar.mini li span {
+  font-variant: small-caps;
+}
+/* Navbar styling when nested in infobox and navbox */
+.infobox .navbar {
+    font-size: 100%;
+}
+.navbox .navbar {
+    display: block;
+    font-size: 100%;
+}
+.navbox-title .navbar {
+    /* @noflip */
+    float: left;
+    /* @noflip */
+    text-align: left;
+    /* @noflip */
+    margin-right: 0.5em;
+    width: 6em;
+}
+
+/* This will make the Geshi text same big as other default font */
+div.mw-geshi div,
+div.mw-geshi div pre,
+span.mw-geshi,
+pre.source-css,
+pre.source-javascript,
+pre.source-php,
+pre.source-lua {
+    font-family: monospace, Courier !important;
+}
+
+/* Pie chart test: Transparent borders (per [[Special:Diff/7965876]], from [[w:MediaWiki:Common.css]]) */
+.transborder {
+    border: solid transparent;
+}
+* html .transborder {  /* IE6 */
+    border: solid #000001;
+    filter: chroma(color=#000001);
+}
+
+/* ALTERNANCE */
+ 
+/** Classes allowing alternating line colors
+*  in tables according to the number of header lines:
+*.alternance if odd number
+*.alternance2 if even number.
+*
+*.odd is to be kind to IE<9 which does not implement
+*  the selector :nth-child, applied via Common.js (?)
+*
+*.sortable: sortable tables require reversing
+*  the alternance.
+*/
+ 
+.alternance,
+.alternance2 {
+  border-collapse: collapse;
+}
+ 
+table.alternance > * > tr > th,
+table.alternance2 > * > tr > th {
+ background: #e6e6e6;
+}
+ 
+.alternance tr,
+.alternance th[scope="row"] {
+  background: #fcfcfc;
+}
+ 
+.alternance:not(.sortable) tr:nth-child(odd),
+.alternance.sortable       tr:nth-child(even),
+.alternance:not(.sortable) tr:nth-child(odd) th[scope="row"],
+.alternance.sortable       tr:nth-child(even) th[scope="row"] {
+  background: #eeeeee;
+}
+ 
+.alternance .odd,
+.alternance .odd th[scope="row"] {
+  /* be kind to IE<9 */
+  background: #eeeeee;
+}
+ 
+.alternance2 tr,
+.alternance2 th[scope="row"] {
+  background: #eeeeee;
+}
+ 
+.alternance2 tr:nth-child(odd),
+.alternance2 tr:nth-child(odd) th[scope="row"] {
+  background: #fcfcfc;
+}
+ 
+.alternance2 .odd,
+.alternance2 .odd th[scope="row"] {
+  /* be kind to IE<9 */
+  background: #fcfcfc;
+}
+
+/* Styling for MediaWiki:Sharedupload-desc-here used on file pages linking to Commons */
+.sharedUploadNotice {
+     border:1px solid #a2a9b1; margin: 1em auto; width: 60%; padding: 8px 1% 8px 8%; border-radius: 5px;
+     background-color: #eaf3ff; background-position: 2% 50%; background-repeat: no-repeat;
+     background-image: url(//upload.wikimedia.org/wikipedia/commons/9/9d/Commons-logo-31px.png);
+}
+
+/* Reset italic styling set by user agent */
+cite, dfn {
+    font-style: inherit;
+}
+
+/* </nowiki> */
+
+/* Hide save page button for anons on [[Wikimedia_Foundation_nomail_list]]. Shown for users thru [[MediaWiki:Group-user.css]]  */
+.page-Wikimedia_Foundation_nomail_list  #wpSave{
+  display: none;
+}
+
+/* For election announcements */
+#bodyContent .letterhead {
+    background-image:url('//upload.wikimedia.org/wikipedia/commons/e/e0/Tan-page-corner.png');
+    background-repeat:no-repeat;
+    padding: 2em;
+    background-color: #faf9f2;
+}
+
+/* Disable election banner at least on landing page, will think about other election pages */
+.page-Wikimedia_Foundation_elections_2015_Call_for_candidates .cn-Election2015_Submission {
+	display: none;
+}
+
+/* Style for change tags */
+.mw-tag-markers {
+ font-family:sans-serif;
+ font-style:italic;
+ font-size:90%;
+}
+
+/**
+ * Hid Special:Log/renameuser log entries in Special:RecentChanges
+ * Discussion: [[Special:Permalink/15455880#Hiding Special:Log/renameuser from RecentChanges]]
+ */
+.mw-changeslist-log-renameuser { display:none; }
+
+/**
+ * Hid Special:Log/translationreview log entries in Special:RecentChanges
+ * Discussion: none
+ */
+.mw-changeslist-log-translationreview { display:none; }
+
+/* [[Template:Seealso]] */
+.mw-tpl-seealso {
+	font-style: italic;
+	padding-bottom: 0.4em;
+	padding-left: 0;
+	margin-bottom: 0.4em;
+	color: #555;
+	border-bottom: 1px solid #ccc;
+}
+
+/*
+Can be removed after the deployment of
+https://gerrit.wikimedia.org/r/#/c/286128/
+*/
+/* @noflip */ .rtl a.external.free,
+.rtl a.external.autonumber {
+	direction: ltr;
+	unicode-bidi: -moz-isolate;
+	unicode-bidi: -webkit-isolate;
+	unicode-bidi: isolate;
+	display: inline-block; /* Fake bidi isolation for Microsoft browsers. */
+}
+
+@media all and (min-width:  768px ) {
+  /* Banners e.g. WikiProject_UNESCO/African_World_Heritage_Day */
+  #mf-pagebanner .name { font-size: 5em !important; padding: 4px 4px !important; }
+}
+/*
+hide "accept rename" button next time renames are stuck
+#mw-renamequeue-approve{
+ display:none;
+}*/
+

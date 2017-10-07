@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common.decorators;
 
+import com.vaadin.annotations.JavaScript;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
@@ -28,16 +29,19 @@ import javax.inject.Inject;
 /**
  * Created by rainbird on 7/7/17.
  */
+@JavaScript({"MediaWiki_Common.js"})
 public class WikiDecorator extends BaseDecorator {
 
     @Inject
     private QaiDataProvider<WikiArticle> qaiDataProvider;
 
+    private String addStyleLine = "<link rel='stylesheet' type='text/css' href='/VAADIN/themes/mytheme/MediaWiki_Common.css'>";
+
     private Image iconImage;
 
     public WikiDecorator() {
         iconImage = new Image("Wiki article",
-                new ClassResource("gui/images/wiki.png"));
+                new ClassResource("gui/images/wiki-icon.png"));
     }
 
     @Override
@@ -49,7 +53,7 @@ public class WikiDecorator extends BaseDecorator {
     public void decorate(SearchResult searchResult) {
 
         WikiArticle wikiArticle = qaiDataProvider.brokerSearchResult(searchResult);
-        String content = WikiModel.toHtml(wikiArticle.getContent());
+        String content = addStyleLine + "\n" + WikiModel.toHtml(wikiArticle.getContent());
         Label contentText = new Label(content, ContentMode.HTML);
         contentText.setWidth("780px");
         contentText.setStyleName("justify");
