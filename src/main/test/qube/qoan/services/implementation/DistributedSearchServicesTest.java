@@ -68,11 +68,12 @@ public class DistributedSearchServicesTest extends QoanTestBase {
     public void testDistributedUserSearch() throws Exception {
 
         IMap<String, User> usersMap = hazelcastInstance.getMap(USERS);
-        User dummyUser = new User("Test_User", "");
-        usersMap.put(dummyUser.getUuid(), dummyUser);
+        String userName = "Test_User";
+        User dummyUser = new User(userName, "");
+        //usersMap.put(dummyUser.getUuid(), dummyUser);
 
         // just assume there is something in there
-        Collection<SearchResult> results = userSearchService.searchInputString(USERS, "", 1);
+        Collection<SearchResult> results = userSearchService.searchInputString(USERS, "*", 1);
 
         assertNotNull("there has to be some results", results);
         assertTrue("there has to be a user", !results.isEmpty());
