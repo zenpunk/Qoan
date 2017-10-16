@@ -42,7 +42,7 @@
         <lucene.version>5.3.1</lucene.version>
         <tika.version>1.10</tika.version>
         <bliki.version>3.0.19</bliki.version>
-        <encog.version>3.3.0</encog.version>
+        <encog.version>3.4</encog.version>
         <opennlp.version>1.6.0</opennlp.version>
         <jsoup.version>1.9.2</jsoup.version>
         <apache-commons-lang3.version>3.4</apache-commons-lang3.version>
@@ -78,9 +78,10 @@
 
         <dependency>
             <groupId>grph</groupId>
-            <artifactId>grph.all</artifactId>
-            <version>1.6.29</version>
+            <artifactId>grph</artifactId>
+            <version>1.10.8</version>
         </dependency>
+
         <dependency>
             <groupId>org.encog</groupId>
             <artifactId>encog-core</artifactId>
@@ -528,6 +529,11 @@
             <snapshots>
                 <enabled>true</enabled>
             </snapshots>
+        </repository>
+        <repository>
+            <id>lhogie.i3s.maven.repo</id>
+            <name>Luc Hogie Maven repository</name>
+            <url>http://www.i3s.unice.fr/~hogie/maven_repository/</url>
         </repository>
         <!-- in order to be able to track the beta versions -->
         <!--<repository>-->

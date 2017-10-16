@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.components.common.search;
 
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.*;
@@ -24,6 +26,7 @@ import qube.qai.services.implementation.SearchResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 /**
  * Created by rainbird on 6/27/17.
@@ -32,13 +35,17 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     protected Grid<SearchResult> resultGrid;
 
-    //protected List<SearchResult> searchResults;
+    protected List<SearchResult> searchResults;
+
+    protected ListDataProvider<SearchResult> dataProvider;
 
     protected CheckBox clearResults;
 
     protected DragSourceExtension<Grid<SearchResult>> dragExtension;
 
     public SearchSinkComponent() {
+        searchResults = new ArrayList<>();
+        dataProvider = DataProvider.ofCollection(searchResults);
     }
 
     protected abstract void initializeSearchResults();
@@ -62,6 +69,7 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
         layout.addComponent(resultGrid);
 
         clearResults = new CheckBox("Clear results before adding new ones");
+        clearResults.setValue(false);
         layout.addComponent(clearResults);
 
         Button clearButton = new Button("Clear results");
@@ -71,9 +79,8 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
     }
 
     public void onClearResults() {
-        ArrayList<SearchResult> empty = new ArrayList<>();
-        resultGrid.setItems(empty);
-        resultGrid.getDataProvider().refreshAll();
+        searchResults.clear();
+        dataProvider.refreshAll();
     }
 
     /**

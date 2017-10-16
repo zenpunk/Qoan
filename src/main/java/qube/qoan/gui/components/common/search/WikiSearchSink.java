@@ -17,16 +17,14 @@ package qube.qoan.gui.components.common.search;
 import com.vaadin.ui.Grid;
 import qube.qai.services.implementation.SearchResult;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by rainbird on 7/16/17.
  */
 public class WikiSearchSink extends SearchSinkComponent {
 
-    private List<SearchResult> searchResults;
+
 
     public WikiSearchSink() {
         super();
@@ -34,8 +32,6 @@ public class WikiSearchSink extends SearchSinkComponent {
 
     @Override
     protected void initializeSearchResults() {
-
-        searchResults = new ArrayList<>();
 
     }
 
@@ -50,6 +46,8 @@ public class WikiSearchSink extends SearchSinkComponent {
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");
         grid.setHeight("100%");
+
+        grid.setDataProvider(dataProvider);
 
         return grid;
     }
@@ -67,8 +65,7 @@ public class WikiSearchSink extends SearchSinkComponent {
         }
 
         searchResults.addAll(results);
-        resultGrid.setItems(searchResults);
-        resultGrid.getDataProvider().refreshAll();
+        dataProvider.refreshAll();
 
     }
 }
