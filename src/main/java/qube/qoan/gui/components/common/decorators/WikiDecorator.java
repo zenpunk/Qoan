@@ -29,11 +29,13 @@ import javax.inject.Inject;
 /**
  * Created by rainbird on 7/7/17.
  */
-@JavaScript({"MediaWiki_Common.js"})
+@JavaScript({"MediaWiki_Common.js", "MathJax.js"})
 public class WikiDecorator extends BaseDecorator {
 
     @Inject
     private QaiDataProvider<WikiArticle> qaiDataProvider;
+
+    private String mathJaxInit = "MathJax.js?config=TeX-AMS-MML_HTMLorMML";
 
     private String addStyleLine = "<link rel='stylesheet' type='text/css' href='/VAADIN/themes/mytheme/MediaWiki_Common.css'>";
 
@@ -59,6 +61,7 @@ public class WikiDecorator extends BaseDecorator {
         contentText.setStyleName("justify");
         //setWidth("795px");
         setContent(contentText);
+        com.vaadin.ui.JavaScript.getCurrent().execute(mathJaxInit);
     }
 
     @Override
