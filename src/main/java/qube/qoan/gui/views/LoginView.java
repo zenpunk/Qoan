@@ -122,7 +122,7 @@ public class LoginView extends QoanView {
                 String targetPage = ((QoanUI) UI.getCurrent()).getTargetViewName();
 
                 if (targetPage == null) {
-                    targetPage = StartView.NAME;
+                    targetPage = WorkspaceView.NAME;
                 }
 
                 UI.getCurrent().getNavigator().navigateTo(targetPage);

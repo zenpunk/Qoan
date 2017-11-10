@@ -34,6 +34,7 @@ public class SecureViewChangeListener implements ViewChangeListener {
 
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
+
         View nextView = event.getNewView();
         View currentView = event.getOldView();
 
