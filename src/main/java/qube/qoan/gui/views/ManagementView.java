@@ -16,14 +16,23 @@ package qube.qoan.gui.views;
 
 import com.hazelcast.core.DistributedObjectEvent;
 import com.hazelcast.core.DistributedObjectListener;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
+import com.vaadin.data.provider.DataProvider;
+import com.vaadin.data.provider.ListDataProvider;
+import com.vaadin.server.ClassResource;
+import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import qube.qai.main.QaiConstants;
+import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureManagerInterface;
+import qube.qai.user.User;
 import qube.qoan.authentication.UserManagerInterface;
 
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * Created by rainbird on 11/27/15.
@@ -40,9 +49,22 @@ public class ManagementView extends QoanView {
     @Inject
     private UserManagerInterface userManager;
 
+    @Inject
+    private HazelcastInstance hazelcastInstance;
+
     protected Set<String> procedureUuids;
 
     protected Set<String> remotelyCreatedUuids;
+
+    private TabSheet managementTabs;
+
+    private Grid<User> userGrid;
+
+    private Collection<User> users;
+
+    private Grid<Procedure> procedureGrid;
+
+    private Collection<Procedure> procedures;
 
     public ManagementView() {
         this.viewTitle = "Qoan Management";
@@ -54,8 +76,73 @@ public class ManagementView extends QoanView {
      */
     protected void initialize() {
 
-        remotelyCreatedUuids = new TreeSet<String>();
+        HorizontalSplitPanel panel = new HorizontalSplitPanel();
 
+        ClassResource resource = new ClassResource("gui/images/kokoline.gif");
+        Image image = new Image("Singularity is nigh!", resource);
+        panel.setFirstComponent(image);
+        panel.setSplitPosition(15, Unit.PERCENTAGE);
+
+        managementTabs = new TabSheet();
+        managementTabs.addTab(createProcedureTab(), "Procedures", new ClassResource("gui/images/proc-icon.png"));
+        managementTabs.addTab(createUserTab(), "Users", new ClassResource("gui/images/proc-icon.png"));
+        managementTabs.addTab(createGridStatsTab(), "Grid-Stats", new ClassResource("gui/images/chart-icon.png"));
+
+        panel.addComponent(managementTabs);
+        addComponent(panel);
+    }
+
+    private Panel createGridStatsTab() {
+
+        Panel panel = new Panel();
+        Layout layout = new VerticalLayout();
+
+        Label label = new Label("Here will be controls for Grid.");
+        layout.addComponent(label);
+
+        panel.setContent(layout);
+
+        return panel;
+    }
+
+    private Panel createUserTab() {
+
+        Panel panel = new Panel();
+
+        userGrid = new Grid<User>();
+        userGrid.addColumn(User::getUsername).setCaption("Username");
+        userGrid.addColumn(User::getEmail).setCaption("E-mail");
+
+        IMap<String, User> userMap = hazelcastInstance.getMap(QaiConstants.USERS);
+        users = userMap.values();
+        ListDataProvider<User> userProvider = DataProvider.ofCollection(users);
+        userGrid.setDataProvider(userProvider);
+
+        panel.setContent(userGrid);
+
+        return panel;
+    }
+
+    private Panel createProcedureTab() {
+
+        Panel panel = new Panel();
+
+        procedureGrid = new Grid<Procedure>();
+        procedureGrid.addColumn(Procedure::getProcedureName).setCaption("Name");
+        procedureGrid.addColumn(Procedure::getUserName).setCaption("Username");
+        procedureGrid.addColumn(Procedure::hasExecuted).setCaption("Has executed");
+        procedureGrid.addColumn(Procedure::getDuration).setCaption("Duration");
+        procedureGrid.addColumn(Procedure::getProgressPercentage).setCaption("Progress %");
+        procedureGrid.addColumn(Procedure::getDescriptionText).setCaption("Description");
+
+        IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
+        procedures = procedureMap.values();
+        ListDataProvider<Procedure> procedureProvider = DataProvider.ofCollection(procedures);
+        procedureGrid.setDataProvider(procedureProvider);
+
+        panel.setContent(procedureGrid);
+
+        return panel;
     }
 
     class ManagementListener implements DistributedObjectListener {

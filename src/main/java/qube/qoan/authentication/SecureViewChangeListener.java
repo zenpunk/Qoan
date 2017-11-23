@@ -48,6 +48,7 @@ public class SecureViewChangeListener implements ViewChangeListener {
                 || nextView instanceof ManagementView) {
 
             //User user = ((QoanUI) UI.getCurrent()).getUser();
+            // @TODO this is not right- have to get the session information to Shiro somehow...
             Subject subject = SecurityUtils.getSubject();
             if (!subject.isAuthenticated()) {
                 UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
