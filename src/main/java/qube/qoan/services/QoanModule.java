@@ -25,7 +25,6 @@ import qube.qai.main.QaiConstants;
 import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureManager;
-import qube.qai.procedure.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.*;

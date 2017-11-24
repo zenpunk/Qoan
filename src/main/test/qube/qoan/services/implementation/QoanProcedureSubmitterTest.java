@@ -14,13 +14,13 @@
 
 package qube.qoan.services.implementation;
 
+import qube.qai.procedure.ProcedureConstants;
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.procedure.analysis.ChangePointAnalysis;
 import qube.qai.procedure.analysis.MarketNetworkBuilder;
 import qube.qai.procedure.analysis.SortingPercentilesProcedure;
 import qube.qai.procedure.finance.StockQuoteRetriever;
-import qube.qai.services.ProcedureRunnerInterface;
 import qube.qoan.services.ProcedureSubmitterInterface;
 import qube.qoan.services.QoanTestBase;
 
@@ -62,7 +62,7 @@ public class QoanProcedureSubmitterTest extends QoanTestBase {
 
         procedureSubmitter.submitProcedure(marketNetwork);
 
-        ProcedureRunnerInterface.STATE state = procedureSubmitter.queryState(marketNetwork.getUuid());
+        ProcedureConstants.ProcedureState state = procedureSubmitter.queryState(marketNetwork.getUuid());
         assertNotNull("there has to be a state for the procedure", state);
 
     }

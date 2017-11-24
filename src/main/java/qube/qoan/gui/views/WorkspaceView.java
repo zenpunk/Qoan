@@ -59,6 +59,8 @@ public class WorkspaceView extends QoanView {
         Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
 
         HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
+        splitPanel.setSplitPosition(20, Unit.PERCENTAGE);
+
         //VerticalLayout innerLayout = new VerticalLayout();
         Accordion accordion = new Accordion();
 
@@ -83,21 +85,11 @@ public class WorkspaceView extends QoanView {
         injector.injectMembers(resourceMenu);
         resourceMenu.initialize();
         accordion.addTab(resourceMenu, resourceMenu.getCaptionTitle(), resourceMenu.getMenuIcon().getSource());
-
-        //innerLayout.addComponent(accordion);
-
-        // add a new tab to workspace
-//        Button addTabButton = new Button("Add New Tab");
-//        addTabButton.setStyleName("link");
-//        addTabButton.addClickListener(clickEvent -> onAddTab());
-//        innerLayout.addComponent(addTabButton);
+        splitPanel.setFirstComponent(accordion);
 
         workspace = new Workspace();
         injector.injectMembers(workspace);
         splitPanel.setSecondComponent(workspace);
-
-        //innerLayout.setWidth("100%");
-        splitPanel.setFirstComponent(accordion);
 
         addComponent(splitPanel);
 

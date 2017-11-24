@@ -22,6 +22,7 @@ import org.slf4j.LoggerFactory;
 import qube.qai.message.QaiMessageListener;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
+import qube.qai.procedure.ProcedureConstants;
 import qube.qoan.services.ProcedureSubmitterInterface;
 
 import javax.inject.Inject;
@@ -63,7 +64,7 @@ public class QoanProcedureSubmitter extends QaiMessageListener implements Proced
     }
 
     @Override
-    public STATE queryState(String uuid) {
+    public ProcedureConstants.ProcedureState queryState(String uuid) {
         return null;
     }
 

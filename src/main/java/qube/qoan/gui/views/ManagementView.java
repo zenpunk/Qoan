@@ -26,7 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureManagerInterface;
+import qube.qai.services.ProcedureManagerInterface;
 import qube.qai.user.User;
 import qube.qoan.authentication.UserManagerInterface;
 
@@ -66,6 +66,8 @@ public class ManagementView extends QoanView {
 
     private Collection<Procedure> procedures;
 
+    private boolean isInitialized = false;
+
     public ManagementView() {
         this.viewTitle = "Qoan Management";
     }
@@ -75,6 +77,10 @@ public class ManagementView extends QoanView {
      * nothing original really
      */
     protected void initialize() {
+
+        if (isInitialized) {
+            return;
+        }
 
         HorizontalSplitPanel panel = new HorizontalSplitPanel();
 
@@ -90,6 +96,7 @@ public class ManagementView extends QoanView {
 
         panel.addComponent(managementTabs);
         addComponent(panel);
+        isInitialized = true;
     }
 
     private Panel createGridStatsTab() {
