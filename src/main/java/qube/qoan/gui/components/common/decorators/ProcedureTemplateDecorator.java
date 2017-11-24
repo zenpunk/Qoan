@@ -67,7 +67,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
         if (!isInitialized) {
 
-            ProcedureTemplate template = ProcedureLibrary.getNamedProcedureTemplate(toDecorate.getTitle());
+            ProcedureTemplate template = ProcedureLibrary.getTemplateNameMap().get(toDecorate.getTitle());
 
             if (template == null) {
                 Notification.show("Template: '" + toDecorate.getTitle() + "' not found");

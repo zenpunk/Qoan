@@ -16,7 +16,6 @@ package qube.qoan.services.implementation;
 
 import qube.qai.procedure.ProcedureConstants;
 import qube.qai.procedure.ProcedureLibrary;
-import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.procedure.analysis.ChangePointAnalysis;
 import qube.qai.procedure.analysis.MarketNetworkBuilder;
 import qube.qai.procedure.analysis.SortingPercentilesProcedure;
@@ -37,25 +36,25 @@ public class QoanProcedureSubmitterTest extends QoanTestBase {
 
         assertNotNull("there has to be an instance of QoanProcedureSubmitter", procedureSubmitter);
 
-        ProcedureTemplate[] templates = ProcedureLibrary.allTemplates;
+        //ProcedureTemplate[] templates = ProcedureLibrary.allTemplates;
 
         //-> pick out the data for the list of entities.
         String[] stockSymbols = {"GOOG", "ORCL"};
 
         //-> divide the data into intervals and train neural-networks.
-        MarketNetworkBuilder marketNetwork = (MarketNetworkBuilder) ProcedureLibrary.getNamedProcedureTemplate(MarketNetworkBuilder.NAME).createProcedure();
+        MarketNetworkBuilder marketNetwork = ProcedureLibrary.marketNetworkBuilderTemplate.createProcedure();
 
         //-> run the interval-analysis on the averages.
-        ChangePointAnalysis changePoint = (ChangePointAnalysis) ProcedureLibrary.getNamedProcedureTemplate(ChangePointAnalysis.NAME).createProcedure();
+        ChangePointAnalysis changePoint = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
 
         //-> create an average-time series based on them.
-        SortingPercentilesProcedure sorter = (SortingPercentilesProcedure) ProcedureLibrary.getNamedProcedureTemplate(SortingPercentilesProcedure.NAME).createProcedure();
+        SortingPercentilesProcedure sorter = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
 
         // -> collect their data.
         Collection<StockQuoteRetriever> retrievers = new ArrayList<>();
         for (String symbol : stockSymbols) {
 
-            StockQuoteRetriever retriever = (StockQuoteRetriever) ProcedureLibrary.getNamedProcedureTemplate(StockQuoteRetriever.NAME).createProcedure();
+            StockQuoteRetriever retriever = ProcedureLibrary.stockQuoteRetriverTemplate.createProcedure();
             retriever.setTickerSymbol(symbol);
             retrievers.add(retriever);
         }
