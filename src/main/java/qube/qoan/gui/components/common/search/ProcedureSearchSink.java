@@ -57,7 +57,7 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         for (ProcedureTemplate template : ProcedureLibrary.getTemplateMap().values()) {
             Procedure proc = template.createProcedure();
             Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
-            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURES, proc.getProcedureName(), null, proc.getDescriptionText(), 1.0);
+            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, proc.getProcedureName(), proc.getUuid(), proc.getDescriptionText(), 1.0);
             data.addItem(null, procResult);
             // if the results have returned nothing just go on tot eh next procedure.
             if (results == null || results.isEmpty()) {

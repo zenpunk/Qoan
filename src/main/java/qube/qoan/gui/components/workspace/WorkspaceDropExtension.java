@@ -85,7 +85,7 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
             tag = new WikiArticleTag(targetLayout, result);
         } else if (STOCK_ENTITIES.equals(result.getContext())) {
             tag = new StockEntityTag(targetLayout, result);
-        } else if (PROCEDURES.equals(result.getContext()) && StringUtils.isBlank(result.getUuid())) {
+        } else if (PROCEDURE_TEMPLATES.equals(result.getContext())) {
             tag = new ProcedureTemplateTag(targetLayout, result);
         } else if (PROCEDURES.equals(result.getContext()) && StringUtils.isNotBlank(result.getUuid())) {
             tag = new ProcedureTag(targetLayout, result);
