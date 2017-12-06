@@ -91,7 +91,7 @@ public class ManagementView extends QoanView {
 
         managementTabs = new TabSheet();
         managementTabs.addTab(createProcedureTab(), "Procedures", new ClassResource("gui/images/proc-icon.png"));
-        managementTabs.addTab(createUserTab(), "Users", new ClassResource("gui/images/proc-icon.png"));
+        managementTabs.addTab(createUserTab(), "Users", new ClassResource("gui/images/user-icon.png"));
         managementTabs.addTab(createGridStatsTab(), "Grid-Stats", new ClassResource("gui/images/chart-icon.png"));
 
         panel.addComponent(managementTabs);
