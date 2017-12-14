@@ -43,6 +43,14 @@ public class QoanRealm extends JdbcRealm {
     @Inject
     private HazelcastInstance hazelcastInstance;
 
+    public QoanRealm() {
+    }
+
+    @Inject
+    public QoanRealm(HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
+    }
+
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 

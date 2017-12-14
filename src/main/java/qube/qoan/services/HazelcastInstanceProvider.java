@@ -12,21 +12,24 @@
  *
  */
 
-package qube.qoan.authentication;
+package qube.qoan.services;
 
-import qube.qoan.services.QoanTestBase;
-import qube.qoan.services.QoanTestSecurityModule;
+import com.hazelcast.core.HazelcastInstance;
 
-public class QoanSecurityTest extends QoanTestBase {
+import javax.inject.Inject;
+import javax.inject.Provider;
 
-    public void testQoanSecurity() throws Exception {
+public class HazelcastInstanceProvider implements Provider<HazelcastInstance> {
 
-        QoanTestSecurityModule securityModule = new QoanTestSecurityModule();
-        assertNotNull("nona", securityModule);
+    private HazelcastInstance hazelcastInstance;
 
-        injector.injectMembers(securityModule);
+    @Inject
+    public HazelcastInstanceProvider(HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
+    }
 
-
-
+    @Override
+    public HazelcastInstance get() {
+        return hazelcastInstance;
     }
 }

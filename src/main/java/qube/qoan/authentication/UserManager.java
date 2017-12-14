@@ -16,7 +16,6 @@ package qube.qoan.authentication;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.subject.Subject;
 import qube.qai.security.QaiRealm;
 import qube.qai.user.User;
@@ -31,8 +30,8 @@ public class UserManager implements UserManagerInterface {
     @Inject
     private QaiRealm realm;
 
-    @Inject
-    private SecurityManager securityManager;
+    //@Inject
+    //private SecurityManager securityManager;
 
     /**
      * this is in order to authenticate the user with the
@@ -49,6 +48,7 @@ public class UserManager implements UserManagerInterface {
         Subject subject = SecurityUtils.getSubject();
         UsernamePasswordToken token = new UsernamePasswordToken(username, password);
         //this is all you have to do to support 'remember me' (no config - built in!):
+        token.setHost("/qoan#!");
         token.setRememberMe(true);
 
         subject.login(token);

@@ -15,11 +15,15 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServletRequest;
+import com.vaadin.server.VaadinServletResponse;
 import com.vaadin.ui.*;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.subject.WebSubject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.user.User;
@@ -27,6 +31,8 @@ import qube.qoan.QoanUI;
 import qube.qoan.authentication.UserManagerInterface;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Created by rainbird on 12/24/15.
@@ -109,7 +115,10 @@ public class LoginView extends QoanView {
 
     public void onLoginClicked() {
 
-        Subject subject = SecurityUtils.getSubject();
+        HttpServletRequest request = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        HttpServletResponse response = ((VaadinServletResponse) VaadinService.getCurrentResponse()).getHttpServletResponse();
+        org.apache.shiro.mgt.SecurityManager manager = SecurityUtils.getSecurityManager();
+        Subject subject = new WebSubject.Builder(manager, request, response).buildWebSubject();
 
         if (!subject.isAuthenticated()) {
 

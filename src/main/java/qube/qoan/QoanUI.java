@@ -14,26 +14,23 @@
 
 package qube.qoan;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Widgetset;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.UI;
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.mgt.SecurityManager;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.user.User;
+import qube.qoan.authentication.SecureSessionInitListener;
 import qube.qoan.authentication.SecureViewChangeListener;
 import qube.qoan.authentication.UserManagerInterface;
 import qube.qoan.gui.views.*;
-import qube.qoan.services.QoanModule;
-import qube.qoan.services.QoanSecurityModule;
+import qube.qoan.services.QoanInjectorService;
 
-import javax.servlet.ServletContext;
-import java.util.Set;
+import javax.inject.Inject;
 
 /**
  *
@@ -48,6 +45,8 @@ public class QoanUI extends UI {
 
     protected SecureViewChangeListener changeListener;
 
+    protected SecureSessionInitListener sessionListener;
+
     protected WorkspaceView workspaceView;
 
     protected ManagementView managementView;
@@ -56,42 +55,28 @@ public class QoanUI extends UI {
 
     protected Injector injector;
 
-    protected QoanModule qoanModule;
-
-    protected QoanSecurityModule qoanSecurityModule;
-
+    @Inject
     protected HazelcastInstance hazelcastInstance;
 
-    protected SearchServiceInterface wikipediaSearchService;
+//    @Inject
+//    protected SearchServiceInterface wikipediaSearchService;
+//
+//    @Inject
+//    protected SearchServiceInterface wiktionarySearchService;
 
-    protected SearchServiceInterface wiktionarySearchService;
-
+    @Inject
     protected UserManagerInterface userManager;
 
     protected User user;
 
     protected String targetViewName;
 
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
 
-        // this way we have a different injector for each thread
-        qoanModule = new QoanModule();
-        ServletContext context = null;
-        qoanSecurityModule = new QoanSecurityModule();
-        injector = Guice.createInjector(qoanModule, qoanSecurityModule);
-        // start the Shiro-securityManager and initialize the Shiro-securityUtils
-        SecurityManager securityManager = injector.getInstance(SecurityManager.class);
-        SecurityUtils.setSecurityManager(securityManager);
-
-        hazelcastInstance = injector.getInstance(HazelcastInstance.class);
-        //injector.injectMembers(this);
-        wikipediaSearchService = qoanModule.provideWikipediaSearchService();
-        wiktionarySearchService = qoanModule.provideWiktionarySearchService();
-
-        // fetch a copy of the userManager and initialize the thing right, so that it can be used all around
-        userManager = qoanModule.getUserManager();
-        injector.injectMembers(userManager);
+        injector = QoanInjectorService.getInstance().getInjector();
+        injector.injectMembers(this);
 
         getPage().setTitle("Qoan");
 
@@ -99,6 +84,8 @@ public class QoanUI extends UI {
         navigator = new Navigator(this, this);
         changeListener = new SecureViewChangeListener();
         navigator.addViewChangeListener(changeListener);
+        sessionListener = new SecureSessionInitListener();
+        VaadinService.getCurrent().addSessionInitListener(sessionListener);
 
         // instantiate the workspace-view
         if (workspaceView == null) {
@@ -129,12 +116,13 @@ public class QoanUI extends UI {
     }
 
     public SearchServiceInterface getNamedService(String name) {
-        return qoanModule.getNamedService(name);
+        //return qoanModule.getNamedService(name);
+        return null;
     }
 
-    public Set<String> getSearchServiceNames() {
-        return qoanModule.getSearchServiceNames();
-    }
+//    public Set<String> getSearchServiceNames() {
+//        return qoanModule.getSearchServiceNames();
+//    }
 
     public Injector getInjector() {
         return injector;

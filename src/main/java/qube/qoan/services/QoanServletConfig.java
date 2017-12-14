@@ -14,14 +14,15 @@
 
 package qube.qoan.services;
 
-import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.inject.servlet.ServletScopes;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.UI;
 import qube.qoan.QoanUI;
+
+import javax.servlet.ServletContext;
+import javax.servlet.ServletContextEvent;
 
 /**
  * Created by rainbird on 11/26/15.
@@ -30,28 +31,47 @@ public class QoanServletConfig extends GuiceServletContextListener {
 
     private boolean debug = true;
 
+    private ServletContext servletContext;
+
+    private Injector injector;
+
+
+
     @Override
-    protected Injector getInjector() {
+    public Injector getInjector() {
 
-        ServletModule module = new ServletModule() {
-            @Override
-            protected void configureServlets() {
-                log("Starting to filter servlets...");
-                serve("/*").with(VaadinServlet.class);
+        if (injector == null) {
+            ServletModule module = new ServletModule() {
+                @Override
+                protected void configureServlets() {
+                    log("Starting to filter servlets...");
+                    //serve("/*").with(VaadinServlet.class);
+                    serve("/*").with(QoanServlet.class);
 
-                bind(UI.class).to(QoanUI.class).in(ServletScopes.SESSION);
+                    bind(UI.class).to(QoanUI.class).in(ServletScopes.SESSION);
+                    //bind(Realm.class).to(QoanRealm.class).asEagerSingleton();
 
-            }
-        };
-
-        Injector injector = Guice.createInjector(module); // , new QoanModule(), new QaiModule()
+                }
+            };
+            injector = QoanInjectorService.getInstance().getInjector();
+        }
 
         return injector;
+    }
+
+    @Override
+    public void contextInitialized(final ServletContextEvent servletContextEvent) {
+        this.servletContext = servletContextEvent.getServletContext();
+        super.contextInitialized(servletContextEvent);
     }
 
     private void log(String message) {
         if (debug) {
             System.out.println(message);
         }
+    }
+
+    public void setInjector(Injector injector) {
+        this.injector = injector;
     }
 }

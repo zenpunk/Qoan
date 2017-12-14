@@ -12,21 +12,14 @@
  *
  */
 
-package qube.qoan.authentication;
+package qube.qoan.services;
 
-import qube.qoan.services.QoanTestBase;
-import qube.qoan.services.QoanTestSecurityModule;
+import org.apache.shiro.guice.ShiroModule;
 
-public class QoanSecurityTest extends QoanTestBase {
+public class QoanTestSecurityModule extends ShiroModule {
 
-    public void testQoanSecurity() throws Exception {
-
-        QoanTestSecurityModule securityModule = new QoanTestSecurityModule();
-        assertNotNull("nona", securityModule);
-
-        injector.injectMembers(securityModule);
-
-
+    @Override
+    public void configureShiro() {
 
     }
 }

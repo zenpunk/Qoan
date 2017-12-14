@@ -20,9 +20,18 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
+    <display-name>assembly</display-name>
+    <context-param>
+        <description>
+            Vaadin production mode
+        </description>
+        <param-name>productionMode</param-name>
+        <param-value>false</param-value>
+    </context-param>
+
     <servlet>
         <servlet-name>qoan</servlet-name>
-        <servlet-class>com.vaadin.server.VaadinServlet</servlet-class>
+        <servlet-class>qube.qoan.services.QoanServlet</servlet-class>
 
         <init-param>
             <param-name>UI</param-name>
@@ -45,4 +54,30 @@
         <servlet-name>qoan</servlet-name>
         <url-pattern>/VAADIN/*</url-pattern>
     </servlet-mapping>
+
+
+    <!--<listener>
+        <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+    </listener>
+
+    <filter>
+        <filter-name>ShiroFilter</filter-name>
+        <filter-class>org.apache.shiro.web.servlet.IniShiroFilter</filter-class>
+    </filter>-->
+
+    <!-- Make sure any request you want accessible to Shiro is filtered. /*
+        catches all -->
+    <!-- requests. Usually this filter mapping is defined first (before all
+        others) to -->
+    <!-- ensure that Shiro works in subsequent filters in the filter chain: -->
+
+    <!--<filter-mapping>
+        <filter-name>ShiroFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+        <dispatcher>REQUEST</dispatcher>
+        <dispatcher>FORWARD</dispatcher>
+        <dispatcher>INCLUDE</dispatcher>
+        <dispatcher>ERROR</dispatcher>
+    </filter-mapping>-->
+
 </web-app>

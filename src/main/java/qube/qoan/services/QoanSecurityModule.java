@@ -15,30 +15,54 @@
 package qube.qoan.services;
 
 import com.google.inject.Provides;
+import com.hazelcast.core.HazelcastInstance;
 import org.apache.shiro.config.Ini;
-import org.apache.shiro.guice.ShiroModule;
+import org.apache.shiro.guice.web.ShiroWebModule;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 import qube.qoan.authentication.QoanRealm;
+
+import javax.servlet.ServletContext;
 
 /**
  * Created by rainbird on 7/19/17.
  */
-public class QoanSecurityModule extends ShiroModule {
+public class QoanSecurityModule extends ShiroWebModule {
 
+    private QoanRealm qoanRealm;
 
-    public QoanSecurityModule() {
-        super();
+    private HazelcastInstance hazelcastInstance;
+
+    public QoanSecurityModule(HazelcastInstance hazelcastInstance, ServletContext servletContext) {
+        super(servletContext);
+        this.hazelcastInstance = hazelcastInstance;
     }
 
     @Override
-    protected void configureShiro() {
+    protected void configureShiroWeb() {
+
         try {
             bindRealm().toConstructor(IniRealm.class.getConstructor(Ini.class));
         } catch (NoSuchMethodException e) {
             addError(e);
         }
 
-        this.bindRealm().to(QoanRealm.class);
+        addFilterChain("/qoan#", ANON);
+        addFilterChain("/qoan#!welcome", AUTHC_BASIC);
+        addFilterChain("/qoan#!components", AUTHC_BASIC);
+        addFilterChain("/qoan#!wiki", AUTHC_BASIC);
+        addFilterChain("/qoan#!registration", AUTHC_BASIC);
+        addFilterChain("/qoan#!workspace", AUTHC_BASIC);
+        addFilterChain("/qoan#!management", AUTHC_BASIC);
+        addFilterChain("/**", AUTHC_BASIC);
+    }
+
+    @Provides
+    Realm provideRealm() {
+        if (qoanRealm == null) {
+            qoanRealm = new QoanRealm(hazelcastInstance);
+        }
+        return qoanRealm;
     }
 
     @Provides

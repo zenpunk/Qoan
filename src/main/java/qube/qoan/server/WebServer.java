@@ -15,9 +15,15 @@
 package qube.qoan.server;
 
 
+import com.google.inject.Injector;
+import org.apache.shiro.web.env.EnvironmentLoaderListener;
+import org.eclipse.jetty.annotations.AnnotationConfiguration;
+import org.eclipse.jetty.plus.webapp.EnvConfiguration;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
-import qube.qoan.services.QoanServletConfig;
+import org.eclipse.jetty.webapp.WebInfConfiguration;
+import org.eclipse.jetty.webapp.WebXmlConfiguration;
 
 
 /**
@@ -32,30 +38,32 @@ public class WebServer {
     private static String resourceBase = "./target/classes/webapp";
     private static int httpPort = 8080;
 
+    private static Injector injector;
+
     /**
      * main function, starts the jetty server.
      *
      * @param args
      */
     public static void main(String[] args) {
+
         Server server = new Server(httpPort);
 
         WebAppContext webAppContext = new WebAppContext();
         webAppContext.setContextPath(contextPath);
         webAppContext.setResourceBase(resourceBase);
+        webAppContext.setConfigurations(new Configuration[]{
+                new AnnotationConfiguration(),
+                new WebXmlConfiguration(),
+                new WebInfConfiguration(),
+                //new TagLibConfiguration(),
+                //new PlusConfiguration(),
+                //new MetaInfConfiguration(),
+                //new FragmentConfiguration(),
+                new EnvConfiguration()});
         webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
-        //webAppContext.addFilter(GuiceFilter.class, "/*", EnumSet.of(DispatcherType.REQUEST));
-        webAppContext.addEventListener(new QoanServletConfig());
-
-//        webAppContext.setConfigurations(new Configuration[] {
-//                new AnnotationConfiguration(),
-//                new WebXmlConfiguration(),
-//                new WebInfConfiguration(),
-//                new TagLibConfiguration(),
-//                new PlusConfiguration(),
-//                new MetaInfConfiguration(),
-//                new FragmentConfiguration(),
-//                new EnvConfiguration() });
+        //webAppContext.(new EnvironmentLoader());
+        webAppContext.addEventListener(new EnvironmentLoaderListener());
 
         server.setHandler(webAppContext);
 
@@ -67,8 +75,9 @@ public class WebServer {
             e.printStackTrace();
         }
 
-        // now the web-server has been started, we invoke an instance of Hazelcast as well
-        //HazelcastInstance hazelcastInstance = Hazelcast.getInstance();
+    }
 
+    public static Injector getInjector() {
+        return injector;
     }
 }
