@@ -44,8 +44,7 @@ public class SecureViewChangeListener implements ViewChangeListener {
         }
 
         // check if user is already logged in
-        if (nextView instanceof WorkspaceView
-                || nextView instanceof ManagementView) {
+        if (nextView instanceof WorkspaceView || nextView instanceof ManagementView) {
 
             // @TODO this is not right- have to get the session information to Shiro somehow...
             //Subject subject = SecurityUtils.getSubject();
@@ -55,16 +54,10 @@ public class SecureViewChangeListener implements ViewChangeListener {
                 UI.getCurrent().getNavigator().navigateTo(LoginView.NAME);
                 logger.info("Requested view: " + nextView.toString() + " redirected to LoginView");
                 return false;
-            } else {
-                return true;
             }
         }
 
         return true;
     }
 
-    @Override
-    public void afterViewChange(ViewChangeEvent event) {
-        logger.info("View changed to: " + event.getNewView().toString());
-    }
 }
