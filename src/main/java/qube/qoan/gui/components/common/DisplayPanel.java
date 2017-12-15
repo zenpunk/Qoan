@@ -14,7 +14,6 @@
 
 package qube.qoan.gui.components.common;
 
-import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
@@ -28,7 +27,7 @@ public class DisplayPanel extends Panel {
 
     private Layout parentLayout;
 
-    private ResizableCssLayout resizeWrapper;
+    //private ResizableCssLayout resizeWrapper;
 
     /**
      * this class is a substitute to Vaadin's native
@@ -46,7 +45,9 @@ public class DisplayPanel extends Panel {
 
     private void initialize(Component content) {
 
-        VerticalLayout contentLayout = new VerticalLayout();
+        VerticalSplitPanel panel = new VerticalSplitPanel();
+        panel.setSplitPosition(50, Unit.PIXELS);
+
 
         HorizontalLayout titleRow = new HorizontalLayout();
 
@@ -59,26 +60,20 @@ public class DisplayPanel extends Panel {
         titleLabel.setStyleName("bold");
         titleRow.addComponent(titleLabel);
 
-        Panel titleRowPanel = new Panel();
-        titleRowPanel.setContent(titleRow);
-        titleRowPanel.setHeight("50px");
-        titleRowPanel.setStyleName("float");
-        contentLayout.addComponent(titleRowPanel);
-
-        // set the sizes for the content and add
-        contentLayout.addComponent(content);
-        setContent(contentLayout);
+        panel.setFirstComponent(titleRow);
+        panel.setSecondComponent(content);
+        setContent(panel);
 
         //resizeWrapper = new ResizableCssLayout(this);
     }
 
     public void onCLoseClicked() {
-        if (resizeWrapper != null) {
+        /*if (resizeWrapper != null) {
             parentLayout.removeComponent(resizeWrapper);
         } else {
             parentLayout.removeComponent(this);
-        }
-
+        }*/
+        parentLayout.removeComponent(this);
     }
 
     public DragSourceExtension<DisplayPanel> getDragExtension() {
@@ -99,11 +94,11 @@ public class DisplayPanel extends Panel {
         return dragExtension;
     }
 
-    public ResizableCssLayout getResizeWrapper() {
+    /*public ResizableCssLayout getResizeWrapper() {
         return resizeWrapper;
     }
 
     public void setResizeWrapper(ResizableCssLayout resizeWrapper) {
         this.resizeWrapper = resizeWrapper;
-    }
+    }*/
 }

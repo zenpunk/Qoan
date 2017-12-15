@@ -31,6 +31,9 @@ import qube.qoan.gui.views.*;
 import qube.qoan.services.QoanInjectorService;
 
 import javax.inject.Inject;
+import javax.inject.Named;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -67,10 +70,13 @@ public class QoanUI extends UI {
     @Inject
     protected UserManagerInterface userManager;
 
+    @Inject
+    @Named("ServicesMap")
+    Map<String, SearchServiceInterface> searchServiceMap;
+
     protected User user;
 
     protected String targetViewName;
-
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
@@ -116,13 +122,12 @@ public class QoanUI extends UI {
     }
 
     public SearchServiceInterface getNamedService(String name) {
-        //return qoanModule.getNamedService(name);
-        return null;
+        return searchServiceMap.get(name);
     }
 
-//    public Set<String> getSearchServiceNames() {
-//        return qoanModule.getSearchServiceNames();
-//    }
+    public Set<String> getSearchServiceNames() {
+        return searchServiceMap.keySet();
+    }
 
     public Injector getInjector() {
         return injector;

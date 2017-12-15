@@ -126,6 +126,18 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         // Procedure Manager
         bind(ProcedureManagerInterface.class).to(ProcedureManager.class);
+
+    }
+
+    @Provides
+    @Named("ServicesMap")
+    Map<String, SearchServiceInterface> provideServicesMap() {
+
+        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+            initKnownNamedServers();
+        }
+
+        return namedSearchServices;
     }
 
     @Provides
