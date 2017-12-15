@@ -1,7 +1,7 @@
 <component name="CopyrightManager">
   <settings default="Qoan Copyright">
     <module2copyright>
-      <element module="Project Files" copyright="Qoan Copyright" />
+      <element module="All" copyright="Qoan Copyright" />
     </module2copyright>
   </settings>
 </component>
