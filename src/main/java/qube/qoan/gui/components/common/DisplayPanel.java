@@ -47,7 +47,7 @@ public class DisplayPanel extends Panel {
 
         VerticalSplitPanel panel = new VerticalSplitPanel();
         panel.setSplitPosition(50, Unit.PIXELS);
-
+        panel.setLocked(true);
 
         HorizontalLayout titleRow = new HorizontalLayout();
 

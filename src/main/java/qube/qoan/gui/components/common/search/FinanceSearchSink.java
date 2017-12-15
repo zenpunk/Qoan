@@ -25,7 +25,7 @@ import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.QoanUI;
+import qube.qoan.services.QoanInjectorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,7 +48,8 @@ public class FinanceSearchSink extends SearchSinkComponent {
     protected void initializeSearchResults() {
 
         // self-inoculation
-        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
         Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);

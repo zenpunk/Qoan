@@ -16,7 +16,7 @@ package qube.qoan.gui.components.workspace;
 
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.TabSheet;
-import qube.qoan.QoanUI;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 11/2/15.
@@ -38,7 +38,7 @@ public class Workspace extends Panel {
         workspaceTabs = new TabSheet();
 
         WorkspacePanel panel = new WorkspacePanel("Workspace 1");
-        ((QoanUI) QoanUI.getCurrent()).getInjector().injectMembers(panel);
+        QoanInjectorService.getInstance().getInjector().injectMembers(panel);
         workspaceTabs.addTab(panel).setCaption("Workspace 1");
 
         //layout.addComponent(workspaceTabs);
@@ -53,7 +53,7 @@ public class Workspace extends Panel {
         int count = workspaceTabs.getComponentCount() + 1;
         String title = "Workspace " + count;
         WorkspacePanel panel = new WorkspacePanel(title);
-        ((QoanUI) QoanUI.getCurrent()).getInjector().injectMembers(panel);
+        QoanInjectorService.getInstance().getInjector().injectMembers(panel);
         workspaceTabs.addTab(panel).setCaption(title);
     }
 

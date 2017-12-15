@@ -22,9 +22,9 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.DisplayPanel;
 import qube.qoan.gui.components.common.decorators.Decorator;
+import qube.qoan.services.QoanInjectorService;
 
 import java.util.Map;
 import java.util.TreeMap;
@@ -102,7 +102,8 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
      */
     public void onOpenClicked() {
 
-        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        Injector injector = QoanInjectorService.getInstance().getInjector();
         TabSheet content = new TabSheet();
         if (decorators.size() > 0) {
             for (String name : decorators.keySet()) {

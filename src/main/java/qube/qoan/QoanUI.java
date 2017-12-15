@@ -129,9 +129,9 @@ public class QoanUI extends UI {
         return searchServiceMap.keySet();
     }
 
-    public Injector getInjector() {
+    /*public Injector getInjector() {
         return injector;
-    }
+    }*/
 
     public User getUser() {
         return user;

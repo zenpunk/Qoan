@@ -18,12 +18,12 @@ import com.google.inject.Injector;
 import com.vaadin.ui.Accordion;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Notification;
-import qube.qoan.QoanUI;
 import qube.qoan.gui.components.workspace.Workspace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 import qube.qoan.gui.components.workspace.resource.ResourceMenu;
 import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
+import qube.qoan.services.QoanInjectorService;
 
 
 /**
@@ -56,7 +56,8 @@ public class WorkspaceView extends QoanView {
         }
 
         // so that we can inject the members of the class already now for their correct initialization
-        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        Injector injector = QoanInjectorService.getInstance().getInjector();
 
         HorizontalSplitPanel splitPanel = new HorizontalSplitPanel();
         splitPanel.setSplitPosition(35, Unit.PERCENTAGE);

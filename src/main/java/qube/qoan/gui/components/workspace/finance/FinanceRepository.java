@@ -16,9 +16,8 @@ package qube.qoan.gui.components.workspace.finance;
 
 import com.google.inject.Injector;
 import com.vaadin.ui.Panel;
-import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import qube.qoan.QoanUI;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 12/28/15.
@@ -40,7 +39,8 @@ public class FinanceRepository extends Panel {
 
     private void initialize() {
 
-        Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+        //Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+        Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
         VerticalLayout layout = new VerticalLayout();

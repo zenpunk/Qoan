@@ -26,7 +26,7 @@ import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.QoanUI;
+import qube.qoan.services.QoanInjectorService;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -48,7 +48,8 @@ public class ProcedureSearchSink extends SearchSinkComponent {
     protected void initializeSearchResults() {
 
         // self-inoculation
-        Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
+        Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
         TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();

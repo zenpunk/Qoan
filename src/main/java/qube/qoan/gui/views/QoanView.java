@@ -21,8 +21,8 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.QoanHeader;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 2/22/17.
@@ -51,7 +51,8 @@ public abstract class QoanView extends VerticalLayout implements View {
 
         if (!initialized) {
 
-            Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+            //Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
+            Injector injector = QoanInjectorService.getInstance().getInjector();
             injector.injectMembers(this);
 
             header = new QoanHeader();
