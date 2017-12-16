@@ -42,7 +42,7 @@ public class MyComponentConnector extends AbstractComponentConnector {
 
         // TODO ServerRpc usage example, do something useful instead
 //        getWidget().addClickHandler(new ClickHandler() {
-//            public void onClick(ClickEvent event) {
+//            public void onDrop(ClickEvent event) {
 //                final MouseEventDetails mouseDetails = MouseEventDetailsBuilder
 //                        .buildMouseEventDetails(event.getNativeEvent(),
 //                                getWidget().getElement());

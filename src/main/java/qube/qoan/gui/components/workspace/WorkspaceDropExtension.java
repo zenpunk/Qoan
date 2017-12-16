@@ -43,10 +43,10 @@ public class WorkspaceDropExtension extends DropTargetExtension<AbsoluteLayout>
     }
 
     public void addListener() {
-        addDropListener(event -> onClick(event));
+        addDropListener(event -> onDrop(event));
     }
 
-    protected void onClick(DropEvent event) {
+    protected void onDrop(DropEvent event) {
         // if the drag source is in the same UI as the target
         Optional<AbstractComponent> dragSource = event.getDragSourceComponent();
         String dropCoords = "left: %d px; top: %d px;";

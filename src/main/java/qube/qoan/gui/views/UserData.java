@@ -14,6 +14,8 @@
 
 package qube.qoan.gui.views;
 
+import qube.qai.user.User;
+
 public class UserData {
 
     private String username;
@@ -25,6 +27,13 @@ public class UserData {
     private String email;
 
     public UserData() {
+    }
+
+    public UserData(User user) {
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.passwordCheck = user.getPassword();
+        this.email = user.getEmail();
     }
 
     public UserData(String username, String password, String passwordCheck, String email) {

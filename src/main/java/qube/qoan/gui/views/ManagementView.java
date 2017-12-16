@@ -23,7 +23,6 @@ import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.procedure.Procedure;
 import qube.qai.services.ProcedureManagerInterface;
@@ -39,7 +38,8 @@ import java.util.Set;
  */
 public class ManagementView extends QoanView {
 
-    private static Logger logger = LoggerFactory.getLogger("ManagementView");
+    @Inject
+    private Logger logger;
 
     public static String NAME = "ManagementView";
 
@@ -99,7 +99,7 @@ public class ManagementView extends QoanView {
         isInitialized = true;
     }
 
-    private Panel createGridStatsTab() {
+    private Component createGridStatsTab() {
 
         Panel panel = new Panel();
         Layout layout = new VerticalLayout();
@@ -112,9 +112,10 @@ public class ManagementView extends QoanView {
         return panel;
     }
 
-    private Panel createUserTab() {
+    private Component createUserTab() {
 
-        Panel panel = new Panel();
+        VerticalSplitPanel panel = new VerticalSplitPanel();
+        //Panel panel = new Panel();
 
         userGrid = new Grid<User>();
         userGrid.addColumn(User::getUsername).setCaption("Username");
@@ -125,7 +126,15 @@ public class ManagementView extends QoanView {
         ListDataProvider<User> userProvider = DataProvider.ofCollection(users);
         userGrid.setDataProvider(userProvider);
 
-        panel.setContent(userGrid);
+        panel.setFirstComponent(userGrid);
+
+        // create the side pane and add the drop-extension
+        Panel sidepane = new Panel();
+        AbsoluteLayout layout = new AbsoluteLayout();
+        UserDropExtension dropExtension = new UserDropExtension(layout);
+        dropExtension.addListener();
+        sidepane.setContent(layout);
+        panel.setSecondComponent(sidepane);
 
         return panel;
     }

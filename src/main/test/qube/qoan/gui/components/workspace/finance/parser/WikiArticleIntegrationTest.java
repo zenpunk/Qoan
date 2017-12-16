@@ -20,7 +20,6 @@ import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
 import qube.qai.services.SearchServiceInterface;
@@ -37,7 +36,8 @@ import java.util.Set;
  */
 public class WikiArticleIntegrationTest extends QoanTestBase {
 
-    private static Logger logger = LoggerFactory.getLogger("WikiArticleIntegrationTest");
+    @Inject
+    private Logger logger;
 
     private String stockListingPage = "Lists of companies by stock exchange listing.xml";
 

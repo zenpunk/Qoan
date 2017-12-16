@@ -48,7 +48,6 @@ public class ProcedureSearchSink extends SearchSinkComponent {
     protected void initializeSearchResults() {
 
         // self-inoculation
-        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
@@ -57,7 +56,9 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
         for (ProcedureTemplate template : ProcedureLibrary.getTemplateMap().values()) {
             Procedure proc = template.createProcedure();
-            Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
+            // this initial search takes too much time.
+            //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
+            Collection<SearchResult> results = null;
             SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, proc.getProcedureName(), proc.getUuid(), proc.getDescriptionText(), 1.0);
             data.addItem(null, procResult);
             // if the results have returned nothing just go on tot eh next procedure.

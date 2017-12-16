@@ -18,7 +18,6 @@ import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
 
@@ -29,25 +28,23 @@ import javax.inject.Inject;
  */
 public class WorkspacePanel extends Panel {
 
-    private static Logger logger = LoggerFactory.getLogger("DisplayPanel");
+    @Inject
+    private static Logger logger;
 
     @Inject
     private QaiDataProvider<WikiArticle> wikiProvider;
-
-    private WorkspaceDropExtension dropExtension;
 
     private String title;
 
     public WorkspacePanel(String title) {
         this.title = title;
-
         initialize();
     }
 
     private void initialize() {
 
         AbsoluteLayout layout = new AbsoluteLayout();
-        dropExtension = new WorkspaceDropExtension(layout);
+        WorkspaceDropExtension dropExtension = new WorkspaceDropExtension(layout);
         dropExtension.addListener();
 
         Label titleLabel = new Label(title);

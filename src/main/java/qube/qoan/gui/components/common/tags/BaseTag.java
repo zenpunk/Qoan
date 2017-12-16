@@ -22,6 +22,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.main.QaiConstants;
 import qube.qai.services.implementation.SearchResult;
+import qube.qai.user.User;
 import qube.qoan.gui.components.common.DisplayPanel;
 import qube.qoan.gui.components.common.decorators.Decorator;
 import qube.qoan.services.QoanInjectorService;
@@ -36,6 +37,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
     protected Layout parentLayout;
 
+    protected String titleString;
     protected SearchResult searchResult;
 
     protected Layout layout;
@@ -52,8 +54,15 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
     public BaseTag(Layout parentLayout, SearchResult searchResult) {
         this();
-        this.parentLayout = parentLayout;
         this.searchResult = searchResult;
+        this.parentLayout = parentLayout;
+        this.titleString = searchResult.getTitle();
+    }
+
+    public BaseTag(Layout parentLayout, User user) {
+        this();
+        this.parentLayout = parentLayout;
+        this.titleString = "User: " + user.getUsername();
     }
 
     /**
@@ -75,7 +84,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
         layout.addComponent(iconImage);
 
         // create and add the close-button first
-        Label title = new Label(searchResult.getTitle());
+        Label title = new Label(titleString);
         title.setStyleName("bold");
         layout.addComponent(title);
 
@@ -102,7 +111,6 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
      */
     public void onOpenClicked() {
 
-        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         Injector injector = QoanInjectorService.getInstance().getInjector();
         TabSheet content = new TabSheet();
         if (decorators.size() > 0) {
@@ -116,16 +124,18 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
             content.addTab(new Panel("No decorators for this"));
         }
 
-        DisplayPanel panel = new DisplayPanel(searchResult.getTitle(), parentLayout, content);
+        addToParent(content);
+
+    }
+
+    protected void addToParent(Component content) {
+        DisplayPanel panel = new DisplayPanel(titleString, parentLayout, content);
         panel.setWidth("800px");
         panel.setHeight("600px");
         DragSourceExtension<DisplayPanel> dragSourceExtension = panel.getDragExtension();
 
         panelWrapper = new ResizableCssLayout(panel);
-        //panel.setResizeWrapper(panelWrapper);
-
         parentLayout.addComponent(panelWrapper);
-
     }
 
     /**

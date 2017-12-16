@@ -95,7 +95,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mickey Mouse");
 
-        checkSearchService(topicName, "title", searchTopics);
+        checkSearchService(topicName, "titleString", searchTopics);
     }
 
     public void testDistributedWiktionarySearch() throws Exception {
@@ -104,7 +104,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, "title", searchTopics);
+        checkSearchService(topicName, "titleString", searchTopics);
     }
 
     public void testDistributedWikiResourcesSearch() throws Exception {
@@ -113,7 +113,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, "title", searchTopics);
+        checkSearchService(topicName, "titleString", searchTopics);
     }
 
     public void testDistributedGroupSearch() throws Exception {

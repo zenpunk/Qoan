@@ -38,8 +38,6 @@ import java.util.Set;
 /**
  *
  */
-//@WebServlet(value = "/*", asyncSupported = true)
-//@VaadinServletConfiguration(productionMode = false, ui = QoanUI.class)
 @Theme("mytheme")
 @Widgetset("qube.qoan.MyWidgetset")
 public class QoanUI extends UI {
@@ -60,12 +58,6 @@ public class QoanUI extends UI {
 
     @Inject
     protected HazelcastInstance hazelcastInstance;
-
-//    @Inject
-//    protected SearchServiceInterface wikipediaSearchService;
-//
-//    @Inject
-//    protected SearchServiceInterface wiktionarySearchService;
 
     @Inject
     protected UserManagerInterface userManager;
@@ -128,10 +120,6 @@ public class QoanUI extends UI {
     public Set<String> getSearchServiceNames() {
         return searchServiceMap.keySet();
     }
-
-    /*public Injector getInjector() {
-        return injector;
-    }*/
 
     public User getUser() {
         return user;

@@ -130,6 +130,11 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
+    Logger provideLogger() {
+        return LoggerFactory.getLogger("Qoan");
+    }
+
+    @Provides
     @Named("ServicesMap")
     Map<String, SearchServiceInterface> provideServicesMap() {
 
@@ -519,4 +524,5 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         return userManager;
     }
+
 }

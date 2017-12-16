@@ -48,7 +48,6 @@ public class FinanceSearchSink extends SearchSinkComponent {
     protected void initializeSearchResults() {
 
         // self-inoculation
-        //Injector injector = ((QoanUI) QoanUI.getCurrent()).getInjector();
         Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
@@ -102,6 +101,8 @@ public class FinanceSearchSink extends SearchSinkComponent {
 
     @Override
     public void addResults(Collection<SearchResult> results) {
-        // do nothing- the initialization at start should be sufficient
+        searchResults.clear();
+        searchResults.addAll(results);
+        dataProvider.refreshAll();
     }
 }

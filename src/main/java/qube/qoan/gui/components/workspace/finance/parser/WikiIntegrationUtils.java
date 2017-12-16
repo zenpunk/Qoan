@@ -22,7 +22,6 @@ import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import qube.qai.parsers.WikiIntegration;
 import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.WikiArticle;
@@ -34,7 +33,8 @@ import javax.inject.Inject;
  */
 public class WikiIntegrationUtils {
 
-    private static Logger logger = LoggerFactory.getLogger("WikiIntegrationUtils");
+    @Inject
+    private Logger logger;
 
     @Inject
     private HazelcastInstance hazelcastInstance;

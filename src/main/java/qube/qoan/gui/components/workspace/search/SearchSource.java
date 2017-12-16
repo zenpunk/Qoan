@@ -91,9 +91,9 @@ public class SearchSource extends Panel {
 
         Collection<SearchResult> results;
         if (QaiConstants.WIKIPEDIA.equals(searchContext)) {
-            results = searchService.searchInputString(searchString, "title", numResults);
+            results = searchService.searchInputString(searchString, "titleString", numResults);
         } else if (QaiConstants.WIKTIONARY.equalsIgnoreCase(searchContext)) {
-            results = searchService.searchInputString(searchString, "title", numResults);
+            results = searchService.searchInputString(searchString, "titleString", numResults);
         } else {
             results = searchService.searchInputString(searchString, searchContext, numResults);
         }
