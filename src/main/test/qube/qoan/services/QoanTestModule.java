@@ -73,6 +73,11 @@ public class QoanTestModule extends AbstractModule {
         bind(QaiSecurity.class).to(QaiSecurityManager.class);
     }
 
+    @Provides
+    Logger provideLogger() {
+        return LoggerFactory.getLogger("Qoan");
+    }
+
 //    @Provides
 //    @Named("USER")
 //    public SearchServiceInterface provideUserDataService() {
