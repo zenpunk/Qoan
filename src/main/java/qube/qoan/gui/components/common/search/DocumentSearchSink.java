@@ -31,7 +31,7 @@ public class DocumentSearchSink extends SearchSinkComponent {
 
     @Override
     protected void initializeSearchResults() {
-
+        // no initialization to be done here
     }
 
     @Override

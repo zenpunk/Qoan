@@ -14,8 +14,6 @@
 
 package qube.qoan.gui.views;
 
-import com.hazelcast.core.DistributedObjectEvent;
-import com.hazelcast.core.DistributedObjectListener;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
 import com.vaadin.data.provider.DataProvider;
@@ -31,17 +29,16 @@ import qube.qoan.authentication.UserManagerInterface;
 
 import javax.inject.Inject;
 import java.util.Collection;
-import java.util.Set;
 
 /**
  * Created by rainbird on 11/27/15.
  */
 public class ManagementView extends QoanView {
 
+    public static String NAME = "ManagementView";
+
     @Inject
     private Logger logger;
-
-    public static String NAME = "ManagementView";
 
     @Inject
     private ProcedureManagerInterface procedureManager;
@@ -52,19 +49,15 @@ public class ManagementView extends QoanView {
     @Inject
     private HazelcastInstance hazelcastInstance;
 
-    protected Set<String> procedureUuids;
-
-    protected Set<String> remotelyCreatedUuids;
-
     private TabSheet managementTabs;
-
-    private Grid<User> userGrid;
 
     private Collection<User> users;
 
-    private Grid<Procedure> procedureGrid;
+    private ListDataProvider<User> userProvider;
 
     private Collection<Procedure> procedures;
+
+    private ListDataProvider<Procedure> procedureProvider;
 
     private boolean isInitialized = false;
 
@@ -115,15 +108,15 @@ public class ManagementView extends QoanView {
     private Component createUserTab() {
 
         VerticalSplitPanel panel = new VerticalSplitPanel();
-        //Panel panel = new Panel();
 
-        userGrid = new Grid<User>();
+        Grid<User> userGrid = new Grid<User>();
+        userGrid.setSelectionMode(Grid.SelectionMode.MULTI);
         userGrid.addColumn(User::getUsername).setCaption("Username");
         userGrid.addColumn(User::getEmail).setCaption("E-mail");
 
         IMap<String, User> userMap = hazelcastInstance.getMap(QaiConstants.USERS);
         users = userMap.values();
-        ListDataProvider<User> userProvider = DataProvider.ofCollection(users);
+        userProvider = DataProvider.ofCollection(users);
         userGrid.setDataProvider(userProvider);
 
         panel.setFirstComponent(userGrid);
@@ -143,7 +136,7 @@ public class ManagementView extends QoanView {
 
         Panel panel = new Panel();
 
-        procedureGrid = new Grid<Procedure>();
+        Grid<Procedure> procedureGrid = new Grid<Procedure>();
         procedureGrid.addColumn(Procedure::getProcedureName).setCaption("Name");
         procedureGrid.addColumn(Procedure::getUserName).setCaption("Username");
         procedureGrid.addColumn(Procedure::hasExecuted).setCaption("Has executed");
@@ -153,7 +146,7 @@ public class ManagementView extends QoanView {
 
         IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
         procedures = procedureMap.values();
-        ListDataProvider<Procedure> procedureProvider = DataProvider.ofCollection(procedures);
+        procedureProvider = DataProvider.ofCollection(procedures);
         procedureGrid.setDataProvider(procedureProvider);
 
         panel.setContent(procedureGrid);
@@ -161,7 +154,7 @@ public class ManagementView extends QoanView {
         return panel;
     }
 
-    class ManagementListener implements DistributedObjectListener {
+    /*class ManagementListener implements DistributedObjectListener {
 
         @Override
         public void distributedObjectCreated(DistributedObjectEvent distributedObjectEvent) {
@@ -177,5 +170,5 @@ public class ManagementView extends QoanView {
             DistributedObjectEvent.EventType type = distributedObjectEvent.getEventType();
             logger.info("received event " + type + " with uuid: " + uuid);
         }
-    }
+    }*/
 }

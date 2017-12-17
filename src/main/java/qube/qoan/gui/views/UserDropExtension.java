@@ -61,7 +61,6 @@ public class UserDropExtension extends DropTargetExtension<AbsoluteLayout>
                 targetLayout.addComponent(tag, coords);
             }
 
-
         } else if (dragSource.isPresent() && dragSource.get() instanceof BaseTag) {
             BaseTag tag = (BaseTag) dragSource.get();
             String coords = String.format(dropCoords, dropX, dropY);

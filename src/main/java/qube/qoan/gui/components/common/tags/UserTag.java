@@ -30,7 +30,7 @@ public class UserTag extends BaseTag {
     public UserTag(Layout parentLayout, User user) {
         super(parentLayout, user);
         iconImage = new Image(searchResult.getContext(),
-                new ClassResource("gui/images/user-icon.png"));
+                new ClassResource("gui/images/user.jpg"));
         decorators.put("Wiki-article", new WikiDecorator());
         this.user = user;
     }
