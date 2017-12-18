@@ -27,7 +27,6 @@ import qube.qoan.gui.components.common.decorators.DecoratorsTest;
 import qube.qoan.gui.components.management.ManagementPanelTest;
 import qube.qoan.gui.components.workspace.procedure.decorators.ProcedureTemplateDecoratorsTest;
 import qube.qoan.services.implementation.DistributedSearchServicesTest;
-import qube.qoan.util.GsonSerializerTest;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -67,7 +66,7 @@ public class AllQoanTests extends TestCase {
         suite.addTestSuite(ProcedureTemplateDecoratorsTest.class);
 
         // Gson serialization experiments
-        suite.addTestSuite(GsonSerializerTest.class);
+        //suite.addTestSuite(GsonSerializerTest.class);
 
         return suite;
     }
