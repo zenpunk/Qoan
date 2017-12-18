@@ -25,7 +25,6 @@ import qube.qoan.gui.components.WikiSearchMenuTest;
 import qube.qoan.gui.components.common.QoanMenuTest;
 import qube.qoan.gui.components.common.decorators.DecoratorsTest;
 import qube.qoan.gui.components.management.ManagementPanelTest;
-import qube.qoan.gui.components.workspace.finance.parser.WikiArticleIntegrationTest;
 import qube.qoan.gui.components.workspace.procedure.decorators.ProcedureTemplateDecoratorsTest;
 import qube.qoan.services.implementation.DistributedSearchServicesTest;
 import qube.qoan.util.GsonSerializerTest;
@@ -57,7 +56,7 @@ public class AllQoanTests extends TestCase {
         suite.addTestSuite(ManagementPanelTest.class);
 
         // this one is for parsing wiki-tables
-        suite.addTestSuite(WikiArticleIntegrationTest.class);
+        //suite.addTestSuite(WikiArticleIntegrationTest.class);
 
         // this is the most important of all, really, to see if you have live-data
         suite.addTestSuite(DistributedSearchServicesTest.class);

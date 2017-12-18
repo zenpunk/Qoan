@@ -206,7 +206,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
-    QaiDataProvider<Procedure> provideProcedureProvier() {
+    QaiDataProvider<Procedure> provideProcedureProvider() {
         QaiDataProvider<Procedure> provider = new MapDataProvider(PROCEDURES, hazelcastInstance);
         return provider;
     }

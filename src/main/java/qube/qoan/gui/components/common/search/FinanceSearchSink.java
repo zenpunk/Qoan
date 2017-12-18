@@ -15,12 +15,13 @@
 package qube.qoan.gui.components.common.search;
 
 import com.google.inject.Injector;
+import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IMap;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
-import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
 import qube.qai.services.SearchServiceInterface;
@@ -35,14 +36,14 @@ import java.util.Collection;
 /**
  * Created by rainbird on 7/4/17.
  */
-public class FinanceSearchSink extends SearchSinkComponent {
+public class FinanceSearchSink extends SearchSinkComponent implements QaiConstants {
 
     @Inject
     @Named("Stock_Groups")
     private SearchServiceInterface searchService;
 
     @Inject
-    private QaiDataProvider<StockGroup> qaiDataProvider;
+    private HazelcastInstance hazelcastInstance;
 
     @Override
     protected void initializeSearchResults() {
@@ -57,8 +58,9 @@ public class FinanceSearchSink extends SearchSinkComponent {
             return;
         }
 
+        IMap<String, StockGroup> groupMap = hazelcastInstance.getMap(STOCK_GROUPS);
         for (SearchResult result : results) {
-            StockGroup stockGroup = qaiDataProvider.brokerSearchResult(result);
+            StockGroup stockGroup = groupMap.get(result.getUuid());
             Collection<StockEntity> entities = stockGroup.getEntities();
             Collection<SearchResult> entitiesAsResult = new ArrayList<>();
             for (StockEntity entity : entities) {
