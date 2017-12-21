@@ -24,10 +24,14 @@ import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureManager;
+import qube.qai.security.ProcedureManager;
+import qube.qai.security.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
-import qube.qai.services.*;
+import qube.qai.services.ProcedureRunnerInterface;
+import qube.qai.services.SearchResultSink;
+import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
@@ -149,17 +153,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     UUIDServiceInterface provideUUIDService() {
         return new UUIDService();
     }
-
-    /*@Provides
-    ProcedureSourceInterface provideProcedureSourceInterface() {
-        return CachedProcedureSourceService.getInstance();
-    }*/
-
-    /*@Provides
-    @Singleton
-    ProcedureCache provideProcedureSource() {
-        return new ProcedureCache();
-    }*/
 
     @Provides
     @Singleton

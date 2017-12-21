@@ -23,7 +23,7 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import qube.qai.main.QaiConstants;
 import qube.qai.procedure.Procedure;
-import qube.qai.services.ProcedureManagerInterface;
+import qube.qai.security.ProcedureManagerInterface;
 import qube.qai.user.User;
 import qube.qoan.authentication.UserManagerInterface;
 
