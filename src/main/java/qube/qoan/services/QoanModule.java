@@ -28,7 +28,6 @@ import qube.qai.procedure.ProcedureManager;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.*;
-import qube.qai.services.implementation.CachedProcedureSourceService;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
@@ -151,16 +150,16 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         return new UUIDService();
     }
 
-    @Provides
+    /*@Provides
     ProcedureSourceInterface provideProcedureSourceInterface() {
         return CachedProcedureSourceService.getInstance();
-    }
+    }*/
 
-    @Provides
+    /*@Provides
     @Singleton
     ProcedureCache provideProcedureSource() {
         return new ProcedureCache();
-    }
+    }*/
 
     @Provides
     @Singleton

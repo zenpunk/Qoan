@@ -19,7 +19,6 @@ import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.QoanMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-import qube.qoan.services.ProcedureCache;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,8 +28,8 @@ import javax.inject.Named;
  */
 public class ProcedureMenu extends QoanMenu {
 
-    @Inject
-    private ProcedureCache procedureCache;
+//    @Inject
+//    private ProcedureCache procedureCache;
 
     @Inject
     @Named("ProcedureResults")

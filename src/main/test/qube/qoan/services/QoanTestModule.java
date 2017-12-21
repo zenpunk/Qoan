@@ -26,8 +26,14 @@ import qube.qai.message.MessageQueue;
 import qube.qai.message.MessageQueueInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
-import qube.qai.services.*;
-import qube.qai.services.implementation.*;
+import qube.qai.services.ProcedureRunnerInterface;
+import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.SelectorFactoryInterface;
+import qube.qai.services.UUIDServiceInterface;
+import qube.qai.services.implementation.DataSelectorFactory;
+import qube.qai.services.implementation.DistributedSearchService;
+import qube.qai.services.implementation.ProcedureRunner;
+import qube.qai.services.implementation.UUIDService;
 
 import javax.inject.Named;
 import javax.persistence.EntityManager;
@@ -62,7 +68,7 @@ public class QoanTestModule extends AbstractModule {
         bind(UUIDServiceInterface.class).to(UUIDService.class);
 
         // ProcedureSource
-        bind(ProcedureSourceInterface.class).to(ProcedureSourceService.class);
+        //bind(ProcedureSourceInterface.class).to(ProcedureSourceService.class);
 
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
