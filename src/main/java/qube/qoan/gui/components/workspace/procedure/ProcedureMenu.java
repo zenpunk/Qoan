@@ -28,9 +28,6 @@ import javax.inject.Named;
  */
 public class ProcedureMenu extends QoanMenu {
 
-//    @Inject
-//    private ProcedureCache procedureCache;
-
     @Inject
     @Named("ProcedureResults")
     private SearchResultSink resultSink;

@@ -15,9 +15,9 @@
 package qube.qoan.gui.components.workspace.procedure;
 
 import qube.qai.parsers.antimirov.nodes.NodeVisitor;
-import qube.qai.procedure.finance.StockQuoteRetriever;
+import qube.qai.procedure.finance.StockQuoteUpdater;
 
 public interface ProcDecoratingVisitor extends NodeVisitor {
 
-    Object visit(StockQuoteRetriever node, Object data);
+    Object visit(StockQuoteUpdater node, Object data);
 }
