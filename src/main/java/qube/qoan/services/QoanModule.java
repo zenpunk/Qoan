@@ -199,45 +199,45 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     QaiDataProvider<Procedure> provideProcedureProvider() {
-        QaiDataProvider<Procedure> provider = new MapDataProvider(PROCEDURES, hazelcastInstance);
+        QaiDataProvider<Procedure> provider = new MapDataProvider(hazelcastInstance, PROCEDURES);
         return provider;
     }
 
     @Provides
     QaiDataProvider<StockGroup> provideStockGroupProvider() {
-        QaiDataProvider<StockGroup> provider = new MapDataProvider(STOCK_GROUPS, hazelcastInstance);
+        QaiDataProvider<StockGroup> provider = new MapDataProvider(hazelcastInstance, STOCK_GROUPS);
         return provider;
     }
 
     @Provides
     QaiDataProvider<StockEntity> provideStockEntityProvider() {
-        QaiDataProvider<StockEntity> provider = new MapDataProvider(STOCK_ENTITIES, hazelcastInstance);
+        QaiDataProvider<StockEntity> provider = new MapDataProvider(hazelcastInstance, STOCK_ENTITIES);
         return provider;
     }
 
     @Provides
     QaiDataProvider<StockQuote> provideStockQuoteProvider() {
-        QaiDataProvider<StockQuote> provider = new MapDataProvider(STOCK_QUOTES, hazelcastInstance);
+        QaiDataProvider<StockQuote> provider = new MapDataProvider(hazelcastInstance, STOCK_QUOTES);
         return provider;
     }
 
     @Provides
     QaiDataProvider<WikiArticle> provideWikiArticleData() {
-        QaiDataProvider<WikiArticle> provider = new MapDataProvider(WIKIPEDIA, hazelcastInstance);
+        QaiDataProvider<WikiArticle> provider = new MapDataProvider(hazelcastInstance, WIKIPEDIA);
         return provider;
     }
 
     @Provides
     @Named("WikiResources_en")
     QaiDataProvider<ResourceData> provideWikiResourceProvider() {
-        QaiDataProvider<ResourceData> provider = new MapDataProvider(WIKIPEDIA_RESOURCES, hazelcastInstance);
+        QaiDataProvider<ResourceData> provider = new MapDataProvider(hazelcastInstance, WIKIPEDIA_RESOURCES);
         return provider;
     }
 
     @Provides
     @Named("PdfFileResources")
     QaiDataProvider<ResourceData> providePdfResourceProvider() {
-        QaiDataProvider<ResourceData> provider = new MapDataProvider(PDF_FILE_RESOURCES, hazelcastInstance);
+        QaiDataProvider<ResourceData> provider = new MapDataProvider(hazelcastInstance, PDF_FILE_RESOURCES);
         return provider;
     }
 
