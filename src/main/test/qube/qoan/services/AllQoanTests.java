@@ -54,19 +54,12 @@ public class AllQoanTests extends TestCase {
         // management panel tests
         suite.addTestSuite(ManagementPanelTest.class);
 
-        // this one is for parsing wiki-tables
-        //suite.addTestSuite(WikiArticleIntegrationTest.class);
-
         // this is the most important of all, really, to see if you have live-data
         suite.addTestSuite(DistributedSearchServicesTest.class);
-        //suite.addTestSuite(QoanProcedureSubmitterTest.class);
 
         // test for the decorators
         suite.addTestSuite(DecoratorsTest.class);
         suite.addTestSuite(ProcedureTemplateDecoratorsTest.class);
-
-        // Gson serialization experiments
-        //suite.addTestSuite(GsonSerializerTest.class);
 
         return suite;
     }
