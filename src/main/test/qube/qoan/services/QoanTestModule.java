@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.message.MessageQueue;
 import qube.qai.message.MessageQueueInterface;
+import qube.qai.security.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.ProcedureRunnerInterface;
@@ -49,13 +50,13 @@ public class QoanTestModule extends AbstractModule {
 
     private HazelcastInstance hazelcastInstance;
 
-    private static String wikipediaDirectory = "/media/rainbird/ALEPH/wiki-archives/wikipedia_en.index";
+    private static String wikipediaDirectory = "/media/rainbird/GIMEL/wiki-archives/wikipedia_en.index";
 
-    private static String wikipediaZipFileName = "/media/rainbird/ALEPH/wiki-archives/wikipedia_en.zip";
+    private static String wikipediaZipFileName = "/media/rainbird/GIMEL/wiki-archives/wikipedia_en.zip";
 
-    private static String wiktionaryDirectory = "/media/rainbird/ALEPH/wiki-archives/wiktionary_en.index";
+    private static String wiktionaryDirectory = "/media/rainbird/GIMEL/wiki-archives/wiktionary_en.index";
 
-    private static String wiktionaryZipFileName = "/media/rainbird/ALEPH/wiki-archives/wiktionary_en.zip";
+    private static String wiktionaryZipFileName = "/media/rainbird/GIMEL/wiki-archives/wiktionary_en.zip";
 
     private static String STOCK_QUOTES_DIRECTORY = "test/stockquotes/";
 
@@ -72,6 +73,8 @@ public class QoanTestModule extends AbstractModule {
 
         // executorService
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
+
+        bind(ProcedureManagerInterface.class).to(QoanTestProcedureManager.class);
 
         // messageQueue
         bind(MessageQueueInterface.class).to(MessageQueue.class);

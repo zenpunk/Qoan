@@ -23,7 +23,7 @@ import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.procedure.nodes.ProcedureInputs;
 import qube.qai.procedure.nodes.ValueNode;
-import qube.qai.procedure.utils.SelectionProcedure;
+import qube.qai.procedure.utils.SelectOut;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
@@ -81,11 +81,11 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
             TabSheet content = new TabSheet();
             content.addTab(description, "Description", descIconImage.getSource());
 
-            Map<String, SelectionProcedure> children = attachSelectionProcedures(procedure);
+            Map<String, SelectOut> children = attachSelectionProcedures(procedure);
             if (children.size() > 0) {
                 TabSheet tabSheet;
                 for (String name : children.keySet()) {
-                    SelectionProcedure child = children.get(name);
+                    SelectOut child = children.get(name);
                     SelectionDecorator decorator = new SelectionDecorator(name, child);
                     decorator.decorate(toDecorate);
                     content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
@@ -106,14 +106,14 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
      * @param template
      * @return
      */
-    protected Map<String, SelectionProcedure> attachSelectionProcedures(Procedure template) {
+    protected Map<String, SelectOut> attachSelectionProcedures(Procedure template) {
 
-        Map<String, SelectionProcedure> procedures = new HashMap<>();
+        Map<String, SelectOut> procedures = new HashMap<>();
 
         ProcedureInputs inputs = template.getProcedureInputs();
         for (String name : inputs.getInputNames()) {
             ValueNode targetValue = inputs.getNamedInput(name);
-            SelectionProcedure selection = new SelectionProcedure(targetValue);
+            SelectOut selection = new SelectOut(targetValue);
             template.addChild(selection);
             procedures.put(name, selection);
         }

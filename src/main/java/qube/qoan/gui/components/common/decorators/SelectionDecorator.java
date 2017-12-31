@@ -21,7 +21,7 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.dnd.DropTargetExtension;
-import qube.qai.procedure.utils.SelectionProcedure;
+import qube.qai.procedure.utils.SelectOut;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.tags.BaseTag;
 
@@ -33,7 +33,7 @@ public class SelectionDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    private SelectionProcedure selection;
+    private SelectOut selection;
 
     private String name;
 
@@ -41,7 +41,7 @@ public class SelectionDecorator extends BaseDecorator {
 
     private Grid<SearchResult> grid;
 
-    public SelectionDecorator(String name, SelectionProcedure selection) {
+    public SelectionDecorator(String name, SelectOut selection) {
         this.name = "Selection for " + name;
         this.selection = selection;
         this.iconImage = new Image(name,

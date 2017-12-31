@@ -27,6 +27,7 @@ import qube.qoan.gui.components.common.decorators.DecoratorsTest;
 import qube.qoan.gui.components.management.ManagementPanelTest;
 import qube.qoan.gui.components.workspace.procedure.decorators.ProcedureTemplateDecoratorsTest;
 import qube.qoan.services.implementation.DistributedSearchServicesTest;
+import qube.qoan.services.implementation.ProcedureLibraryTests;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -56,6 +57,7 @@ public class AllQoanTests extends TestCase {
 
         // this is the most important of all, really, to see if you have live-data
         suite.addTestSuite(DistributedSearchServicesTest.class);
+        suite.addTestSuite(ProcedureLibraryTests.class);
 
         // test for the decorators
         suite.addTestSuite(DecoratorsTest.class);
