@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.network.finance.FinanceNetworkBuilder;
+import qube.qai.network.wiki.WikiNetworkBuilder;
 import qube.qai.persistence.DummyQaiDataProvider;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockEntity;
@@ -47,6 +48,15 @@ public class ProcedureLibraryTests extends QoanTestBase {
     @Inject
     private ProcedureRunnerInterface procedureRunner;
 
+    public void testWikiNetworkBuilder() throws Exception {
+
+        WikiNetworkBuilder procedure = ProcedureLibrary.wikiNetworkBuilderTemplate.createProcedure();
+        assertNotNull("duh!", procedure);
+
+        // @TODO the procedure template as well as the test itself is missing
+        fail("there has to be a template which would be returning this procedure ready to use too");
+
+    }
 
     public void estMarketNetworkBuilder() throws Exception {
 
@@ -56,21 +66,28 @@ public class ProcedureLibraryTests extends QoanTestBase {
         fail("implement the rest of the test");
     }
 
-    public void estChangePointAnalysis() throws Exception {
+    public void testChangePointOnAverage() throws Exception {
+
+        // @TODO the procedure combination is missing, as well as the test itself too
+        fail("there also has to be a template which averages and runs change-point analysis on average only too");
+
+    }
+
+    public void testChangePointAnalysis() throws Exception {
 
         Set<StockEntity> entities = pickRandomFrom(1);
         assertTrue("there has to be a stock entity", !entities.isEmpty());
 
-        ChangePointAnalysis changePointAnalysis = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
-        assertNotNull("duh!", changePointAnalysis);
+        ChangePointAnalysis procedure = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
+        assertNotNull("duh!", procedure);
 
         QaiDataProvider<StockEntity> provider = new DummyQaiDataProvider<>(entities.iterator().next());
-        changePointAnalysis.setEntityProvider(provider);
+        procedure.setEntityProvider(provider);
 
-        procedureRunner.submitProcedure(changePointAnalysis);
+        procedureRunner.submitProcedure(procedure);
 
         IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
-        Procedure copy = procedureMap.get(changePointAnalysis.getUuid());
+        Procedure copy = procedureMap.get(procedure.getUuid());
         assertNotNull("there has to be a copy and all that", copy);
         Collection markers = ((ChangePointAnalysis) copy).getMarkers();
         assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);
@@ -90,6 +107,34 @@ public class ProcedureLibraryTests extends QoanTestBase {
         procedure.setCollectorForEach(forEach);
 
         procedureRunner.submitProcedure(procedure);
+
+        IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
+        Procedure copy = procedureMap.get(procedure.getUuid());
+        assertNotNull("there has to be a copy and all that", copy);
+        Collection markers = ((ChangePointAnalysis) copy).getMarkers();
+        assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);
+    }
+
+    public void testStockQuoteRetrieverTemplate() throws Exception {
+
+        ForEach foreach = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
+        assertNotNull("duh!", foreach);
+
+
+        Set<StockEntity> pickedEntities = pickRandomFrom(5);
+
+        assertNotNull("entitites must have been initialized", pickedEntities);
+        assertTrue("there has to be entities", !pickedEntities.isEmpty());
+
+        QaiDataProvider<Collection> entityProvider = new DummyQaiDataProvider<>(pickedEntities);
+        foreach.setTargetCollectionProvider(entityProvider);
+        procedureRunner.submitProcedure(foreach);
+        // and hope all has gone well, i suppose
+        String names = "";
+        for (StockEntity entity : pickedEntities) {
+            names += entity.getTickerSymbol() + " ";
+        }
+        log("Have successfully submitted update procedure for " + names);
     }
 
     /**
@@ -120,28 +165,6 @@ public class ProcedureLibraryTests extends QoanTestBase {
         assertNotNull("there has to be a persisted procedure ", procedure);
         assertTrue("procedure must have run by now", procedure.hasExecuted());
     }*/
-
-    public void estStockQuoteRetrieverTemplate() throws Exception {
-
-        ForEach foreach = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
-        assertNotNull("duh!", foreach);
-
-
-        Set<StockEntity> pickedEntities = pickRandomFrom(5);
-
-        assertNotNull("entitites must have been initialized", pickedEntities);
-        assertTrue("there has to be entities", !pickedEntities.isEmpty());
-
-        QaiDataProvider<Collection> entityProvider = new DummyQaiDataProvider<>(pickedEntities);
-        foreach.setTargetCollectionProvider(entityProvider);
-        procedureRunner.submitProcedure(foreach);
-        // and hope all has gone well, i suppose
-        String names = "";
-        for (StockEntity entity : pickedEntities) {
-            names += entity.getTickerSymbol() + " ";
-        }
-        log("Have successfully submitted update procedure for " + names);
-    }
 
     private Set<StockEntity> pickRandomFrom(int size) {
 

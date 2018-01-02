@@ -22,7 +22,7 @@ import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureLibrary;
+import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -42,6 +42,9 @@ public class ProcedureSearchSink extends SearchSinkComponent {
     private SearchServiceInterface searchService;
 
     @Inject
+    private ProcedureLibraryInterface procedureLibrary;
+
+    @Inject
     private QaiDataProvider<Procedure> dataProvider;
 
     @Override
@@ -54,7 +57,7 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
         TreeData<SearchResult> data = gridDataProvider.getTreeData();
 
-        for (ProcedureTemplate template : ProcedureLibrary.getTemplateMap().values()) {
+        for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
             Procedure proc = template.createProcedure();
             // this initial search takes too much time.
             //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);

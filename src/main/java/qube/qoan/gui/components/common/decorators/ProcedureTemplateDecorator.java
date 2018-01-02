@@ -19,7 +19,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureLibrary;
+import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.procedure.nodes.ProcedureInputs;
 import qube.qai.procedure.nodes.ValueNode;
@@ -37,6 +37,9 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
     @Inject
     private QaiDataProvider<Procedure> dataProvider;
+
+    @Inject
+    private ProcedureLibraryInterface procedureLibrary;
 
     @Inject
     private ProcedureRunnerInterface procedureRunner;
@@ -67,7 +70,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
         if (!isInitialized) {
 
-            ProcedureTemplate template = ProcedureLibrary.getTemplateNameMap().get(toDecorate.getTitle());
+            ProcedureTemplate template = findNamedTemplate(toDecorate.getTitle());
 
             if (template == null) {
                 Notification.show("Template: '" + toDecorate.getTitle() + "' not found");
@@ -97,6 +100,19 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         }
 
 
+    }
+
+    private ProcedureTemplate findNamedTemplate(String templateName) {
+        ProcedureTemplate template = null;
+
+        for (ProcedureTemplate tmp : procedureLibrary.getTemplateMap().values()) {
+            if (templateName.equalsIgnoreCase(tmp.getProcedureName())) {
+                template = tmp;
+                break;
+            }
+        }
+
+        return template;
     }
 
     /**
