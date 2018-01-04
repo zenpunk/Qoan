@@ -66,9 +66,6 @@
     <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.9.3" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.apache.jena:jena-rdfconnection:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-csv:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-cmds:3.2.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.7.21" level="project" />
     <orderEntry type="library" name="Maven: org.milyn:milyn-smooks-all:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.milyn:milyn-commons:1.6" level="project" />
     <orderEntry type="library" name="Maven: javassist:javassist:3.10.0.GA" level="project" />
