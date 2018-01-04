@@ -52,14 +52,14 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
         Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
-        Collection<SearchResult> results = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
+        searchResults = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
 
-        if (results == null) {
+        if (searchResults == null) {
             return;
         }
 
         IMap<String, StockGroup> groupMap = hazelcastInstance.getMap(STOCK_GROUPS);
-        for (SearchResult result : results) {
+        for (SearchResult result : searchResults) {
             StockGroup stockGroup = groupMap.get(result.getUuid());
             Collection<StockEntity> entities = stockGroup.getEntities();
             Collection<SearchResult> entitiesAsResult = new ArrayList<>();
@@ -103,7 +103,14 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
 
     @Override
     public void addResults(Collection<SearchResult> results) {
-        searchResults.clear();
+        if (results == null || results.isEmpty()) {
+            return;
+        }
+
+        if (clearResults.getValue()) {
+            searchResults.clear();
+        }
+
         searchResults.addAll(results);
         dataProvider.refreshAll();
     }

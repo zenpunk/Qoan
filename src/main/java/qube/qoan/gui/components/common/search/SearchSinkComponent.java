@@ -26,7 +26,6 @@ import qube.qai.services.implementation.SearchResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
 /**
  * Created by rainbird on 6/27/17.
@@ -35,7 +34,7 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     protected Grid<SearchResult> resultGrid;
 
-    protected List<SearchResult> searchResults;
+    protected Collection<SearchResult> searchResults;
 
     protected ListDataProvider<SearchResult> dataProvider;
 

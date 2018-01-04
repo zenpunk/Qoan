@@ -76,7 +76,6 @@
             <version>${bliki.version}</version>
         </dependency>
 
-
         <dependency>
             <groupId>grph</groupId>
             <artifactId>grph</artifactId>

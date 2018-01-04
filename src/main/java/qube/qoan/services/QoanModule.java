@@ -24,6 +24,8 @@ import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.*;
 import qube.qai.procedure.Procedure;
+import qube.qai.procedure.ProcedureLibrary;
+import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.security.ProcedureManager;
 import qube.qai.security.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
@@ -129,6 +131,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         // Procedure Manager
         bind(ProcedureManagerInterface.class).to(ProcedureManager.class);
+
+        bind(ProcedureLibraryInterface.class).to(ProcedureLibrary.class);
 
     }
 
