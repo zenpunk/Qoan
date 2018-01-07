@@ -45,6 +45,10 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
     @Inject
     private HazelcastInstance hazelcastInstance;
 
+    public FinanceSearchSink() {
+        super();
+    }
+
     @Override
     protected void initializeSearchResults() {
 
@@ -103,6 +107,7 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
 
     @Override
     public void addResults(Collection<SearchResult> results) {
+
         if (results == null || results.isEmpty()) {
             return;
         }

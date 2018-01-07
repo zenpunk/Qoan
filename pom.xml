@@ -85,7 +85,7 @@
         <dependency>
             <groupId>grph</groupId>
             <artifactId>grph</artifactId>
-            <version>1.10.8</version>
+            <version>2.1.2</version>
         </dependency>
 
         <dependency>
@@ -134,12 +134,12 @@
           compilation classpath by vaadin-maven-plugin so normally there is no need for an
           explicit dependency.
         -->
-        <dependency>
+        <!--<dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiler</artifactId>
             <version>${vaadin.version}</version>
-            <!--<scope>provided</scope>-->
-        </dependency>
+            <scope>provided</scope>
+        </dependency>-->
 
         <dependency>
             <groupId>com.vaadin</groupId>
@@ -453,7 +453,7 @@
                     </packagingExcludes>
                 </configuration>
             </plugin>
-            <plugin>
+            <!--<plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-client-compiler</artifactId>
                 <version>${vaadin.plugin.version}</version>
@@ -474,7 +474,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin>
+            </plugin>-->
             <!--<plugin>-->
             <!--<groupId>com.vaadin</groupId>-->
             <!--<artifactId>vaadin-maven-plugin</artifactId>-->
@@ -536,31 +536,6 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-        <repository>
-            <id>lhogie.i3s.maven.repo</id>
-            <name>Luc Hogie Maven repository</name>
-            <url>http://www.i3s.unice.fr/~hogie/maven_repository/</url>
-        </repository>
-        <!-- in order to be able to track the beta versions -->
-        <!--<repository>-->
-        <!--<id>vaadin-prereleases</id>-->
-        <!--<name>Vaadin Pre-releases</name>-->
-        <!--<url>https://maven.vaadin.com/vaadin-prereleases</url>-->
-        <!--</repository>-->
-        <!--<repository>-->
-        <!--<id>central</id>-->
-        <!--<url>http://192.168.1.4:8081/artifactory/libs-release</url>-->
-        <!--<snapshots>-->
-        <!--<enabled>false</enabled>-->
-        <!--</snapshots>-->
-        <!--</repository>-->
-        <!--<repository>-->
-        <!--<id>snapshots</id>-->
-        <!--<url>http://192.168.1.4:8081/artifactory/libs-snapshot</url>-->
-        <!--<releases>-->
-        <!--<enabled>false</enabled>-->
-        <!--</releases>-->
-        <!--</repository>-->
     </repositories>
 
     <pluginRepositories>

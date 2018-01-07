@@ -43,8 +43,7 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
     protected DragSourceExtension<Grid<SearchResult>> dragExtension;
 
     public SearchSinkComponent() {
-        searchResults = new ArrayList<>();
-        dataProvider = DataProvider.ofCollection(searchResults);
+
     }
 
     protected abstract void initializeSearchResults();
@@ -57,6 +56,9 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
      * initialize the thing only when you actually will need it
      */
     public void initialize() {
+
+        searchResults = new ArrayList<>();
+        dataProvider = DataProvider.ofCollection(searchResults);
 
         resultGrid = createGrid();
         dragExtension = createDragSource(resultGrid);
