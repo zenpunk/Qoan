@@ -59,6 +59,7 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
         searchResults = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
 
         if (searchResults == null) {
+            searchResults = new ArrayList<>();
             return;
         }
 

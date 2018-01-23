@@ -19,8 +19,9 @@ import com.hazelcast.core.IMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
+import qube.qai.network.finance.FinanceNetworkBuilderSpawner;
 import qube.qai.network.wiki.WikiNetworkBuilder;
-import qube.qai.persistence.DummyQaiDataProvider;
+import qube.qai.persistence.DataProvider;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
@@ -28,10 +29,13 @@ import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.analysis.ChangePointAnalysis;
 import qube.qai.procedure.utils.ForEach;
+import qube.qai.procedure.utils.Select;
 import qube.qai.services.ProcedureRunnerInterface;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,30 +60,31 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     }
 
-    public void estMarketNetworkBuilder() throws Exception {
+    public void testFinanceNetworkBuilderTemplate() throws Exception {
 
-        /*FinanceNetworkBuilder networkBuilder = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
-        assertNotNull(networkBuilder);
+        FinanceNetworkBuilderSpawner procedure = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
+        assertNotNull("duh!", procedure);
 
-        fail("implement the rest of the test");*/
-    }
+        Set<StockEntity> pickedEntities = pickRandomFrom(10);
+        assertNotNull("entitites must have been initialized", pickedEntities);
+        assertTrue("there has to be a stock entity", !pickedEntities.isEmpty());
 
-    public void testChangePointOnAverage() throws Exception {
+        Collection<SearchResult> results = convert2SearchResults(pickedEntities);
 
-        // @TODO the procedure combination is missing, as well as the test itself too
-        fail("there also has to be a template which averages and runs change-point analysis on average only too");
-
+        Select select = new Select();
+        select.setResults(results);
     }
 
     public void testChangePointAnalysis() throws Exception {
 
-        Set<StockEntity> entities = pickRandomFrom(1);
-        assertTrue("there has to be a stock entity", !entities.isEmpty());
-
         ChangePointAnalysis procedure = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
-        QaiDataProvider<StockEntity> provider = new DummyQaiDataProvider<>(entities.iterator().next());
+        Set<StockEntity> pickedEntities = pickRandomFrom(1);
+        assertNotNull("entitites must have been initialized", pickedEntities);
+        assertTrue("there has to be a stock entity", !pickedEntities.isEmpty());
+
+        QaiDataProvider<StockEntity> provider = new DataProvider<>(pickedEntities.iterator().next());
         procedure.setEntityProvider(provider);
 
         procedureRunner.submitProcedure(procedure);
@@ -91,78 +96,83 @@ public class ProcedureLibraryTests extends QoanTestBase {
         assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);
     }
 
-    public void testSequenceAverager() throws Exception {
+    public void testSequenceAveragerTemplate() throws Exception {
 
-        Set<StockEntity> entities = pickRandomFrom(10);
-        assertTrue("there has to be a stock entity", !entities.isEmpty());
-
-        /*SequenceCollectionAverager procedure = ProcedureLibrary.sequenceAveragerTemplate.createProcedure();
+        Select procedure = ProcedureLibrary.sequenceAveragerTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
-        QaiDataProvider<Collection> provider = new DummyQaiDataProvider<>(entities);
-        ForEach forEach = new ForEach();
-        forEach.setTargetCollectionProvider(provider);
-        procedure.setCollectorForEach(forEach);
+        Set<StockEntity> pickedEntities = pickRandomFrom(10);
+        assertNotNull("entitites must have been initialized", pickedEntities);
+        assertTrue("there has to be a stock entity", !pickedEntities.isEmpty());
 
-        procedureRunner.submitProcedure(procedure);
+        Collection<SearchResult> results = convert2SearchResults(pickedEntities);
 
-        IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
-        Procedure copy = procedureMap.get(procedure.getUuid());
-        assertNotNull("there has to be a copy and all that", copy);
-        Collection markers = ((ChangePointAnalysis) copy).getMarkers();
-        assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);*/
+        Select select = new Select();
+        select.setResults(results);
     }
 
-    public void testStockQuoteRetrieverTemplate() throws Exception {
+    public void testSortingPercentilesTemplate() throws Exception {
 
-        ForEach foreach = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
-        assertNotNull("duh!", foreach);
+        ForEach procedure = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
+        assertNotNull("duh!", procedure);
 
-
-        Set<StockEntity> pickedEntities = pickRandomFrom(5);
-
+        Set<StockEntity> pickedEntities = pickRandomFrom(10);
         assertNotNull("entitites must have been initialized", pickedEntities);
-        assertTrue("there has to be entities", !pickedEntities.isEmpty());
+        assertTrue("there has to be a stock entity", !pickedEntities.isEmpty());
 
-        QaiDataProvider<Collection> entityProvider = new DummyQaiDataProvider<>(pickedEntities);
-        foreach.setTargetCollectionProvider(entityProvider);
-        procedureRunner.submitProcedure(foreach);
+        Collection<SearchResult> results = convert2SearchResults(pickedEntities);
+
+        Select select = new Select();
+        select.setResults(results);
+
+        procedure.setSelect(select);
+
+        procedureRunner.submitProcedure(procedure);
         // and hope all has gone well, i suppose
         String names = "";
         for (StockEntity entity : pickedEntities) {
             names += entity.getTickerSymbol() + " ";
         }
+
         log("Have successfully submitted update procedure for " + names);
     }
 
-    /**
-     * right now i don't see how this is required
-     *
-     * @throws Exception
-     */
-    @Deprecated
-    /*public void estSortingPercentilesTemplate() throws Exception {
+    public void testStockQuoteRetrieverTemplate() throws Exception {
+
+        ForEach procedure = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
+        assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(5);
-
         assertNotNull("entitites must have been initialized", pickedEntities);
         assertTrue("there has to be entities", !pickedEntities.isEmpty());
 
-        QaiDataProvider<Collection> entityProvider = new DummyQaiDataProvider<>(pickedEntities);
+        Collection<SearchResult> results = convert2SearchResults(pickedEntities);
 
-        ForEach forEach = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
-        assertNotNull("duh!", forEach);
+        Select select = new Select();
+        select.setResults(results);
 
-        forEach.setTargetCollectionProvider(entityProvider);
+        procedure.setSelect(select);
 
-        procedureRunner.submitProcedure(forEach);
+        procedureRunner.submitProcedure(procedure);
+        // and hope all has gone well, i suppose
+        String names = "";
+        for (StockEntity entity : pickedEntities) {
+            names += entity.getTickerSymbol() + " ";
+        }
 
-        IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
+        log("Have successfully submitted update procedure for " + names);
+    }
 
-        Procedure procedure = procedureMap.get(forEach.getUuid());
-        assertNotNull("there has to be a persisted procedure ", procedure);
-        assertTrue("procedure must have run by now", procedure.hasExecuted());
-    }*/
+    private Collection<SearchResult> convert2SearchResults(Set<StockEntity> entities) {
+        Collection<SearchResult> results = new ArrayList<>();
+
+        for (StockEntity entity : entities) {
+            SearchResult result = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), "result", 1.0);
+            results.add(result);
+        }
+
+        return results;
+    }
 
     private Set<StockEntity> pickRandomFrom(int size) {
 

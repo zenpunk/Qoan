@@ -58,11 +58,12 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         TreeData<SearchResult> data = gridDataProvider.getTreeData();
 
         for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
-            Procedure proc = template.createProcedure();
+            //Procedure proc = template.createProcedure();
             // this initial search takes too much time.
             //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
             Collection<SearchResult> results = null;
-            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, proc.getProcedureName(), proc.getUuid(), proc.getDescriptionText(), 1.0);
+            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES,
+                    template.getProcedureName(), "n/a", template.getProcedureDescription(), 1.0);
             data.addItem(null, procResult);
             // if the results have returned nothing just go on tot eh next procedure.
             if (results == null || results.isEmpty()) {

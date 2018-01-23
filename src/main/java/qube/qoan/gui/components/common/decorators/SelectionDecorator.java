@@ -21,6 +21,9 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.dnd.DropTargetExtension;
+import qube.qai.main.QaiConstants;
+import qube.qai.persistence.QaiDataProvider;
+import qube.qai.persistence.SearchResultCollectionProvider;
 import qube.qai.procedure.utils.SelectOut;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.tags.BaseTag;
@@ -55,14 +58,11 @@ public class SelectionDecorator extends BaseDecorator {
 
         // initialize the whole only once, so that re-opening the
         // desktop-tag doesn't remove all data
-        ArrayList<SearchResult> results;
+        final ArrayList<SearchResult> results = new ArrayList<>();
+        QaiDataProvider provider = new SearchResultCollectionProvider(QaiConstants.STOCK_ENTITIES, results);
         if (!isInitialized) {
-            if (selection.getValueTo().getValue() != null) {
-                results = (ArrayList<SearchResult>) selection.getValueTo().getValue();
-            } else {
-                results = new ArrayList<>();
-                selection.getValueTo().setValue(results);
-            }
+
+            selection.getValueTo().setValue(results);
 
             ListDataProvider<SearchResult> dataProvider = DataProvider.ofCollection(results);
 

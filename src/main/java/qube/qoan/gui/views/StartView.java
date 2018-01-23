@@ -35,7 +35,7 @@ public class StartView extends QoanView {
                     "<b><i>Merriam-Webster Online Dictionary</i></b></p>" +
                     //"<br>" +
                     "<p>... networks, networks everywhere,<br>" +
-                    "not a single software to quench curiousity...<br>" + "" +
+                    "and when combined, more than just the sum of its parts...<br>" +
                     "<b><i>Mugat Gurkowsky</i></b></p>";
 
     public StartView() {

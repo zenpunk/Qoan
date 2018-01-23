@@ -19,6 +19,7 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
+import qube.qai.procedure.ProcedureConstants;
 import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.procedure.nodes.ProcedureInputs;
@@ -79,6 +80,10 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
             procedure = template.createProcedure();
 
+            // assign the current user so that later credentials can be checked for execution
+            User user = ((QoanUI) QoanUI.getCurrent()).getUser();
+            procedure.setUser(user);
+
             Panel description = createProcedureDescription(procedure);
 
             TabSheet content = new TabSheet();
@@ -128,10 +133,12 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
         ProcedureInputs inputs = template.getProcedureInputs();
         for (String name : inputs.getInputNames()) {
-            ValueNode targetValue = inputs.getNamedInput(name);
-            SelectOut selection = new SelectOut(targetValue);
-            template.addChild(selection);
-            procedures.put(name, selection);
+            if (ProcedureConstants.TARGET_COLLECTION.equalsIgnoreCase(name)) {
+                ValueNode targetValue = inputs.getNamedInput(name);
+                SelectOut selection = new SelectOut(targetValue);
+                template.addChild(selection);
+                procedures.put(name, selection);
+            }
         }
 
         return procedures;
