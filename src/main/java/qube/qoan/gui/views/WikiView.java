@@ -27,7 +27,7 @@ public class WikiView extends QoanView {
 
     // for the moment, this need to be in a configuration even, as i have
     // only one wiki-server after all... later, much later...
-    private String wikiUrl = "http://192.168.1.4:8081/wiki/en/Welcome_Page";
+    private String wikiUrl = "http://192.168.0.206:8081/wiki/en/Welcome_Page";
 
     public WikiView() {
         this.viewTitle = "Qoan Wiki";

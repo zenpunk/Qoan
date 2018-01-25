@@ -21,10 +21,7 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.dnd.DropTargetExtension;
-import qube.qai.main.QaiConstants;
-import qube.qai.persistence.QaiDataProvider;
-import qube.qai.persistence.SearchResultCollectionProvider;
-import qube.qai.procedure.utils.SelectOut;
+import qube.qai.procedure.utils.Select;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.tags.BaseTag;
 
@@ -36,7 +33,7 @@ public class SelectionDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    private SelectOut selection;
+    private Select select;
 
     private String name;
 
@@ -44,29 +41,30 @@ public class SelectionDecorator extends BaseDecorator {
 
     private Grid<SearchResult> grid;
 
-    public SelectionDecorator(String name, SelectOut selection) {
+    private final ArrayList<SearchResult> results;
+
+    public SelectionDecorator(String name, Select select) {
         this.name = "Selection for " + name;
-        this.selection = selection;
+        this.select = select;
+        this.results = new ArrayList<>();
         this.iconImage = new Image(name,
-                new ClassResource("gui/images/selection-icon.png"));
+                new ClassResource("gui/images/select-icon.png"));
     }
 
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        String mimeType = selection.getValueTo().getMimeType();
+        //String mimeType = select.getValueTo().getMimeType();
 
         // initialize the whole only once, so that re-opening the
         // desktop-tag doesn't remove all data
-        final ArrayList<SearchResult> results = new ArrayList<>();
-        QaiDataProvider provider = new SearchResultCollectionProvider(QaiConstants.STOCK_ENTITIES, results);
         if (!isInitialized) {
 
-            selection.getValueTo().setValue(results);
+            select.setResults(results);
 
             ListDataProvider<SearchResult> dataProvider = DataProvider.ofCollection(results);
 
-            grid = new Grid<SearchResult>();
+            grid = new Grid<>();
             grid.setCaption("Drop searches from Finance and Stock Searches");
             grid.addColumn(SearchResult::getContext).setCaption("Context");
             grid.addColumn(SearchResult::getTitle).setCaption("Title");
@@ -103,9 +101,9 @@ public class SelectionDecorator extends BaseDecorator {
 
     }
 
-    public void addListener() {
+    /*public void addListener() {
 
-    }
+    }*/
 
     class SelectionDropListener extends DropTargetExtension<Grid> {
         public SelectionDropListener(Grid target) {

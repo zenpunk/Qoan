@@ -19,20 +19,15 @@ import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
-import qube.qai.procedure.ProcedureConstants;
 import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
-import qube.qai.procedure.nodes.ProcedureInputs;
-import qube.qai.procedure.nodes.ValueNode;
-import qube.qai.procedure.utils.SelectOut;
+import qube.qai.procedure.utils.Select;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
 import qube.qoan.QoanUI;
 
 import javax.inject.Inject;
-import java.util.HashMap;
-import java.util.Map;
 
 public class ProcedureTemplateDecorator extends BaseDecorator {
 
@@ -80,7 +75,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
             procedure = template.createProcedure();
 
-            // assign the current user so that later credentials can be checked for execution
+            // assign the current user so that later credentials can be checked prior to execution
             User user = ((QoanUI) QoanUI.getCurrent()).getUser();
             procedure.setUser(user);
 
@@ -89,15 +84,11 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
             TabSheet content = new TabSheet();
             content.addTab(description, "Description", descIconImage.getSource());
 
-            Map<String, SelectOut> children = attachSelectionProcedures(procedure);
-            if (children.size() > 0) {
-                TabSheet tabSheet;
-                for (String name : children.keySet()) {
-                    SelectOut child = children.get(name);
-                    SelectionDecorator decorator = new SelectionDecorator(name, child);
-                    decorator.decorate(toDecorate);
-                    content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
-                }
+            // @TODO at least for the time being this is all we need?
+            if (procedure instanceof Select) {
+                SelectionDecorator decorator = new SelectionDecorator("Drop Selected Items", (Select) procedure);
+                decorator.decorate(toDecorate);
+                content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
             }
 
             setContent(content);
@@ -127,7 +118,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
      * @param template
      * @return
      */
-    protected Map<String, SelectOut> attachSelectionProcedures(Procedure template) {
+    /*protected Map<String, SelectOut> attachSelectionProcedures(Procedure template) {
 
         Map<String, SelectOut> procedures = new HashMap<>();
 
@@ -142,7 +133,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         }
 
         return procedures;
-    }
+    }*/
 
     /**
      * create the panel with the procedure metrics

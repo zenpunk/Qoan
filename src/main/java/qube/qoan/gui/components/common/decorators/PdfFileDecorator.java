@@ -14,14 +14,12 @@
 
 package qube.qoan.gui.components.common.decorators;
 
-import com.vaadin.annotations.JavaScript;
 import com.vaadin.server.ClassResource;
 import com.vaadin.server.VaadinService;
-import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Panel;
+import pl.pdfviewer.PdfViewer;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.ResourceData;
 import qube.qai.services.implementation.SearchResult;
@@ -34,7 +32,7 @@ import java.io.IOException;
 /**
  * Created by rainbird on 7/7/17.
  */
-@JavaScript({"pdf.js", "pdf.worker.js"})
+//@JavaScript({"pdf.js", "pdf.worker.js"})
 public class PdfFileDecorator extends Panel implements Decorator {
 
     @Inject
@@ -45,7 +43,7 @@ public class PdfFileDecorator extends Panel implements Decorator {
 
     private String name = "Pdf-Viewer";
 
-    private String scriptToTemplate = "" +
+    /*private String scriptToTemplate = "" +
             "// URL of PDF document\n" +
             "var url = '/VAADIN/tmp/%s';" +
             "// Asynchronous download PDF\n" +
@@ -77,7 +75,7 @@ public class PdfFileDecorator extends Panel implements Decorator {
             "    .then(function (svg) {\n" +
             "      container.appendChild(svg);\n" +
             "    });\n" +
-            "});\n";
+            "});\n";*/
 
     public PdfFileDecorator() {
         iconImage = new Image(name,
@@ -99,16 +97,45 @@ public class PdfFileDecorator extends Panel implements Decorator {
         try {
             data.writeDataToFile(file);
         } catch (IOException e) {
-            Notification.show("Error while writing file: '" + file.getName() + "'");
+            Notification.show("Error writing file: '" + file.getName() + "'");
             return;
         }
 
-        String iframe = "<div id='the-svg' width='800px' height='600px'></div>";
-        Label iframeLabel = new Label(String.format(iframe, toDecorate.getTitle()));
-        iframeLabel.setContentMode(ContentMode.HTML);
-        setContent(iframeLabel);
-        String toRun = String.format(scriptToTemplate, data.getName());
-        com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
+        if (!file.exists()) {
+            Notification.show("Error reading file: '" + file.getName() + "' does not exist!");
+        }
+
+        //FileResource fileResource = new FileResource(file);
+        PdfViewer pdfViewer = new PdfViewer(file);
+        pdfViewer.setSizeFull();
+        /*
+        setPreviousPageCaption(String htmlCaption)
+        setNextPageCaption(String htmlCaption)
+        setPageCaption(String htmlCaption)
+        setToPageCaption(String htmlCaption)
+        setIncreaseButtonCaption(String htmlCaption)
+        setDecreaseButtonCaption(String htmlCaption)
+        setNextAngleButtonCaption(String htmlCaption)
+        setBackAngleButtonCaption(String htmlCaption)
+        setPrintButtonCaption(String htmlCaption)
+        setDownloadButtonCaption(String htmlCaption)
+        setAngleButtonVisible(boolean visible)
+        setDownloadBtnVisible(boolean visible)
+        addPageChangeListener(PageChangeListener listener)
+        removePageChangeListener(PageChangeListener listener)
+        addAngleChangeListener(AngleChangeListener listener)
+        removeAngleChangeListener(AngleChangeListener listener)
+        addDownloadTiffListener(DownloadTiffListener listener)
+        removeDownloadTiffListener(DownloadTiffListener listener)
+         */
+        setContent(pdfViewer);
+
+//        String iframe = "<div id='the-svg' width='800px' height='600px'></div>";
+//        Label iframeLabel = new Label(String.format(iframe, toDecorate.getTitle()));
+//        iframeLabel.setContentMode(ContentMode.HTML);
+//        setContent(iframeLabel);
+//        String toRun = String.format(scriptToTemplate, data.getName());
+//        com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
     }
 
