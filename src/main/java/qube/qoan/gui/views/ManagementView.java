@@ -16,6 +16,7 @@ package qube.qoan.gui.views;
 
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IMap;
+import com.hazelcast.core.Member;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.server.ClassResource;
@@ -29,6 +30,7 @@ import qube.qoan.authentication.UserManagerInterface;
 
 import javax.inject.Inject;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by rainbird on 11/27/15.
@@ -48,6 +50,10 @@ public class ManagementView extends QoanView {
 
     @Inject
     private HazelcastInstance hazelcastInstance;
+
+    private String nameTemplate = "HazelcastInstance name: '%s'";
+
+    private String versionTemplate = "Hazelcast-Cluster version: '%s'";
 
     private TabSheet managementTabs;
 
@@ -97,8 +103,27 @@ public class ManagementView extends QoanView {
         Panel panel = new Panel();
         Layout layout = new VerticalLayout();
 
-        Label label = new Label("Here will be controls for Grid.");
-        layout.addComponent(label);
+        String name = hazelcastInstance.getName();
+
+        Label nameLabel = new Label(String.format(nameTemplate, name));
+        layout.addComponent(nameLabel);
+
+//        String clusterVersion = hazelcastInstance.getCluster().getClusterVersion().toString();
+//        Label versionLabel = new Label(String.format(versionTemplate, clusterVersion));
+//        layout.addComponent(versionLabel);
+
+        Grid<Member> grid = new Grid<>();
+        grid.setCaption("Cluster Members");
+        grid.addColumn(Member::getUuid).setCaption("UUID:");
+        grid.addColumn(Member::getAddress).setCaption("Address:");
+        grid.addColumn(Member::getVersion).setCaption("Version:");
+
+        Set<Member> members = hazelcastInstance.getCluster().getMembers();
+        ListDataProvider<Member> dataProvider = DataProvider.ofCollection(members);
+        grid.setDataProvider(dataProvider);
+        grid.setSizeFull();
+
+        layout.addComponent(grid);
 
         panel.setContent(layout);
 

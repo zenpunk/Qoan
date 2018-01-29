@@ -62,7 +62,7 @@ public class DecoratorsTest extends QoanTestBase {
         fail("this test is not yet implemented");
     }
 
-    public void testPdfFileDecorator() throws Exception {
+    /*public void testPdfFileDecorator() throws Exception {
 
         Decorator decorator = new PdfFileDecorator();
 
@@ -70,7 +70,7 @@ public class DecoratorsTest extends QoanTestBase {
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
-    }
+    }*/
 
     public void testTimeSeriesDecorator() throws Exception {
 

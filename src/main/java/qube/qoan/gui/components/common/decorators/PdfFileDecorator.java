@@ -32,7 +32,6 @@ import java.io.IOException;
 /**
  * Created by rainbird on 7/7/17.
  */
-//@JavaScript({"pdf.js", "pdf.worker.js"})
 public class PdfFileDecorator extends Panel implements Decorator {
 
     @Inject
@@ -42,40 +41,6 @@ public class PdfFileDecorator extends Panel implements Decorator {
     private Image iconImage;
 
     private String name = "Pdf-Viewer";
-
-    /*private String scriptToTemplate = "" +
-            "// URL of PDF document\n" +
-            "var url = '/VAADIN/tmp/%s';" +
-            "// Asynchronous download PDF\n" +
-            "PDFJS.getDocument(url)\n" +
-            "  .then(function(pdf) {\n" +
-            "    return pdf.getPage(1);\n" +
-            "  })\n" +
-            ".then(function(page) {\n" +
-            "\n" +
-            "  // Set scale (zoom) level\n" +
-            "  var scale = 1.5;\n" +
-            "\n" +
-            "  // Get viewport (dimensions)\n" +
-            "  var viewport = page.getViewport(scale);\n" +
-            "\n" +
-            "  // Get div#the-svg\n" +
-            "  var container = document.getElementById('the-svg');\n" +
-            "\n" +
-            "  // Set dimensions\n" +
-            "  container.style.width = viewport.width + 'px';\n" +
-            "  container.style.height = viewport.height + 'px';\n" +
-            "\n" +
-            "  // SVG rendering by PDF.js\n" +
-            "  page.getOperatorList()\n" +
-            "    .then(function (opList) {\n" +
-            "      var svgGfx = new PDFJS.SVGGraphics(page.commonObjs, page.objs);\n" +
-            "      return svgGfx.getSVG(opList, viewport);\n" +
-            "    })\n" +
-            "    .then(function (svg) {\n" +
-            "      container.appendChild(svg);\n" +
-            "    });\n" +
-            "});\n";*/
 
     public PdfFileDecorator() {
         iconImage = new Image(name,
@@ -105,7 +70,6 @@ public class PdfFileDecorator extends Panel implements Decorator {
             Notification.show("Error reading file: '" + file.getName() + "' does not exist!");
         }
 
-        //FileResource fileResource = new FileResource(file);
         PdfViewer pdfViewer = new PdfViewer(file);
         pdfViewer.setSizeFull();
         /*
@@ -129,13 +93,6 @@ public class PdfFileDecorator extends Panel implements Decorator {
         removeDownloadTiffListener(DownloadTiffListener listener)
          */
         setContent(pdfViewer);
-
-//        String iframe = "<div id='the-svg' width='800px' height='600px'></div>";
-//        Label iframeLabel = new Label(String.format(iframe, toDecorate.getTitle()));
-//        iframeLabel.setContentMode(ContentMode.HTML);
-//        setContent(iframeLabel);
-//        String toRun = String.format(scriptToTemplate, data.getName());
-//        com.vaadin.ui.JavaScript.getCurrent().execute(toRun);
 
     }
 
