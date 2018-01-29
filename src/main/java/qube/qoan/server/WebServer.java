@@ -19,7 +19,10 @@ import com.google.inject.Injector;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.DefaultHandler;
+import org.eclipse.jetty.server.handler.HandlerList;
 import org.eclipse.jetty.webapp.Configuration;
 import org.eclipse.jetty.webapp.WebAppContext;
 import org.eclipse.jetty.webapp.WebInfConfiguration;
@@ -48,6 +51,7 @@ public class WebServer {
         Server server = new Server(httpPort);
 
         WebAppContext webAppContext = new WebAppContext();
+        webAppContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
         webAppContext.setContextPath(contextPath);
         webAppContext.setResourceBase(resourceBase);
         webAppContext.setConfigurations(new Configuration[]{
@@ -63,7 +67,10 @@ public class WebServer {
         //webAppContext.(new EnvironmentLoader());
         webAppContext.addEventListener(new EnvironmentLoaderListener());
 
-        server.setHandler(webAppContext);
+        //server.setHandler(webAppContext);
+        HandlerList handlers = new HandlerList();
+        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler()});
+        server.setHandler(handlers);
 
         System.out.println("Go to http://localhost:" + httpPort + contextPath);
         try {

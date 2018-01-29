@@ -47,6 +47,11 @@
 
     <servlet-mapping>
         <servlet-name>qoan</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet-mapping>
+        <servlet-name>qoan</servlet-name>
         <url-pattern>/qoan/*</url-pattern>
     </servlet-mapping>
 
