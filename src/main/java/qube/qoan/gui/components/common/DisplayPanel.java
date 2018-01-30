@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.common;
 
+import com.vaadin.pekka.resizablecsslayout.ResizableCssLayout;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
@@ -24,6 +25,8 @@ import com.vaadin.ui.dnd.DragSourceExtension;
 public class DisplayPanel extends Panel {
 
     private String title;
+
+    private ResizableCssLayout wrapperLayout;
 
     private Layout parentLayout;
 
@@ -68,11 +71,7 @@ public class DisplayPanel extends Panel {
     }
 
     public void onCLoseClicked() {
-        /*if (resizeWrapper != null) {
-            parentLayout.removeComponent(resizeWrapper);
-        } else {
-            parentLayout.removeComponent(this);
-        }*/
+        parentLayout.removeComponent(wrapperLayout);
         parentLayout.removeComponent(this);
     }
 
@@ -94,11 +93,11 @@ public class DisplayPanel extends Panel {
         return dragExtension;
     }
 
-    /*public ResizableCssLayout getResizeWrapper() {
-        return resizeWrapper;
+    public ResizableCssLayout getWrapperLayout() {
+        return wrapperLayout;
     }
 
-    public void setResizeWrapper(ResizableCssLayout resizeWrapper) {
-        this.resizeWrapper = resizeWrapper;
-    }*/
+    public void setWrapperLayout(ResizableCssLayout wrapperLayout) {
+        this.wrapperLayout = wrapperLayout;
+    }
 }

@@ -44,7 +44,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
 
     protected Image iconImage;
 
-    private ResizableCssLayout panelWrapper;
+    //private ResizableCssLayout panelWrapper;
 
     protected Map<String, Decorator> decorators;
 
@@ -129,12 +129,14 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
     }
 
     protected void addToParent(Component content) {
+
         DisplayPanel panel = new DisplayPanel(titleString, parentLayout, content);
         panel.setWidth("800px");
         panel.setHeight("600px");
         DragSourceExtension<DisplayPanel> dragSourceExtension = panel.getDragExtension();
 
-        panelWrapper = new ResizableCssLayout(panel);
+        ResizableCssLayout panelWrapper = new ResizableCssLayout(panel);
+        panel.setWrapperLayout(panelWrapper);
         parentLayout.addComponent(panelWrapper);
     }
 
