@@ -17,6 +17,8 @@ package qube.qoan.gui.components.common;
 import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
+import org.apache.shiro.SecurityUtils;
+import qube.qai.user.User;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.views.*;
 
@@ -24,6 +26,8 @@ import qube.qoan.gui.views.*;
  * Created by rainbird on 11/9/15.
  */
 public class QoanHeader extends Panel {
+
+    private Button logoutButton;
 
     public QoanHeader() {
         super();
@@ -80,35 +84,65 @@ public class QoanHeader extends Panel {
         wikiButton.setStyleName("link");
         layout.addComponent(wikiButton);
 
+        logoutButton = new Button("Logout");
+        logoutButton.addClickListener(clickEvent -> onLogoutClicked());
+        logoutButton.setStyleName("link");
+        // check whether there is a registered user
+        checkLogoutState();
+        layout.addComponent(logoutButton);
+
         setContent(layout);
     }
 
+    private void checkLogoutState() {
+        User user = ((QoanUI) UI.getCurrent()).getUser();
+        if (user == null) {
+            logoutButton.setVisible(false);
+        } else {
+            logoutButton.setCaption("Logout [" + user.getUsername() + "]");
+            logoutButton.setVisible(true);
+        }
+    }
+
+    public void onLogoutClicked() {
+        ((QoanUI) UI.getCurrent()).setUser(null);
+        SecurityUtils.getSubject().logout();
+        checkLogoutState();
+        onHomeClicked();
+    }
+
     public void onWorkspaceClicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(WorkspaceView.NAME);
         UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
     }
 
     public void onHomeClicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(StartView.NAME);
         UI.getCurrent().getNavigator().navigateTo(StartView.NAME);
     }
 
     public void onComponenetsClicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(ComponentsView.NAME);
         UI.getCurrent().getNavigator().navigateTo(ComponentsView.NAME);
     }
 
     public void onManagementClicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(ManagementView.NAME);
         UI.getCurrent().getNavigator().navigateTo(ManagementView.NAME);
     }
 
     public void onWikiCLicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(WikiView.NAME);
         UI.getCurrent().getNavigator().navigateTo(WikiView.NAME);
     }
 
     public void onRegistrationClicked() {
+        checkLogoutState();
         ((QoanUI) UI.getCurrent()).setTargetViewName(RegistrationView.NAME);
         UI.getCurrent().getNavigator().navigateTo(RegistrationView.NAME);
     }
@@ -122,19 +156,4 @@ public class QoanHeader extends Panel {
         return true;
     }
 
-    private boolean authenticationRequired(String viewName) {
-
-//        String currentPage = UI.getCurrent().getEmbedId();
-//        User user = ((QoanUI) UI.getCurrent()).getUser();
-
-        // for the time being stop this so
-        // can't be bothered
-//        if (ManagementView.NAME.equals(viewName)
-//                || WorkspaceView.NAME.equals(viewName)
-//                && user == null) {
-//            return true;
-//        }
-
-        return false;
-    }
 }
