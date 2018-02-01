@@ -105,11 +105,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
-    public String QAI_NODE_TO_CONNECT = "127.0.0.1:5701"; // localhost
-    // public String QAI_NODE_TO_CONNECT = "192.168.0.199:5701"; // monday
-    // public String QAI_NODE_TO_CONNECT = "192.168.0.241:5701"; // tuesday
-    // public String QAI_NODE_TO_CONNECT = "192.168.0.164:5701"; // wednesday
-    // public String QAI_NODE_TO_CONNECT = "192.168.0.108:5701"; // stann
+    //public String QAI_NODE_TO_CONNECT = "192.168.0.*:5701"; // localhost
+    public String CLIENT_NAME = "Qoan Web-Service";
+
+    public String MONDAY_NODE = "192.168.0.199:5701"; // monday
+    public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
+    public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
+    public String STANN_NODE = "192.168.0.108:5701"; // stann
 
 
     @Override
@@ -257,8 +259,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         }
 
         ClientConfig clientConfig = new ClientConfig();
-        //clientConfig.setInstanceName(QAI_NODE_NAME);
-        clientConfig.getNetworkConfig().addAddress(QAI_NODE_TO_CONNECT);
+        clientConfig.setInstanceName(CLIENT_NAME);
+        clientConfig.getNetworkConfig().setSmartRouting(true);
+        clientConfig.getNetworkConfig().addAddress(STANN_NODE, MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
