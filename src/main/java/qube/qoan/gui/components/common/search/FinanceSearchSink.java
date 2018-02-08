@@ -113,9 +113,9 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
             return;
         }
 
-        if (clearResults.getValue()) {
+        /*if (clearResults.getValue()) {
             searchResults.clear();
-        }
+        }*/
 
         searchResults.addAll(results);
         dataProvider.refreshAll();

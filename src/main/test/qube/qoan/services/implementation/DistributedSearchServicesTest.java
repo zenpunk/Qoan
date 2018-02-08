@@ -65,7 +65,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
     @Inject
     private HazelcastInstance hazelcastInstance;
 
-    public void testDistributedUserSearch() throws Exception {
+    public void estDistributedUserSearch() throws Exception {
 
         IMap<String, User> usersMap = hazelcastInstance.getMap(USERS);
         String userName = "Test_User";
@@ -73,14 +73,14 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         //usersMap.put(dummyUser.getUuid(), dummyUser);
 
         // just assume there is something in there
-        Collection<SearchResult> results = userSearchService.searchInputString(USERS, "*", 1);
+        Collection<SearchResult> results = userSearchService.searchInputString("admin", USERS, 1);
 
         assertNotNull("there has to be some results", results);
         assertTrue("there has to be a user", !results.isEmpty());
 
     }
 
-    public void testDistributedProcedureSearch() throws Exception {
+    public void estDistributedProcedureSearch() throws Exception {
 
         String topicName = PROCEDURES;
         Collection<String> searchTopics = new ArrayList<>();
@@ -94,11 +94,12 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         String topicName = WIKIPEDIA;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mickey Mouse");
+        searchTopics.add("Mouse");
 
         checkSearchService(topicName, "titleString", searchTopics);
     }
 
-    public void testDistributedWiktionarySearch() throws Exception {
+    public void estDistributedWiktionarySearch() throws Exception {
 
         String topicName = WIKTIONARY;
         Collection<String> searchTopics = new ArrayList<>();
@@ -107,7 +108,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         checkSearchService(topicName, "titleString", searchTopics);
     }
 
-    public void testDistributedWikiResourcesSearch() throws Exception {
+    public void estDistributedWikiResourcesSearch() throws Exception {
 
         String topicName = WIKIPEDIA_RESOURCES;
         Collection<String> searchTopics = new ArrayList<>();
@@ -116,7 +117,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         checkSearchService(topicName, "titleString", searchTopics);
     }
 
-    public void testDistributedGroupSearch() throws Exception {
+    public void estDistributedGroupSearch() throws Exception {
 
         Collection<SearchResult> results = stocksSearchService.searchInputString("*", STOCK_GROUPS, 0);
 
@@ -137,7 +138,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         }
     }
 
-    public void testDistributedProcedureSearch2() throws Exception {
+    public void estDistributedProcedureSearch2() throws Exception {
 
         String topicName = PROCEDURES;
         Collection<String> searchTopics = new ArrayList<>();

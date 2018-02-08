@@ -15,6 +15,7 @@
 package qube.qoan.gui.components.common;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.*;
 import org.apache.shiro.SecurityUtils;
@@ -107,6 +108,9 @@ public class QoanHeader extends Panel {
     public void onLogoutClicked() {
         ((QoanUI) UI.getCurrent()).setUser(null);
         SecurityUtils.getSubject().logout();
+        // @TODO this shuts down hazelcast-instance and causes reconnect-troubles.
+        VaadinSession vaadinSession = VaadinSession.getCurrent();
+        vaadinSession.getSession().invalidate();
         checkLogoutState();
         onHomeClicked();
     }

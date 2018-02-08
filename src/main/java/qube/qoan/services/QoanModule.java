@@ -108,11 +108,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     //public String QAI_NODE_TO_CONNECT = "192.168.0.*:5701"; // localhost
     public String CLIENT_NAME = "Qoan Web-Service";
 
-    public String MONDAY_NODE = "192.168.0.199:5701"; // monday
-    public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
-    public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
+    //public String MONDAY_NODE = "192.168.0.199:5701"; // monday
+    //public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
+    //public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
     public String STANN_NODE = "192.168.0.108:5701"; // stann
+    //public String STANN_NODE = "127.0.0.1:5701";
 
+    private String GRID_PASSWORD = "p4ssw0rd";
+
+    private String GRID_NAME = "Qai-Nodes";
 
     @Override
     protected void configure() {
@@ -258,12 +262,15 @@ public class QoanModule extends AbstractModule implements QaiConstants {
             return hazelcastInstance;
         }
 
-        ClientConfig clientConfig = new ClientConfig();
-        clientConfig.setInstanceName(CLIENT_NAME);
-        clientConfig.getNetworkConfig().setSmartRouting(true);
-        clientConfig.getNetworkConfig().addAddress(STANN_NODE, MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
+        ClientConfig config = new ClientConfig();
+        config.setInstanceName(CLIENT_NAME);
+        config.getNetworkConfig().setSmartRouting(true);
+        config.getNetworkConfig().setRedoOperation(true);
+        config.getGroupConfig().setPassword(GRID_PASSWORD);
+        config.getGroupConfig().setName(GRID_NAME);
+        config.getNetworkConfig().addAddress(STANN_NODE);//, MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
 
-        hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
+        hazelcastInstance = HazelcastClient.newHazelcastClient(config);
 
         return hazelcastInstance;
     }

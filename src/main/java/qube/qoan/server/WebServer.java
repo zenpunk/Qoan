@@ -19,6 +19,8 @@ import com.google.inject.Injector;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
+import org.eclipse.jetty.rewrite.handler.RedirectPatternRule;
+import org.eclipse.jetty.rewrite.handler.RewriteHandler;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
@@ -38,7 +40,7 @@ public class WebServer {
     //private static String resourceBase = "./webapp";
     private static String resourceBase = "./target/classes/webapp";
     private static int httpPort = 8080;
-
+    private static String wikiUrl = "192.168.0.206:/8081";
     private static Injector injector;
 
     /**
@@ -67,9 +69,19 @@ public class WebServer {
         //webAppContext.(new EnvironmentLoader());
         webAppContext.addEventListener(new EnvironmentLoaderListener());
 
+        RewriteHandler rewrite = new RewriteHandler();
+        rewrite.setRewriteRequestURI(true);
+        rewrite.setRewritePathInfo(false);
+        rewrite.setOriginalPathAttribute("wiki.qoan.org");
+
+        RedirectPatternRule redirect = new RedirectPatternRule();
+        redirect.setPattern("wiki.qoan.org/*");
+        redirect.setLocation(wikiUrl);
+        rewrite.addRule(redirect);
+
         //server.setHandler(webAppContext);
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler()});
+        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler(), rewrite});
         server.setHandler(handlers);
 
         System.out.println("Go to http://localhost:" + httpPort + contextPath);
