@@ -20,8 +20,6 @@ import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
-import qube.qai.persistence.QaiDataProvider;
-import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
 import qube.qai.services.SearchServiceInterface;
@@ -43,9 +41,6 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
     @Inject
     private ProcedureLibraryInterface procedureLibrary;
-
-    @Inject
-    private QaiDataProvider<Procedure> dataProvider;
 
     @Override
     protected void initializeSearchResults() {
@@ -101,5 +96,8 @@ public class ProcedureSearchSink extends SearchSinkComponent {
     public void addResults(Collection<SearchResult> results) {
         // do nothing- the initialization at start should be sufficient
         //super.addResults(results);
+        searchResults.addAll(results);
+        dataProvider.refreshAll();
+
     }
 }

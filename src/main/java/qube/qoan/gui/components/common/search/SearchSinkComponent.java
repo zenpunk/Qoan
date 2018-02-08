@@ -14,8 +14,8 @@
 
 package qube.qoan.gui.components.common.search;
 
+import com.vaadin.data.provider.AbstractDataProvider;
 import com.vaadin.data.provider.DataProvider;
-import com.vaadin.data.provider.ListDataProvider;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.*;
@@ -36,7 +36,7 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     protected Collection<SearchResult> searchResults;
 
-    protected ListDataProvider<SearchResult> dataProvider;
+    protected AbstractDataProvider dataProvider;
 
     protected CheckBox clearResults;
 

@@ -45,6 +45,8 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
     @Inject
     private HazelcastInstance hazelcastInstance;
 
+    private TreeData<SearchResult> treeData;
+
     public FinanceSearchSink() {
         super();
     }
@@ -56,34 +58,55 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
         Injector injector = QoanInjectorService.getInstance().getInjector();
         injector.injectMembers(this);
 
-        searchResults = searchService.searchInputString("*", QaiConstants.STOCK_GROUPS, 100);
+        searchResults = searchService.searchInputString("", QaiConstants.STOCK_GROUPS, 100);
 
         if (searchResults == null) {
             searchResults = new ArrayList<>();
+            treeData = new TreeData();
+            dataProvider = new TreeDataProvider(treeData);
+            resultGrid.setDataProvider(dataProvider);
             return;
+        } else {
+            treeData = new TreeData();
+            dataProvider = new TreeDataProvider(treeData);
+            resultGrid.setDataProvider(dataProvider);
         }
 
+        addSearchResultsToDisplay(searchResults);
+    }
+
+    private void addSearchResultsToDisplay(Collection<SearchResult> results) {
+
         IMap<String, StockGroup> groupMap = hazelcastInstance.getMap(STOCK_GROUPS);
-        for (SearchResult result : searchResults) {
+
+        for (SearchResult result : results) {
+
             StockGroup stockGroup = groupMap.get(result.getUuid());
+            // stranger things have happened
+            if (stockGroup == null
+                    || stockGroup.getEntities() == null
+                    || stockGroup.getEntities().isEmpty()) {
+                continue;
+            }
             Collection<StockEntity> entities = stockGroup.getEntities();
             Collection<SearchResult> entitiesAsResult = new ArrayList<>();
+
             for (StockEntity entity : entities) {
                 SearchResult r = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
                 entitiesAsResult.add(r);
             }
 
-            TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
-            TreeData<SearchResult> data = gridDataProvider.getTreeData();
-            if (!data.contains(result)) {
-                data.addItem(null, result);
+
+            if (!treeData.contains(result)) {
+                treeData.addItem(null, result);
                 for (SearchResult r : entitiesAsResult) {
-                    if (!data.contains(r)) {
-                        data.addItem(result, r);
+                    if (!treeData.contains(r)) {
+                        treeData.addItem(result, r);
                     }
                 }
             }
-            gridDataProvider.refreshAll();
+
+            dataProvider.refreshAll();
         }
     }
 
@@ -113,11 +136,6 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
             return;
         }
 
-        /*if (clearResults.getValue()) {
-            searchResults.clear();
-        }*/
-
-        searchResults.addAll(results);
-        dataProvider.refreshAll();
+        addSearchResultsToDisplay(results);
     }
 }

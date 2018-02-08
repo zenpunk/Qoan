@@ -108,7 +108,6 @@ public class QoanHeader extends Panel {
     public void onLogoutClicked() {
         ((QoanUI) UI.getCurrent()).setUser(null);
         SecurityUtils.getSubject().logout();
-        // @TODO this shuts down hazelcast-instance and causes reconnect-troubles.
         VaadinSession vaadinSession = VaadinSession.getCurrent();
         vaadinSession.getSession().invalidate();
         checkLogoutState();
