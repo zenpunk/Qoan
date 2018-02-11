@@ -29,6 +29,8 @@ import java.util.List;
  */
 public abstract class QoanMenu extends Panel implements QaiConstants {
 
+    protected boolean firstClick = true;
+
     protected boolean initialized = false;
 
     protected VerticalLayout layout;
@@ -114,6 +116,10 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
     public void doSearch(String searchString) {
         for (SearchSource source : searchSources) {
             source.doSearch(searchString);
+        }
+        if (firstClick) {
+            Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
+            firstClick = false;
         }
     }
 }

@@ -26,6 +26,7 @@ import qube.qai.services.implementation.SearchResult;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Set;
 
 /**
  * Created by rainbird on 6/27/17.
@@ -108,7 +109,14 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
             if (event.isCanceled()) {
                 Notification.show("Drag event was canceled");
             } else {
-                Notification.show("Drag event finished");
+                Set<SearchResult> results = grid.getSelectedItems();
+                StringBuffer buffer = new StringBuffer("Selected items: <");
+                for (SearchResult result : results) {
+                    buffer.append(result.getTitle());
+                    buffer.append("/");
+                }
+                buffer.append("> are added to workspace");
+                Notification.show(buffer.toString());
             }
         });
 

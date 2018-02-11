@@ -19,22 +19,22 @@ import com.google.inject.Injector;
 import org.apache.shiro.web.env.EnvironmentLoaderListener;
 import org.eclipse.jetty.annotations.AnnotationConfiguration;
 import org.eclipse.jetty.plus.webapp.EnvConfiguration;
-import org.eclipse.jetty.rewrite.handler.RedirectPatternRule;
-import org.eclipse.jetty.rewrite.handler.RewriteHandler;
+import org.eclipse.jetty.plus.webapp.PlusConfiguration;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
-import org.eclipse.jetty.webapp.Configuration;
-import org.eclipse.jetty.webapp.WebAppContext;
-import org.eclipse.jetty.webapp.WebInfConfiguration;
-import org.eclipse.jetty.webapp.WebXmlConfiguration;
+import org.eclipse.jetty.webapp.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 /**
  * Created by rainbird on 10/26/15.
  */
 public class WebServer {
+
+    private static Logger logger = LoggerFactory.getLogger("WebServer");
 
     private static String contextPath = "/";
     //private static String resourceBase = "./webapp";
@@ -61,33 +61,35 @@ public class WebServer {
                 new WebXmlConfiguration(),
                 new WebInfConfiguration(),
                 //new TagLibConfiguration(),
-                //new PlusConfiguration(),
-                //new MetaInfConfiguration(),
+                new PlusConfiguration(),
+                new MetaInfConfiguration(),
                 //new FragmentConfiguration(),
                 new EnvConfiguration()});
         webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
         //webAppContext.(new EnvironmentLoader());
         webAppContext.addEventListener(new EnvironmentLoaderListener());
 
-        RewriteHandler rewrite = new RewriteHandler();
-        rewrite.setRewriteRequestURI(true);
-        rewrite.setRewritePathInfo(false);
-        rewrite.setOriginalPathAttribute("wiki.qoan.org");
-
-        RedirectPatternRule redirect = new RedirectPatternRule();
-        redirect.setPattern("wiki.qoan.org/*");
-        redirect.setLocation(wikiUrl);
-        rewrite.addRule(redirect);
+        // @TODO out of some reason the redirect rules are getting ignored....
+//        RewriteHandler rewrite = new RewriteHandler();
+//        rewrite.setRewriteRequestURI(true);
+//        rewrite.setRewritePathInfo(true);
+//        rewrite.setOriginalPathAttribute("requestedPath");
+//
+//        RedirectPatternRule redirect = new RedirectPatternRule();
+//        redirect.setPattern("wiki.qoan.org");
+//        redirect.setLocation("192.168.0.206:/8081");
+//        redirect.setTerminating(true);
+//        rewrite.addRule(redirect);
 
         //server.setHandler(webAppContext);
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler(), rewrite});
+        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler()});
         server.setHandler(handlers);
 
-        System.out.println("Go to http://localhost:" + httpPort + contextPath);
         try {
             server.start();
             server.join();
+            logger.info("Go to http://localhost:" + httpPort + contextPath);
         } catch (Exception e) {
             e.printStackTrace();
         }
