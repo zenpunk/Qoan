@@ -33,10 +33,13 @@ public class StartView extends QoanView {
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br>" +
                     "<b><i>Merriam-Webster Online Dictionary</i></b></p>" +
-                    //"<br>" +
+                    "<p><i>In order to achieve <b>artificial intelligence</b>, we must first be able to define <b>intelligence</b>.<br>" +
+                    "<b>Anonymous common sense</b></i></p>" +
                     "<p><i>\"Networks, networks everywhere,<br>" +
                     "and when combined, more than just the sum of its parts\".</i><br>" +
-                    "<b><i>Mugat Gurkowsky</i></b></p>";
+                    "<b><i>Mugat Gurkowsky</i></b></p><br>" +
+                    "<p><i>And of course,<br>" +
+                    "the proof of the pudding is in the eating.</i></p>";
 
     public StartView() {
         this.viewTitle = "Welcome to Qoan";
