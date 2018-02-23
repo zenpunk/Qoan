@@ -27,6 +27,13 @@ public class StartView extends QoanView {
 
     public static String NAME = "";
 
+    private static String introduction = "<p><b>Artificial Neural-Networks</b> and <b>Graph</b> theories are commonly used tools in field " +
+            "of <b>Artificial Intelligence</b>.</p> " +
+            "<p><b>Qoan.org</b> is a distributed artificial intelligence framework which aims to bring those tools " +
+            "together in an user-friendly environment, helping visualize the data as well as organizing it. With this framework, we wish to integrate " +
+            "openly accessible data sources, like Wikipedia, Wiktionary, DBpedia projects, as well as many different internet gene and molecular databases " +
+            "for research, analysis and prognosis tasks.</p>";
+
     private static String loremIpsum =
             "<p><b><u>Koan:&nbsp;</u></b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
@@ -51,16 +58,20 @@ public class StartView extends QoanView {
         //contentLayout.setWidth("80%");
 
         HorizontalLayout firstRow = new HorizontalLayout();
-        firstRow.setWidth("80%");
+        firstRow.setWidth("100%");
         ClassResource resource = new ClassResource("gui/images/kokoline.gif");
         Image image = new Image("Singularity is nigh!", resource);
         image.setWidth("30%");
         firstRow.addComponent(image);
 
-        Label loremIpsum = new Label(StartView.loremIpsum, ContentMode.HTML);
-        loremIpsum.setWidth("70%");
+        Label introductionLabel = new Label(introduction, ContentMode.HTML);
+        introductionLabel.setWidth("50%");
+        firstRow.addComponent(introductionLabel);
+
+        Label loremIpsumLabel = new Label(StartView.loremIpsum, ContentMode.HTML);
+        loremIpsumLabel.setWidth("50%");
         //loremIpsum.setStyleName("paragraph", true);
-        firstRow.addComponent(loremIpsum);
+        firstRow.addComponent(loremIpsumLabel);
         //contentLayout.addComponent(firstRow);
 
         addComponent(firstRow);
