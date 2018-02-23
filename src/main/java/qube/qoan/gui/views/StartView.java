@@ -29,7 +29,7 @@ public class StartView extends QoanView {
 
     private static String introduction = "<p><b>Artificial Neural-Networks</b> and <b>Graph</b> theories are commonly used tools in field " +
             "of <b>Artificial Intelligence</b>.</p> " +
-            "<p><b>Qoan.org</b> is a distributed artificial intelligence framework which aims to bring those tools " +
+            "<p><b>Qoan.org</b> is a open-source distributed artificial intelligence framework which aims to bring those tools " +
             "together in an user-friendly environment, helping visualize the data as well as organizing it. With this framework, we wish to integrate " +
             "openly accessible data sources, like Wikipedia, Wiktionary, DBpedia projects, as well as many different internet gene and molecular databases " +
             "for research, analysis and prognosis tasks.</p>";
