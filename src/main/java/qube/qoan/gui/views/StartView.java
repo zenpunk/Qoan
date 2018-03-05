@@ -15,10 +15,13 @@
 package qube.qoan.gui.views;
 
 import com.vaadin.server.ClassResource;
+import com.vaadin.server.FileResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.shared.ui.ContentMode;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Image;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.*;
+import pl.pdfviewer.PdfViewer;
+
+import java.io.File;
 
 /**
  * Created by rainbird on 10/29/15.
@@ -27,54 +30,109 @@ public class StartView extends QoanView {
 
     public static String NAME = "";
 
-    private static String introduction = "<p><b>Artificial Neural-Networks</b> and <b>Graph</b> theories are commonly used tools in field " +
+    private static String introduction = "<p align=justify><b>Artificial Neural-Networks</b> and <b>Graph</b> theories are commonly used tools in field " +
             "of <b>Artificial Intelligence</b>.</p> " +
-            "<p><b>Qoan.org</b> is an open-source distributed artificial intelligence framework which aims to bring those tools " +
+            "<p align=justify><b>Qoan.org</b> is an open-source distributed artificial intelligence framework which aims to bring those tools " +
             "together in an user-friendly environment, helping visualize the data as well as organizing it. With this framework, we wish to integrate " +
             "openly accessible data sources, like Wikipedia, Wiktionary, DBpedia projects, as well as many different internet gene and molecular databases " +
-            "for research, analysis and prognosis tasks.</p>";
+            "for training specialized neural-networks to be employed in research, analysis and prognosis tasks.</p>";
 
     private static String loremIpsum =
-            "<p><b><u>Koan:&nbsp;</u></b> a paradox to be meditated upon that is used to train " +
+            "<p align=justify><b><u>Koan:</u></b> a paradox to be meditated upon that is used to train " +
                     "Zen Buddhist monks to abandon ultimate dependence on reason and to " +
                     "force them into gaining sudden intuitive enlightenment" +
                     "<br>" +
-                    "<b><i>Merriam-Webster Online Dictionary</i></b></p>" +
-                    "<p><i>In order to achieve <b>artificial intelligence</b>, we must first be able to define <b>intelligence</b>.<br>" +
-                    "<b>Anonymous common sense</b></i></p>" +
+                    "<b>Merriam-Webster Online Dictionary</b></p>" +
+                    "<p align=justify>In order to achieve <i>artificial intelligence</i>, we must first be able to define <i>intelligence</i>.<br>" +
+                    "<b>Anonymous common sense</b></p>" +
                     "<p><i>\"Networks, networks everywhere,<br>" +
                     "and when combined, more than just the sum of its parts\".</i><br>" +
-                    "<b><i>Mugat Gurkowsky</i></b></p><br>" +
-                    "<p><i>And of course,<br>" +
-                    "the proof of the pudding is in the eating.</i></p>";
+                    "<b>Mugat Gurkowsky</b></p><br>" +
+                    "<p>And of course,<br>" +
+                    "<i>the proof of the pudding is in the eating.</i></p>";
 
     public StartView() {
-        this.viewTitle = "Welcome to Qoan";
+        this.viewTitle = "Welcome to Qoan.org";
     }
 
     protected void initialize() {
 
-        //VerticalLayout contentLayout = new VerticalLayout();
-        //contentLayout.setWidth("80%");
+        HorizontalSplitPanel panel = new HorizontalSplitPanel();
 
-        HorizontalLayout firstRow = new HorizontalLayout();
-        firstRow.setWidth("100%");
         ClassResource resource = new ClassResource("gui/images/kokoline.gif");
         Image image = new Image("Singularity is nigh!", resource);
-        image.setWidth("30%");
-        firstRow.addComponent(image);
+        panel.setFirstComponent(image);
+        panel.setSplitPosition(15, Unit.PERCENTAGE);
+
+        VerticalLayout textLayout = new VerticalLayout();
+        textLayout.setWidth("80%");
 
         Label introductionLabel = new Label(introduction, ContentMode.HTML);
-        introductionLabel.setWidth("50%");
-        firstRow.addComponent(introductionLabel);
+        introductionLabel.setWidth("100%");
+        textLayout.addComponent(introductionLabel);
+
+        HorizontalLayout infoLine = new HorizontalLayout();
+        Label moreInfolabel = new Label("For more information pelase refer to ");
+        infoLine.addComponent(moreInfolabel);
+
+        Button manifestoHtmlButton = new Button("Qoan Manifesto");
+        manifestoHtmlButton.setStyleName("link");
+        manifestoHtmlButton.addClickListener(event -> onOpenHtmlClicked());
+        infoLine.addComponent(manifestoHtmlButton);
+
+        Label orLabel = new Label("or as ");
+        infoLine.addComponent(orLabel);
+
+        Button manifestoPdfButton = new Button("Pdf-file");
+        manifestoPdfButton.setStyleName("link");
+        manifestoPdfButton.addClickListener(event -> onOpenPdfClicked());
+
+        infoLine.addComponent(manifestoPdfButton);
+        textLayout.addComponent(infoLine);
 
         Label loremIpsumLabel = new Label(StartView.loremIpsum, ContentMode.HTML);
-        loremIpsumLabel.setWidth("50%");
-        //loremIpsum.setStyleName("paragraph", true);
-        firstRow.addComponent(loremIpsumLabel);
-        //contentLayout.addComponent(firstRow);
+        loremIpsumLabel.setWidth("100%");
+        textLayout.addComponent(loremIpsumLabel);
 
-        addComponent(firstRow);
-        //addComponent(layout);
+        panel.addComponent(textLayout);
+        addComponent(panel);
+    }
+
+    public void onOpenHtmlClicked() {
+
+        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+        String filename = basepath + "/VAADIN/tmp/kickoff.xhtml";
+        FileResource resource = new FileResource(new File(filename));
+
+        BrowserFrame embeddedHtml = new BrowserFrame("", resource);
+        embeddedHtml.setWidth("100%");
+        embeddedHtml.setHeight("100%");
+
+        Window window = new Window("Qoan Manifesto");
+        window.setContent(embeddedHtml);
+        window.setWidth("1000px");
+        window.setHeight("800px");
+        UI.getCurrent().addWindow(window);
+    }
+
+    public void onOpenPdfClicked() {
+
+        String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+        String filename = basepath + "/VAADIN/tmp/kickoff.pdf";
+        File file = new File(filename);
+
+        if (!file.exists()) {
+            Notification.show("Error reading file: '" + file.getName() + "' does not exist!");
+        }
+
+        PdfViewer pdfViewer = new PdfViewer(file);
+        pdfViewer.setWidth("100%");
+        pdfViewer.setHeight("100%");
+
+        Window window = new Window("Qoan Manifesto");
+        window.setContent(pdfViewer);
+        window.setWidth("1000px");
+        window.setHeight("800px");
+        UI.getCurrent().addWindow(window);
     }
 }

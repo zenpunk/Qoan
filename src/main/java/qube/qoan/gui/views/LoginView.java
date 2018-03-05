@@ -69,6 +69,14 @@ public class LoginView extends QoanView {
         firstRow.addComponent(image);
 
         VerticalLayout layout = new VerticalLayout();
+
+        // @TODO this requires testing therefore add only later.
+//        Button guestLoginButton = new Button("Login as Guest user");
+//        guestLoginButton.setDescription("With this you will be logged in as a temporary user");
+//        guestLoginButton.setStyleName("link");
+//        guestLoginButton.addClickListener(event -> onGuestLoginClicked());
+//        layout.addComponent(guestLoginButton);
+
         userField = new TextField("Username");
         layout.addComponent(userField);
 
@@ -87,10 +95,6 @@ public class LoginView extends QoanView {
         registerButton.addClickListener(clickEvent -> onRegisterClicked());
         buttonRow.addComponent(registerButton);
 
-        Button guestLoginButton = new Button("Login as Guest user");
-        guestLoginButton.setStyleName("link");
-        guestLoginButton.addClickListener(event -> onGuestLoginClicked());
-        buttonRow.addComponent(guestLoginButton);
 
         layout.addComponent(buttonRow);
         firstRow.addComponent(layout);

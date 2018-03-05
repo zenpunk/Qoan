@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.views;
 
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.StringUtils;
 import org.jfree.chart.ChartFactory;
@@ -118,7 +119,9 @@ public class ComponentsView extends QoanView {
             public void buttonClick(Button.ClickEvent clickEvent) {
                 Window window = new Window("A Window");
 
-                File file = new File("/home/rainbird/projects/work/docs/powerpoint/Qoan.pdf");
+                String basepath = VaadinService.getCurrent().getBaseDirectory().getAbsolutePath();
+                String filename = basepath + "/VAADIN/tmp/kickoff.pdf";
+                File file = new File(filename);
                 PdfViewer pdfViewer = new PdfViewer(file);
                 pdfViewer.setSizeFull();
                 pdfViewer.setVisible(true);
