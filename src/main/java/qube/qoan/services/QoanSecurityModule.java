@@ -54,7 +54,7 @@ public class QoanSecurityModule extends ShiroWebModule {
         addFilterChain("/qoan#!registration", AUTHC_BASIC);
         addFilterChain("/qoan#!workspace", AUTHC_BASIC);
         addFilterChain("/qoan#!management", AUTHC_BASIC);
-        addFilterChain("/**", AUTHC_BASIC);
+        addFilterChain("/**", ANON);
     }
 
     @Provides

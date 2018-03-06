@@ -14,12 +14,15 @@
 
 package qube.qoan.services;
 
+import com.google.common.collect.ImmutableMap;
 import com.google.inject.Injector;
 import com.google.inject.servlet.GuiceServletContextListener;
 import com.google.inject.servlet.ServletModule;
 import com.google.inject.servlet.ServletScopes;
 import com.vaadin.ui.UI;
+import org.apache.shiro.realm.Realm;
 import qube.qoan.QoanUI;
+import qube.qoan.authentication.QoanRealm;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletContextEvent;
@@ -35,21 +38,40 @@ public class QoanServletConfig extends GuiceServletContextListener {
 
     private Injector injector;
 
-
+    public QoanServletConfig() {
+        super();
+    }
 
     @Override
     public Injector getInjector() {
+
+        if (this == null) {
+
+        }
 
         if (injector == null) {
             ServletModule module = new ServletModule() {
                 @Override
                 protected void configureServlets() {
                     log("Starting to filter servlets...");
+
                     //serve("/*").with(VaadinServlet.class);
-                    serve("/*").with(QoanServlet.class);
+
+
+                    serve("/*").with(QoanServlet.class, ImmutableMap.of(
+                            "resourceBase", "./target/classes/webapp",
+                            "dirAllowed", "false"));
+
+                    serve("/VAADIN/*").with(QoanServlet.class, ImmutableMap.of(
+                            "resourceBase", "./target/classes/webapp/VAADIN",
+                            "dirAllowed", "false"));
+
+                    serve("/qoan/*").with(QoanServlet.class, ImmutableMap.of(
+                            "resourceBase", "./target/classes/webapp",
+                            "dirAllowed", "false"));
 
                     bind(UI.class).to(QoanUI.class).in(ServletScopes.SESSION);
-                    //bind(Realm.class).to(QoanRealm.class).asEagerSingleton();
+                    bind(Realm.class).to(QoanRealm.class).asEagerSingleton();
 
                 }
             };
@@ -62,7 +84,7 @@ public class QoanServletConfig extends GuiceServletContextListener {
     @Override
     public void contextInitialized(final ServletContextEvent servletContextEvent) {
         this.servletContext = servletContextEvent.getServletContext();
-        super.contextInitialized(servletContextEvent);
+        //super.contextInitialized(servletContextEvent);
     }
 
     private void log(String message) {

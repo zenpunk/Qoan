@@ -49,6 +49,8 @@ public class ComponentsView extends QoanView {
         this.viewTitle = "Qoan Components";
     }
 
+    private TextField nameField;
+
     private String jsExec = "NGL.init( onInit );";
 
     private String jsExecParam = "NGL.init( onInitLoad('";
@@ -60,15 +62,34 @@ public class ComponentsView extends QoanView {
         Label welcomeLabel = new Label("Welcome to the demo page for Qoan components.");
         layout.addComponent(welcomeLabel);
 
-        NglAdapter nglViewer = new NglAdapter();
-        layout.addComponent(nglViewer);
+        //layout.addComponent(nglViewer);
 
         HorizontalLayout selectLine = new HorizontalLayout();
 
-        TextField nameField = new TextField("Molecule name");
+        nameField = new TextField("Molecule name");
         nameField.setValue("1crm");
         selectLine.addComponent(nameField);
 
+        Button showNgl = makeMoleculeButton();
+        selectLine.addComponent(showNgl);
+        layout.addComponent(selectLine);
+
+        Button showPdfViewerButton = makePdfButton();
+        layout.addComponent(showPdfViewerButton);
+
+        Button showGraphButton = makeGraphButton();
+        layout.addComponent(showGraphButton);
+
+        Component timeSeries = createTimeSeries();
+        layout.addComponent(timeSeries);
+
+        Component histogram = createHistogram();
+        layout.addComponent(histogram);
+
+        addComponent(layout);
+    }
+
+    private Button makeMoleculeButton() {
         Button showNgl = new Button("Show molecule");
         showNgl.addClickListener(new Button.ClickListener() {
             @Override
@@ -77,42 +98,25 @@ public class ComponentsView extends QoanView {
                 if (StringUtils.isEmpty(moleculeName)) {
                     JavaScript.getCurrent().execute(jsExec);
                 } else {
+
+                    Window window = new Window("MoleculeViewer- NGLViewer");
+                    NglAdapter nglViewer = new NglAdapter();
                     String toExecute = jsExecParam + moleculeName + "' ))";
                     //JavaScript.getCurrent().execute("alert('" + toExecute + "')");
                     JavaScript.getCurrent().execute(toExecute);
+
+                    window.setContent(nglViewer);
+                    window.setWidth("1000px");
+                    window.setHeight("800px");
+
+                    UI.getCurrent().addWindow(window);
                 }
             }
         });
-        selectLine.addComponent(showNgl);
-        layout.addComponent(selectLine);
-//
-//        MyComponent mycomponent = new MyComponent();
-//        layout.addComponent(mycomponent);
-//
-//        Button showNglButton = new Button("Show NGL-Viewer");
-//        showNglButton.addClickListener(new Button.ClickListener() {
-//            @Override
-//            public void buttonClick(Button.ClickEvent clickEvent) {
-//                Window window = new Window("A Window");
-//                VerticalLayout content = new VerticalLayout();
-//                content.setMargin(true);
-//
-//                NglAdapter nglViewer = new NglAdapter("");
-//                content.addComponent(nglViewer);
-//
-//                window.setContent(content);
-//                window.setWidth("800px");
-//                UI.getCurrent().addWindow(window);
-//            }
-//        });
-//        layout.addComponent(showNglButton);
+        return showNgl;
+    }
 
-        Component timeSeries = createTimeSeries();
-        layout.addComponent(timeSeries);
-
-        Component histogram = createHistogram();
-        layout.addComponent(histogram);
-
+    private Button makePdfButton() {
         Button showPdfViewerButton = new Button("Show Pdf-Viewer");
         showPdfViewerButton.addClickListener(new Button.ClickListener() {
             @Override
@@ -123,22 +127,25 @@ public class ComponentsView extends QoanView {
                 String filename = basepath + "/VAADIN/tmp/kickoff.pdf";
                 File file = new File(filename);
                 PdfViewer pdfViewer = new PdfViewer(file);
-                pdfViewer.setSizeFull();
-                pdfViewer.setVisible(true);
-                pdfViewer.setPage(1);
+                pdfViewer.setWidth("100%");
+                pdfViewer.setHeight("100%");
 
                 window.setContent(pdfViewer);
-                window.setWidth("800px");
+                window.setWidth("1000px");
+                window.setHeight("800px");
+
                 UI.getCurrent().addWindow(window);
             }
         });
-        layout.addComponent(showPdfViewerButton);
+        return showPdfViewerButton;
+    }
 
+    private Button makeGraphButton() {
         Button showGraphButton = new Button("Open Window for example Graph");
         showGraphButton.addClickListener(new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                Window window = new Window("A Window");
+                Window window = new Window("A Silly Graph");
                 VerticalLayout content = new VerticalLayout();
                 content.setMargin(true);
                 //Label label = new Label("this is some test text to display in the window");
@@ -154,9 +161,7 @@ public class ComponentsView extends QoanView {
                 UI.getCurrent().addWindow(window);
             }
         });
-        layout.addComponent(showGraphButton);
-
-        addComponent(layout);
+        return showGraphButton;
     }
 
     private Component createTimeSeries() {

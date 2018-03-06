@@ -17,22 +17,17 @@ package qube.qoan.services;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import com.hazelcast.core.HazelcastInstance;
-import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinServlet;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.mgt.WebSecurityManager;
-import qube.qoan.QoanUI;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 
-@WebServlet(value = "/*", asyncSupported = true)
-@VaadinServletConfiguration(productionMode = false, ui = QoanUI.class)
 public class QoanServlet extends VaadinServlet {
 
     private Injector injector;
@@ -40,13 +35,6 @@ public class QoanServlet extends VaadinServlet {
     private QoanModule qoanModule;
 
     private QoanSecurityModule securityModule;
-
-    /*@Override
-    protected void servletInitialized() throws ServletException {
-        super.servletInitialized();
-
-
-    }*/
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {

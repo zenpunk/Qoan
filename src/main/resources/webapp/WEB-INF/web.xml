@@ -20,6 +20,10 @@
         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee
      http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
+    <!--<listener>-->
+    <!--<listener-class>qube.qoan.services.QoanServletConfig</listener-class>-->
+    <!--</listener>-->
+
     <display-name>assembly</display-name>
     <context-param>
         <description>
@@ -31,7 +35,10 @@
 
     <servlet>
         <servlet-name>qoan</servlet-name>
+
         <servlet-class>qube.qoan.services.QoanServlet</servlet-class>
+
+        <!--<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>-->
 
         <init-param>
             <param-name>UI</param-name>
@@ -39,10 +46,10 @@
         </init-param>
 
         <!-- If not using the default widget set-->
-        <!--<init-param>-->
-        <!--<param-name>widgetset</param-name>-->
-        <!--<param-value>com.ex.myprj.MyWidgetSet</param-value>-->
-        <!--</init-param>-->
+        <init-param>
+            <param-name>widgetset</param-name>
+            <param-value>qube.qoan.MyWidgetSet</param-value>
+        </init-param>
     </servlet>
 
     <servlet-mapping>

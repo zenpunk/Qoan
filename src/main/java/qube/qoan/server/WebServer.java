@@ -24,6 +24,7 @@ import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.DefaultHandler;
 import org.eclipse.jetty.server.handler.HandlerList;
+import org.eclipse.jetty.server.handler.ResourceHandler;
 import org.eclipse.jetty.webapp.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -36,11 +37,14 @@ public class WebServer {
 
     private static Logger logger = LoggerFactory.getLogger("WebServer");
 
-    private static String contextPath = "/";
-    //private static String resourceBase = "./webapp";
-    private static String resourceBase = "./target/classes/webapp";
     private static int httpPort = 8080;
-    private static String wikiUrl = "192.168.0.206:/8081";
+    private static String contextPath = "/";
+    private static String htmlBase = "./target/classes/ROOT";
+
+    private static String qoanContextPath = "/qoan";
+    private static String qoanResourceBase = "./target/classes/webapp";
+
+    private static String wikiUrl = "192.168.0.206:8081/wiki";
     private static Injector injector;
 
     /**
@@ -52,38 +56,40 @@ public class WebServer {
 
         Server server = new Server(httpPort);
 
-        WebAppContext webAppContext = new WebAppContext();
-        webAppContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
-        webAppContext.setContextPath(contextPath);
-        webAppContext.setResourceBase(resourceBase);
-        webAppContext.setConfigurations(new Configuration[]{
+//        WebAppContext htmlContext = new WebAppContext();
+//        htmlContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "true");
+//        htmlContext.setContextPath(contextPath);
+//        htmlContext.setResourceBase(htmlBase);
+//        htmlContext.setWelcomeFiles(new String[] { "index.html" });
+//        htmlContext.setConfigurations(new Configuration[]{
+//                //new AnnotationConfiguration(),
+//                //new WebXmlConfiguration(),
+//                //new WebInfConfiguration(),
+//                new PlusConfiguration(),
+//                //new MetaInfConfiguration(),
+//                //new EnvConfiguration()},
+//                new FragmentConfiguration()});
+//        htmlContext.setClassLoader(Thread.currentThread().getContextClassLoader());
+//        htmlContext.addEventListener(new EnvironmentLoaderListener());
+
+        WebAppContext qoanContext = new WebAppContext();
+        qoanContext.setInitParameter("org.eclipse.jetty.servlet.Default.dirAllowed", "false");
+        qoanContext.setContextPath(contextPath);
+        qoanContext.setResourceBase(qoanResourceBase);
+        qoanContext.setConfigurations(new Configuration[]{
                 new AnnotationConfiguration(),
                 new WebXmlConfiguration(),
                 new WebInfConfiguration(),
-                //new TagLibConfiguration(),
                 new PlusConfiguration(),
                 new MetaInfConfiguration(),
-                //new FragmentConfiguration(),
+                new FragmentConfiguration(),
                 new EnvConfiguration()});
-        webAppContext.setClassLoader(Thread.currentThread().getContextClassLoader());
-        //webAppContext.(new EnvironmentLoader());
-        webAppContext.addEventListener(new EnvironmentLoaderListener());
+        qoanContext.setClassLoader(Thread.currentThread().getContextClassLoader());
+        qoanContext.addEventListener(new EnvironmentLoaderListener());
 
-        // @TODO out of some reason the redirect rules are getting ignored....
-//        RewriteHandler rewrite = new RewriteHandler();
-//        rewrite.setRewriteRequestURI(true);
-//        rewrite.setRewritePathInfo(true);
-//        rewrite.setOriginalPathAttribute("requestedPath");
-//
-//        RedirectPatternRule redirect = new RedirectPatternRule();
-//        redirect.setPattern("wiki.qoan.org");
-//        redirect.setLocation("192.168.0.206:/8081");
-//        redirect.setTerminating(true);
-//        rewrite.addRule(redirect);
-
-        //server.setHandler(webAppContext);
+        // add all the handlers in a list
         HandlerList handlers = new HandlerList();
-        handlers.setHandlers(new Handler[]{webAppContext, new DefaultHandler()});
+        handlers.setHandlers(new Handler[]{qoanContext, new DefaultHandler(), new ResourceHandler()});
         server.setHandler(handlers);
 
         try {

@@ -31,8 +31,7 @@ public class StartView extends QoanView {
     public static String NAME = "";
 
     private static String introduction = "<p align=justify><b>Artificial Neural-Networks</b> and <b>Graph</b> theories are commonly used tools in field " +
-            "of <b>Artificial Intelligence</b>.</p> " +
-            "<p align=justify><b>Qoan.org</b> is an open-source distributed artificial intelligence framework which aims to bring those tools " +
+            "of <b>Artificial Intelligence</b>. <b>Qoan.org</b> is an open-source distributed artificial intelligence framework which aims to bring those tools " +
             "together in an user-friendly environment, helping visualize the data as well as organizing it. With this framework, we wish to integrate " +
             "openly accessible data sources, like Wikipedia, Wiktionary, DBpedia projects, as well as many different internet gene and molecular databases " +
             "for training specialized neural-networks to be employed in research, analysis and prognosis tasks.</p>";
@@ -71,24 +70,24 @@ public class StartView extends QoanView {
         introductionLabel.setWidth("100%");
         textLayout.addComponent(introductionLabel);
 
-        HorizontalLayout infoLine = new HorizontalLayout();
-        Label moreInfolabel = new Label("For more information pelase refer to ");
-        infoLine.addComponent(moreInfolabel);
-
-        Button manifestoHtmlButton = new Button("Qoan Manifesto");
-        manifestoHtmlButton.setStyleName("link");
-        manifestoHtmlButton.addClickListener(event -> onOpenHtmlClicked());
-        infoLine.addComponent(manifestoHtmlButton);
-
-        Label orLabel = new Label("or as ");
-        infoLine.addComponent(orLabel);
-
-        Button manifestoPdfButton = new Button("Pdf-file");
-        manifestoPdfButton.setStyleName("link");
-        manifestoPdfButton.addClickListener(event -> onOpenPdfClicked());
-
-        infoLine.addComponent(manifestoPdfButton);
-        textLayout.addComponent(infoLine);
+//        HorizontalLayout infoLine = new HorizontalLayout();
+//        Label moreInfolabel = new Label("For more information pelase refer to ");
+//        infoLine.addComponent(moreInfolabel);
+//
+//        Button manifestoHtmlButton = new Button("Qoan Manifesto");
+//        manifestoHtmlButton.setStyleName("link");
+//        manifestoHtmlButton.addClickListener(event -> onOpenHtmlClicked());
+//        infoLine.addComponent(manifestoHtmlButton);
+//
+//        Label orLabel = new Label("or as ");
+//        infoLine.addComponent(orLabel);
+//
+//        Button manifestoPdfButton = new Button("Pdf-file");
+//        manifestoPdfButton.setStyleName("link");
+//        manifestoPdfButton.addClickListener(event -> onOpenPdfClicked());
+//
+//        infoLine.addComponent(manifestoPdfButton);
+//        textLayout.addComponent(infoLine);
 
         Label loremIpsumLabel = new Label(StartView.loremIpsum, ContentMode.HTML);
         loremIpsumLabel.setWidth("100%");
