@@ -71,11 +71,11 @@ public class LoginView extends QoanView {
         VerticalLayout layout = new VerticalLayout();
 
         // @TODO this requires testing therefore add only later.
-//        Button guestLoginButton = new Button("Login as Guest user");
-//        guestLoginButton.setDescription("With this you will be logged in as a temporary user");
-//        guestLoginButton.setStyleName("link");
-//        guestLoginButton.addClickListener(event -> onGuestLoginClicked());
-//        layout.addComponent(guestLoginButton);
+        Button guestLoginButton = new Button("Login as Guest user");
+        guestLoginButton.setDescription("With this you will be logged in as a temporary user");
+        guestLoginButton.setStyleName("link");
+        guestLoginButton.addClickListener(event -> onGuestLoginClicked());
+        layout.addComponent(guestLoginButton);
 
         userField = new TextField("Username");
         layout.addComponent(userField);
@@ -104,13 +104,29 @@ public class LoginView extends QoanView {
 
     public void onGuestLoginClicked() {
 
-        User user = userManager.findUser(GUEST_USERNAME);
+        HttpServletRequest request = ((VaadinServletRequest) VaadinService.getCurrentRequest()).getHttpServletRequest();
+        HttpServletResponse response = ((VaadinServletResponse) VaadinService.getCurrentResponse()).getHttpServletResponse();
+        org.apache.shiro.mgt.SecurityManager manager = SecurityUtils.getSecurityManager();
+        Subject subject = new WebSubject.Builder(manager, request, response).buildWebSubject();
+
+        String remoteAddress = VaadinService.getCurrent().getCurrentRequest().getRemoteAddr();
+        String username = String.format("%s[%s]", GUEST_USERNAME, remoteAddress);
+
+        User user = userManager.findUser(username);
         if (user == null) {
-            user = userManager.createUser(GUEST_USERNAME, GUEST_PASSWORD, "GuestRole", "View_only_permission");
+            user = userManager.createUser(username, GUEST_PASSWORD, "GuestRole", "View_only_permission");
         }
 
         try {
-            userManager.authenticateUser(user.getUsername(), user.getPassword());
+
+            userField.setValue(user.getUsername());
+            passwordField.setValue(user.getPassword());
+            UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
+            ((QoanUI) UI.getCurrent()).setUser(user);
+            subject.login(token);
+
+            UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
+
         } catch (Exception e) {
             logger.error("There has to be a guest user!", e);
             return;
@@ -138,7 +154,7 @@ public class LoginView extends QoanView {
                     targetPage = WorkspaceView.NAME;
                 }
 
-                UI.getCurrent().getNavigator().navigateTo(targetPage);
+                UI.getCurrent().getNavigator().navigateTo(WorkspaceView.NAME);
 
             } catch (AuthenticationException e) {
                 Notification.show("User cannot login with username and password supplied");

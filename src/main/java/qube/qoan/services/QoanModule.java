@@ -37,7 +37,6 @@ import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
-import qube.qoan.authentication.UserManager;
 import qube.qoan.authentication.UserManagerInterface;
 import qube.qoan.gui.components.common.search.DocumentSearchSink;
 import qube.qoan.gui.components.common.search.FinanceSearchSink;
@@ -199,7 +198,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         return documentSearchSink;
     }
 
-    @Provides
+    /*@Provides
     @Singleton
     UserManagerInterface provideUserManager() {
 
@@ -208,7 +207,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         }
 
         return userManager;
-    }
+    }*/
 
     @Provides
     QaiDataProvider<Procedure> provideProcedureProvider() {
@@ -529,12 +528,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         return hazelcastInstance;
     }
 
-    public UserManagerInterface getUserManager() {
+    /*public UserManagerInterface getUserManager() {
         if (userManager == null) {
             userManager = provideUserManager();
         }
 
         return userManager;
-    }
+    }*/
 
 }

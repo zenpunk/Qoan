@@ -14,6 +14,7 @@
 
 package qube.qoan.services;
 
+import com.google.inject.Exposed;
 import com.google.inject.Provides;
 import com.hazelcast.core.HazelcastInstance;
 import org.apache.shiro.config.Ini;
@@ -21,7 +22,10 @@ import org.apache.shiro.guice.web.ShiroWebModule;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.realm.text.IniRealm;
 import qube.qoan.authentication.QoanRealm;
+import qube.qoan.authentication.UserManager;
+import qube.qoan.authentication.UserManagerInterface;
 
+import javax.inject.Singleton;
 import javax.servlet.ServletContext;
 
 /**
@@ -30,6 +34,8 @@ import javax.servlet.ServletContext;
 public class QoanSecurityModule extends ShiroWebModule {
 
     private QoanRealm qoanRealm;
+
+    private UserManagerInterface userManager;
 
     private HazelcastInstance hazelcastInstance;
 
@@ -58,11 +64,24 @@ public class QoanSecurityModule extends ShiroWebModule {
     }
 
     @Provides
+    @Exposed
     Realm provideRealm() {
         if (qoanRealm == null) {
             qoanRealm = new QoanRealm(hazelcastInstance);
         }
         return qoanRealm;
+    }
+
+    @Provides
+    @Exposed
+    @Singleton
+    UserManagerInterface provideUserManager() {
+
+        if (userManager == null) {
+            userManager = new UserManager(provideRealm());
+        }
+
+        return userManager;
     }
 
     @Provides

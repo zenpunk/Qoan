@@ -80,10 +80,11 @@ public class QoanHeader extends Panel {
         registrationButton.setStyleName("link");
         layout.addComponent(registrationButton);
 
-        Button wikiButton = new Button("Wiki");
-        wikiButton.addClickListener(clickEvent -> onWikiCLicked());
-        wikiButton.setStyleName("link");
-        layout.addComponent(wikiButton);
+        // With the current web-site configuration this has become rather useless.
+//        Button wikiButton = new Button("Wiki");
+//        wikiButton.addClickListener(clickEvent -> onWikiCLicked());
+//        wikiButton.setStyleName("link");
+//        layout.addComponent(wikiButton);
 
         logoutButton = new Button("Logout");
         logoutButton.addClickListener(clickEvent -> onLogoutClicked());

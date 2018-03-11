@@ -70,14 +70,17 @@ public class ComponentsView extends QoanView {
         nameField.setValue("1crm");
         selectLine.addComponent(nameField);
 
-        Button showNgl = makeMoleculeButton();
-        selectLine.addComponent(showNgl);
+        Button showNglButton = makeMoleculeButton();
+        showNglButton.setStyleName("link");
+        selectLine.addComponent(showNglButton);
         layout.addComponent(selectLine);
 
         Button showPdfViewerButton = makePdfButton();
+        showPdfViewerButton.setStyleName("link");
         layout.addComponent(showPdfViewerButton);
 
         Button showGraphButton = makeGraphButton();
+        showGraphButton.setStyleName("link");
         layout.addComponent(showGraphButton);
 
         Component timeSeries = createTimeSeries();

@@ -110,7 +110,8 @@ public class QoanUI extends UI {
         navigator.addView(WorkspaceView.NAME, workspaceView);
         navigator.addView(ManagementView.NAME, managementView);
         navigator.addView(RegistrationView.NAME, registrationView);
-        navigator.addView(WikiView.NAME, WikiView.class);
+        // with the new web page design, this is no longer really relevant
+        //navigator.addView(WikiView.NAME, WikiView.class);
     }
 
     public SearchServiceInterface getNamedService(String name) {

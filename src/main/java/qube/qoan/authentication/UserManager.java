@@ -16,8 +16,8 @@ package qube.qoan.authentication;
 
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.realm.Realm;
 import org.apache.shiro.subject.Subject;
-import qube.qai.security.QaiRealm;
 import qube.qai.user.User;
 
 import javax.inject.Inject;
@@ -28,10 +28,14 @@ import javax.inject.Inject;
 public class UserManager implements UserManagerInterface {
 
     @Inject
-    private QaiRealm realm;
+    private QoanRealm realm;
 
-    //@Inject
-    //private SecurityManager securityManager;
+    public UserManager() {
+    }
+
+    public UserManager(Realm realm) {
+        this.realm = (QoanRealm) realm;
+    }
 
     /**
      * this is in order to authenticate the user with the
