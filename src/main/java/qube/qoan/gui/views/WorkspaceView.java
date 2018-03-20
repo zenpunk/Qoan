@@ -22,7 +22,7 @@ import qube.qoan.gui.components.workspace.Workspace;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
 import qube.qoan.gui.components.workspace.resource.ResourceMenu;
-import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
+import qube.qoan.gui.components.workspace.wiki.WikiMenu;
 import qube.qoan.services.QoanInjectorService;
 
 
@@ -66,11 +66,11 @@ public class WorkspaceView extends QoanView {
         Accordion accordion = new Accordion();
 
         // begin adding the first component
-        // search-menu has to have a reference to the workspace in order to be able to add components to it
-        WikiSearchMenu wikiSearchMenu = new WikiSearchMenu();
-        injector.injectMembers(wikiSearchMenu);
-        wikiSearchMenu.initialize();
-        accordion.addTab(wikiSearchMenu, wikiSearchMenu.getCaptionTitle(), wikiSearchMenu.getMenuIcon().getSource());
+        // wiki-menu has to have a reference to the workspace in order to be able to add components to it
+        WikiMenu wikiMenu = new WikiMenu();
+        injector.injectMembers(wikiMenu);
+        wikiMenu.initialize();
+        accordion.addTab(wikiMenu, wikiMenu.getCaptionTitle(), wikiMenu.getMenuIcon().getSource());
 
         FinanceMenu financeMenu = new FinanceMenu();
         injector.injectMembers(financeMenu);

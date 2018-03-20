@@ -12,7 +12,7 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.search;
+package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
@@ -59,7 +59,7 @@ public class SearchSource extends Panel {
 
         searchService = ((QoanUI) UI.getCurrent()).getNamedService(searchContext);
         if (searchService == null) {
-            String message = "No search-service with the name: '" + searchContext + "' has been found- this service will not be available!";
+            String message = "No wiki-service with the name: '" + searchContext + "' has been found- this service will not be available!";
             logger.error(message);
             Notification.show(message);
         }
@@ -91,9 +91,9 @@ public class SearchSource extends Panel {
 
         Collection<SearchResult> results;
         if (QaiConstants.WIKIPEDIA.equals(searchContext)) {
-            results = searchService.searchInputString(searchString, "titleString", numResults);
+            results = searchService.searchInputString(searchString, "title", numResults);
         } else if (QaiConstants.WIKTIONARY.equalsIgnoreCase(searchContext)) {
-            results = searchService.searchInputString(searchString, "titleString", numResults);
+            results = searchService.searchInputString(searchString, "title", numResults);
         } else {
             results = searchService.searchInputString(searchString, searchContext, numResults);
         }

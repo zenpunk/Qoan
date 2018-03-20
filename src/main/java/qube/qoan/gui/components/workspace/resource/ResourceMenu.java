@@ -17,7 +17,7 @@ package qube.qoan.gui.components.workspace.resource;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
-import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 1/16/16.
  */
-public class ResourceMenu extends QoanMenu {
+public class ResourceMenu extends SearchMenu {
 
     @Inject
     @Named("ResourceResults")

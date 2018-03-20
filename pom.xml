@@ -305,7 +305,7 @@
             <version>1.4.0</version>
         </dependency>
 
-        <!-- Tika does parsing and lucene does search and indexing -->
+        <!-- Tika does parsing and lucene does wiki and indexing -->
         <dependency>
             <groupId>org.apache.tika</groupId>
             <artifactId>tika-parsers</artifactId>

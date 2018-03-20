@@ -17,7 +17,7 @@ package qube.qoan.gui.components.workspace.procedure;
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
-import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 12/2/15.
  */
-public class ProcedureMenu extends QoanMenu {
+public class ProcedureMenu extends SearchMenu {
 
     @Inject
     @Named("ProcedureResults")

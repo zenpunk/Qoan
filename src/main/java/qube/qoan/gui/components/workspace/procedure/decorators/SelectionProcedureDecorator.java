@@ -31,7 +31,7 @@ public class SelectionProcedureDecorator extends BaseDecorator {
     private Image iconImage;
 
     /**
-     * this procedure decorators will accepting drops from search results
+     * this procedure decorators will accepting drops from wiki results
      * to use those as input-parameters for the procedure templates.
      */
     public SelectionProcedureDecorator() {

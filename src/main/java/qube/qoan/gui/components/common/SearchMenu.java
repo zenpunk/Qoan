@@ -19,7 +19,7 @@ import qube.qai.main.QaiConstants;
 import qube.qai.services.SearchServiceInterface;
 import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-import qube.qoan.gui.components.workspace.search.SearchSource;
+import qube.qoan.gui.components.workspace.wiki.SearchSource;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by rainbird on 7/1/17.
  */
-public abstract class QoanMenu extends Panel implements QaiConstants {
+public abstract class SearchMenu extends Panel implements QaiConstants {
 
     protected boolean firstClick = true;
 
@@ -39,7 +39,7 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
 
     protected Accordion searchSettings;
 
-    public QoanMenu() {
+    public SearchMenu() {
         searchSources = new ArrayList<>();
     }
 
@@ -65,12 +65,12 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         resultSink.initialize();
 
         layout = new VerticalLayout();
-        // make the search-settings initially invisible for the sake of clarity
+        // make the wiki-settings initially invisible for the sake of clarity
         searchSettings = new Accordion();
         searchSettings.setCaption("Search settings");
         searchSettings.setVisible(false);
 
-        // put the text-field and the search buton on the same row
+        // put the text-field and the wiki buton on the same row
         HorizontalLayout searchRow = new HorizontalLayout();
 
         TextField searchText = new TextField("Search");
@@ -83,12 +83,12 @@ public abstract class QoanMenu extends Panel implements QaiConstants {
         layout.addComponent(searchRow);
 
         HorizontalLayout toggleLine = new HorizontalLayout();
-        Button toggleSettingsButton = new Button("Toggle search-setting visibility");
+        Button toggleSettingsButton = new Button("Toggle wiki-setting visibility");
         toggleSettingsButton.setStyleName("link");
         toggleSettingsButton.addClickListener(clickEvent -> searchSettings.setVisible(!searchSettings.isVisible()));
         toggleLine.addComponent(toggleSettingsButton);
 
-        Button toggleResultsButton = new Button("Toggle search results visibility");
+        Button toggleResultsButton = new Button("Toggle wiki results visibility");
         toggleResultsButton.setStyleName("link");
         toggleResultsButton.addClickListener(clickEvent -> resultSink.setVisible(!resultSink.isVisible()));
         toggleLine.addComponent(toggleResultsButton);

@@ -54,7 +54,7 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
         for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
             //Procedure proc = template.createProcedure();
-            // this initial search takes too much time.
+            // this initial wiki takes too much time.
             //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
             Collection<SearchResult> results = null;
             SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES,
@@ -77,9 +77,9 @@ public class ProcedureSearchSink extends SearchSinkComponent {
     protected Grid createGrid() {
 
         TreeGrid<SearchResult> grid = new TreeGrid<>();
-        grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getTitle).setCaption("Title");
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
+        grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");

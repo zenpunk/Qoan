@@ -26,7 +26,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new HistogramDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -36,7 +36,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new ImageDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -46,7 +46,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new MolecularViewerDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -56,7 +56,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new NetworkDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -66,7 +66,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new PdfFileDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -76,7 +76,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new StockQuotesDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");
@@ -86,7 +86,7 @@ public class DecoratorsTest extends QoanTestBase {
 
         Decorator decorator = new WikiDecorator();
 
-        SearchResult result = new SearchResult("context", "titleString", "uuid", "test search", 1.0);
+        SearchResult result = new SearchResult("context", "titleString", "uuid", "test wiki", 1.0);
         decorator.decorate(result);
 
         fail("this test is not yet implemented");

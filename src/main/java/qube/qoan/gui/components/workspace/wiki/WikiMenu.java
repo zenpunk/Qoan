@@ -12,12 +12,12 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.search;
+package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import qube.qai.services.SearchResultSink;
-import qube.qoan.gui.components.common.QoanMenu;
+import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
@@ -26,7 +26,7 @@ import javax.inject.Named;
 /**
  * Created by rainbird on 10/31/15.
  */
-public class WikiSearchMenu extends QoanMenu {
+public class WikiMenu extends SearchMenu {
 
     @Inject
     @Named("WikiResults")
@@ -36,7 +36,7 @@ public class WikiSearchMenu extends QoanMenu {
 
     private String captionTitle = "Wikipedia & Wiktionary Entries";
 
-    public WikiSearchMenu() {
+    public WikiMenu() {
         super();
     }
 

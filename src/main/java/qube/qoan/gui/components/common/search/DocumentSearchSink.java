@@ -38,9 +38,9 @@ public class DocumentSearchSink extends SearchSinkComponent {
     protected Grid createGrid() {
 
         Grid<SearchResult> grid = new Grid<>("Search Results");
-        grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getTitle).setCaption("Title");
         grid.addColumn(SearchResult::getDescription).setCaption("Description");
+        grid.addColumn(SearchResult::getContext).setCaption("Context");
         grid.addColumn(SearchResult::getRelevance).setCaption("Relevance");
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");

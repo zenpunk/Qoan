@@ -16,7 +16,7 @@ package qube.qoan.gui.components.common;
 
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
-import qube.qoan.gui.components.workspace.search.WikiSearchMenu;
+import qube.qoan.gui.components.workspace.wiki.WikiMenu;
 import qube.qoan.services.QoanTestBase;
 
 /**
@@ -24,7 +24,7 @@ import qube.qoan.services.QoanTestBase;
  */
 public class QoanMenuTest extends QoanTestBase {
 
-    private WikiSearchMenu wikiSearchMenu;
+    private WikiMenu wikiMenu;
 
     private ProcedureMenu procedureMenu;
 
@@ -32,8 +32,8 @@ public class QoanMenuTest extends QoanTestBase {
 
     public void testSearchMenu() throws Exception {
 
-        wikiSearchMenu = new WikiSearchMenu();
-        injector.injectMembers(wikiSearchMenu);
+        wikiMenu = new WikiMenu();
+        injector.injectMembers(wikiMenu);
 
         fail("implement first the test");
     }
