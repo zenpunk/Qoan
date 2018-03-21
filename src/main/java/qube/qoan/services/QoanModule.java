@@ -43,13 +43,12 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import java.util.Set;
 
 /**
  * Created by rainbird on 11/2/15.
  */
-//@BindConfig(value = "qube/qoan/services/config_dev", syntax = Syntax.PROPERTIES)
-//@BindConfig(value = "qube/qoan/services/config_deploy", syntax = Syntax.PROPERTIES)
 public class QoanModule extends AbstractModule implements QaiConstants {
 
     private static Logger logger = LoggerFactory.getLogger("QoanModule");
@@ -61,19 +60,11 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     // for the time being we leave it at that
     private static String QAI_NODE_NAME = "QaiNode";
 
+    private Properties properties;
+
     private HazelcastInstance hazelcastInstance;
 
     private UserManagerInterface userManager;
-
-//    private WikiSearchSink wikiSearchSink;
-//
-//    private FinanceSearchSink financeResultSink;
-//
-//    private ProcedureSearchSink procedureResultSink;
-//
-//    private ResourceSearchSink resourceSearchSink;
-//
-//    private DocumentSearchSink documentSearchSink;
 
     private DistributedSearchServiceInterface userSearchService;
 
@@ -99,18 +90,24 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
-    //public String QAI_NODE_TO_CONNECT = "192.168.0.*:5701"; // localhost
-    public String CLIENT_NAME = "Qoan Web-Service";
 
+    //public String QAI_NODE_TO_CONNECT = "192.168.0.*:5701"; // localhost
     public String MONDAY_NODE = "192.168.0.199:5701"; // monday
     public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
     public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
-    //public String STANN_NODE = "192.168.0.108:5701"; // stann
-    public String STANN_NODE = "127.0.0.1:5701";
+    public String STANN_NODE = "192.168.0.108:5701"; // stann
+    //public String STANN_NODE = "127.0.0.1:5701";
 
-    private String GRID_PASSWORD = "p4ssw0rd";
+    public String NODE_NAME = "NODE_NAME";
 
-    private String GRID_NAME = "Qai-Nodes";
+    private String GRID_NAME = "GRID_NAME";
+    // private String GRID_NAME = "Qai-Nodes";
+
+    private String GRID_PASSWORD = "GRID_PASSWORD";
+
+    public QoanModule(Properties properties) {
+        this.properties = properties;
+    }
 
     @Override
     protected void configure() {
@@ -137,6 +134,30 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         bind(ProcedureLibraryInterface.class).to(ProcedureLibrary.class);
 
+    }
+
+    @Provides
+    @Singleton
+    HazelcastInstance provideHazelcastInstance() {
+
+        if (hazelcastInstance != null) {
+            return hazelcastInstance;
+        }
+
+        ClientConfig config = new ClientConfig();
+        config.setInstanceName(properties.getProperty(NODE_NAME));
+        config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
+        config.getGroupConfig().setPassword(properties.getProperty(GRID_PASSWORD));
+        config.getNetworkConfig().setSmartRouting(true);
+        config.getNetworkConfig().setRedoOperation(true);
+        // dev-config
+        config.getNetworkConfig().addAddress(STANN_NODE);
+        // deployment config
+        //config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
+
+        hazelcastInstance = HazelcastClient.newHazelcastClient(config);
+
+        return hazelcastInstance;
     }
 
     @Provides
@@ -203,30 +224,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     QaiDataProvider<ResourceData> providePdfResourceProvider() {
         QaiDataProvider<ResourceData> provider = new MapDataProvider(hazelcastInstance, PDF_FILE_RESOURCES);
         return provider;
-    }
-
-    @Provides
-    @Singleton
-    HazelcastInstance provideHazelcastInstance() {
-
-        if (hazelcastInstance != null) {
-            return hazelcastInstance;
-        }
-
-        ClientConfig config = new ClientConfig();
-        config.setInstanceName(CLIENT_NAME);
-        config.getNetworkConfig().setSmartRouting(true);
-        config.getNetworkConfig().setRedoOperation(true);
-        config.getGroupConfig().setPassword(GRID_PASSWORD);
-        config.getGroupConfig().setName(GRID_NAME);
-        // dev-config
-        //config.getNetworkConfig().addAddress(STANN_NODE);
-        // deployment config
-        config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
-
-        hazelcastInstance = HazelcastClient.newHazelcastClient(config);
-
-        return hazelcastInstance;
     }
 
     @Provides
@@ -335,10 +332,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     DistributedSearchServiceInterface providePdfFileSearchService() {
 
         pdfFileRsourcesService = new DistributedSearchService(PDF_FILE_RESOURCES, hazelcastInstance);
-
-        ((DistributedSearchService) pdfFileRsourcesService).setHazelcastInstance(getHazelcastInstance());
-        //((DistributedSearchService) pdfFileRsourcesService).setResultSink(resourceSearchSink);
-        ((DistributedSearchService) pdfFileRsourcesService).initialize();
+        pdfFileRsourcesService.initialize();
 
         return pdfFileRsourcesService;
     }

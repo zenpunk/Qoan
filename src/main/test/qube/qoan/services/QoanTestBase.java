@@ -21,13 +21,16 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.main.QaiConstants;
 
+import java.net.URL;
+import java.util.Properties;
+
 /**
  * Created by rainbird on 11/19/15.
  */
 public class QoanTestBase extends TestCase implements QaiConstants {
 
     protected Logger logger = LoggerFactory.getLogger("QoanTestBase");
-
+    private String PROPERTIES_FILE = "qube/qoan/services/config_test.properties";
     protected Injector injector;
 
     @Override
@@ -36,8 +39,15 @@ public class QoanTestBase extends TestCase implements QaiConstants {
 
         logger.info("injecting members for the test");
 
+        Properties properties = new Properties();
+
+        ClassLoader loader = QoanTestBase.class.getClassLoader();
+        URL url = loader.getResource(PROPERTIES_FILE);
+        properties.load(url.openStream());
+
         if (injector == null) {
-            injector = Guice.createInjector(new QoanModule(), new QoanTestSecurityModule());
+
+            injector = Guice.createInjector(new QoanModule(properties), new QoanTestSecurityModule());
             injector.injectMembers(this);
         }
     }

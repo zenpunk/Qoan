@@ -19,6 +19,7 @@ import com.vaadin.server.ClassResource;
 import com.vaadin.shared.ui.ContentMode;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Notification;
 import info.bliki.wiki.model.WikiModel;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.WikiArticle;
@@ -55,6 +56,10 @@ public class WikiDecorator extends BaseDecorator {
     public void decorate(SearchResult searchResult) {
 
         WikiArticle wikiArticle = qaiDataProvider.brokerSearchResult(searchResult);
+        if (wikiArticle == null) {
+            Notification.show("Strange- the wiki-article could not be found!");
+            return;
+        }
         String content = addStyleLine + "\n" + WikiModel.toHtml(wikiArticle.getContent());
         Label contentText = new Label(content, ContentMode.HTML);
         contentText.setWidth("780px");

@@ -27,6 +27,9 @@ import org.apache.shiro.web.mgt.WebSecurityManager;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
+import java.io.IOException;
+import java.net.URL;
+import java.util.Properties;
 
 public class QoanServlet extends VaadinServlet {
 
@@ -35,6 +38,9 @@ public class QoanServlet extends VaadinServlet {
     private QoanModule qoanModule;
 
     private QoanSecurityModule securityModule;
+
+    //private String PROPERTIES_FILE = "qube/qoan/services/config_dev.properties";
+    private String PROPERTIES_FILE = "qube/qai/main/config_deploy.properties";
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
@@ -45,8 +51,19 @@ public class QoanServlet extends VaadinServlet {
         // which will be used all over the application
         if (injector == null) {
 
+            Properties properties = null;
+            try {
+                properties = new Properties();
+
+                ClassLoader loader = QoanServlet.class.getClassLoader();
+                URL url = loader.getResource(PROPERTIES_FILE);
+                properties.load(url.openStream());
+            } catch (IOException e) {
+                throw new IllegalStateException("Properties file " + PROPERTIES_FILE + " could not be loaded!");
+            }
+
             ServletContext context = servletConfig.getServletContext();
-            qoanModule = new QoanModule();
+            qoanModule = new QoanModule(properties);
 
             Injector dummy = Guice.createInjector(qoanModule);
             HazelcastInstance hazelcastInstance = dummy.getInstance(HazelcastInstance.class);
