@@ -28,24 +28,17 @@ import org.vaadin.addon.JFreeChartWrapper;
 import qube.qai.persistence.QaiDataProvider;
 import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockQuote;
-import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 
 import javax.inject.Inject;
-import javax.inject.Named;
-import java.util.Collection;
 import java.util.Set;
-
-import static qube.qai.main.QaiConstants.STOCK_QUOTES;
 
 /**
  * Created by rainbird on 7/4/17.
  */
 public class StockQuotesDecorator extends BaseDecorator {
 
-    @Inject
-    @Named("Stock_Quotes")
-    private SearchServiceInterface stocksSearch;
+
 
     @Inject
     private QaiDataProvider<StockEntity> dataProvider;
@@ -62,34 +55,30 @@ public class StockQuotesDecorator extends BaseDecorator {
     @Override
     public void decorate(SearchResult toDecorate) {
 
-        Collection<SearchResult> results = stocksSearch.searchInputString(toDecorate.getDescription(), STOCK_QUOTES, 0);
         Component wrapper = new Panel();
+        StockEntity entity = dataProvider.brokerSearchResult(toDecorate);
+        Set<StockQuote> quotes = entity.getQuotes();
+        if (quotes != null && !quotes.isEmpty()) {
 
-        if (results != null && !results.isEmpty()) {
-            SearchResult result = results.iterator().next();
-            StockEntity entity = dataProvider.brokerSearchResult(result);
-            Set<StockQuote> quotes = entity.getQuotes();
-            if (quotes != null && !quotes.isEmpty()) {
+            XYDataset dataset = createDataSet(toDecorate.getTitle(), quotes);
+            JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                    toDecorate.getTitle(),
+                    "Days",
+                    "Close",
+                    dataset,
+                    true,
+                    false,
+                    false);
+            wrapper = new JFreeChartWrapper(chart) {
 
-                XYDataset dataset = createDataSet(toDecorate.getTitle(), quotes);
-                JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                        toDecorate.getTitle(),
-                        "Days",
-                        "Close",
-                        dataset,
-                        true,
-                        false,
-                        false);
-                wrapper = new JFreeChartWrapper(chart) {
-
-                    @Override
-                    public void attach() {
-                        super.attach();
-                        setResource("src", getSource());
-                    }
-                };
-            }
+                @Override
+                public void attach() {
+                    super.attach();
+                    setResource("src", getSource());
+                }
+            };
         }
+
         setContent(wrapper);
     }
 

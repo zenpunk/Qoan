@@ -82,7 +82,7 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
                 StockGroup group = qaiDataProvider.brokerSearchResult(result);
                 Collection<StockEntity> entities = group.getEntities();
                 for (StockEntity entity : entities) {
-                    SearchResult sResult = new SearchResult("Stock_Entities", entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
+                    SearchResult sResult = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
                     treeData.addItem(result, sResult);
                 }
             }
