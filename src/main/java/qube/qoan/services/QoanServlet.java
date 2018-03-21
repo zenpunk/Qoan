@@ -40,7 +40,7 @@ public class QoanServlet extends VaadinServlet {
     private QoanSecurityModule securityModule;
 
     //private String PROPERTIES_FILE = "qube/qoan/services/config_dev.properties";
-    private String PROPERTIES_FILE = "qube/qai/main/config_deploy.properties";
+    private String PROPERTIES_FILE = "qube/qoan/services/config_deploy.properties";
 
     @Override
     public void init(ServletConfig servletConfig) throws ServletException {
