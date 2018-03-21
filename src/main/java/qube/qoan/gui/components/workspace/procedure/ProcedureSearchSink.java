@@ -12,19 +12,20 @@
  *
  */
 
-package qube.qoan.gui.components.common.search;
+package qube.qoan.gui.components.workspace.procedure;
 
-import com.google.inject.Injector;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
 import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
-import qube.qai.services.SearchServiceInterface;
+import qube.qai.services.DistributedSearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
-import qube.qoan.services.QoanInjectorService;
+import qube.qoan.gui.components.common.SearchSettings;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -37,40 +38,68 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
     @Inject
     @Named("Procedures")
-    private SearchServiceInterface searchService;
+    private DistributedSearchServiceInterface searchService;
 
     @Inject
     private ProcedureLibraryInterface procedureLibrary;
 
+    private SearchSettings searchSettings;
+
+    private TreeData<SearchResult> treeData;
+
+    protected TreeDataProvider<SearchResult> dataProvider;
+
     @Override
-    protected void initializeSearchResults() {
+    protected void initializeSearchSettings() {
+        searchSettings = new SearchSettings("Procedures", "Procedures", "This is for searching the procdures");
+    }
 
-        // self-inoculation
-        Injector injector = QoanInjectorService.getInstance().getInjector();
-        injector.injectMembers(this);
+    @Override
+    public void doSearch(String searchString) {
 
-        TreeDataProvider<SearchResult> gridDataProvider = (TreeDataProvider<SearchResult>) ((TreeGrid<SearchResult>) resultGrid).getDataProvider();
-        TreeData<SearchResult> data = gridDataProvider.getTreeData();
+        if (clearResults.getValue()) {
+            onClearResults();
+        }
 
         for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
             //Procedure proc = template.createProcedure();
             // this initial wiki takes too much time.
-            //Collection<SearchResult> results = searchService.searchInputString(proc.getProcedureName(), QaiConstants.PROCEDURES, 100);
+            //Collection<SearchResult> results = searchService.searchInputString(template.getProcedureName(), QaiConstants.PROCEDURES, 100);
             Collection<SearchResult> results = null;
-            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES,
-                    template.getProcedureName(), "n/a", template.getProcedureDescription(), 1.0);
-            if (!data.contains(procResult)) {
-                data.addItem(null, procResult);
+            SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, template.getProcedureName(), "n/a", template.getProcedureDescription(), 1.0);
+            if (!treeData.contains(procResult)) {
+                treeData.addItem(null, procResult);
             }
             // if the results have returned nothing just go on tot eh next procedure.
             if (results == null || results.isEmpty()) {
                 continue;
             } else {
-                data.addItems(procResult, results);
-                gridDataProvider.refreshAll();
+                treeData.addItems(procResult, results);
             }
         }
 
+        dataProvider.refreshAll();
+
+        Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
+
+    }
+
+    @Override
+    public void delayedResults(Collection<SearchResult> results) {
+
+        // for the moment being there is nothing to do here
+
+    }
+
+    @Override
+    public SearchSettings getSettingsFor(String serviceName) {
+        return searchSettings;
+    }
+
+    @Override
+    protected void onClearResults() {
+        treeData.clear();
+        dataProvider.refreshAll();
     }
 
     @Override
@@ -84,6 +113,11 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");
         grid.setHeight("100%");
+
+        treeData = new TreeData<>();
+        dataProvider = new TreeDataProvider<>(treeData);
+        grid.setDataProvider(dataProvider);
+
         return grid;
     }
 
@@ -92,12 +126,4 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         super.initialize();
     }
 
-    @Override
-    public void addResults(Collection<SearchResult> results) {
-        // do nothing- the initialization at start should be sufficient
-        //super.addResults(results);
-        searchResults.addAll(results);
-        dataProvider.refreshAll();
-
-    }
 }

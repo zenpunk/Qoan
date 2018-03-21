@@ -55,7 +55,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
     private SearchServiceInterface wikiResourcesSearchService;
 
     @Inject
-    @Named("StockEntities")
+    @Named("Stock_Groups")
     private SearchServiceInterface stocksSearchService;
 
     @Inject
@@ -63,9 +63,13 @@ public class DistributedSearchServicesTest extends QoanTestBase {
     private SearchServiceInterface proceduresSearchService;
 
     @Inject
+    @Named("MolecularResources")
+    private SearchServiceInterface moleculeSearchService;
+
+    @Inject
     private HazelcastInstance hazelcastInstance;
 
-    public void estDistributedUserSearch() throws Exception {
+    public void testDistributedUserSearch() throws Exception {
 
         IMap<String, User> usersMap = hazelcastInstance.getMap(USERS);
         String userName = "Test_User";
@@ -80,44 +84,35 @@ public class DistributedSearchServicesTest extends QoanTestBase {
 
     }
 
-    public void estDistributedProcedureSearch() throws Exception {
-
-        String topicName = PROCEDURES;
-        Collection<String> searchTopics = new ArrayList<>();
-        searchTopics.add("*");
-
-        checkSearchService(topicName, "name", searchTopics);
-    }
-
     public void testDistributedWikipediaSearch() throws Exception {
 
         String topicName = WIKIPEDIA;
         Collection<String> searchTopics = new ArrayList<>();
-        searchTopics.add("Mickey Mouse");
-        searchTopics.add("Mouse");
+        //searchTopics.add("Mickey Mouse");
+        searchTopics.add("mouse");
 
-        checkSearchService(topicName, "titleString", searchTopics);
+        checkSearchService(wikipediaSearchService, "titleString", searchTopics);
     }
 
-    public void estDistributedWiktionarySearch() throws Exception {
+    public void testDistributedWiktionarySearch() throws Exception {
 
         String topicName = WIKTIONARY;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, "titleString", searchTopics);
+        checkSearchService(wiktionarySearchService, "title", searchTopics);
     }
 
-    public void estDistributedWikiResourcesSearch() throws Exception {
+    public void testDistributedWikiResourcesSearch() throws Exception {
 
         String topicName = WIKIPEDIA_RESOURCES;
         Collection<String> searchTopics = new ArrayList<>();
         searchTopics.add("Mouse");
 
-        checkSearchService(topicName, "titleString", searchTopics);
+        checkSearchService(wikiResourcesSearchService, "title", searchTopics);
     }
 
-    public void estDistributedGroupSearch() throws Exception {
+    public void testDistributedStockGroupSearch() throws Exception {
 
         Collection<SearchResult> results = stocksSearchService.searchInputString("*", STOCK_GROUPS, 0);
 
@@ -138,21 +133,25 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         }
     }
 
-    public void estDistributedProcedureSearch2() throws Exception {
+    public void testDistributedProcedureSearch() throws Exception {
 
-        String topicName = PROCEDURES;
-        Collection<String> searchTopics = new ArrayList<>();
-        searchTopics.add("*");
+        Collection<SearchResult> results = proceduresSearchService.searchInputString("", "PdfResources", 50);
+        assertNotNull("results may not be null", results);
+        assertTrue("there have to be some results", !results.isEmpty());
 
-        checkSearchService(topicName, "", searchTopics);
     }
 
-    private void checkSearchService(String topicName, String fieldName, Collection<String> searchTopics) {
+    public void testDistributedMolecularResSearch() throws Exception {
 
-        SearchServiceInterface distributedSearch = getSearchListener(topicName);
+        Collection<SearchResult> results = moleculeSearchService.searchInputString("", "MolecularResources", 20);
+        assertNotNull("results may not be null", results);
+        assertTrue("there have to be some results", !results.isEmpty());
+    }
+
+    private void checkSearchService(SearchServiceInterface searchService, String fieldName, Collection<String> searchTopics) {
 
         for (String search : searchTopics) {
-            Collection<SearchResult> results = distributedSearch.searchInputString(search, fieldName, 100);
+            Collection<SearchResult> results = searchService.searchInputString(search, fieldName, 100);
             assertNotNull("have to return something", results);
             assertTrue("has to be something in there as well", !results.isEmpty());
             for (SearchResult result : results) {
@@ -164,24 +163,7 @@ public class DistributedSearchServicesTest extends QoanTestBase {
         }
     }
 
-    private SearchServiceInterface getSearchListener(String topicName) {
 
-        if (USERS.equals(topicName)) {
-            return userSearchService;
-        } else if (WIKIPEDIA.equals(topicName)) {
-            return wikipediaSearchService;
-        } else if (WIKTIONARY.equals(topicName)) {
-            return wiktionarySearchService;
-        } else if (WIKIPEDIA_RESOURCES.equals(topicName)) {
-            return wikiResourcesSearchService;
-        } else if (STOCK_GROUPS.equals(topicName)) {
-            return stocksSearchService;
-        } else if (PROCEDURES.equals(topicName)) {
-            return proceduresSearchService;
-        }
-
-        return null;
-    }
 
     private void log(String message) {
         System.out.println(message);

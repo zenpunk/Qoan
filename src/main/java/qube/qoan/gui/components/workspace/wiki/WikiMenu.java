@@ -16,21 +16,16 @@ package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 10/31/15.
  */
 public class WikiMenu extends SearchMenu {
 
-    @Inject
-    @Named("WikiResults")
-    private SearchResultSink resultSink;
+    private SearchSinkComponent searchSink;
 
     private Image iconImage;
 
@@ -44,7 +39,12 @@ public class WikiMenu extends SearchMenu {
     public void initialize() {
         iconImage = new Image("",
                 new ClassResource("gui/images/wiki-icon.png"));
-        initialize(WIKIPEDIA, WIKTIONARY);
+
+        searchSink = new WikiSearchSink();
+        QoanInjectorService.getInstance().injectMembers(searchSink);
+        searchSink.initialize();
+
+        initialize(searchSink, WIKIPEDIA, WIKTIONARY);
     }
 
     @Override
@@ -57,8 +57,5 @@ public class WikiMenu extends SearchMenu {
         return captionTitle;
     }
 
-    @Override
-    protected SearchSinkComponent getResultSink() {
-        return (SearchSinkComponent) resultSink;
-    }
+
 }

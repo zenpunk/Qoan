@@ -16,21 +16,16 @@ package qube.qoan.gui.components.workspace.procedure;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 12/2/15.
  */
 public class ProcedureMenu extends SearchMenu {
 
-    @Inject
-    @Named("ProcedureResults")
-    private SearchResultSink resultSink;
+    private SearchSinkComponent searchSink;
 
     private Image iconImage;
 
@@ -51,12 +46,12 @@ public class ProcedureMenu extends SearchMenu {
     public void initialize() {
         iconImage = new Image("",
                 new ClassResource("gui/images/proc-icon.png"));
-        initialize(PROCEDURES);
-    }
 
-    @Override
-    protected SearchSinkComponent getResultSink() {
-        return (SearchSinkComponent) resultSink;
+        searchSink = new ProcedureSearchSink();
+        QoanInjectorService.getInstance().injectMembers(searchSink);
+        searchSink.initialize();
+
+        initialize(searchSink, PROCEDURES);
     }
 
     @Override

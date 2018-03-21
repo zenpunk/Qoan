@@ -33,6 +33,15 @@ public class QoanInjectorService {
         this.injector = injector;
     }
 
+    public void injectMembers(Object toInject) {
+
+        if (injector == null) {
+            throw new IllegalStateException("There is no injector to make use of. Configuraiton error- exiting!");
+        }
+
+        injector.injectMembers(toInject);
+    }
+
     public static QoanInjectorService getInstance() {
 
         if (instance == null) {

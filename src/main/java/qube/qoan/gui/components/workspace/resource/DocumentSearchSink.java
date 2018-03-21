@@ -12,10 +12,15 @@
  *
  */
 
-package qube.qoan.gui.components.common.search;
+package qube.qoan.gui.components.workspace.resource;
 
+import com.vaadin.data.provider.AbstractDataProvider;
+import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Notification;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.SearchSettings;
+import qube.qoan.gui.components.common.search.SearchSinkComponent;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,15 +28,19 @@ import java.util.List;
 
 public class DocumentSearchSink extends SearchSinkComponent {
 
+    private SearchSettings searchSettings;
+
     private List<SearchResult> searchResults;
 
+    protected AbstractDataProvider dataProvider;
+
     public DocumentSearchSink() {
-        searchResults = new ArrayList<>();
+
     }
 
     @Override
-    protected void initializeSearchResults() {
-        // no initialization to be done here
+    protected void initializeSearchSettings() {
+        searchSettings = new SearchSettings("Documents", "Documents", "This is for searching for documents");
     }
 
     @Override
@@ -46,23 +55,41 @@ public class DocumentSearchSink extends SearchSinkComponent {
         grid.setWidth("100%");
         grid.setHeight("100%");
 
+        searchResults = new ArrayList<>();
+        dataProvider = DataProvider.ofCollection(searchResults);
+        grid.setDataProvider(dataProvider);
+
         return grid;
     }
 
     @Override
-    public void addResults(Collection<SearchResult> results) {
-
-        // if there are no results, don't bother add them
-        if (results == null || results.isEmpty()) {
-            return;
-        }
+    public void doSearch(String searchString) {
 
         if (clearResults.getValue()) {
-            searchResults.clear();
+            onClearResults();
         }
 
-        searchResults.addAll(results);
-        resultGrid.setItems(searchResults);
-        resultGrid.getDataProvider().refreshAll();
+        //results = searchService.searchInputString(searchString, "Stock_Groups", searchSettings.getNumResults());
+
+        if (!searchResults.isEmpty()) {
+            Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
+        }
     }
+
+    @Override
+    public void delayedResults(Collection<SearchResult> results) {
+
+    }
+
+    @Override
+    public SearchSettings getSettingsFor(String serviceName) {
+        return searchSettings;
+    }
+
+    @Override
+    protected void onClearResults() {
+        searchResults.clear();
+        dataProvider.refreshAll();
+    }
+
 }

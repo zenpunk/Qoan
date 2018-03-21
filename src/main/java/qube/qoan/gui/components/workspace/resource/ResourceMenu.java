@@ -16,21 +16,16 @@ package qube.qoan.gui.components.workspace.resource;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 1/16/16.
  */
 public class ResourceMenu extends SearchMenu {
 
-    @Inject
-    @Named("ResourceResults")
-    private SearchResultSink searchSink;
+    private SearchSinkComponent searchSink;
 
     private Image iconImage;
 
@@ -46,12 +41,12 @@ public class ResourceMenu extends SearchMenu {
     public void initialize() {
         iconImage = new Image("",
                 new ClassResource("gui/images/readings-icon.png"));
-        initialize(WIKIPEDIA_RESOURCES, PDF_FILE_RESOURCES, MOLECULAR_RESOURCES);
-    }
 
-    @Override
-    protected SearchSinkComponent getResultSink() {
-        return (SearchSinkComponent) searchSink;
+        searchSink = new ResourceSearchSink();
+        QoanInjectorService.getInstance().injectMembers(searchSink);
+        searchSink.initialize();
+
+        initialize(searchSink, WIKIPEDIA_RESOURCES, PDF_FILE_RESOURCES, MOLECULAR_RESOURCES);
     }
 
     @Override

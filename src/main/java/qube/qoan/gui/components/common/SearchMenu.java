@@ -16,36 +16,24 @@ package qube.qoan.gui.components.common;
 
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
-import qube.qai.services.SearchServiceInterface;
-import qube.qoan.QoanUI;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-import qube.qoan.gui.components.workspace.wiki.SearchSource;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by rainbird on 7/1/17.
  */
 public abstract class SearchMenu extends Panel implements QaiConstants {
 
-    protected boolean firstClick = true;
-
     protected boolean initialized = false;
 
     protected VerticalLayout layout;
 
-    protected List<SearchSource> searchSources;
-
     protected Accordion searchSettings;
 
     public SearchMenu() {
-        searchSources = new ArrayList<>();
+        super();
     }
 
     public abstract void initialize();
-
-    protected abstract SearchSinkComponent getResultSink();
 
     public abstract Image getMenuIcon();
 
@@ -55,14 +43,11 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
         return initialized;
     }
 
-    protected void initialize(String... serviceNames) {
+    protected void initialize(SearchSinkComponent searchSink, String... serviceNames) {
 
         if (initialized) {
             return;
         }
-
-        SearchSinkComponent resultSink = getResultSink();
-        resultSink.initialize();
 
         layout = new VerticalLayout();
         // make the wiki-settings initially invisible for the sake of clarity
@@ -78,7 +63,7 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
 
         Button doSearch = new Button("Do Search");
         doSearch.setStyleName("link");
-        doSearch.addClickListener(clickEvent -> this.doSearch(searchText.getValue()));
+        doSearch.addClickListener(clickEvent -> searchSink.doSearch(searchText.getValue()));
         searchRow.addComponent(doSearch);
         layout.addComponent(searchRow);
 
@@ -90,36 +75,23 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
 
         Button toggleResultsButton = new Button("Toggle wiki results visibility");
         toggleResultsButton.setStyleName("link");
-        toggleResultsButton.addClickListener(clickEvent -> resultSink.setVisible(!resultSink.isVisible()));
+        toggleResultsButton.addClickListener(clickEvent -> searchSink.setVisible(!searchSink.isVisible()));
         toggleLine.addComponent(toggleResultsButton);
 
         layout.addComponent(toggleLine);
 
         //Set<String> serviceNames = ((QoanUI) UI.getCurrent()).getSearchServiceNames();
         for (String name : serviceNames) {
-            SearchServiceInterface service = ((QoanUI) UI.getCurrent()).getNamedService(name);
-            SearchSource source = new SearchSource(name, name);
-            source.setResultSink(resultSink);
-            searchSettings.addTab(source, source.getName());
-            searchSources.add(source);
+            searchSettings.addTab(searchSink.getSettingsFor(name), name);
         }
         searchSettings.setWidth("100%");
         layout.addComponent(searchSettings);
 
         // and finally below all else put the result sink
-        layout.addComponent(resultSink);
+        layout.addComponent(searchSink);
         setContent(layout);
 
         initialized = true;
     }
 
-    public void doSearch(String searchString) {
-        for (SearchSource source : searchSources) {
-            source.doSearch(searchString);
-        }
-        if (firstClick) {
-            Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
-            firstClick = false;
-        }
-    }
 }

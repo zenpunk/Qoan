@@ -150,9 +150,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Users")
     SearchServiceInterface provideUsersSearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("Users");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("Users", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;
@@ -161,9 +159,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Wikipedia_en")
     SearchServiceInterface provideWikipediaSearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("Wikipedia_en");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("Wikipedia_en", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;
@@ -172,9 +168,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Wiktionary_en")
     SearchServiceInterface provideWiktionarySearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("Wiktionary_en");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("Wiktionary_en", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;
@@ -183,9 +177,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("WikiResources_en")
     SearchServiceInterface provideWikiResourcesSearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("WikiResources_en");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("WikiResources_en", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;
@@ -194,9 +186,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("StockEntities")
     SearchServiceInterface provideStockEntitiesSearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("StockEntities");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("StockEntities", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;
@@ -205,9 +195,7 @@ public class QoanTestModule extends AbstractModule {
     @Provides
     @Named("Procedures")
     SearchServiceInterface provideProceduresSearchServiceInterface() {
-        DistributedSearchService searchService = new DistributedSearchService("Procedures");
-
-        searchService.setHazelcastInstance(getHazelcastInstance());
+        DistributedSearchService searchService = new DistributedSearchService("Procedures", getHazelcastInstance());
         searchService.initialize();
 
         return searchService;

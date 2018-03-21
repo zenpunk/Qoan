@@ -14,8 +14,6 @@
 
 package qube.qoan.gui.components.common.search;
 
-import com.vaadin.data.provider.AbstractDataProvider;
-import com.vaadin.data.provider.DataProvider;
 import com.vaadin.shared.ui.dnd.DropEffect;
 import com.vaadin.shared.ui.dnd.EffectAllowed;
 import com.vaadin.ui.*;
@@ -23,8 +21,8 @@ import com.vaadin.ui.components.grid.GridDragSource;
 import com.vaadin.ui.dnd.DragSourceExtension;
 import qube.qai.services.SearchResultSink;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.SearchSettings;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Set;
 
@@ -35,10 +33,6 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     protected Grid<SearchResult> resultGrid;
 
-    protected Collection<SearchResult> searchResults;
-
-    protected AbstractDataProvider dataProvider;
-
     protected CheckBox clearResults;
 
     protected DragSourceExtension<Grid<SearchResult>> dragExtension;
@@ -47,23 +41,26 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
 
     }
 
-    protected abstract void initializeSearchResults();
+    protected abstract void initializeSearchSettings();
 
     protected abstract Grid createGrid();
 
-    public abstract void addResults(Collection<SearchResult> results);
+    public abstract void doSearch(String searchString);
+
+    public abstract SearchSettings getSettingsFor(String serviceName);
+
+    public abstract void delayedResults(Collection<SearchResult> results);
+
+    protected abstract void onClearResults();
 
     /**
      * initialize the thing only when you actually will need it
      */
     public void initialize() {
 
-        searchResults = new ArrayList<>();
-        dataProvider = DataProvider.ofCollection(searchResults);
-
+        initializeSearchSettings();
         resultGrid = createGrid();
         dragExtension = createDragSource(resultGrid);
-        initializeSearchResults();
 
         VerticalLayout layout = new VerticalLayout();
         setContent(layout);
@@ -78,11 +75,6 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
         clearButton.addClickListener(clickEvent -> onClearResults());
         clearButton.setStyleName("link");
         layout.addComponent(clearButton);
-    }
-
-    public void onClearResults() {
-        searchResults.clear();
-        dataProvider.refreshAll();
     }
 
     /**

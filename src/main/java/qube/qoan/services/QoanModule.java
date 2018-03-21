@@ -30,19 +30,14 @@ import qube.qai.security.ProcedureManager;
 import qube.qai.security.ProcedureManagerInterface;
 import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
+import qube.qai.services.DistributedSearchServiceInterface;
 import qube.qai.services.ProcedureRunnerInterface;
-import qube.qai.services.SearchResultSink;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.UUIDServiceInterface;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
 import qube.qoan.authentication.UserManagerInterface;
-import qube.qoan.gui.components.common.search.DocumentSearchSink;
-import qube.qoan.gui.components.common.search.FinanceSearchSink;
-import qube.qoan.gui.components.common.search.ProcedureSearchSink;
-import qube.qoan.gui.components.common.search.WikiSearchSink;
-import qube.qoan.gui.components.workspace.resource.ResourceSearchSink;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -70,35 +65,35 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private UserManagerInterface userManager;
 
-    private WikiSearchSink wikiSearchSink;
+//    private WikiSearchSink wikiSearchSink;
+//
+//    private FinanceSearchSink financeResultSink;
+//
+//    private ProcedureSearchSink procedureResultSink;
+//
+//    private ResourceSearchSink resourceSearchSink;
+//
+//    private DocumentSearchSink documentSearchSink;
 
-    private FinanceSearchSink financeResultSink;
+    private DistributedSearchServiceInterface userSearchService;
 
-    private ProcedureSearchSink procedureResultSink;
+    private DistributedSearchServiceInterface wikipediaSearchService;
 
-    private ResourceSearchSink resourceSearchSink;
+    private DistributedSearchServiceInterface wiktionarySearchService;
 
-    private DocumentSearchSink documentSearchSink;
+    private DistributedSearchServiceInterface molecularResourcesService;
 
-    private SearchServiceInterface userSearchService;
+    private DistributedSearchServiceInterface pdfFileRsourcesService;
 
-    private SearchServiceInterface wikipediaSearchService;
+    private DistributedSearchServiceInterface wikiResourcesSearchService;
 
-    private SearchServiceInterface wiktionarySearchService;
+    private DistributedSearchServiceInterface stockEntitiesSearchService;
 
-    private SearchServiceInterface molecularResourcesService;
+    private DistributedSearchServiceInterface stockGroupsSearchService;
 
-    private SearchServiceInterface pdfFileRsourcesService;
+    private DistributedSearchServiceInterface stockQuotesSearchService;
 
-    private SearchServiceInterface wikiResourcesSearchService;
-
-    private SearchServiceInterface stockEntitiesSearchService;
-
-    private SearchServiceInterface stockGroupsSearchService;
-
-    private SearchServiceInterface stockQuotesSearchService;
-
-    private SearchServiceInterface proceduresSearchService;
+    private DistributedSearchServiceInterface proceduresSearchService;
 
     private Map<String, SearchServiceInterface> namedSearchServices;
 
@@ -110,8 +105,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     public String MONDAY_NODE = "192.168.0.199:5701"; // monday
     public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
     public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
-    public String STANN_NODE = "192.168.0.108:5701"; // stann
-    //public String STANN_NODE = "127.0.0.1:5701";
+    //public String STANN_NODE = "192.168.0.108:5701"; // stann
+    public String STANN_NODE = "127.0.0.1:5701";
 
     private String GRID_PASSWORD = "p4ssw0rd";
 
@@ -167,49 +162,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     }
 
     @Provides
-    @Singleton
-    @Named("WikiResults")
-    SearchResultSink provideSearchResultSink() {
-        wikiSearchSink = new WikiSearchSink();
-        return wikiSearchSink;
-    }
-
-    @Provides
-    @Singleton
-    @Named("ProcedureResults")
-    SearchResultSink provideProcedureResultSink() {
-        procedureResultSink = new ProcedureSearchSink();
-        return procedureResultSink;
-    }
-
-    @Provides
-    @Singleton
-    @Named("FinanceResults")
-    SearchResultSink provideFinanceResultSink() {
-        financeResultSink = new FinanceSearchSink();
-        return financeResultSink;
-    }
-
-    @Provides
-    @Singleton
-    @Named("ResourceResults")
-    SearchResultSink provideDocumentSearchSink() {
-        documentSearchSink = new DocumentSearchSink();
-        return documentSearchSink;
-    }
-
-    /*@Provides
-    @Singleton
-    UserManagerInterface provideUserManager() {
-
-        if (userManager == null) {
-            userManager = new UserManager();
-        }
-
-        return userManager;
-    }*/
-
-    @Provides
     QaiDataProvider<Procedure> provideProcedureProvider() {
         QaiDataProvider<Procedure> provider = new MapDataProvider(hazelcastInstance, PROCEDURES);
         return provider;
@@ -263,14 +215,14 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         ClientConfig config = new ClientConfig();
         config.setInstanceName(CLIENT_NAME);
-        config.getNetworkConfig().setSmartRouting(true);
+        //config.getNetworkConfig().setSmartRouting(true);
         config.getNetworkConfig().setRedoOperation(true);
         config.getGroupConfig().setPassword(GRID_PASSWORD);
         config.getGroupConfig().setName(GRID_NAME);
         // dev-config
-        //config.getNetworkConfig().addAddress(STANN_NODE);
+        config.getNetworkConfig().addAddress(STANN_NODE);
         // deployment config
-        config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
+        //config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(config);
 
@@ -280,12 +232,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Users")
     @Singleton
-    SearchServiceInterface provideUserSearchService() {
+    DistributedSearchServiceInterface provideUserSearchService() {
 
-        userSearchService = new DistributedSearchService(USERS);
-        ((DistributedSearchService) userSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) userSearchService).setResultSink(wikiSearchSink);
-        ((DistributedSearchService) userSearchService).initialize();
+        userSearchService = new DistributedSearchService(USERS, hazelcastInstance);
+        userSearchService.initialize();
 
         return userSearchService;
     }
@@ -293,13 +243,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Wikipedia_en")
     @Singleton
-    public SearchServiceInterface provideWikipediaSearchService() {
+    public DistributedSearchServiceInterface provideWikipediaSearchService() {
 
-        wikipediaSearchService = new DistributedSearchService(WIKIPEDIA);
-
-        ((DistributedSearchService) wikipediaSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) wikipediaSearchService).setResultSink(wikiSearchSink);
-        ((DistributedSearchService) wikipediaSearchService).initialize();
+        wikipediaSearchService = new DistributedSearchService(WIKIPEDIA, hazelcastInstance);
+        wikipediaSearchService.initialize();
 
         return wikipediaSearchService;
     }
@@ -307,13 +254,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Wiktionary_en")
     @Singleton
-    public SearchServiceInterface provideWiktionarySearchService() {
+    public DistributedSearchServiceInterface provideWiktionarySearchService() {
 
-        wiktionarySearchService = new DistributedSearchService(WIKTIONARY);
-
-        ((DistributedSearchService) wiktionarySearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) wiktionarySearchService).setResultSink(wikiSearchSink);
-        ((DistributedSearchService) wiktionarySearchService).initialize();
+        wiktionarySearchService = new DistributedSearchService(WIKTIONARY, hazelcastInstance);
+        wiktionarySearchService.initialize();
 
         return wiktionarySearchService;
     }
@@ -321,13 +265,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Stock_Groups")
     @Singleton
-    SearchServiceInterface provideStockGroupssSearchService() {
+    DistributedSearchServiceInterface provideStockGroupssSearchService() {
 
-        stockGroupsSearchService = new DistributedSearchService(STOCK_GROUPS);
-
-        ((DistributedSearchService) stockGroupsSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) stockGroupsSearchService).setResultSink(financeResultSink);
-        ((DistributedSearchService) stockGroupsSearchService).initialize();
+        stockGroupsSearchService = new DistributedSearchService(STOCK_GROUPS, hazelcastInstance);
+        stockGroupsSearchService.initialize();
 
         return stockGroupsSearchService;
     }
@@ -335,13 +276,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Stock_Quotes")
     @Singleton
-    SearchServiceInterface provideStockQuotessSearchService() {
+    DistributedSearchServiceInterface provideStockQuotessSearchService() {
 
-        stockQuotesSearchService = new DistributedSearchService(STOCK_QUOTES);
-
-        ((DistributedSearchService) stockQuotesSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) stockQuotesSearchService).setResultSink(financeResultSink);
-        ((DistributedSearchService) stockQuotesSearchService).initialize();
+        stockQuotesSearchService = new DistributedSearchService(STOCK_QUOTES, hazelcastInstance);
+        stockQuotesSearchService.initialize();
 
         return stockQuotesSearchService;
     }
@@ -349,13 +287,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Stock_Entities")
     @Singleton
-    SearchServiceInterface provideStockEntitiesSearchService() {
+    DistributedSearchServiceInterface provideStockEntitiesSearchService() {
 
-        stockEntitiesSearchService = new DistributedSearchService(STOCK_ENTITIES);
-
-        ((DistributedSearchService) stockEntitiesSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) stockEntitiesSearchService).setResultSink(financeResultSink);
-        ((DistributedSearchService) stockEntitiesSearchService).initialize();
+        stockEntitiesSearchService = new DistributedSearchService(STOCK_ENTITIES, hazelcastInstance);
+        stockEntitiesSearchService.initialize();
 
         return stockEntitiesSearchService;
     }
@@ -363,13 +298,11 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("Procedures")
     @Singleton
-    SearchServiceInterface provideProceduresSearchService() {
+    DistributedSearchServiceInterface provideProceduresSearchService() {
 
-        proceduresSearchService = new DistributedSearchService(PROCEDURES);
+        proceduresSearchService = new DistributedSearchService(PROCEDURES, hazelcastInstance);
 
-        ((DistributedSearchService) proceduresSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) proceduresSearchService).setResultSink(procedureResultSink);
-        ((DistributedSearchService) proceduresSearchService).initialize();
+        proceduresSearchService.initialize();
 
         return proceduresSearchService;
     }
@@ -377,13 +310,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("WikiResources_en")
     @Singleton
-    SearchServiceInterface provideWikiResourcesSearchService() {
+    DistributedSearchServiceInterface provideWikiResourcesSearchService() {
 
-        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES);
-
-        ((DistributedSearchService) wikiResourcesSearchService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) wikiResourcesSearchService).setResultSink(resourceSearchSink);
-        ((DistributedSearchService) wikiResourcesSearchService).initialize();
+        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES, hazelcastInstance);
+        wikiResourcesSearchService.initialize();
 
         return wikiResourcesSearchService;
     }
@@ -391,13 +321,10 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("MolecularResources")
     @Singleton
-    SearchServiceInterface provideMolecularSearchService() {
+    DistributedSearchServiceInterface provideMolecularSearchService() {
 
-        molecularResourcesService = new DistributedSearchService(MOLECULAR_RESOURCES);
-
-        ((DistributedSearchService) molecularResourcesService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) molecularResourcesService).setResultSink(resourceSearchSink);
-        ((DistributedSearchService) molecularResourcesService).initialize();
+        molecularResourcesService = new DistributedSearchService(MOLECULAR_RESOURCES, hazelcastInstance);
+        molecularResourcesService.initialize();
 
         return molecularResourcesService;
     }
@@ -405,12 +332,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     @Named("PdfFileResources")
     @Singleton
-    SearchServiceInterface providePdfFileSearchService() {
+    DistributedSearchServiceInterface providePdfFileSearchService() {
 
-        pdfFileRsourcesService = new DistributedSearchService(PDF_FILE_RESOURCES);
+        pdfFileRsourcesService = new DistributedSearchService(PDF_FILE_RESOURCES, hazelcastInstance);
 
         ((DistributedSearchService) pdfFileRsourcesService).setHazelcastInstance(getHazelcastInstance());
-        ((DistributedSearchService) pdfFileRsourcesService).setResultSink(resourceSearchSink);
+        //((DistributedSearchService) pdfFileRsourcesService).setResultSink(resourceSearchSink);
         ((DistributedSearchService) pdfFileRsourcesService).initialize();
 
         return pdfFileRsourcesService;
@@ -527,13 +454,5 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         return hazelcastInstance;
     }
-
-    /*public UserManagerInterface getUserManager() {
-        if (userManager == null) {
-            userManager = provideUserManager();
-        }
-
-        return userManager;
-    }*/
 
 }

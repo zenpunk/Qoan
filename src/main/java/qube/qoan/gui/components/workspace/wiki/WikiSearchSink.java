@@ -12,15 +12,13 @@
  *
  */
 
-package qube.qoan.gui.components.workspace.resource;
+package qube.qoan.gui.components.workspace.wiki;
 
-import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.data.provider.AbstractDataProvider;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Notification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import qube.qai.main.QaiConstants;
 import qube.qai.services.DistributedSearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.SearchSettings;
@@ -31,45 +29,37 @@ import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 
-import static qube.qai.main.QaiConstants.*;
-
-public class ResourceSearchSink extends SearchSinkComponent {
-
-    private Logger logger = LoggerFactory.getLogger("ResourceSearchSink");
-
-    @Inject
-    @Named("WikiResources_en")
-    private DistributedSearchServiceInterface wikiResSearchService;
+/**
+ * Created by rainbird on 7/16/17.
+ */
+public class WikiSearchSink extends SearchSinkComponent {
 
     @Inject
-    @Named("PdfFileResources")
-    private DistributedSearchServiceInterface pdfSearchService;
+    @Named("Wikipedia_en")
+    private DistributedSearchServiceInterface wikiService;
 
     @Inject
-    @Named("MolecularResources")
-    private DistributedSearchServiceInterface molecularSearchService;
-
-    @Inject
-    private HazelcastInstance hazelcastInstance;
+    @Named("Wiktionary_en")
+    private DistributedSearchServiceInterface wiktionaryService;
 
     private SearchSettings wikiSettings;
 
-    private SearchSettings pdfSettings;
-
-    private SearchSettings moleSettings;
+    private SearchSettings wiktionarySettings;
 
     private Collection<SearchResult> searchResults;
 
     protected AbstractDataProvider dataProvider;
 
+    public WikiSearchSink() {
+        super();
+    }
+
     @Override
     protected void initializeSearchSettings() {
 
-        wikiSettings = new SearchSettings("WikiResources_en", "WikiResources", "This is for searching the wiki-resources");
-        pdfSettings = new SearchSettings("PdfFileResources", "PdfFileResources", "This is for searching the pdf-file resources");
-        moleSettings = new SearchSettings("MolecularResources", "MolecularResources", "This is for searching the molecular-resources");
+        wikiSettings = new SearchSettings(QaiConstants.WIKIPEDIA, "Wikipedia", "This is for the searches in Wikipedia");
 
-
+        wiktionarySettings = new SearchSettings(QaiConstants.WIKTIONARY, "Wiktionary", "This is for searches in Wiktionary");
     }
 
     @Override
@@ -99,15 +89,11 @@ public class ResourceSearchSink extends SearchSinkComponent {
         }
 
         if (wikiSettings.isInUse()) {
-            wikiResSearchService.searchInputString(this, searchString, WIKIPEDIA_RESOURCES, wikiSettings.getNumResults());
+            wikiService.searchInputString(this, searchString, "title", wikiSettings.getNumResults());
         }
 
-        if (pdfSettings.isInUse()) {
-            pdfSearchService.searchInputString(this, searchString, PDF_FILE_RESOURCES, pdfSettings.getNumResults());
-        }
-
-        if (moleSettings.isInUse()) {
-            molecularSearchService.searchInputString(this, searchString, MOLECULAR_RESOURCES, moleSettings.getNumResults());
+        if (wiktionarySettings.isInUse()) {
+            Collection<SearchResult> results = wiktionaryService.searchInputString(searchString, "title", wiktionarySettings.getNumResults());
         }
 
         dataProvider.refreshAll();
@@ -134,13 +120,20 @@ public class ResourceSearchSink extends SearchSinkComponent {
     }
 
     @Override
-    public SearchSettings getSettingsFor(String serviceName) {
-        return wikiSettings;
-    }
-
-    @Override
     protected void onClearResults() {
         searchResults.clear();
         dataProvider.refreshAll();
     }
+
+    @Override
+    public SearchSettings getSettingsFor(String serviceName) {
+        if (QaiConstants.WIKIPEDIA.equalsIgnoreCase(serviceName)) {
+            return wikiSettings;
+        } else if (QaiConstants.WIKTIONARY.equalsIgnoreCase(serviceName)) {
+            return wiktionarySettings;
+        } else {
+            return null;
+        }
+    }
+
 }

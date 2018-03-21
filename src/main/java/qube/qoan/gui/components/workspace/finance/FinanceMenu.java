@@ -16,21 +16,16 @@ package qube.qoan.gui.components.workspace.finance;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
-import qube.qai.services.SearchResultSink;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
-
-import javax.inject.Inject;
-import javax.inject.Named;
+import qube.qoan.services.QoanInjectorService;
 
 /**
  * Created by rainbird on 11/18/15.
  */
 public class FinanceMenu extends SearchMenu {
 
-    @Inject
-    @Named("FinanceResults")
-    private SearchResultSink resultSink;
+    private SearchSinkComponent searchSink;
 
     private Image iconImage;
 
@@ -44,12 +39,12 @@ public class FinanceMenu extends SearchMenu {
     public void initialize() {
         iconImage = new Image("Selection",
                 new ClassResource("gui/images/stocks-index-icon.png"));
-        initialize(STOCK_GROUPS);
-    }
 
-    @Override
-    protected SearchSinkComponent getResultSink() {
-        return (SearchSinkComponent) resultSink;
+        searchSink = new FinanceSearchSink();
+        searchSink.initialize();
+        QoanInjectorService.getInstance().injectMembers(searchSink);
+
+        initialize(searchSink, STOCK_GROUPS);
     }
 
     @Override

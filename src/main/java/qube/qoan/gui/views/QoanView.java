@@ -14,7 +14,6 @@
 
 package qube.qoan.gui.views;
 
-import com.google.inject.Injector;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.UI;
@@ -51,9 +50,7 @@ public abstract class QoanView extends VerticalLayout implements View {
 
         if (!initialized) {
 
-            //Injector injector = ((QoanUI) UI.getCurrent()).getInjector();
-            Injector injector = QoanInjectorService.getInstance().getInjector();
-            injector.injectMembers(this);
+            QoanInjectorService.getInstance().injectMembers(this);
 
             header = new QoanHeader();
             header.setWidth("100%");
