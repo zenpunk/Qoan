@@ -93,7 +93,7 @@ public class WikiSearchSink extends SearchSinkComponent {
         }
 
         if (wiktionarySettings.isInUse()) {
-            Collection<SearchResult> results = wiktionaryService.searchInputString(searchString, "title", wiktionarySettings.getNumResults());
+            wiktionaryService.searchInputString(this, searchString, "title", wiktionarySettings.getNumResults());
         }
 
         dataProvider.refreshAll();
