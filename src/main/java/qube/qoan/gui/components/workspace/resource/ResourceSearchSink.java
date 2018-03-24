@@ -134,7 +134,7 @@ public class ResourceSearchSink extends SearchSinkComponent {
 
         dataProvider.refreshAll();
 
-        Notification.show("Resources search results received- drag items on desktop to open...");
+//        Notification.show("Resources search results received- drag items on desktop to open...");
 
     }
 

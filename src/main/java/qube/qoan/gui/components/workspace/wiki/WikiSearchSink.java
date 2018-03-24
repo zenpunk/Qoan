@@ -122,7 +122,7 @@ public class WikiSearchSink extends SearchSinkComponent {
 
         dataProvider.refreshAll();
 
-        Notification.show("Wiki-searches received- drag items on desktop to open...");
+//        Notification.show("Wiki-searches received- drag items on desktop to open...");
 
     }
 
