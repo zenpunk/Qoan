@@ -77,15 +77,15 @@ public class WorkspaceView extends QoanView {
         financeMenu.initialize();
         accordion.addTab(financeMenu, financeMenu.getCaptionTitle(), financeMenu.getMenuIcon().getSource());
 
-        ProcedureMenu procedureMenu = new ProcedureMenu();
-        injector.injectMembers(procedureMenu);
-        procedureMenu.initialize();
-        accordion.addTab(procedureMenu, procedureMenu.getCaptionTitle(), procedureMenu.getMenuIcon().getSource());
-
         ResourceMenu resourceMenu = new ResourceMenu();
         injector.injectMembers(resourceMenu);
         resourceMenu.initialize();
         accordion.addTab(resourceMenu, resourceMenu.getCaptionTitle(), resourceMenu.getMenuIcon().getSource());
+
+        ProcedureMenu procedureMenu = new ProcedureMenu();
+        injector.injectMembers(procedureMenu);
+        procedureMenu.initialize();
+        accordion.addTab(procedureMenu, procedureMenu.getCaptionTitle(), procedureMenu.getMenuIcon().getSource());
 
         splitPanel.setFirstComponent(accordion);
 

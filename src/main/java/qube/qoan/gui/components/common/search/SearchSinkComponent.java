@@ -31,6 +31,10 @@ import java.util.Set;
  */
 public abstract class SearchSinkComponent extends Panel implements SearchResultSink {
 
+    protected String name;
+
+    protected String context;
+
     protected Grid<SearchResult> resultGrid;
 
     protected CheckBox clearResults;
@@ -129,5 +133,23 @@ public abstract class SearchSinkComponent extends Panel implements SearchResultS
         });
 
         return dragSource;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String getContext() {
+        return context;
+    }
+
+    public void setContext(String context) {
+        this.context = context;
     }
 }

@@ -71,6 +71,6 @@ public class WikiDecorator extends BaseDecorator {
 
     @Override
     public String getName() {
-        return "Wiki-Decorator";
+        return "Wiki Article";
     }
 }

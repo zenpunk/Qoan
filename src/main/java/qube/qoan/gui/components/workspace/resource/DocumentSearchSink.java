@@ -40,6 +40,10 @@ public class DocumentSearchSink extends SearchSinkComponent {
 
     @Override
     protected void initializeSearchSettings() {
+
+        this.name = "Documents";
+        this.context = "Documents";
+
         searchSettings = new SearchSettings("Documents", "Documents", "This is for searching for documents");
     }
 

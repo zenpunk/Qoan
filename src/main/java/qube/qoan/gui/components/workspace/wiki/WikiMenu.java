@@ -45,6 +45,7 @@ public class WikiMenu extends SearchMenu {
         searchSink.initialize();
 
         initialize(searchSink, WIKIPEDIA, WIKTIONARY);
+
     }
 
     @Override

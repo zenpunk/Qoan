@@ -65,10 +65,12 @@ public class ResourceSearchSink extends SearchSinkComponent {
     @Override
     protected void initializeSearchSettings() {
 
+        this.name = "WikiResources, PdfFileResources & MolecularResources searches";
+        this.context = "WikiResources_en, PdfFileResources, MolecularResources";
+
         wikiSettings = new SearchSettings("WikiResources_en", "WikiResources", "This is for searching the wiki-resources");
         pdfSettings = new SearchSettings("PdfFileResources", "PdfFileResources", "This is for searching the pdf-file resources");
         moleSettings = new SearchSettings("MolecularResources", "MolecularResources", "This is for searching the molecular-resources");
-
 
     }
 
@@ -131,6 +133,9 @@ public class ResourceSearchSink extends SearchSinkComponent {
         }
 
         dataProvider.refreshAll();
+
+        Notification.show("Resources search results received- drag items on desktop to open...");
+
     }
 
     @Override

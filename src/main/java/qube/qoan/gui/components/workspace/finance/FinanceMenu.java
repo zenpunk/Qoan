@@ -37,14 +37,20 @@ public class FinanceMenu extends SearchMenu {
 
     @Override
     public void initialize() {
-        iconImage = new Image("Selection",
+        iconImage = new Image("Stock Groups & Entities",
                 new ClassResource("gui/images/stocks-index-icon.png"));
 
         searchSink = new FinanceSearchSink();
         searchSink.initialize();
         QoanInjectorService.getInstance().injectMembers(searchSink);
 
+        this.searchToolTipText = "Currently no searches here- just click button to load sample set";
+
         initialize(searchSink, STOCK_GROUPS);
+
+        this.searchText.setEnabled(false);
+        this.searchText.setValue("n/a");
+        this.searchText.setDescription("Currently search is not implemented- click on search button to load sample data set.");
     }
 
     @Override

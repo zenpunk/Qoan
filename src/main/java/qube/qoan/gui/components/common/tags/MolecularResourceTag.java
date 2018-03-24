@@ -18,6 +18,7 @@ import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.Layout;
 import qube.qai.services.implementation.SearchResult;
+import qube.qoan.gui.components.common.decorators.MolecularInfoDecorator;
 import qube.qoan.gui.components.common.decorators.MolecularViewerDecorator;
 
 public class MolecularResourceTag extends BaseTag {
@@ -27,5 +28,6 @@ public class MolecularResourceTag extends BaseTag {
         iconImage = new Image(searchResult.getContext(),
                 new ClassResource("gui/images/helix.jpg"));
         decorators.put("Molecular-Viewer", new MolecularViewerDecorator());
+        decorators.put("Molecule info", new MolecularInfoDecorator());
     }
 }

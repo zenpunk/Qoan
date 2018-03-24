@@ -51,7 +51,13 @@ public class ProcedureMenu extends SearchMenu {
         QoanInjectorService.getInstance().injectMembers(searchSink);
         searchSink.initialize();
 
+        this.searchToolTipText = "Currently no searches here- just click button to load sample set";
+
         initialize(searchSink, PROCEDURES);
+
+        this.searchText.setEnabled(false);
+        this.searchText.setValue("n/a");
+        this.searchText.setDescription("Currently search is not implemented- click on search button to load sample data set.");
     }
 
     @Override

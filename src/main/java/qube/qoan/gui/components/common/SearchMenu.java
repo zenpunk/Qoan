@@ -29,6 +29,12 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
 
     protected Accordion searchSettings;
 
+    protected Button doSearch;
+
+    protected TextField searchText;
+
+    protected String searchToolTipText = "Click button to start search";
+
     public SearchMenu() {
         super();
     }
@@ -58,22 +64,23 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
         // put the text-field and the wiki buton on the same row
         HorizontalLayout searchRow = new HorizontalLayout();
 
-        TextField searchText = new TextField("Search");
+        searchText = new TextField("Search");
         searchRow.addComponent(searchText);
 
-        Button doSearch = new Button("Do Search");
+        doSearch = new Button("Do Search");
         doSearch.setStyleName("link");
+        doSearch.setDescription(searchToolTipText);
         doSearch.addClickListener(clickEvent -> searchSink.doSearch(searchText.getValue()));
         searchRow.addComponent(doSearch);
         layout.addComponent(searchRow);
 
         HorizontalLayout toggleLine = new HorizontalLayout();
-        Button toggleSettingsButton = new Button("Toggle wiki-setting visibility");
+        Button toggleSettingsButton = new Button("Toggle search settings visibility");
         toggleSettingsButton.setStyleName("link");
         toggleSettingsButton.addClickListener(clickEvent -> searchSettings.setVisible(!searchSettings.isVisible()));
         toggleLine.addComponent(toggleSettingsButton);
 
-        Button toggleResultsButton = new Button("Toggle wiki results visibility");
+        Button toggleResultsButton = new Button("Toggle search results visibility");
         toggleResultsButton.setStyleName("link");
         toggleResultsButton.addClickListener(clickEvent -> searchSink.setVisible(!searchSink.isVisible()));
         toggleLine.addComponent(toggleResultsButton);

@@ -29,7 +29,7 @@ public class ResourceMenu extends SearchMenu {
 
     private Image iconImage;
 
-    private String captionTitle = "Wiki-Resources, Pdf-Documents & Molecular-Viewer Resources";
+    private String captionTitle = "Wiki-Resources, Pdf-Documents & Molecular Resources";
 
     /**
      * this is for adding and managing pdf-directories in the whole
@@ -46,7 +46,13 @@ public class ResourceMenu extends SearchMenu {
         QoanInjectorService.getInstance().injectMembers(searchSink);
         searchSink.initialize();
 
+        this.searchToolTipText = "Currently no searches here- just click button to load sample set";
+
         initialize(searchSink, WIKIPEDIA_RESOURCES, PDF_FILE_RESOURCES, MOLECULAR_RESOURCES);
+
+        this.searchText.setEnabled(false);
+        this.searchText.setValue("n/a");
+        this.searchText.setDescription("Currently search is not implemented- click on search button to load sample data set.");
     }
 
     @Override

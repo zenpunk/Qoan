@@ -51,6 +51,8 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
     @Override
     protected void initializeSearchSettings() {
+        this.name = "Procedures";
+        this.context = "Procedures";
         searchSettings = new SearchSettings("Procedures", "Procedures", "This is for searching the procdures");
     }
 

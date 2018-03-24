@@ -57,6 +57,9 @@ public class WikiSearchSink extends SearchSinkComponent {
     @Override
     protected void initializeSearchSettings() {
 
+        this.name = "Wikipedia & Wiktionary articles";
+        this.context = "Wikipedia_en, Wiktionary_en";
+
         wikiSettings = new SearchSettings(QaiConstants.WIKIPEDIA, "Wikipedia", "This is for the searches in Wikipedia");
 
         wiktionarySettings = new SearchSettings(QaiConstants.WIKTIONARY, "Wiktionary", "This is for searches in Wiktionary");
@@ -73,6 +76,7 @@ public class WikiSearchSink extends SearchSinkComponent {
         grid.addColumn(SearchResult::getUuid).setCaption("UUID");
         grid.setWidth("100%");
         grid.setHeight("100%");
+        grid.clearSortOrder();
 
         searchResults = new ArrayList<>();
         dataProvider = DataProvider.ofCollection(searchResults);
@@ -117,6 +121,9 @@ public class WikiSearchSink extends SearchSinkComponent {
         }
 
         dataProvider.refreshAll();
+
+        Notification.show("Wiki-searches received- drag items on desktop to open...");
+
     }
 
     @Override
@@ -127,9 +134,9 @@ public class WikiSearchSink extends SearchSinkComponent {
 
     @Override
     public SearchSettings getSettingsFor(String serviceName) {
-        if (QaiConstants.WIKIPEDIA.equalsIgnoreCase(serviceName)) {
+        if ("Wikipedia".equalsIgnoreCase(serviceName)) {
             return wikiSettings;
-        } else if (QaiConstants.WIKTIONARY.equalsIgnoreCase(serviceName)) {
+        } else if ("Wiktionary".equalsIgnoreCase(serviceName)) {
             return wiktionarySettings;
         } else {
             return null;

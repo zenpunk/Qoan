@@ -38,6 +38,7 @@ import java.util.Set;
 /**
  *
  */
+//@Push
 @Theme("mytheme")
 @Widgetset("qube.qoan.MyWidgetset")
 public class QoanUI extends UI {

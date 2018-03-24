@@ -18,6 +18,7 @@ import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
 import qube.qai.persistence.QaiDataProvider;
@@ -42,9 +43,11 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
     private DistributedSearchServiceInterface searchService;
 
     @Inject
-    QaiDataProvider<StockGroup> qaiDataProvider;
+    private QaiDataProvider<StockGroup> qaiDataProvider;
 
     private SearchSettings searchSettings;
+
+    private ProgressBar progress;
 
     private TreeData<SearchResult> treeData;
 
@@ -55,61 +58,12 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
     }
 
     @Override
-    public void doSearch(String searchString) {
-
-        if (clearResults.getValue()) {
-            onClearResults();
-        }
-
-        if (searchSettings.isInUse()) {
-            searchService.searchInputString(this, searchString, QaiConstants.STOCK_GROUPS, searchSettings.getNumResults());
-        }
-
-    }
-
-    @Override
-    public void delayedResults(Collection<SearchResult> results) {
-
-        if (results == null || results.isEmpty()) {
-            return;
-        }
-
-        for (SearchResult result : results) {
-
-            if (!treeData.contains(result)) {
-                treeData.addItem(null, result);
-
-                StockGroup group = qaiDataProvider.brokerSearchResult(result);
-                Collection<StockEntity> entities = group.getEntities();
-                for (StockEntity entity : entities) {
-                    SearchResult sResult = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
-                    treeData.addItem(result, sResult);
-                }
-            }
-        }
-
-        dataProvider.refreshAll();
-
-        if (results != null && !results.isEmpty()) {
-            Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
-        }
-    }
-
-    @Override
-    public SearchSettings getSettingsFor(String serviceName) {
-        return searchSettings;
-    }
-
-    @Override
-    protected void onClearResults() {
-        treeData.clear();
-        dataProvider.refreshAll();
-    }
-
-    @Override
     protected void initializeSearchSettings() {
 
-        searchSettings = new SearchSettings("Procedures", "Procedures", "This is for searching the procdures");
+        this.name = "Finance-Entities";
+        this.context = "Stock_Groups, Stock_Entities";
+
+        searchSettings = new SearchSettings("Stock_Groups", "Finance-Entities", "This is for listing the finance-entities");
     }
 
     @Override
@@ -129,6 +83,63 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
         grid.setDataProvider(dataProvider);
 
         return grid;
+    }
+
+    @Override
+    public void doSearch(String searchString) {
+
+        if (clearResults.getValue()) {
+            onClearResults();
+        }
+
+        if (searchSettings.isInUse()) {
+            searchService.searchInputString(this, searchString, QaiConstants.STOCK_GROUPS, searchSettings.getNumResults());
+        }
+
+        progress = new ProgressBar();
+
+    }
+
+    @Override
+    public void delayedResults(Collection<SearchResult> results) {
+
+        if (results == null || results.isEmpty()) {
+            return;
+        }
+
+        try {
+            for (SearchResult result : results) {
+
+                if (!treeData.contains(result)) {
+                    treeData.addItem(null, result);
+
+                    StockGroup group = qaiDataProvider.brokerSearchResult(result);
+                    Collection<StockEntity> entities = group.getEntities();
+                    for (StockEntity entity : entities) {
+                        SearchResult sResult = new SearchResult(QaiConstants.STOCK_ENTITIES, entity.getName(), entity.getUuid(), entity.getTickerSymbol(), 1.0);
+                        treeData.addItem(result, sResult);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            // ignore this exception
+        } finally {
+
+            dataProvider.refreshAll();
+
+            Notification.show("Finance entities received- drag items on desktop to open...");
+        }
+    }
+
+    @Override
+    public SearchSettings getSettingsFor(String serviceName) {
+        return searchSettings;
+    }
+
+    @Override
+    protected void onClearResults() {
+        treeData.clear();
+        dataProvider.refreshAll();
     }
 
     @Override
