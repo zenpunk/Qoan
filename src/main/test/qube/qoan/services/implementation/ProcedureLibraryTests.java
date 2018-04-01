@@ -24,7 +24,7 @@ import qube.qai.persistence.StockGroup;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.analysis.ChangePointAnalysis;
-import qube.qai.procedure.utils.Select;
+import qube.qai.procedure.utils.SelectForEach;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.services.QoanTestBase;
@@ -47,7 +47,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testWikiNetworkBuilder() throws Exception {
 
-        Select procedure = ProcedureLibrary.wikiNetworkBuilderTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.wikiNetworkBuilderTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         // @TODO the procedure template as well as the test itself is missing
@@ -57,7 +57,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testFinanceNetworkBuilderTemplate() throws Exception {
 
-        Select procedure = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(10);
@@ -71,7 +71,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testChangePointAnalysis() throws Exception {
 
-        Select procedure = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.changePointAnalysisTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(1);
@@ -92,7 +92,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testSequenceAveragerTemplate() throws Exception {
 
-        Select procedure = ProcedureLibrary.sequenceAveragerTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.sequenceAveragerTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(10);
@@ -101,13 +101,13 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
         Collection<SearchResult> results = convert2SearchResults(pickedEntities);
 
-        Select select = new Select();
+        SelectForEach select = new SelectForEach();
         select.setResults(results);
     }
 
     public void testSortingPercentilesTemplate() throws Exception {
 
-        Select procedure = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(10);
@@ -130,7 +130,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testStockQuoteRetrieverTemplate() throws Exception {
 
-        Select procedure = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
+        SelectForEach procedure = ProcedureLibrary.stockQuoteUpdaterTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(5);

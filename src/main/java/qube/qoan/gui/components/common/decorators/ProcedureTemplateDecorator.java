@@ -21,7 +21,7 @@ import qube.qai.persistence.QaiDataProvider;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibraryInterface;
 import qube.qai.procedure.ProcedureTemplate;
-import qube.qai.procedure.utils.Select;
+import qube.qai.procedure.utils.SelectForEach;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
@@ -85,8 +85,8 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
             content.addTab(description, "Description", descIconImage.getSource());
 
             // @TODO at least for the time being this is all we need?
-            if (procedure instanceof Select) {
-                SelectionDecorator decorator = new SelectionDecorator("Drop Selected Items", (Select) procedure);
+            if (procedure instanceof SelectForEach) {
+                SelectionDecorator decorator = new SelectionDecorator("Drop Selected Items", (SelectForEach) procedure);
                 decorator.decorate(toDecorate);
                 content.addTab(decorator, decorator.getName(), decorator.getIconImage().getSource());
             }

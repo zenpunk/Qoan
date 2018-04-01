@@ -21,7 +21,7 @@ import com.vaadin.ui.AbstractComponent;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Image;
 import com.vaadin.ui.dnd.DropTargetExtension;
-import qube.qai.procedure.utils.Select;
+import qube.qai.procedure.utils.SelectForEach;
 import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.tags.BaseTag;
 
@@ -33,7 +33,7 @@ public class SelectionDecorator extends BaseDecorator {
 
     private Image iconImage;
 
-    private Select select;
+    private SelectForEach select;
 
     private String name;
 
@@ -43,7 +43,7 @@ public class SelectionDecorator extends BaseDecorator {
 
     private final ArrayList<SearchResult> results;
 
-    public SelectionDecorator(String name, Select select) {
+    public SelectionDecorator(String name, SelectForEach select) {
         this.name = "Selection for " + name;
         this.select = select;
         this.results = new ArrayList<>();
