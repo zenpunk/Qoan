@@ -96,6 +96,9 @@ public class ResourceSearchSink extends SearchSinkComponent {
     @Override
     public void doSearch(String searchString) {
 
+        // we're doing always the same search after all.
+        searchString = "r*";
+
         if (clearResults.getValue()) {
             onClearResults();
         }

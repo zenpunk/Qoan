@@ -116,7 +116,7 @@ public class ManagementView extends QoanView {
         grid.setCaption("Cluster Members");
         grid.addColumn(Member::getUuid).setCaption("UUID:");
         grid.addColumn(Member::getAddress).setCaption("Address:");
-        grid.addColumn(Member::getVersion).setCaption("Version:");
+        //grid.addColumn(Member::getVersion).setCaption("Version:");
 
         Set<Member> members = hazelcastInstance.getCluster().getMembers();
         ListDataProvider<Member> dataProvider = DataProvider.ofCollection(members);

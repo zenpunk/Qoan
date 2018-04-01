@@ -17,7 +17,6 @@ package qube.qoan.gui.components.workspace.finance;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.ProgressBar;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
@@ -93,7 +92,7 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
         }
 
         if (searchSettings.isInUse()) {
-            searchService.searchInputString(this, searchString, QaiConstants.STOCK_GROUPS, searchSettings.getNumResults());
+            searchService.searchInputString(this, "*", QaiConstants.STOCK_GROUPS, searchSettings.getNumResults());
         }
 
         progress = new ProgressBar();
@@ -127,7 +126,7 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
 
             dataProvider.refreshAll();
 
-            Notification.show("Finance entities received- drag items on desktop to open...");
+//            Notification.show("Finance entities received- drag items on desktop to open...");
         }
     }
 

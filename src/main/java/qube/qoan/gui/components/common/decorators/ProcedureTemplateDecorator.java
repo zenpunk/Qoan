@@ -149,6 +149,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
         VerticalLayout contentLayout = new VerticalLayout();
 
+        // @TODO make the description value a variable, so that inidvidual descriptions can be assigned to procedures by user
         Label descriptionLabel = new Label(String.format(template, "Description", procedure.getDescriptionText()));
         descriptionLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(descriptionLabel);
@@ -157,16 +158,10 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         uuidLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(uuidLabel);
 
-        String userName = "User not assigned";
-        if (procedure.getUser() == null) {
-            User user = ((QoanUI) QoanUI.getCurrent()).getUser();
-            if (user != null) {
-                procedure.setUser(user);
-            } else {
-                procedure.setUser(new User(userName, ""));
-            }
-        }
-        Label userLabel = new Label(String.format(template, "Username", procedure.getUser().getUsername()));
+        User user = ((QoanUI) QoanUI.getCurrent()).getUser();
+        procedure.setUser(user);
+
+        Label userLabel = new Label(String.format(template, "Username", user.getUsername()));
         userLabel.setContentMode(ContentMode.HTML);
         contentLayout.addComponent(userLabel);
 
@@ -214,10 +209,9 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
     public void onStartProcedure() {
         if (procedure != null && isSaved) {
             procedureRunner.submitProcedure(procedure);
-            String message = String.format("Procedure %s with uuid: %s has been submitted by user: %s",
+            String message = String.format("Procedure %s with uuid: %s has been submitted",
                     procedure.getProcedureName(),
-                    procedure.getUuid(),
-                    procedure.getUser().getUsername());
+                    procedure.getUuid());
             logger.info(message);
             Notification.show(message);
         }
