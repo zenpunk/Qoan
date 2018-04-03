@@ -16,6 +16,7 @@ package qube.qoan.services;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.hazelcast.core.HazelcastInstance;
 import junit.framework.TestCase;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,12 +31,20 @@ import java.util.Properties;
 public class QoanTestBase extends TestCase implements QaiConstants {
 
     protected Logger logger = LoggerFactory.getLogger("QoanTestBase");
+
     private String PROPERTIES_FILE = "qube/qoan/services/config_test.properties";
-    protected Injector injector;
+
+    //protected Injector injector;
+
+    //protected HazelcastInstance hazelcastInstance;
 
     @Override
     protected void setUp() throws Exception {
         super.setUp();
+
+        if (QoanInjectorService.getInstance().getInjector() != null) {
+            return;
+        }
 
         logger.info("injecting members for the test");
 
@@ -45,11 +54,14 @@ public class QoanTestBase extends TestCase implements QaiConstants {
         URL url = loader.getResource(PROPERTIES_FILE);
         properties.load(url.openStream());
 
-        if (injector == null) {
+        Injector injector = Guice.createInjector(new QoanModule(properties), new QoanTestSecurityModule());
 
-            injector = Guice.createInjector(new QoanModule(properties), new QoanTestSecurityModule());
-            injector.injectMembers(this);
-        }
+        HazelcastInstance hazelcastInstance = injector.getInstance(HazelcastInstance.class);
+
+        injector.injectMembers(this);
+
+        QoanInjectorService.getInstance().setInjector(injector);
+
     }
 
 }

@@ -21,6 +21,7 @@ import org.apache.shiro.subject.Subject;
 import qube.qai.services.implementation.UUIDService;
 import qube.qai.user.Role;
 import qube.qai.user.User;
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
 
 public class QoanRealmTest extends QoanTestBase {
@@ -28,7 +29,7 @@ public class QoanRealmTest extends QoanTestBase {
     public void testQoanRealm() throws Exception {
 
         QoanRealm realm = new QoanRealm();
-        injector.injectMembers(realm);
+        QoanInjectorService.getInstance().injectMembers(realm);
 
         String username = createUsername();
         String password = "password";
@@ -65,11 +66,11 @@ public class QoanRealmTest extends QoanTestBase {
 
     public void testSecutrity() throws Exception {
 
-        org.apache.shiro.mgt.SecurityManager securityManager = injector.getInstance(org.apache.shiro.mgt.SecurityManager.class);
+        org.apache.shiro.mgt.SecurityManager securityManager = QoanInjectorService.getInstance().getInjector().getInstance(org.apache.shiro.mgt.SecurityManager.class);
         SecurityUtils.setSecurityManager(securityManager);
 
         QoanRealm realm = new QoanRealm();
-        injector.injectMembers(realm);
+        QoanInjectorService.getInstance().injectMembers(realm);
 
         Subject subject = SecurityUtils.getSubject();
         assertNotNull("there has to be a subject", subject);

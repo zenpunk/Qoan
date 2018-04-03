@@ -14,43 +14,83 @@
 
 package qube.qoan.gui.components.common;
 
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.workspace.finance.FinanceMenu;
 import qube.qoan.gui.components.workspace.procedure.ProcedureMenu;
+import qube.qoan.gui.components.workspace.resource.ResourceMenu;
 import qube.qoan.gui.components.workspace.wiki.WikiMenu;
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
+
+import java.util.Collection;
 
 /**
  * Created by rainbird on 7/2/17.
  */
 public class QoanMenuTest extends QoanTestBase {
 
-    private WikiMenu wikiMenu;
 
-    private ProcedureMenu procedureMenu;
+    public void testWikihMenu() throws Exception {
 
-    private FinanceMenu financeMenu;
+        WikiMenu wikiMenu = new WikiMenu();
+        QoanInjectorService.getInstance().injectMembers(wikiMenu);
 
-    public void testSearchMenu() throws Exception {
+        wikiMenu.initialize();
 
-        wikiMenu = new WikiMenu();
-        injector.injectMembers(wikiMenu);
+        wikiMenu.doSearch("mouse");
 
-        fail("implement first the test");
+        Thread.sleep(1000);
+
+        Collection<SearchResult> results = wikiMenu.getCurrentResult();
+        assertNotNull("there has to be some results", results);
+        assertTrue("there has to be content in the results", !results.isEmpty());
+
     }
 
     public void testProceduresMenu() throws Exception {
 
-        procedureMenu = new ProcedureMenu();
-        injector.injectMembers(procedureMenu);
+        ProcedureMenu procedureMenu = new ProcedureMenu();
+        QoanInjectorService.getInstance().injectMembers(procedureMenu);
 
-        fail("implement first the test");
+        procedureMenu.initialize();
+
+        procedureMenu.doSearch("");
+
+        Thread.sleep(1000);
+
+        Collection<SearchResult> results = procedureMenu.getCurrentResult();
+        assertNotNull("there has to be some results", results);
+        assertTrue("there has to be content in the results", !results.isEmpty());
     }
 
     public void testFinanceMenu() throws Exception {
 
-        financeMenu = new FinanceMenu();
-        injector.injectMembers(financeMenu);
+        FinanceMenu financeMenu = new FinanceMenu();
+        QoanInjectorService.getInstance().injectMembers(financeMenu);
 
-        fail("implement first the test");
+        financeMenu.initialize();
+
+        financeMenu.doSearch("");
+
+        Thread.sleep(1000);
+
+        Collection<SearchResult> results = financeMenu.getCurrentResult();
+        assertNotNull("there has to be some results", results);
+        assertTrue("there has to be content in the results", !results.isEmpty());
+    }
+
+    public void testDocumentMenu() throws Exception {
+
+        ResourceMenu resourceMenu = new ResourceMenu();
+        QoanInjectorService.getInstance().injectMembers(resourceMenu);
+
+        resourceMenu.initialize();
+        resourceMenu.doSearch("");
+
+        Thread.sleep(1000);
+
+        Collection<SearchResult> results = resourceMenu.getCurrentResult();
+        assertNotNull("there has to be some results", results);
+        assertTrue("there has to be content in the results", !results.isEmpty());
     }
 }

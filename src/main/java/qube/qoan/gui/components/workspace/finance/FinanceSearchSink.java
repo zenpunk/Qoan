@@ -100,6 +100,11 @@ public class FinanceSearchSink extends SearchSinkComponent implements QaiConstan
     }
 
     @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return dataProvider.getTreeData().getRootItems();
+    }
+
+    @Override
     public void delayedResults(Collection<SearchResult> results) {
 
         if (results == null || results.isEmpty()) {

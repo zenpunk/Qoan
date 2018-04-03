@@ -17,7 +17,6 @@ package qube.qoan.gui.components.workspace.procedure;
 import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.TreeGrid;
 import qube.qai.main.QaiConstants;
 import qube.qai.procedure.ProcedureLibraryInterface;
@@ -82,8 +81,13 @@ public class ProcedureSearchSink extends SearchSinkComponent {
 
         dataProvider.refreshAll();
 
-        Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
+        //Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
 
+    }
+
+    @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return dataProvider.getTreeData().getRootItems();
     }
 
     @Override

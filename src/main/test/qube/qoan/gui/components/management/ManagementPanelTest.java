@@ -14,6 +14,7 @@
 
 package qube.qoan.gui.components.management;
 
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
 
 /**
@@ -24,7 +25,7 @@ public class ManagementPanelTest extends QoanTestBase {
     public void testManagementPanel() throws Exception {
 
         ManagementPanel managementPanel = new ManagementPanel();
-        injector.injectMembers(managementPanel);
+        QoanInjectorService.getInstance().injectMembers(managementPanel);
 
         fail("implement the test first");
     }

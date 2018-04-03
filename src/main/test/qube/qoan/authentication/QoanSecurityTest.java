@@ -14,6 +14,7 @@
 
 package qube.qoan.authentication;
 
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
 import qube.qoan.services.QoanTestSecurityModule;
 
@@ -24,7 +25,7 @@ public class QoanSecurityTest extends QoanTestBase {
         QoanTestSecurityModule securityModule = new QoanTestSecurityModule();
         assertNotNull("nona", securityModule);
 
-        injector.injectMembers(securityModule);
+        QoanInjectorService.getInstance().injectMembers(securityModule);
 
 
 

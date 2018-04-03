@@ -16,9 +16,12 @@ package qube.qoan.gui.components.workspace.wiki;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
 import qube.qoan.services.QoanInjectorService;
+
+import java.util.Collection;
 
 /**
  * Created by rainbird on 10/31/15.
@@ -33,6 +36,16 @@ public class WikiMenu extends SearchMenu {
 
     public WikiMenu() {
         super();
+    }
+
+    @Override
+    public void doSearch(String searchString) {
+        searchSink.doSearch(searchString);
+    }
+
+    @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return searchSink.getCurrentResult();
     }
 
     @Override

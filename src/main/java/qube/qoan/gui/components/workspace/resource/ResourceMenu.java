@@ -16,9 +16,12 @@ package qube.qoan.gui.components.workspace.resource;
 
 import com.vaadin.server.ClassResource;
 import com.vaadin.ui.Image;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.SearchMenu;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
 import qube.qoan.services.QoanInjectorService;
+
+import java.util.Collection;
 
 /**
  * Created by rainbird on 1/16/16.
@@ -53,6 +56,16 @@ public class ResourceMenu extends SearchMenu {
         this.searchText.setEnabled(false);
         this.searchText.setValue("n/a");
         this.searchText.setDescription("Currently search is not implemented- click on search button to load sample data set.");
+    }
+
+    @Override
+    public void doSearch(String searchString) {
+        searchSink.doSearch(searchString);
+    }
+
+    @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return searchSink.getCurrentResult();
     }
 
     @Override

@@ -18,7 +18,6 @@ import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.data.provider.AbstractDataProvider;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.services.DistributedSearchServiceInterface;
@@ -117,9 +116,14 @@ public class ResourceSearchSink extends SearchSinkComponent {
 
         dataProvider.refreshAll();
 
-        if (!searchResults.isEmpty()) {
+        /*if (!searchResults.isEmpty()) {
             Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
-        }
+        }*/
+    }
+
+    @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return searchResults;
     }
 
     @Override

@@ -16,6 +16,7 @@ package qube.qoan.authentication;
 
 import com.hazelcast.core.HazelcastInstance;
 import qube.qai.user.User;
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
@@ -31,7 +32,7 @@ public class UserManagerTest extends QoanTestBase {
     public void testUserManager() throws Exception {
 
         UserManager manager = new UserManager();
-        injector.injectMembers(manager);
+        QoanInjectorService.getInstance().injectMembers(manager);
 
         // first create the user to check the positive case
         String userName = "test_user";

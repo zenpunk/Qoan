@@ -146,8 +146,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         ClientConfig config = new ClientConfig();
         config.setInstanceName(properties.getProperty(NODE_NAME));
-        config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
-        config.getGroupConfig().setPassword(properties.getProperty(GRID_PASSWORD));
+        //config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
+        //config.getGroupConfig().setPassword(properties.getProperty(GRID_PASSWORD));
         config.getNetworkConfig().setSmartRouting(true);
         config.getNetworkConfig().setRedoOperation(true);
         // dev-config

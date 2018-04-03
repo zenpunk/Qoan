@@ -143,4 +143,9 @@ public class WikiSearchSink extends SearchSinkComponent {
         }
     }
 
+    @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return searchResults;
+    }
+
 }

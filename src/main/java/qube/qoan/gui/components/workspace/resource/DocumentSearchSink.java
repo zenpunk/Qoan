@@ -81,9 +81,15 @@ public class DocumentSearchSink extends SearchSinkComponent {
     }
 
     @Override
+    public Collection<SearchResult> getCurrentResult() {
+        return searchResults;
+    }
+
+    @Override
     public void delayedResults(Collection<SearchResult> results) {
 
     }
+
 
     @Override
     public SearchSettings getSettingsFor(String serviceName) {

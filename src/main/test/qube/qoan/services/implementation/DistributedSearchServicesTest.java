@@ -20,9 +20,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
+import qube.qai.services.DistributedSearchServiceInterface;
 import qube.qai.services.SearchServiceInterface;
 import qube.qai.services.implementation.SearchResult;
 import qube.qai.user.User;
+import qube.qoan.services.QoanInjectorService;
 import qube.qoan.services.QoanTestBase;
 
 import javax.inject.Inject;
@@ -40,34 +42,41 @@ public class DistributedSearchServicesTest extends QoanTestBase {
 
     @Inject
     @Named("Users")
-    private SearchServiceInterface userSearchService;
+    private DistributedSearchServiceInterface userSearchService;
 
     @Inject
     @Named("Wikipedia_en")
-    private SearchServiceInterface wikipediaSearchService;
+    private DistributedSearchServiceInterface wikipediaSearchService;
 
     @Inject
     @Named("Wiktionary_en")
-    private SearchServiceInterface wiktionarySearchService;
+    private DistributedSearchServiceInterface wiktionarySearchService;
 
     @Inject
     @Named("WikiResources_en")
-    private SearchServiceInterface wikiResourcesSearchService;
+    private DistributedSearchServiceInterface wikiResourcesSearchService;
 
     @Inject
     @Named("Stock_Groups")
-    private SearchServiceInterface stocksSearchService;
+    private DistributedSearchServiceInterface stocksSearchService;
 
     @Inject
     @Named("Procedures")
-    private SearchServiceInterface proceduresSearchService;
+    private DistributedSearchServiceInterface proceduresSearchService;
 
     @Inject
     @Named("MolecularResources")
-    private SearchServiceInterface moleculeSearchService;
+    private DistributedSearchServiceInterface moleculeSearchService;
 
     @Inject
     private HazelcastInstance hazelcastInstance;
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+
+        QoanInjectorService.getInstance().injectMembers(this);
+    }
 
     public void testDistributedUserSearch() throws Exception {
 

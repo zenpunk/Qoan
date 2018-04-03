@@ -16,7 +16,10 @@ package qube.qoan.gui.components.common;
 
 import com.vaadin.ui.*;
 import qube.qai.main.QaiConstants;
+import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.search.SearchSinkComponent;
+
+import java.util.Collection;
 
 /**
  * Created by rainbird on 7/1/17.
@@ -38,6 +41,10 @@ public abstract class SearchMenu extends Panel implements QaiConstants {
     public SearchMenu() {
         super();
     }
+
+    public abstract void doSearch(String searchString);
+
+    public abstract Collection<SearchResult> getCurrentResult();
 
     public abstract void initialize();
 
