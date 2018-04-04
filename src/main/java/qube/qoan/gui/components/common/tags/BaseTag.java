@@ -38,6 +38,7 @@ public class BaseTag extends Panel implements QoanTag, QaiConstants {
     protected Layout parentLayout;
 
     protected String titleString;
+
     protected SearchResult searchResult;
 
     protected Layout layout;

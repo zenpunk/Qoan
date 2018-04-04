@@ -143,15 +143,24 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
      */
     public Panel createProcedureDescription(Procedure procedure) {
 
-        String template = "<b> %s :</b><i> %s </i>";
+        String template = "<b>%s :</b> %s";
 
         Panel panel = new Panel(procedure.getProcedureName());
+        panel.setWidth("800px");
+        //panel.setHeight("600px");
 
         VerticalLayout contentLayout = new VerticalLayout();
+        //contentLayout.setWidth("790px");
+        //contentLayout.setWidth("450px");
+
+        Label nameLabel = new Label(String.format(template, "Name", procedure.getProcedureName()));
+        nameLabel.setContentMode(ContentMode.HTML);
+        contentLayout.addComponent(nameLabel);
 
         // @TODO make the description value a variable, so that inidvidual descriptions can be assigned to procedures by user
-        Label descriptionLabel = new Label(String.format(template, "Description", procedure.getDescriptionText()));
+        Label descriptionLabel = new Label(String.format(template, "Description", procedure.getDESCRIPTION()));
         descriptionLabel.setContentMode(ContentMode.HTML);
+        descriptionLabel.setWidth("780px");
         contentLayout.addComponent(descriptionLabel);
 
         Label uuidLabel = new Label(String.format(template, "UUID", procedure.getUuid()));

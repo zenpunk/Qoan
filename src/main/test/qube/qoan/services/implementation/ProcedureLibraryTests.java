@@ -90,7 +90,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
         assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);
     }
 
-    public void testSequenceAveragerTemplate() throws Exception {
+    /*public void testSequenceAveragerTemplate() throws Exception {
 
         SelectForEach procedure = ProcedureLibrary.sequenceAveragerTemplate.createProcedure();
         assertNotNull("duh!", procedure);
@@ -103,9 +103,9 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
         SelectForEach select = new SelectForEach();
         select.setResults(results);
-    }
+    }*/
 
-    public void testSortingPercentilesTemplate() throws Exception {
+    /*public void testSortingPercentilesTemplate() throws Exception {
 
         SelectForEach procedure = ProcedureLibrary.sortingPercentilesTemplate.createProcedure();
         assertNotNull("duh!", procedure);
@@ -126,7 +126,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
         }
 
         log("Have successfully submitted update procedure for " + names);
-    }
+    }*/
 
     public void testStockQuoteRetrieverTemplate() throws Exception {
 
