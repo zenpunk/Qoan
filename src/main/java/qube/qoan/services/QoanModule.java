@@ -146,14 +146,14 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         ClientConfig config = new ClientConfig();
         config.setInstanceName(properties.getProperty(NODE_NAME));
-        //config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
+        config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
         //config.getGroupConfig().setPassword(properties.getProperty(GRID_PASSWORD));
         config.getNetworkConfig().setSmartRouting(true);
         config.getNetworkConfig().setRedoOperation(true);
         // dev-config
-        config.getNetworkConfig().addAddress(STANN_NODE);
+        //config.getNetworkConfig().addAddress(STANN_NODE);
         // deployment config
-        //config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
+        config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(config);
 

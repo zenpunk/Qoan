@@ -79,7 +79,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
             User user = ((QoanUI) QoanUI.getCurrent()).getUser();
             procedure.setUser(user);
 
-            Panel description = createProcedureDescription(procedure);
+            Panel description = createProcedureDescription(template, procedure);
 
             TabSheet content = new TabSheet();
             content.addTab(description, "Description", descIconImage.getSource());
@@ -137,15 +137,15 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
     /**
      * create the panel with the procedure metrics
-     *
+     * @param procedureTemplate
      * @param procedure
      * @return
      */
-    public Panel createProcedureDescription(Procedure procedure) {
+    public Panel createProcedureDescription(ProcedureTemplate procedureTemplate, Procedure procedure) {
 
         String template = "<b>%s :</b> %s";
 
-        Panel panel = new Panel(procedure.getProcedureName());
+        Panel panel = new Panel(procedureTemplate.getProcedureName());
         panel.setWidth("800px");
         //panel.setHeight("600px");
 
@@ -153,12 +153,12 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         //contentLayout.setWidth("790px");
         //contentLayout.setWidth("450px");
 
-        Label nameLabel = new Label(String.format(template, "Name", procedure.getProcedureName()));
-        nameLabel.setContentMode(ContentMode.HTML);
-        contentLayout.addComponent(nameLabel);
+//        Label nameLabel = new Label(String.format(template, "Name", procedureTemplate.getProcedureName()));
+//        nameLabel.setContentMode(ContentMode.HTML);
+//        contentLayout.addComponent(nameLabel);
 
         // @TODO make the description value a variable, so that inidvidual descriptions can be assigned to procedures by user
-        Label descriptionLabel = new Label(String.format(template, "Description", procedure.getDESCRIPTION()));
+        Label descriptionLabel = new Label(String.format(template, "Description", procedureTemplate.getProcedureDescription()));
         descriptionLabel.setContentMode(ContentMode.HTML);
         descriptionLabel.setWidth("780px");
         contentLayout.addComponent(descriptionLabel);
@@ -190,6 +190,10 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
         saveButton = new Button("Save Procedure");
         saveButton.addClickListener(event -> onSaveProcedure());
         saveButton.setStyleName("link");
+
+        // @TODO only for the time being
+        saveButton.setVisible(false);
+
         buttonRow.addComponent(saveButton);
 
         startButton = new Button("Start Procedure");
