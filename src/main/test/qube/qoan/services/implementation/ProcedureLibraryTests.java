@@ -24,6 +24,7 @@ import qube.qai.persistence.StockGroup;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
 import qube.qai.procedure.analysis.ChangePointAnalysis;
+import qube.qai.procedure.utils.SelectForAll;
 import qube.qai.procedure.utils.SelectForEach;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.implementation.SearchResult;
@@ -47,7 +48,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testWikiNetworkBuilder() throws Exception {
 
-        SelectForEach procedure = ProcedureLibrary.wikiNetworkBuilderTemplate.createProcedure();
+        SelectForAll procedure = ProcedureLibrary.wikiNetworkBuilderTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         // @TODO the procedure template as well as the test itself is missing
@@ -57,7 +58,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
 
     public void testFinanceNetworkBuilderTemplate() throws Exception {
 
-        SelectForEach procedure = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
+        SelectForAll procedure = ProcedureLibrary.financeNetworkBuilderTemplate.createProcedure();
         assertNotNull("duh!", procedure);
 
         Set<StockEntity> pickedEntities = pickRandomFrom(10);

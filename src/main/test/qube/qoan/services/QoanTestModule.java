@@ -29,9 +29,7 @@ import qube.qai.security.QaiSecurity;
 import qube.qai.security.QaiSecurityManager;
 import qube.qai.services.ProcedureRunnerInterface;
 import qube.qai.services.SearchServiceInterface;
-import qube.qai.services.SelectorFactoryInterface;
 import qube.qai.services.UUIDServiceInterface;
-import qube.qai.services.implementation.DataSelectorFactory;
 import qube.qai.services.implementation.DistributedSearchService;
 import qube.qai.services.implementation.ProcedureRunner;
 import qube.qai.services.implementation.UUIDService;
@@ -138,13 +136,6 @@ public class QoanTestModule extends AbstractModule {
         hazelcastInstance = HazelcastClient.newHazelcastClient(clientConfig);
 
         return hazelcastInstance;
-    }
-
-    @Provides
-    SelectorFactoryInterface provideSelectorFactoryInterface() {
-        SelectorFactoryInterface selectorfactory = new DataSelectorFactory();
-
-        return selectorfactory;
     }
 
     @Provides

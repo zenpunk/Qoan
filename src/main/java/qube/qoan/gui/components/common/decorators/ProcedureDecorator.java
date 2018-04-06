@@ -79,7 +79,7 @@ public class ProcedureDecorator extends BaseDecorator {
         contentLayout.addComponent(uuidLabel);
 
         String userName = "User not assigned";
-        if (procedure.getUser() == null) {
+        if (procedure.getUserUUID() == null) {
             User user = ((QoanUI) QoanUI.getCurrent()).getUser();
             if (user != null) {
                 procedure.setUser(user);
@@ -87,9 +87,10 @@ public class ProcedureDecorator extends BaseDecorator {
                 procedure.setUser(new User(userName, ""));
             }
         }
-        Label userLabel = new Label(String.format(template, "Username", procedure.getUser().getUsername()));
-        userLabel.setContentMode(ContentMode.HTML);
-        contentLayout.addComponent(userLabel);
+
+//        Label userLabel = new Label(String.format(template, "Username", procedure.getUser().getUsername()));
+//        userLabel.setContentMode(ContentMode.HTML);
+//        contentLayout.addComponent(userLabel);
 
         Label hasExecutedLabel = new Label(String.format(template, "Has executed", procedure.hasExecuted()));
         hasExecutedLabel.setContentMode(ContentMode.HTML);

@@ -163,7 +163,7 @@ public class ManagementView extends QoanView {
 
         Grid<Procedure> procedureGrid = new Grid<Procedure>();
         procedureGrid.addColumn(Procedure::getProcedureName).setCaption("Name");
-        procedureGrid.addColumn(Procedure::getUserName).setCaption("Username");
+        //procedureGrid.addColumn(Procedure::getUserName).setCaption("Username");
         procedureGrid.addColumn(Procedure::hasExecuted).setCaption("Has executed");
         procedureGrid.addColumn(Procedure::getDuration).setCaption("Duration");
         procedureGrid.addColumn(Procedure::getProgressPercentage).setCaption("Progress %");

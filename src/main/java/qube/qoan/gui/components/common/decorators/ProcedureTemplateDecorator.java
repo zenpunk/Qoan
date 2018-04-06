@@ -77,7 +77,7 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
 
             // assign the current user so that later credentials can be checked prior to execution
             User user = ((QoanUI) QoanUI.getCurrent()).getUser();
-            procedure.setUser(user);
+            procedure.setUserUUID(user.getUuid());
 
             Panel description = createProcedureDescription(template, procedure);
 
@@ -118,15 +118,15 @@ public class ProcedureTemplateDecorator extends BaseDecorator {
      * @param template
      * @return
      */
-    /*protected Map<String, SelectOut> attachSelectionProcedures(Procedure template) {
+    /*protected Map<String, SelectForAll> attachSelectionProcedures(Procedure template) {
 
-        Map<String, SelectOut> procedures = new HashMap<>();
+        Map<String, SelectForAll> procedures = new HashMap<>();
 
         ProcedureInputs inputs = template.getProcedureInputs();
         for (String name : inputs.getInputNames()) {
             if (ProcedureConstants.TARGET_COLLECTION.equalsIgnoreCase(name)) {
                 ValueNode targetValue = inputs.getNamedInput(name);
-                SelectOut selection = new SelectOut(targetValue);
+                SelectForAll selection = new SelectForAll(targetValue);
                 template.addChild(selection);
                 procedures.put(name, selection);
             }
