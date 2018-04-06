@@ -47,7 +47,7 @@ import java.util.Properties;
 import java.util.Set;
 
 /**
- * Created by rainbird on 11/2/15.
+ * Created by zenpunk on 11/2/15.
  */
 public class QoanModule extends AbstractModule implements QaiConstants {
 

@@ -21,7 +21,7 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 
 /**
- * Created by rainbird on 6/21/17.
+ * Created by zenpunk on 6/21/17.
  * This is supposed to add ngl-viewer in the application as a
  * Vaadin addon. should this work well enough, later i should consider
  * to make it in its own library, so that it can be released as a real Vaadin

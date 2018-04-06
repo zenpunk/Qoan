@@ -17,7 +17,7 @@ package qube.qoan.gui.components.common;
 import com.vaadin.shared.communication.ClientRpc;
 
 /**
- * Created by rainbird on 6/22/17.
+ * Created by zenpunk on 6/22/17.
  */
 public interface MyComponentClientRpc extends ClientRpc {
 

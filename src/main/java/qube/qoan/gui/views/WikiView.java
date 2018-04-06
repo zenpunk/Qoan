@@ -19,7 +19,7 @@ import com.vaadin.ui.BrowserFrame;
 import com.vaadin.ui.UI;
 
 /**
- * Created by rainbird on 1/10/16.
+ * Created by zenpunk on 1/10/16.
  */
 public class WikiView extends QoanView {
 

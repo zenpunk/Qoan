@@ -20,7 +20,7 @@ import com.vaadin.ui.*;
 import com.vaadin.ui.dnd.DragSourceExtension;
 
 /**
- * Created by rainbird on 12/3/15.
+ * Created by zenpunk on 12/3/15.
  */
 public class DisplayPanel extends Panel {
 

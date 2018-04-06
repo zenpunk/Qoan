@@ -22,7 +22,7 @@ import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.decorators.ProcedureTemplateDecorator;
 
 /**
- * Created by rainbird on 12/5/15.
+ * Created by zenpunk on 12/5/15.
  */
 public class ProcedureTemplateTag extends BaseTag {
 

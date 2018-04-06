@@ -23,7 +23,7 @@ import com.vaadin.client.ui.AbstractComponentConnector;
 import com.vaadin.shared.ui.Connect;
 
 /**
- * Created by rainbird on 6/22/17.
+ * Created by zenpunk on 6/22/17.
  */
 @Connect(MyComponent.class)
 public class MyComponentConnector extends AbstractComponentConnector {

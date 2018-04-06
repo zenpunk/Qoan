@@ -21,7 +21,7 @@ import qube.qai.services.implementation.SearchResult;
 import qube.qoan.gui.components.common.decorators.WikiDecorator;
 
 /**
- * Created by rainbird on 11/13/15.
+ * Created by zenpunk on 11/13/15.
  */
 public class WikiArticleTag extends BaseTag {
 

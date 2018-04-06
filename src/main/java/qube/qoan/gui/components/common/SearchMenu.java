@@ -22,7 +22,7 @@ import qube.qoan.gui.components.common.search.SearchSinkComponent;
 import java.util.Collection;
 
 /**
- * Created by rainbird on 7/1/17.
+ * Created by zenpunk on 7/1/17.
  */
 public abstract class SearchMenu extends Panel implements QaiConstants {
 

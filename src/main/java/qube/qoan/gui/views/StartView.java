@@ -24,7 +24,7 @@ import pl.pdfviewer.PdfViewer;
 import java.io.File;
 
 /**
- * Created by rainbird on 10/29/15.
+ * Created by zenpunk on 10/29/15.
  */
 public class StartView extends QoanView {
 

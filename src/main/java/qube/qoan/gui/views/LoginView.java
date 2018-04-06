@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Created by rainbird on 12/24/15.
+ * Created by zenpunk on 12/24/15.
  */
 public class LoginView extends QoanView {
 

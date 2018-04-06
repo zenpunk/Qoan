@@ -22,7 +22,7 @@ import qube.qai.data.MetricTyped;
 import qube.qai.data.Metrics;
 
 /**
- * Created by rainbird on 12/4/15.
+ * Created by zenpunk on 12/4/15.
  */
 public class MetricsPanel extends Panel {
 

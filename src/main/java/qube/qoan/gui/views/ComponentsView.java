@@ -39,7 +39,7 @@ import qube.qoan.gui.components.common.NglAdapter;
 import java.io.File;
 
 /**
- * Created by rainbird on 10/29/15.
+ * Created by zenpunk on 10/29/15.
  */
 public class ComponentsView extends QoanView {
 

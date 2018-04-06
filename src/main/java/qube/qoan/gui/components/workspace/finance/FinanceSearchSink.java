@@ -33,7 +33,7 @@ import javax.inject.Named;
 import java.util.Collection;
 
 /**
- * Created by rainbird on 7/4/17.
+ * Created by zenpunk on 7/4/17.
  */
 public class FinanceSearchSink extends SearchSinkComponent implements QaiConstants {
 

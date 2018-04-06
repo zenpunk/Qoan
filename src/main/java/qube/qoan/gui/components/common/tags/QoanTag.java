@@ -19,7 +19,7 @@ import com.vaadin.ui.Layout;
 import qube.qai.services.implementation.SearchResult;
 
 /**
- * Created by rainbird on 7/6/17.
+ * Created by zenpunk on 7/6/17.
  */
 public interface QoanTag extends Component {
 

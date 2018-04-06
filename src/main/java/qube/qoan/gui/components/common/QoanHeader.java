@@ -24,7 +24,7 @@ import qube.qoan.QoanUI;
 import qube.qoan.gui.views.*;
 
 /**
- * Created by rainbird on 11/9/15.
+ * Created by zenpunk on 11/9/15.
  */
 public class QoanHeader extends Panel {
 

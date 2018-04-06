@@ -27,7 +27,7 @@ import qube.qoan.services.QoanInjectorService;
 
 
 /**
- * Created by rainbird on 10/30/15.
+ * Created by zenpunk on 10/30/15.
  * here we need absolute layout, because we want this part of the application to be
  * drag & drop
  */

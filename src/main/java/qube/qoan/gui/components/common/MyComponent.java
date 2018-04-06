@@ -19,7 +19,7 @@ import com.vaadin.server.Resource;
 
 /**
  * repeating the Vaadin example for custom javascript compoents
- * Created by rainbird on 6/22/17.
+ * Created by zenpunk on 6/22/17.
  */
 @JavaScript({"mylibrary.js", "mycomponent-connector.js"})
 public class MyComponent extends com.vaadin.ui.AbstractComponent {

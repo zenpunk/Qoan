@@ -23,7 +23,7 @@ import qube.qoan.gui.components.common.decorators.MolecularViewerDecorator;
 import qube.qoan.gui.components.common.decorators.PdfFileDecorator;
 
 /**
- * Created by rainbird on 7/7/17.
+ * Created by zenpunk on 7/7/17.
  */
 public class ResourceTag extends BaseTag {
 

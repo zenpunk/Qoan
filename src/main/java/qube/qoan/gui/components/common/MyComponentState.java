@@ -17,7 +17,7 @@ package qube.qoan.gui.components.common;
 import com.vaadin.shared.ui.JavaScriptComponentState;
 
 /**
- * Created by rainbird on 6/22/17.
+ * Created by zenpunk on 6/22/17.
  */
 public class MyComponentState extends JavaScriptComponentState {
 

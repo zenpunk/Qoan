@@ -33,7 +33,7 @@ import java.util.Collection;
 import java.util.Set;
 
 /**
- * Created by rainbird on 11/27/15.
+ * Created by zenpunk on 11/27/15.
  */
 public class ManagementView extends QoanView {
 

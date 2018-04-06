@@ -24,7 +24,7 @@ import qube.qoan.gui.components.common.decorators.StockQuotesDecorator;
 import qube.qoan.gui.components.workspace.finance.StockEntityPanel;
 
 /**
- * Created by rainbird on 12/28/15.
+ * Created by zenpunk on 12/28/15.
  */
 public class StockEntityTag extends BaseTag {
 

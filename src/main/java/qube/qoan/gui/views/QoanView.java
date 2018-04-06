@@ -24,7 +24,7 @@ import qube.qoan.gui.components.common.QoanHeader;
 import qube.qoan.services.QoanInjectorService;
 
 /**
- * Created by rainbird on 2/22/17.
+ * Created by zenpunk on 2/22/17.
  */
 public abstract class QoanView extends VerticalLayout implements View {
 
