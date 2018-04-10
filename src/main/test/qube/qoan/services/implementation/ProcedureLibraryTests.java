@@ -25,7 +25,7 @@ import qube.qai.persistence.StockEntity;
 import qube.qai.persistence.StockGroup;
 import qube.qai.procedure.Procedure;
 import qube.qai.procedure.ProcedureLibrary;
-import qube.qai.procedure.analysis.ChangePointAnalysis;
+import qube.qai.procedure.analysis.ChangePoints;
 import qube.qai.procedure.utils.SelectForAll;
 import qube.qai.procedure.utils.SelectForEach;
 import qube.qai.services.ProcedureRunnerInterface;
@@ -88,7 +88,7 @@ public class ProcedureLibraryTests extends QoanTestBase {
         IMap<String, Procedure> procedureMap = hazelcastInstance.getMap(QaiConstants.PROCEDURES);
         Procedure copy = procedureMap.get(procedure.getUuid());
         assertNotNull("there has to be a copy and all that", copy);
-        Collection markers = ((ChangePointAnalysis) copy).getMarkers();
+        Collection markers = ((ChangePoints) copy).getMarkers();
         assertNotNull("if the procedure has actually been executed and save there have to be markers", markers);
     }
 
