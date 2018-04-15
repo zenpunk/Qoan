@@ -95,6 +95,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     public String MONDAY_NODE = "192.168.0.199:5701"; // monday
     public String TUESDAY_NODE = "192.168.0.241:5701"; // tuesday
     public String WEDNESDAY_NODE = "192.168.0.164:5701"; // wednesday
+    public String THURSDAY_NODE = "192.168.0.234:5701"; // thursday
+    public String FRIDAY_NODE = "192.168.0.179:5701"; // friday
     public String STANN_NODE = "192.168.0.108:5701"; // stann
     //public String STANN_NODE = "127.0.0.1:5701";
 
@@ -151,9 +153,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         config.getNetworkConfig().setSmartRouting(true);
         config.getNetworkConfig().setRedoOperation(true);
         // dev-config
-        config.getNetworkConfig().addAddress(STANN_NODE);
+        //config.getNetworkConfig().addAddress(STANN_NODE);
         // deployment config
-        //config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE);
+        config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE, THURSDAY_NODE, FRIDAY_NODE);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(config);
 
