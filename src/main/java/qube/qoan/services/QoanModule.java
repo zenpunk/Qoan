@@ -153,9 +153,9 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         config.getNetworkConfig().setSmartRouting(true);
         config.getNetworkConfig().setRedoOperation(true);
         // dev-config
-        //config.getNetworkConfig().addAddress(STANN_NODE);
+        config.getNetworkConfig().addAddress(STANN_NODE);
         // deployment config
-        config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE, THURSDAY_NODE, FRIDAY_NODE);
+        //config.getNetworkConfig().addAddress(MONDAY_NODE, TUESDAY_NODE, WEDNESDAY_NODE, THURSDAY_NODE, FRIDAY_NODE);
 
         hazelcastInstance = HazelcastClient.newHazelcastClient(config);
 
