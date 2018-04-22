@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.marmotta:ldpath-core:3.4.0-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-core/3.4.0-SNAPSHOT/ldpath-core-3.4.0-20180126.050225-48.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-core/3.4.0-SNAPSHOT/ldpath-core-3.4.0-20180126.050225-48-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-core/3.4.0-SNAPSHOT/ldpath-core-3.4.0-20180126.050225-48-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

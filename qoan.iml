@@ -28,6 +28,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module" module-name="qai" />
+    <orderEntry type="library" name="Maven: org.openrdf.alibaba:alibaba-repository-object:2.0-rc7" level="project" />
     <orderEntry type="library" name="Maven: org.ojalgo:ojalgo:45.0.0" level="project" />
     <orderEntry type="library" name="Maven: org.ojalgo:ojalgo-finance:1.0.0" level="project" />
     <orderEntry type="library" name="Maven: com.google.inject.extensions:guice-persist:4.1.0" level="project" />
@@ -50,28 +51,6 @@
     <orderEntry type="library" name="Maven: javax.validation:validation-api:1.0.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.jparsec:jparsec:3.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.servicemix.bundles:org.apache.servicemix.bundles.cglib:3.2.4_1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-core:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-iri:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.11.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-cli:commons-cli:1.4" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-base:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-shaded-guava:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.andrewoma.dexx:collection:0.7" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-tdb2:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-dboe-trans-data:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-dboe-transaction:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-dboe-base:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-dboe-index:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-rdfconnection:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-tdb:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:3.7.0" level="project" />
-    <orderEntry type="library" name="Maven: com.github.jsonld-java:jsonld-java:0.11.1" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-core:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.9.0" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient-cache:4.5.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.thrift:libthrift:0.10.0" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:jcl-over-slf4j:1.7.25" level="project" />
     <orderEntry type="library" name="Maven: org.milyn:milyn-smooks-all:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.milyn:milyn-commons:1.6" level="project" />
     <orderEntry type="library" name="Maven: javassist:javassist:3.10.0.GA" level="project" />
@@ -111,6 +90,7 @@
     <orderEntry type="library" name="Maven: org.milyn:milyn-smooks-flatfile:1.6" level="project" />
     <orderEntry type="library" name="Maven: org.mvel:mvel2:2.0.17" level="project" />
     <orderEntry type="library" name="Maven: jaxen:jaxen:1.1.1" level="project" />
+    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: xom:xom:1.0" level="project" />
     <orderEntry type="library" name="Maven: xerces:xmlParserAPIs:2.6.2" level="project" />
     <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:2.6.1" level="project" />
@@ -125,24 +105,6 @@
     <orderEntry type="library" name="Maven: com.fasterxml.uuid:java-uuid-generator:3.1.3" level="project" />
     <orderEntry type="library" name="Maven: log4j:log4j:1.2.13" level="project" />
     <orderEntry type="library" name="Maven: joda-time:joda-time:2.9.1" level="project" />
-    <orderEntry type="library" name="Maven: com.thewebsemantic:jenabean:1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.xenei:PA4RDF:1.3" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.commons:commons-proxy:1.0" level="project" />
-    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.6.4" level="project" />
-    <orderEntry type="library" name="Maven: org.slf4j:slf4j-log4j12:1.6.4" level="project" />
-    <orderEntry type="library" name="Maven: cglib:cglib:2.2.2" level="project" />
-    <orderEntry type="library" name="Maven: asm:asm:3.3.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:sources:2.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-arq:javadoc:2.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-core:sources:2.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-core:javadoc:2.12.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-tdb:sources:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-tdb:javadoc:1.1.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-sdb:1.5.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-sdb:sources:1.5.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-sdb:javadoc:1.5.1" level="project" />
-    <orderEntry type="library" name="Maven: org.apache.jena:jena-iri:sources:1.1.1" level="project" />
     <orderEntry type="library" name="Maven: qube.samsroad:samsroad:1.0" level="project" />
     <orderEntry type="library" name="Maven: info.bliki.wiki:bliki-core:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
@@ -151,6 +113,7 @@
     <orderEntry type="library" name="Maven: org.luaj:luaj-jse:3.0.1" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-classic:1.1.6" level="project" />
     <orderEntry type="library" name="Maven: ch.qos.logback:logback-core:1.1.6" level="project" />
+    <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.18" level="project" />
     <orderEntry type="library" name="Maven: info.bliki.wiki:bliki-pdf:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: com.lowagie:itext:2.1.7" level="project" />
     <orderEntry type="library" name="Maven: bouncycastle:bcmail-jdk14:138" level="project" />
@@ -232,6 +195,7 @@
     <orderEntry type="library" name="Maven: org.apache.tika:tika-core:1.10" level="project" />
     <orderEntry type="library" name="Maven: org.gagravarr:vorbis-java-tika:0.6" level="project" />
     <orderEntry type="library" name="Maven: com.healthmarketscience.jackcess:jackcess:2.1.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.healthmarketscience.jackcess:jackcess-encrypt:2.1.0" level="project" />
     <orderEntry type="library" name="Maven: net.sourceforge.jmatio:jmatio:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.james:apache-mime4j-core:0.7.2" level="project" />

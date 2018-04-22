@@ -63,10 +63,8 @@ public class ProcedureSearchSink extends SearchSinkComponent {
         }
 
         for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
-            //Procedure proc = template.createProcedure();
-            // this initial wiki takes too much time.
-            //Collection<SearchResult> results = searchService.searchInputString(template.getProcedureName(), QaiConstants.PROCEDURES, 100);
-            Collection<SearchResult> results = null;
+            // now with data in the datastore this makes sense to wait a bit longer.
+            Collection<SearchResult> results = searchService.searchInputString(template.getProcedureName(), QaiConstants.PROCEDURES, 100);
             SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, template.getProcedureName(), "n/a", template.getProcedureDescription(), 1.0);
             if (!treeData.contains(procResult)) {
                 treeData.addItem(null, procResult);
