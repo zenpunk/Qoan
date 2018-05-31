@@ -1,1 +1,7 @@
 # Created by .ignore support plugin (hsz.mobi)
+.git-ex/
+.idea/fileTemplates/
+.idea/workspace.xml
+data/
+src/main/resources/webapp/VAADIN/widgetsets/
+target/
