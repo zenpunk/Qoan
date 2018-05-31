@@ -2,6 +2,6 @@
 .git-ex/
 .idea/fileTemplates/
 .idea/workspace.xml
+target/
 data/
 src/main/resources/webapp/VAADIN/widgetsets/
-target/
