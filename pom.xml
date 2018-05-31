@@ -17,14 +17,14 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>qube.qoan</groupId>
+    <groupId>org.qoan</groupId>
     <artifactId>qoan</artifactId>
     <packaging>jar</packaging>
     <version>1.0-beta-SNAPSHOT</version>
     <!--<modules>
         <module>../qube.qai</module>
     </modules>-->
-    <name>qube.qoan</name>
+    <name>org.qoan</name>
 
     <properties>
         <!--<vaadin.version>7.6.10</vaadin.version>-->
@@ -56,7 +56,7 @@
     <dependencies>
         <!-- Qai is after all also a dependency -->
         <dependency>
-            <groupId>qube.qai</groupId>
+            <groupId>org.qai</groupId>
             <artifactId>qai</artifactId>
             <version>1.0-beta-SNAPSHOT</version>
         </dependency>
@@ -401,8 +401,14 @@
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>1.2.3</version>
-            <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>1.8.0-beta2</version>
+        </dependency>
+
 
         <!-- apache commons tarball compression is what we need -->
         <dependency>
@@ -438,7 +444,7 @@
                     <!-- End development options -->
                     <webappDirectory>src/main/resources/webapp/VAADIN/widgetsets</webappDirectory>
                     <modules>
-                        <module>qube.qoan.MyWidgetset</module>
+                        <module>org.qoan.MyWidgetset</module>
                     </modules>
                 </configuration>
             </plugin>

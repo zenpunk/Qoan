@@ -1,13 +1,13 @@
 <component name="libraryTable">
   <library name="Maven: org.apache.marmotta:ldpath-backend-sesame:3.4.0-SNAPSHOT">
     <CLASSES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-SNAPSHOT.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-20180126.050208-48.jar!/" />
     </CLASSES>
     <JAVADOC>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-SNAPSHOT-javadoc.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-20180126.050208-48-javadoc.jar!/" />
     </JAVADOC>
     <SOURCES>
-      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-SNAPSHOT-sources.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/marmotta/ldpath-backend-sesame/3.4.0-SNAPSHOT/ldpath-backend-sesame-3.4.0-20180126.050208-48-sources.jar!/" />
     </SOURCES>
   </library>
 </component>

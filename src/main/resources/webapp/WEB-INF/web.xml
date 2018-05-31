@@ -36,19 +36,19 @@
     <servlet>
         <servlet-name>qoan</servlet-name>
 
-        <servlet-class>qube.qoan.services.QoanServlet</servlet-class>
+        <servlet-class>org.qoan.services.QoanServlet</servlet-class>
 
         <!--<servlet-class>com.vaadin.server.VaadinServlet</servlet-class>-->
 
         <init-param>
             <param-name>UI</param-name>
-            <param-value>qube.qoan.QoanUI</param-value>
+            <param-value>org.qoan.QoanUI</param-value>
         </init-param>
 
         <!-- If not using the default widget set-->
         <init-param>
             <param-name>widgetset</param-name>
-            <param-value>qube.qoan.MyWidgetSet</param-value>
+            <param-value>org.qoan.MyWidgetSet</param-value>
         </init-param>
     </servlet>
 
