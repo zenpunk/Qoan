@@ -28,10 +28,8 @@ import org.qai.security.ProcedureManager;
 import org.qai.security.ProcedureManagerInterface;
 import org.qai.security.QaiSecurity;
 import org.qai.security.QaiSecurityManager;
-import org.qai.services.DistributedSearchServiceInterface;
 import org.qai.services.ProcedureRunnerInterface;
 import org.qai.services.UUIDServiceInterface;
-import org.qai.services.implementation.DistributedSearchService;
 import org.qai.services.implementation.ProcedureRunner;
 import org.qai.services.implementation.UUIDService;
 import org.qoan.authentication.UserManagerInterface;
@@ -40,10 +38,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
-import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by zenpunk on 11/2/15.
@@ -61,32 +56,11 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private Properties properties;
 
+    private ClientConfig config;
+
     private HazelcastInstance hazelcastInstance;
 
     private UserManagerInterface userManager;
-
-    private DistributedSearchServiceInterface userSearchService;
-
-    private DistributedSearchServiceInterface wikipediaSearchService;
-
-    private DistributedSearchServiceInterface wiktionarySearchService;
-
-    private DistributedSearchServiceInterface molecularResourcesService;
-
-    private DistributedSearchServiceInterface pdfFileRsourcesService;
-
-    private DistributedSearchServiceInterface wikiResourcesSearchService;
-
-    private DistributedSearchServiceInterface stockEntitiesSearchService;
-
-    private DistributedSearchServiceInterface stockGroupsSearchService;
-
-    private DistributedSearchServiceInterface stockQuotesSearchService;
-
-    private DistributedSearchServiceInterface proceduresSearchService;
-
-    private Map<String, DistributedSearchServiceInterface> providedSearchServices;
-
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
 
@@ -106,25 +80,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private String GRID_PASSWORD = "GRID_PASSWORD";
 
-    public QoanModule(Properties properties) {
+    public QoanModule(Properties properties, ClientConfig config) {
         this.properties = properties;
-        this.providedSearchServices = new ConcurrentHashMap<String, DistributedSearchServiceInterface>();
-
+        this.config = config;
     }
 
     @Override
     protected void configure() {
-
-        //install(ConfigurationModule.create());
-        //requestInjection(this);
-
-//        try {
-//            Properties properties = new Properties();
-//            properties.load(new FileReader(CONFIG_FILE_NAME));
-//            Names.bindProperties(binder(), properties);
-//        } catch (IOException e) {
-//            logger.error("Error while loading configuration file: " + CONFIG_FILE_NAME, e);
-//        }
 
         // Procedure execution-service
         bind(ProcedureRunnerInterface.class).to(ProcedureRunner.class);
@@ -141,19 +103,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     @Singleton
-    Map<String, DistributedSearchServiceInterface> providedSearchServices() {
-        return providedSearchServices;
-    }
-
-    @Provides
-    @Singleton
     HazelcastInstance provideHazelcastInstance() {
 
         if (hazelcastInstance != null) {
             return hazelcastInstance;
         }
 
-        ClientConfig config = new ClientConfig();
+        //ClientConfig config = new ClientConfig();
         config.setInstanceName(properties.getProperty(NODE_NAME));
         //config.getGroupConfig().setName(properties.getProperty(GRID_NAME));
         //config.getGroupConfig().setPassword(properties.getProperty(GRID_PASSWORD));
@@ -172,17 +128,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     @Provides
     Logger provideLogger() {
         return LoggerFactory.getLogger("Qoan");
-    }
-
-    @Provides
-    @Named("ServicesMap")
-    Map<String, DistributedSearchServiceInterface> provideServicesMap() {
-
-        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
-            initKnownNamedServers();
-        }
-
-        return providedSearchServices;
     }
 
     @Provides
@@ -233,216 +178,6 @@ public class QoanModule extends AbstractModule implements QaiConstants {
     QaiDataProvider<ResourceData> providePdfResourceProvider() {
         QaiDataProvider<ResourceData> provider = new MapDataProvider(hazelcastInstance, PDF_FILE_RESOURCES);
         return provider;
-    }
-
-    @Provides
-    @Named("Users")
-    @Singleton
-    DistributedSearchServiceInterface provideUserSearchService() {
-
-        userSearchService = new DistributedSearchService(USERS, hazelcastInstance);
-        userSearchService.initialize();
-
-        return userSearchService;
-    }
-
-    @Provides
-    @Named("Wikipedia_en")
-    @Singleton
-    public DistributedSearchServiceInterface provideWikipediaSearchService() {
-
-        wikipediaSearchService = new DistributedSearchService(WIKIPEDIA_EN, hazelcastInstance);
-        wikipediaSearchService.initialize();
-
-        return wikipediaSearchService;
-    }
-
-    @Provides
-    @Named("Wiktionary_en")
-    @Singleton
-    public DistributedSearchServiceInterface provideWiktionarySearchService() {
-
-        wiktionarySearchService = new DistributedSearchService(WIKTIONARY_EN, hazelcastInstance);
-        wiktionarySearchService.initialize();
-
-        return wiktionarySearchService;
-    }
-
-    @Provides
-    @Named("Stock_Groups")
-    @Singleton
-    DistributedSearchServiceInterface provideStockGroupssSearchService() {
-
-        stockGroupsSearchService = new DistributedSearchService(STOCK_GROUPS, hazelcastInstance);
-        stockGroupsSearchService.initialize();
-
-        return stockGroupsSearchService;
-    }
-
-    @Provides
-    @Named("Stock_Quotes")
-    @Singleton
-    DistributedSearchServiceInterface provideStockQuotessSearchService() {
-
-        stockQuotesSearchService = new DistributedSearchService(STOCK_QUOTES, hazelcastInstance);
-        stockQuotesSearchService.initialize();
-
-        return stockQuotesSearchService;
-    }
-
-    @Provides
-    @Named("Stock_Entities")
-    @Singleton
-    DistributedSearchServiceInterface provideStockEntitiesSearchService() {
-
-        stockEntitiesSearchService = new DistributedSearchService(STOCK_ENTITIES, hazelcastInstance);
-        stockEntitiesSearchService.initialize();
-
-        return stockEntitiesSearchService;
-    }
-
-    @Provides
-    @Named("Procedures")
-    @Singleton
-    DistributedSearchServiceInterface provideProceduresSearchService() {
-
-        proceduresSearchService = new DistributedSearchService(PROCEDURES, hazelcastInstance);
-
-        proceduresSearchService.initialize();
-
-        return proceduresSearchService;
-    }
-
-    @Provides
-    @Named("WikiResources_en")
-    @Singleton
-    DistributedSearchServiceInterface provideWikiResourcesSearchService() {
-
-        wikiResourcesSearchService = new DistributedSearchService(WIKIPEDIA_RESOURCES, hazelcastInstance);
-        wikiResourcesSearchService.initialize();
-
-        return wikiResourcesSearchService;
-    }
-
-    @Provides
-    @Named("MolecularResources")
-    @Singleton
-    DistributedSearchServiceInterface provideMolecularSearchService() {
-
-        molecularResourcesService = new DistributedSearchService(MOLECULAR_RESOURCES, hazelcastInstance);
-        molecularResourcesService.initialize();
-
-        return molecularResourcesService;
-    }
-
-    @Provides
-    @Named("PdfFileResources")
-    @Singleton
-    DistributedSearchServiceInterface providePdfFileSearchService() {
-
-        pdfFileRsourcesService = new DistributedSearchService(PDF_FILE_RESOURCES, hazelcastInstance);
-        pdfFileRsourcesService.initialize();
-
-        return pdfFileRsourcesService;
-    }
-
-    public DistributedSearchServiceInterface getNamedService(String name) {
-
-        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
-            initKnownNamedServers();
-        }
-
-        return providedSearchServices.get(name);
-    }
-
-    /**
-     * when a new service is created, use this to be able to use it
-     *
-     * @param name
-     * @param service
-     */
-    public void addNamedSearchService(String name, DistributedSearchService service) {
-
-        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
-            initKnownNamedServers();
-        }
-
-        providedSearchServices.put(name, service);
-    }
-
-    public Set<String> getSearchServiceNames() {
-
-        initKnownNamedServers();
-
-        return providedSearchServices.keySet();
-    }
-
-    private void initKnownNamedServers() {
-
-        if (wikipediaSearchService == null) {
-            wikipediaSearchService = provideWikipediaSearchService();
-            logger.info("Started service: " + WIKIPEDIA_EN);
-            providedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
-        } else if (!providedSearchServices.containsKey(WIKIPEDIA_EN)) {
-            providedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
-        }
-
-        if (wiktionarySearchService == null) {
-            wiktionarySearchService = provideWiktionarySearchService();
-            logger.info("Started service: " + WIKTIONARY_EN);
-            providedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
-        } else if (!providedSearchServices.containsKey(WIKTIONARY_EN)) {
-            providedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
-        }
-
-        if (wikiResourcesSearchService == null) {
-            wikiResourcesSearchService = provideWikiResourcesSearchService();
-            logger.info("Started service: " + WIKIPEDIA_RESOURCES);
-            providedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
-        } else if (!providedSearchServices.containsKey(WIKIPEDIA_RESOURCES)) {
-            providedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
-        }
-
-        if (stockEntitiesSearchService == null) {
-            stockEntitiesSearchService = provideStockEntitiesSearchService();
-            logger.info("Started service: " + STOCK_ENTITIES);
-            providedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
-        } else if (!providedSearchServices.containsKey(STOCK_ENTITIES)) {
-            providedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
-        }
-
-        if (stockGroupsSearchService == null) {
-            stockGroupsSearchService = provideStockGroupssSearchService();
-            logger.info("Started service: " + STOCK_GROUPS);
-            providedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
-        } else if (!providedSearchServices.containsKey(STOCK_GROUPS)) {
-            providedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
-        }
-
-        if (proceduresSearchService == null) {
-            proceduresSearchService = provideProceduresSearchService();
-            logger.info("Started service: " + PROCEDURES);
-            providedSearchServices.put(PROCEDURES, proceduresSearchService);
-        } else if (!providedSearchServices.containsKey(PROCEDURES)) {
-            providedSearchServices.put(PROCEDURES, proceduresSearchService);
-        }
-
-        if (molecularResourcesService == null) {
-            molecularResourcesService = provideMolecularSearchService();
-            logger.info("Started service: " + MOLECULAR_RESOURCES);
-            providedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
-        } else if (!providedSearchServices.containsKey(MOLECULAR_RESOURCES)) {
-            providedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
-        }
-
-        if (pdfFileRsourcesService == null) {
-            pdfFileRsourcesService = providePdfFileSearchService();
-            logger.info("Started service: " + PDF_FILE_RESOURCES);
-            providedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
-        } else if (!providedSearchServices.containsKey(PDF_FILE_RESOURCES)) {
-            providedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
-        }
-
     }
 
     private HazelcastInstance getHazelcastInstance() {

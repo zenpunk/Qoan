@@ -16,6 +16,7 @@ package org.qoan.services;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import com.vaadin.server.VaadinServlet;
 import org.apache.shiro.SecurityUtils;
@@ -37,7 +38,13 @@ public class QoanServlet extends VaadinServlet {
 
     private QoanModule qoanModule;
 
+    private QoanSearchServicesModule searchServices;
+
     private QoanSecurityModule securityModule;
+
+    private Properties properties;
+
+    private ClientConfig config;
 
     // develeopment properties- dev-grid
     private String PROPERTIES_FILE = "org/qoan/services/config_dev.properties";
@@ -53,7 +60,6 @@ public class QoanServlet extends VaadinServlet {
         // which will be used all over the application
         if (injector == null) {
 
-            Properties properties = null;
             try {
                 properties = new Properties();
 
@@ -64,10 +70,13 @@ public class QoanServlet extends VaadinServlet {
                 throw new IllegalStateException("Properties file " + PROPERTIES_FILE + " could not be loaded!");
             }
 
+            config = new ClientConfig();
             ServletContext context = servletConfig.getServletContext();
-            qoanModule = new QoanModule(properties);
+            qoanModule = new QoanModule(properties, config);
+            searchServices = new QoanSearchServicesModule(properties);
 
             Injector dummy = Guice.createInjector(qoanModule);
+            dummy.injectMembers(searchServices);
             HazelcastInstance hazelcastInstance = dummy.getInstance(HazelcastInstance.class);
 
             securityModule = new QoanSecurityModule(hazelcastInstance, context);

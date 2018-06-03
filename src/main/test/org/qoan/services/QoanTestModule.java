@@ -20,8 +20,6 @@ import com.google.inject.Singleton;
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
-import org.qai.message.MessageQueue;
-import org.qai.message.MessageQueueInterface;
 import org.qai.security.ProcedureManagerInterface;
 import org.qai.security.QaiSecurity;
 import org.qai.security.QaiSecurityManager;
@@ -75,7 +73,7 @@ public class QoanTestModule extends AbstractModule {
         bind(ProcedureManagerInterface.class).to(QoanTestProcedureManager.class);
 
         // messageQueue
-        bind(MessageQueueInterface.class).to(MessageQueue.class);
+        //bind(MessageQueueInterface.class).to(MessageQueue.class);
 
         bind(QaiSecurity.class).to(QaiSecurityManager.class);
     }
