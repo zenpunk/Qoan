@@ -39,7 +39,7 @@
         <guice-conf.version>1.2.0</guice-conf.version>
 
         <!--<hazelcast.version>3.5.4</hazelcast.version>-->
-        <hazelcast.version>3.9.3</hazelcast.version>
+        <hazelcast.version>3.10.1</hazelcast.version>
 
         <!--<lucene.version>5.3.1</lucene.version>-->
         <lucene.version>7.3.0</lucene.version>
@@ -421,7 +421,14 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.11</version>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
 

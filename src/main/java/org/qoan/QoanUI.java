@@ -39,7 +39,7 @@ import java.util.Set;
  *
  */
 //@Push
-@Theme("valo")
+@Theme("mytheme")
 @Widgetset("org.qoan.MyWidgetset")
 public class QoanUI extends UI {
 

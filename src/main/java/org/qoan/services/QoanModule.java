@@ -30,7 +30,6 @@ import org.qai.security.QaiSecurity;
 import org.qai.security.QaiSecurityManager;
 import org.qai.services.DistributedSearchServiceInterface;
 import org.qai.services.ProcedureRunnerInterface;
-import org.qai.services.SearchServiceInterface;
 import org.qai.services.UUIDServiceInterface;
 import org.qai.services.implementation.DistributedSearchService;
 import org.qai.services.implementation.ProcedureRunner;
@@ -41,10 +40,10 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Named;
 import javax.inject.Singleton;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by zenpunk on 11/2/15.
@@ -86,7 +85,7 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     private DistributedSearchServiceInterface proceduresSearchService;
 
-    private Map<String, SearchServiceInterface> namedSearchServices;
+    private Map<String, DistributedSearchServiceInterface> providedSearchServices;
 
 
     //@InjectConfig(value = "QAI_NODE_TO_CONNECT")
@@ -109,6 +108,8 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     public QoanModule(Properties properties) {
         this.properties = properties;
+        this.providedSearchServices = new ConcurrentHashMap<String, DistributedSearchServiceInterface>();
+
     }
 
     @Override
@@ -136,6 +137,12 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
         bind(ProcedureLibraryInterface.class).to(ProcedureLibrary.class);
 
+    }
+
+    @Provides
+    @Singleton
+    Map<String, DistributedSearchServiceInterface> providedSearchServices() {
+        return providedSearchServices;
     }
 
     @Provides
@@ -169,13 +176,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
 
     @Provides
     @Named("ServicesMap")
-    Map<String, SearchServiceInterface> provideServicesMap() {
+    Map<String, DistributedSearchServiceInterface> provideServicesMap() {
 
-        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
             initKnownNamedServers();
         }
 
-        return namedSearchServices;
+        return providedSearchServices;
     }
 
     @Provides
@@ -339,13 +346,13 @@ public class QoanModule extends AbstractModule implements QaiConstants {
         return pdfFileRsourcesService;
     }
 
-    public SearchServiceInterface getNamedService(String name) {
+    public DistributedSearchServiceInterface getNamedService(String name) {
 
-        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
             initKnownNamedServers();
         }
 
-        return namedSearchServices.get(name);
+        return providedSearchServices.get(name);
     }
 
     /**
@@ -354,90 +361,86 @@ public class QoanModule extends AbstractModule implements QaiConstants {
      * @param name
      * @param service
      */
-    public void addNamedSearchService(String name, SearchServiceInterface service) {
+    public void addNamedSearchService(String name, DistributedSearchService service) {
 
-        if (namedSearchServices == null || namedSearchServices.isEmpty()) {
+        if (providedSearchServices == null || providedSearchServices.isEmpty()) {
             initKnownNamedServers();
         }
 
-        namedSearchServices.put(name, service);
+        providedSearchServices.put(name, service);
     }
 
     public Set<String> getSearchServiceNames() {
 
         initKnownNamedServers();
 
-        return namedSearchServices.keySet();
+        return providedSearchServices.keySet();
     }
 
     private void initKnownNamedServers() {
 
-        if (namedSearchServices == null) {
-            namedSearchServices = new HashMap<>();
-        }
-
         if (wikipediaSearchService == null) {
             wikipediaSearchService = provideWikipediaSearchService();
             logger.info("Started service: " + WIKIPEDIA_EN);
-            namedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
-        } else if (!namedSearchServices.containsKey(WIKIPEDIA_EN)) {
-            namedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
+            providedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
+        } else if (!providedSearchServices.containsKey(WIKIPEDIA_EN)) {
+            providedSearchServices.put(WIKIPEDIA_EN, wikipediaSearchService);
         }
 
         if (wiktionarySearchService == null) {
             wiktionarySearchService = provideWiktionarySearchService();
             logger.info("Started service: " + WIKTIONARY_EN);
-            namedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
-        } else if (!namedSearchServices.containsKey(WIKTIONARY_EN)) {
-            namedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
+            providedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
+        } else if (!providedSearchServices.containsKey(WIKTIONARY_EN)) {
+            providedSearchServices.put(WIKTIONARY_EN, wiktionarySearchService);
         }
 
         if (wikiResourcesSearchService == null) {
             wikiResourcesSearchService = provideWikiResourcesSearchService();
             logger.info("Started service: " + WIKIPEDIA_RESOURCES);
-            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
-        } else if (!namedSearchServices.containsKey(WIKIPEDIA_RESOURCES)) {
-            namedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+            providedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
+        } else if (!providedSearchServices.containsKey(WIKIPEDIA_RESOURCES)) {
+            providedSearchServices.put(WIKIPEDIA_RESOURCES, wikiResourcesSearchService);
         }
 
         if (stockEntitiesSearchService == null) {
             stockEntitiesSearchService = provideStockEntitiesSearchService();
             logger.info("Started service: " + STOCK_ENTITIES);
-            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
-        } else if (!namedSearchServices.containsKey(STOCK_ENTITIES)) {
-            namedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+            providedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
+        } else if (!providedSearchServices.containsKey(STOCK_ENTITIES)) {
+            providedSearchServices.put(STOCK_ENTITIES, stockEntitiesSearchService);
         }
 
         if (stockGroupsSearchService == null) {
             stockGroupsSearchService = provideStockGroupssSearchService();
             logger.info("Started service: " + STOCK_GROUPS);
-            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
-        } else if (!namedSearchServices.containsKey(STOCK_GROUPS)) {
-            namedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+            providedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
+        } else if (!providedSearchServices.containsKey(STOCK_GROUPS)) {
+            providedSearchServices.put(STOCK_GROUPS, stockGroupsSearchService);
         }
 
         if (proceduresSearchService == null) {
             proceduresSearchService = provideProceduresSearchService();
             logger.info("Started service: " + PROCEDURES);
-            namedSearchServices.put(PROCEDURES, proceduresSearchService);
-        } else if (!namedSearchServices.containsKey(PROCEDURES)) {
-            namedSearchServices.put(PROCEDURES, proceduresSearchService);
+            providedSearchServices.put(PROCEDURES, proceduresSearchService);
+        } else if (!providedSearchServices.containsKey(PROCEDURES)) {
+            providedSearchServices.put(PROCEDURES, proceduresSearchService);
         }
 
         if (molecularResourcesService == null) {
             molecularResourcesService = provideMolecularSearchService();
             logger.info("Started service: " + MOLECULAR_RESOURCES);
-            namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
-        } else if (!namedSearchServices.containsKey(MOLECULAR_RESOURCES)) {
-            namedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
+            providedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
+        } else if (!providedSearchServices.containsKey(MOLECULAR_RESOURCES)) {
+            providedSearchServices.put(MOLECULAR_RESOURCES, molecularResourcesService);
         }
 
         if (pdfFileRsourcesService == null) {
             pdfFileRsourcesService = providePdfFileSearchService();
             logger.info("Started service: " + PDF_FILE_RESOURCES);
-            namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
-        } else if (!namedSearchServices.containsKey(PDF_FILE_RESOURCES)) {
-            namedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
+            providedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
+        } else if (!providedSearchServices.containsKey(PDF_FILE_RESOURCES)) {
+            providedSearchServices.put(PDF_FILE_RESOURCES, pdfFileRsourcesService);
         }
 
     }

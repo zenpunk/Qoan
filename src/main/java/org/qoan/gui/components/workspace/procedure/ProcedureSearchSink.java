@@ -18,9 +18,7 @@ import com.vaadin.data.TreeData;
 import com.vaadin.data.provider.TreeDataProvider;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.TreeGrid;
-import org.qai.main.QaiConstants;
 import org.qai.procedure.ProcedureLibraryInterface;
-import org.qai.procedure.ProcedureTemplate;
 import org.qai.services.DistributedSearchServiceInterface;
 import org.qai.services.implementation.SearchResult;
 import org.qoan.gui.components.common.SearchSettings;
@@ -62,7 +60,8 @@ public class ProcedureSearchSink extends SearchSinkComponent {
             onClearResults();
         }
 
-        for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
+        // @TODO use the right interface & all that....
+        /*for (ProcedureTemplate template : procedureLibrary.getTemplateMap().values()) {
             // now with data in the datastore this makes sense to wait a bit longer.
             Collection<SearchResult> results = searchService.searchInputString(template.getProcedureName(), QaiConstants.PROCEDURES, 100);
             SearchResult procResult = new SearchResult(QaiConstants.PROCEDURE_TEMPLATES, template.getProcedureName(), "n/a", template.getProcedureDescription(), 1.0);
@@ -75,7 +74,7 @@ public class ProcedureSearchSink extends SearchSinkComponent {
             } else {
                 treeData.addItems(procResult, results);
             }
-        }
+        }*/
 
         dataProvider.refreshAll();
 
