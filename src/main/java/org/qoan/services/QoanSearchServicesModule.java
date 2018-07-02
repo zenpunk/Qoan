@@ -27,7 +27,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 public class QoanSearchServicesModule extends AbstractModule implements QaiConstants {
 
-    private String search_services = "search_services.";
+    private String search_services = "search_services.contexts";
 
     private String indices = " search_services.indices";
 
@@ -43,7 +43,7 @@ public class QoanSearchServicesModule extends AbstractModule implements QaiConst
     @Override
     protected void configure() {
 
-        String contexts = properties.getProperty(search_services + "contexts");
+        String contexts = properties.getProperty(search_services);
         StringTokenizer tokenizer = new StringTokenizer(contexts, ",");
         while (tokenizer.hasMoreTokens()) {
             String context = tokenizer.nextToken();

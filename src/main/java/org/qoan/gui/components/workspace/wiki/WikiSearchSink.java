@@ -17,7 +17,6 @@ package org.qoan.gui.components.workspace.wiki;
 import com.vaadin.data.provider.AbstractDataProvider;
 import com.vaadin.data.provider.DataProvider;
 import com.vaadin.ui.Grid;
-import com.vaadin.ui.Notification;
 import org.qai.main.QaiConstants;
 import org.qai.services.DistributedSearchServiceInterface;
 import org.qai.services.implementation.SearchResult;
@@ -28,6 +27,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Created by rainbird on 7/16/17.
@@ -35,12 +35,8 @@ import java.util.Collection;
 public class WikiSearchSink extends SearchSinkComponent {
 
     @Inject
-    @Named("Wikipedia_en")
-    private DistributedSearchServiceInterface wikiService;
-
-    @Inject
     @Named("Wiktionary_en")
-    private DistributedSearchServiceInterface wiktionaryService;
+    private Map<String, DistributedSearchServiceInterface> wiktionaryService;
 
     private SearchSettings wikiSettings;
 
@@ -88,7 +84,9 @@ public class WikiSearchSink extends SearchSinkComponent {
     @Override
     public void doSearch(String searchString) {
 
-        if (clearResults.getValue()) {
+        // @TODO add context-names in a select box, so that searches can be limited
+        // @TODO each search context will require a setting too, of course...
+        /*if (clearResults.getValue()) {
             onClearResults();
         }
 
@@ -104,7 +102,7 @@ public class WikiSearchSink extends SearchSinkComponent {
 
         if (!searchResults.isEmpty()) {
             Notification.show("You can drag'n'drop results from the grid to workspace to see their details");
-        }
+        }*/
     }
 
     @Override

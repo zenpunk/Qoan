@@ -60,15 +60,7 @@ public class QoanServlet extends VaadinServlet {
         // which will be used all over the application
         if (injector == null) {
 
-            try {
-                properties = new Properties();
-
-                ClassLoader loader = QoanServlet.class.getClassLoader();
-                URL url = loader.getResource(PROPERTIES_FILE);
-                properties.load(url.openStream());
-            } catch (IOException e) {
-                throw new IllegalStateException("Properties file " + PROPERTIES_FILE + " could not be loaded!");
-            }
+            loadProperties();
 
             config = new ClientConfig();
             ServletContext context = servletConfig.getServletContext();
@@ -80,7 +72,10 @@ public class QoanServlet extends VaadinServlet {
             HazelcastInstance hazelcastInstance = dummy.getInstance(HazelcastInstance.class);
 
             securityModule = new QoanSecurityModule(hazelcastInstance, context);
-            injector = Guice.createInjector(qoanModule, securityModule, ShiroWebModule.guiceFilterModule());
+            injector = Guice.createInjector(qoanModule,
+                    securityModule,
+                    searchServices,
+                    ShiroWebModule.guiceFilterModule());
             QoanInjectorService.getInstance().setInjector(injector);
 
             // initialize the security manager while we're at it.
@@ -89,5 +84,20 @@ public class QoanServlet extends VaadinServlet {
             SecurityUtils.setSecurityManager(securityManager);
 
         }
+    }
+
+    private Properties loadProperties() {
+        try {
+
+            properties = new Properties();
+
+            ClassLoader loader = QoanServlet.class.getClassLoader();
+            URL url = loader.getResource(PROPERTIES_FILE);
+            properties.load(url.openStream());
+        } catch (IOException e) {
+            throw new IllegalStateException("Properties file " + PROPERTIES_FILE + " could not be loaded!");
+        }
+
+        return properties;
     }
 }

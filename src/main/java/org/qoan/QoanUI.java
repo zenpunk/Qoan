@@ -22,7 +22,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.ui.UI;
-import org.qai.services.SearchServiceInterface;
+import org.qai.services.DistributedSearchServiceInterface;
 import org.qai.user.User;
 import org.qoan.authentication.SecureSessionInitListener;
 import org.qoan.authentication.SecureViewChangeListener;
@@ -31,7 +31,6 @@ import org.qoan.gui.views.*;
 import org.qoan.services.QoanInjectorService;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.Map;
 import java.util.Set;
 
@@ -64,8 +63,7 @@ public class QoanUI extends UI {
     protected UserManagerInterface userManager;
 
     @Inject
-    @Named("ServicesMap")
-    Map<String, SearchServiceInterface> searchServiceMap;
+    Map<String, DistributedSearchServiceInterface> searchServiceMap;
 
     protected User user;
 
@@ -115,7 +113,7 @@ public class QoanUI extends UI {
         //navigator.addView(WikiView.NAME, WikiView.class);
     }
 
-    public SearchServiceInterface getNamedService(String name) {
+    public DistributedSearchServiceInterface getNamedService(String name) {
         return searchServiceMap.get(name);
     }
 

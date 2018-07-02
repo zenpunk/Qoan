@@ -16,6 +16,7 @@ package org.qoan.services;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.core.HazelcastInstance;
 import junit.framework.TestCase;
 import org.qai.main.QaiConstants;
@@ -54,7 +55,8 @@ public class QoanTestBase extends TestCase implements QaiConstants {
         URL url = loader.getResource(PROPERTIES_FILE);
         properties.load(url.openStream());
 
-        Injector injector = Guice.createInjector(new QoanModule(properties), new QoanTestSecurityModule());
+        ClientConfig config = new ClientConfig();
+        Injector injector = Guice.createInjector(new QoanModule(properties, config), new QoanTestSecurityModule());
 
         HazelcastInstance hazelcastInstance = injector.getInstance(HazelcastInstance.class);
 
