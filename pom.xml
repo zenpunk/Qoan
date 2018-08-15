@@ -20,7 +20,7 @@
     <groupId>org.qoan</groupId>
     <artifactId>qoan</artifactId>
     <packaging>jar</packaging>
-    <version>1.1.0-beta-SNAPSHOT</version>
+    <version>1.1.1-beta-SNAPSHOT</version>
     <!--<modules>
         <module>../qube.qai</module>
     </modules>-->
@@ -58,7 +58,7 @@
         <dependency>
             <groupId>org.qai</groupId>
             <artifactId>qai</artifactId>
-            <version>1.0-beta-SNAPSHOT</version>
+            <version>1.1.1-beta-SNAPSHOT</version>
         </dependency>
 
         <!-- <dependency>
