@@ -31,6 +31,11 @@ public class QoanSearchServicesModule extends AbstractModule implements QaiConst
 
     private String indices = " search_services.indices";
 
+    private String[] propertyNames = {"search_services_archives.wikipedia_en",
+            "search_services_indices.wikipedia_en",
+            "search_services_archives.wiktionary_en"};
+
+
     private Map<String, DistributedSearchServiceInterface> providedSearchServices;
 
     private Properties properties;

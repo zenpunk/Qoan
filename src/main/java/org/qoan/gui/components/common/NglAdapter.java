@@ -48,7 +48,7 @@ public class NglAdapter extends AbstractJavaScriptComponent implements Component
     @Override
     public void componentEvent(Event event) {
         // Display source component and event class names
-        //String eventString = "Event from " + event.getSource().getClass().getName() + ": " + event.getClass().getName();
+        //String eventString = "Event from " + event.getContext().getClass().getName() + ": " + event.getClass().getName();
         //Notification.show(eventString);
     }
 

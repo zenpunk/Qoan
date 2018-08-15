@@ -24,7 +24,6 @@ import org.qoan.gui.components.common.SearchSettings;
 import org.qoan.gui.components.common.search.SearchSinkComponent;
 
 import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
@@ -35,7 +34,6 @@ import java.util.Map;
 public class WikiSearchSink extends SearchSinkComponent {
 
     @Inject
-    @Named("Wiktionary_en")
     private Map<String, DistributedSearchServiceInterface> wiktionaryService;
 
     private SearchSettings wikiSettings;

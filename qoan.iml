@@ -27,7 +27,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="qai" />
+    <orderEntry type="library" name="Maven: org.qai:qai:1.0-beta-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: org.openrdf.alibaba:alibaba-repository-object:2.1" level="project" />
     <orderEntry type="library" name="Maven: org.openrdf.sesame:sesame-repository-contextaware:2.8.8" level="project" />
     <orderEntry type="library" name="Maven: org.openrdf.sesame:sesame-repository-api:2.8.8" level="project" />
@@ -300,7 +300,7 @@
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-client-compiled:8.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-compatibility-server:8.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-compatibility-shared:8.4.5" level="project" />
-    <orderEntry type="library" scope="PROVIDED" name="Maven: com.vaadin:vaadin-compatibility-client:8.4.5" level="project" />
+    <orderEntry type="library" name="Maven: com.vaadin:vaadin-compatibility-client:8.4.5" level="project" />
     <orderEntry type="library" name="Maven: com.vaadin:vaadin-themes:8.4.5" level="project" />
     <orderEntry type="library" name="Maven: org.vaadin.addon:jfreechartwrapper:3.0.2" level="project" />
     <orderEntry type="library" name="Maven: jfree:jfreechart:1.0.13" level="project" />

@@ -20,7 +20,7 @@
     <groupId>org.qoan</groupId>
     <artifactId>qoan</artifactId>
     <packaging>jar</packaging>
-    <version>1.0-beta-SNAPSHOT</version>
+    <version>1.1.0-beta-SNAPSHOT</version>
     <!--<modules>
         <module>../qube.qai</module>
     </modules>-->
@@ -134,7 +134,7 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-compatibility-client</artifactId>
             <version>${vaadin.version}</version>
-            <scope>provided</scope>
+            <!--<scope>provided</scope>-->
         </dependency>
 
         <!--
@@ -431,6 +431,30 @@
             <version>1.10.19</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>org.qai</groupId>
+            <artifactId>qai</artifactId>
+            <version>1.0-beta-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.qai</groupId>
+            <artifactId>qai</artifactId>
+            <version>1.0-beta-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>4.1.0</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.qai</groupId>
+            <artifactId>qai</artifactId>
+            <version>1.0-beta-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
@@ -469,7 +493,7 @@
                 <version>3.0</version>
                 <configuration>
                     <encoding>${project.encoding}</encoding>
-                    <source>1.8</source>
+                    <!--<context>1.8</context>-->
                     <target>1.8</target>
                 </configuration>
             </plugin>
@@ -538,7 +562,7 @@
             <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
+                <artifactId>maven-context-plugin</artifactId>
                 <version>2.4</version>
             </plugin>
             <plugin>
@@ -560,13 +584,13 @@
         </plugins>
     </build>
 
-    <repositories>
+    <!--<repositories>
         <repository>
-            <id>vaadin-addons</id>
+            &lt;!&ndash;<uuid>vaadin-addons</uuid>&ndash;&gt;
             <url>http://maven.vaadin.com/vaadin-addons</url>
         </repository>
         <repository>
-            <id>vaadin-snapshots</id>
+            &lt;!&ndash;<uuid>vaadin-snapshots</uuid>&ndash;&gt;
             <url>https://oss.sonatype.org/content/repositories/vaadin-releases/</url>
             <releases>
                 <enabled>false</enabled>
@@ -575,16 +599,16 @@
                 <enabled>true</enabled>
             </snapshots>
         </repository>
-    </repositories>
+    </repositories>-->
 
     <pluginRepositories>
         <!-- ... -->
 
-        <pluginRepository>
-            <id>vaadin-prereleases</id>
+        <!--<pluginRepository>
+            &lt;!&ndash;<uuid>vaadin-prereleases</uuid>&ndash;&gt;
             <name>Vaadin Pre-releases</name>
             <url>https://maven.vaadin.com/vaadin-prereleases</url>
-        </pluginRepository>
+        </pluginRepository>-->
 
     </pluginRepositories>
 
@@ -600,12 +624,12 @@
         </dependencies>
     </dependencyManagement>
 
-    <distributionManagement>
+    <!--<distributionManagement>
         <repository>
-            <id>artifactory.repo</id>
+            &lt;!&ndash;<uuid>artifactory.repo</uuid>&ndash;&gt;
             <name>Qoan Project Repository</name>
             <url>http://192.168.0.249:8081/artifactory/libs-snapshot-local</url>
         </repository>
-    </distributionManagement>
+    </distributionManagement>-->
 
 </project>
