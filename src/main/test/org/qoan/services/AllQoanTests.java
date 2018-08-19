@@ -26,8 +26,9 @@ import org.qoan.gui.components.common.QoanMenuTest;
 import org.qoan.gui.components.common.decorators.DecoratorsTest;
 import org.qoan.gui.components.management.ManagementPanelTest;
 import org.qoan.gui.components.workspace.procedure.decorators.ProcedureTemplateDecoratorsTest;
-import org.qoan.services.implementation.DistributedSearchServicesTest;
 import org.qoan.services.implementation.ProcedureLibraryTests;
+import org.qoan.services.implementation.QaiIntegrationNetworkBuildersTest;
+import org.qoan.services.implementation.QaiIntegrationSearchServicesTest;
 
 /**
  * Created by rainbird on 5/26/16.
@@ -56,12 +57,13 @@ public class AllQoanTests extends TestCase {
         suite.addTestSuite(ManagementPanelTest.class);
 
         // this is the most important of all, really, to see if you have live-data
-        suite.addTestSuite(DistributedSearchServicesTest.class);
+        suite.addTestSuite(QaiIntegrationSearchServicesTest.class);
         suite.addTestSuite(ProcedureLibraryTests.class);
 
         // test for the decorators
         suite.addTestSuite(DecoratorsTest.class);
         suite.addTestSuite(ProcedureTemplateDecoratorsTest.class);
+        suite.addTestSuite(QaiIntegrationNetworkBuildersTest.class);
 
         return suite;
     }
