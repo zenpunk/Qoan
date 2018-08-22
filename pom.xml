@@ -345,13 +345,6 @@
             <version>${lucene.version}</version>
         </dependency>
 
-        <!-- apache open-nlp -->
-        <dependency>
-            <groupId>org.apache.opennlp</groupId>
-            <artifactId>opennlp-tools</artifactId>
-            <version>${opennlp.version}</version>
-        </dependency>
-
         <!-- jSoup for html-parsing -->
         <dependency>
             <groupId>org.jsoup</groupId>
@@ -422,6 +415,14 @@
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
             <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- Mockito for testing and mock objects and all -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.21.0</version>
             <scope>test</scope>
         </dependency>
 
