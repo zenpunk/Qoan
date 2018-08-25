@@ -27,7 +27,7 @@
         <jarDirectory url="file://$MODULE_DIR$/lib" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
-    <orderEntry type="module" module-name="qai" />
+    <orderEntry type="library" name="Maven: org.qai:qai:1.1.1-beta-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: qube.samsroad:samsroad:1.0" level="project" />
     <orderEntry type="library" name="Maven: info.bliki.wiki:bliki-core:3.1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.httpcomponents:httpclient:4.3.6" level="project" />
