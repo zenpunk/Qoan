@@ -38,7 +38,7 @@ public class QoanServlet extends VaadinServlet {
 
     private QoanModule qoanModule;
 
-    private QoanSearchServicesModule searchServices;
+    private QoanServicesModule searchServices;
 
     private QoanSecurityModule securityModule;
 
@@ -65,7 +65,7 @@ public class QoanServlet extends VaadinServlet {
             config = new ClientConfig();
             ServletContext context = servletConfig.getServletContext();
             qoanModule = new QoanModule(properties, config);
-            searchServices = new QoanSearchServicesModule(properties);
+            searchServices = new QoanServicesModule(properties);
 
             Injector dummy = Guice.createInjector(qoanModule);
             dummy.injectMembers(searchServices);
